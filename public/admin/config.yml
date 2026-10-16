@@ -241,6 +241,7 @@ collections:
               - { label: Correo, name: correo, widget: string, required: false }
               - { label: Extensión, name: extension, widget: string, required: false }
               - { label: Celular, name: celular, widget: string, required: false }
+              - { label: Foto, name: foto, widget: image, required: false, hint: 'Foto vertical, idealmente con el fondo quitado (PNG o WebP).' }
               - label: Sede
                 name: sede
                 widget: select
@@ -253,7 +254,17 @@ collections:
             fields:
               - { label: Área, name: area, widget: string }
               - { label: Área en inglés, name: area_en, widget: string }
-              - { label: Nombres, name: nombres, widget: list, field: { label: Nombre, name: nombre, widget: string } }
+              - label: Especialistas
+                name: personas
+                label_singular: especialista
+                widget: list
+                summary: '{{fields.titulo}} {{fields.nombre}}'
+                fields:
+                  - { label: Título, name: titulo, widget: select, options: ['Dr.', 'Dra.', 'Psic.', 'Nut.', 'Ft.', 'Enf.'], required: false }
+                  - { label: Nombre completo, name: nombre, widget: string }
+                  - { label: Especialidad, name: especialidad, widget: string, required: false }
+                  - { label: Especialidad en inglés, name: especialidad_en, widget: string, required: false }
+                  - { label: Foto, name: foto, widget: image, required: false, hint: 'Foto vertical (4:5), idealmente con el fondo quitado. Si no hay foto se muestran las iniciales.' }
 
       - name: transparencia
         label: Transparencia

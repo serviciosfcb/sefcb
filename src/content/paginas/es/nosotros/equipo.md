@@ -7,6 +7,6 @@ card: Directorio institucional y especialistas.
 section: nosotros
 layout: equipo
 order: 2
-review: Validar nombres de especialistas (tomados de los nombres de las fotos del sitio anterior), cargos y extensiones del PBX nuevo. Agregar fotos cuando llegue la biblioteca de medios.
+review: Nombres completos tomados de la página de especialistas del sitio anterior (2025) y de las fotos con nombre enviadas por gerencia. Faltan foto y especialidad de Fernando José Carrasco Blanco, Juan Guillermo Gallego, Juan Manuel Camargo Ballestas, Marco Oliverio Fonseca González y Luis Alberto Moreno Vera. Validar cargos y extensiones del PBX nuevo.
 ---
 Contamos con un equipo de especialistas de alto nivel profesional y con un equipo administrativo y asistencial que coordina cada servicio. Si necesita comunicarse con un área, use el directorio.

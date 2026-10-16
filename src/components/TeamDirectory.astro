@@ -9,7 +9,11 @@ const { lang } = Astro.props;
 const t = content[lang].pages;
 const en = lang === 'en';
 const areas = ['direccion', 'administrativo', 'asistencial'] as const;
-const initials = (s: string) => s.split(' ').filter(Boolean).slice(0, 2).map((w) => w[0]).join('').toUpperCase();
+// Iniciales: nombre y primer apellido (con cuatro palabras, la tercera es el primer apellido).
+const initials = (s: string) => {
+  const w = s.split(' ').filter(Boolean);
+  return (w.length >= 4 ? [w[0], w[2]] : w.slice(0, 2)).map((x) => x[0]).join('').toUpperCase();
+};
 ---
 <section class="equipo-bloque" aria-labelledby="dir-titulo">
   <h2 id="dir-titulo">{t.directory}</h2>
@@ -21,7 +25,9 @@ const initials = (s: string) => s.split(' ').filter(Boolean).slice(0, 2).map((w)
         <ul class="personas">
           {people.map((p) => (
             <li class="persona">
-              <span class="avatar" aria-hidden="true">{p.nombre ? initials(p.nombre) : <Icon name="award" />}</span>
+              <span class:list={['avatar', { 'con-foto': p.foto }]} aria-hidden="true">
+                {p.foto ? <img src={p.foto} alt="" width="640" height="800" loading="lazy" decoding="async" /> : p.nombre ? initials(p.nombre) : <Icon name="award" />}
+              </span>
               <div class="p-txt">
                 <p class="p-cargo">{en ? p.cargo_en || p.cargo : p.cargo}</p>
                 {p.nombre && <p class="p-nombre">{p.nombre}</p>}
@@ -42,16 +48,29 @@ const initials = (s: string) => s.split(' ').filter(Boolean).slice(0, 2).map((w)
 
 <section class="equipo-bloque" aria-labelledby="esp-titulo">
   <h2 id="esp-titulo">{t.specialists}</h2>
-  <div class="esp-grid">
-    {equipo.especialistas.map((g) => (
-      <div class="esp-area">
-        <h3>{en ? g.area_en || g.area : g.area}</h3>
-        <ul>
-          {g.nombres.map((n) => <li><span class="avatar pequeno" aria-hidden="true">{initials(n)}</span>{n}</li>)}
-        </ul>
-      </div>
-    ))}
-  </div>
+  {equipo.especialistas.map((g) => (
+    <div class="area">
+      <h3>{en ? g.area_en || g.area : g.area}</h3>
+      <ul class="esp-grid" data-stagger>
+        {g.personas.map((p) => {
+          const esp = en ? p.especialidad_en || p.especialidad : p.especialidad;
+          return (
+            <li class="medico" data-stagger-item>
+              <div class:list={['m-foto', { vacia: !p.foto }]}>
+                {p.foto
+                  ? <img src={p.foto} alt="" width="640" height="800" loading="lazy" decoding="async" />
+                  : <span class="m-iniciales" aria-hidden="true">{initials(p.nombre)}</span>}
+              </div>
+              <div class="m-txt">
+                <h4 class="m-nombre">{p.titulo && <span class="m-titulo">{p.titulo} </span>}{p.nombre}</h4>
+                {esp && <p class="m-esp">{esp}</p>}
+              </div>
+            </li>
+          );
+        })}
+      </ul>
+    </div>
+  ))}
 </section>
 
 <style>
@@ -71,9 +90,29 @@ const initials = (s: string) => s.split(' ').filter(Boolean).slice(0, 2).map((w)
   .p-datos li { display: flex; gap: .5rem; align-items: center; min-width: 0; }
   .p-datos :global(.icon) { width: 1rem; height: 1rem; color: var(--rojo); flex: none; }
   .p-datos a { color: var(--tinta); overflow-wrap: anywhere; }
-  .esp-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(min(100%, 16rem), 1fr)); gap: 1rem; }
-  .esp-area { padding: 1.3rem; border-radius: var(--radio-m); background: var(--niebla); display: grid; gap: .8rem; align-content: start; }
-  .esp-area h3 { font-size: var(--t-2); }
-  .esp-area ul { list-style: none; display: grid; gap: .6rem; }
-  .esp-area li { display: flex; align-items: center; gap: .7rem; font-weight: 600; }
+  .avatar.con-foto { overflow: hidden; }
+  .avatar.con-foto img { width: 100%; height: 100%; object-fit: cover; object-position: 50% 0; transform: scale(1.75); transform-origin: 50% 10%; }
+
+  .esp-grid { list-style: none; display: grid; grid-template-columns: repeat(auto-fill, minmax(min(100%, 11.5rem), 1fr)); gap: 1.6rem 1.1rem; margin-bottom: 1.4rem; }
+  .medico { display: grid; gap: .9rem; align-content: start; min-width: 0; }
+  .m-foto {
+    position: relative; aspect-ratio: 4 / 5; border-radius: var(--radio-m); overflow: hidden; isolation: isolate;
+    background:
+      radial-gradient(circle at 50% 30%, transparent 37%, rgb(159 39 40 / .12) 37.4%, rgb(159 39 40 / .12) 38.2%, transparent 38.6%),
+      radial-gradient(130% 75% at 50% 105%, rgb(159 39 40 / .22), transparent 62%),
+      linear-gradient(180deg, #f6f5f3, #e6e3df);
+  }
+  .m-foto::after { content: ''; position: absolute; inset: 0; border-radius: inherit; box-shadow: inset 0 0 0 1px rgb(28 26 25 / .06); pointer-events: none; }
+  .m-foto img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; object-position: 50% 0; transform-origin: 50% 100%; transition: transform .8s var(--ease); }
+  .medico:hover .m-foto img { transform: scale(1.04); }
+  .m-iniciales { position: absolute; inset: 0; display: grid; place-items: center; font-family: var(--display); font-size: clamp(2.6rem, 5vw, 3.4rem); font-weight: 700; letter-spacing: -.03em; color: var(--rojo); }
+  .m-txt { display: grid; gap: .25rem; }
+  .m-nombre { font-family: var(--display); font-size: var(--t-2); line-height: 1.2; letter-spacing: -.01em; }
+  .m-titulo { color: var(--rojo); }
+  .m-esp { color: var(--tinta-2); font-size: var(--t-0); line-height: 1.4; }
+  @media (max-width: 640px) { .esp-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 1.3rem .8rem; } .m-nombre { font-size: var(--t-1); } .m-iniciales { font-size: 2.2rem; } }
+  @media (prefers-reduced-motion: reduce) { .m-foto img { transition: none; } .medico:hover .m-foto img { transform: none; } }
+  :global(:root[data-motion='reduced']) .medico:hover .m-foto img { transform: none; }
+  :global(:root[data-contrast='high']) .m-foto { background: #fff; box-shadow: inset 0 0 0 2px #000; }
+  :global(:root[data-contrast='high']) .m-titulo { color: inherit; }
 </style>

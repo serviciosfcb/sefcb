@@ -1,19 +1,206 @@
 {
   "directorio": [
-    { "area": "direccion", "cargo": "Gerencia", "cargo_en": "General management", "nombre": "", "correo": "gerencia@sefcb.co", "extension": "205", "celular": "", "sede": 0 },
-    { "area": "administrativo", "cargo": "Director contable y financiero", "cargo_en": "Accounting and finance director", "nombre": "Norbek Yolimar Duran Jaimes", "correo": "contabilidad@sefcb.co", "extension": "200", "celular": "", "sede": 0 },
-    { "area": "administrativo", "cargo": "Directora administrativa y operativa", "cargo_en": "Administrative and operations director", "nombre": "Deisy Johanna Villamizar Zuñiga", "correo": "sistemas@sefcb.co", "extension": "141", "celular": "", "sede": 0 },
-    { "area": "administrativo", "cargo": "Coordinadora de calidad, SST y proyectos", "cargo_en": "Quality, occupational safety and projects coordinator", "nombre": "Erika Liseth Vera Sanabria", "correo": "calidad@sefcb.co", "extension": "202", "celular": "", "sede": 0 },
-    { "area": "administrativo", "cargo": "Coordinadora SIAU (atención al usuario)", "cargo_en": "Patient services (SIAU) coordinator", "nombre": "Silvana Maria Carrasco Blanco", "correo": "coordinacionsiau@sefcb.co", "extension": "139", "celular": "", "sede": 0 },
-    { "area": "administrativo", "cargo": "Coordinador de talento humano", "cargo_en": "Human resources coordinator", "nombre": "Miguel Angel Ruedas Martinez", "correo": "talentohumano@sefcb.co", "extension": "201", "celular": "", "sede": 0 },
-    { "area": "asistencial", "cargo": "Coordinadora de intervencionismo", "cargo_en": "Interventional unit coordinator", "nombre": "Adriana Ordoñez Leon", "correo": "intervencionismo@sefcb.co", "extension": "", "celular": "316 690 2029", "sede": 1 },
-    { "area": "asistencial", "cargo": "Coordinadora de medicina nuclear", "cargo_en": "Nuclear medicine coordinator", "nombre": "Roxana Galvis Quintero", "correo": "medicina.nuclear@sefcb.co", "extension": "122", "celular": "", "sede": 0 },
-    { "area": "asistencial", "cargo": "Coordinadora asistencial", "cargo_en": "Clinical care coordinator", "nombre": "Doris Marcela Rincon Rojas", "correo": "coordinacionasistencial@sefcb.co", "extension": "121", "celular": "", "sede": 0 }
+    {
+      "area": "direccion",
+      "cargo": "Gerencia",
+      "cargo_en": "General management",
+      "nombre": "",
+      "correo": "gerencia@sefcb.co",
+      "extension": "205",
+      "celular": "",
+      "sede": 0,
+      "foto": ""
+    },
+    {
+      "area": "administrativo",
+      "cargo": "Director contable y financiero",
+      "cargo_en": "Accounting and finance director",
+      "nombre": "Norbek Yolimar Duran Jaimes",
+      "correo": "contabilidad@sefcb.co",
+      "extension": "200",
+      "celular": "",
+      "sede": 0,
+      "foto": ""
+    },
+    {
+      "area": "administrativo",
+      "cargo": "Directora administrativa y operativa",
+      "cargo_en": "Administrative and operations director",
+      "nombre": "Deisy Johanna Villamizar Zuñiga",
+      "correo": "sistemas@sefcb.co",
+      "extension": "141",
+      "celular": "",
+      "sede": 0,
+      "foto": ""
+    },
+    {
+      "area": "administrativo",
+      "cargo": "Coordinadora de calidad, SST y proyectos",
+      "cargo_en": "Quality, occupational safety and projects coordinator",
+      "nombre": "Erika Liseth Vera Sanabria",
+      "correo": "calidad@sefcb.co",
+      "extension": "202",
+      "celular": "",
+      "sede": 0,
+      "foto": ""
+    },
+    {
+      "area": "administrativo",
+      "cargo": "Coordinadora SIAU (atención al usuario)",
+      "cargo_en": "Patient services (SIAU) coordinator",
+      "nombre": "Silvana Maria Carrasco Blanco",
+      "correo": "coordinacionsiau@sefcb.co",
+      "extension": "139",
+      "celular": "",
+      "sede": 0,
+      "foto": "/uploads/equipo/silvana-carrasco.webp"
+    },
+    {
+      "area": "administrativo",
+      "cargo": "Coordinador de talento humano",
+      "cargo_en": "Human resources coordinator",
+      "nombre": "Miguel Angel Ruedas Martinez",
+      "correo": "talentohumano@sefcb.co",
+      "extension": "201",
+      "celular": "",
+      "sede": 0,
+      "foto": ""
+    },
+    {
+      "area": "asistencial",
+      "cargo": "Coordinadora de intervencionismo",
+      "cargo_en": "Interventional unit coordinator",
+      "nombre": "Adriana Ordoñez Leon",
+      "correo": "intervencionismo@sefcb.co",
+      "extension": "",
+      "celular": "316 690 2029",
+      "sede": 1,
+      "foto": ""
+    },
+    {
+      "area": "asistencial",
+      "cargo": "Coordinadora de medicina nuclear",
+      "cargo_en": "Nuclear medicine coordinator",
+      "nombre": "Roxana Galvis Quintero",
+      "correo": "medicina.nuclear@sefcb.co",
+      "extension": "122",
+      "celular": "",
+      "sede": 0,
+      "foto": ""
+    },
+    {
+      "area": "asistencial",
+      "cargo": "Coordinadora asistencial",
+      "cargo_en": "Clinical care coordinator",
+      "nombre": "Doris Marcela Rincon Rojas",
+      "correo": "coordinacionasistencial@sefcb.co",
+      "extension": "121",
+      "celular": "",
+      "sede": 0,
+      "foto": ""
+    }
   ],
   "especialistas": [
-    { "area": "Dirección médica", "area_en": "Medical director", "nombres": ["Fernando Carrasco Blanco"] },
-    { "area": "Consulta médica especializada", "area_en": "Specialist consultations", "nombres": ["Rossy Carrillo", "Juan Gallego", "Ismael Ramirez"] },
-    { "area": "Intervencionismo", "area_en": "Interventional cardiology", "nombres": ["Marcos Morales", "Juan Camargo", "Marco Fonseca", "Luis Moreno"] },
-    { "area": "Valoración deportiva", "area_en": "Sports medicine", "nombres": ["Zair Ramos", "Ivar Duran", "Fernando Polo"] }
+    {
+      "area": "Dirección médica",
+      "area_en": "Medical director",
+      "personas": [
+        {
+          "titulo": "Dr.",
+          "nombre": "Fernando José Carrasco Blanco",
+          "especialidad": "",
+          "especialidad_en": "",
+          "foto": ""
+        }
+      ]
+    },
+    {
+      "area": "Consulta médica especializada",
+      "area_en": "Specialist consultations",
+      "personas": [
+        {
+          "titulo": "Dra.",
+          "nombre": "Rossy Coromoto Carrillo Gutiérrez",
+          "especialidad": "Cardiología",
+          "especialidad_en": "Cardiology",
+          "foto": "/uploads/equipo/rossy-carrillo.webp"
+        },
+        {
+          "titulo": "Dr.",
+          "nombre": "Juan Guillermo Gallego",
+          "especialidad": "",
+          "especialidad_en": "",
+          "foto": ""
+        },
+        {
+          "titulo": "Dr.",
+          "nombre": "Ismael Alexis Ramírez Carrascal",
+          "especialidad": "Radiología y diagnóstico por imágenes",
+          "especialidad_en": "Radiology and diagnostic imaging",
+          "foto": "/uploads/equipo/ismael-ramirez.webp"
+        }
+      ]
+    },
+    {
+      "area": "Intervencionismo",
+      "area_en": "Interventional cardiology",
+      "personas": [
+        {
+          "titulo": "Dr.",
+          "nombre": "Marcos Gabriel Morales Soto",
+          "especialidad": "Hemodinamia y cardiología intervencionista",
+          "especialidad_en": "Hemodynamics and interventional cardiology",
+          "foto": "/uploads/equipo/marcos-morales.webp"
+        },
+        {
+          "titulo": "Dr.",
+          "nombre": "Juan Manuel Camargo Ballestas",
+          "especialidad": "",
+          "especialidad_en": "",
+          "foto": ""
+        },
+        {
+          "titulo": "Dr.",
+          "nombre": "Marco Oliverio Fonseca González",
+          "especialidad": "",
+          "especialidad_en": "",
+          "foto": ""
+        },
+        {
+          "titulo": "Dr.",
+          "nombre": "Luis Alberto Moreno Vera",
+          "especialidad": "",
+          "especialidad_en": "",
+          "foto": ""
+        }
+      ]
+    },
+    {
+      "area": "Valoración deportiva",
+      "area_en": "Sports assessment",
+      "personas": [
+        {
+          "titulo": "Dr.",
+          "nombre": "Ivar Mauricio Duran Valencia",
+          "especialidad": "Medicina del deporte",
+          "especialidad_en": "Sports medicine",
+          "foto": "/uploads/equipo/ivar-duran.webp"
+        },
+        {
+          "titulo": "Psic.",
+          "nombre": "Zair Eduardo Ramos",
+          "especialidad": "Psicología del deporte y el ejercicio",
+          "especialidad_en": "Sport and exercise psychology",
+          "foto": "/uploads/equipo/zair-ramos.webp"
+        },
+        {
+          "titulo": "Dr.",
+          "nombre": "Luis Fernando Polo Diaz",
+          "especialidad": "Nutricionista",
+          "especialidad_en": "Nutritionist",
+          "foto": "/uploads/equipo/luis-fernando-polo.webp"
+        }
+      ]
+    }
   ]
 }
