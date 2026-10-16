@@ -1,0 +1,26 @@
+---
+// Logo oficial de la IPS: versión a color para fondos claros y versión blanca para fondos oscuros.
+import type { Lang } from '../i18n/content';
+import { content } from '../i18n/content';
+import logoColor from '../assets/logo-color.png';
+import logoBlanco from '../assets/logo-blanco.png';
+interface Props { lang: Lang; href: string; variant?: 'auto' | 'blanco' | 'color' }
+const { lang, href, variant = 'auto' } = Astro.props;
+const t = content[lang].logo;
+---
+<a class:list={['logo', `logo-${variant}`]} href={href} aria-label={t.home}>
+  <img class="logo-img logo-c" src={logoColor.src} width={logoColor.width} height={logoColor.height} alt="" decoding="async" />
+  <img class="logo-img logo-b" src={logoBlanco.src} width={logoBlanco.width} height={logoBlanco.height} alt="" decoding="async" />
+</a>
+
+<style>
+  .logo { position: relative; display: inline-grid; text-decoration: none; flex: none; border-radius: 8px; }
+  .logo-img { grid-area: 1 / 1; height: 3rem; width: auto; transition: opacity .45s var(--ease); }
+  .logo-color .logo-b, .logo-blanco .logo-c { opacity: 0; }
+  /* auto: blanco sobre el héroe oscuro, a color cuando la cabecera se vuelve sólida */
+  .logo-auto .logo-c { opacity: 0; }
+  :global(.cabecera.solida) .logo-auto .logo-c { opacity: 1; }
+  :global(.cabecera.solida) .logo-auto .logo-b { opacity: 0; }
+  @media (max-width: 520px) { .logo-img { height: 2.45rem; } }
+  :global(:root[data-contrast='high']) .logo-c { filter: contrast(1.4) saturate(1.2); }
+</style>

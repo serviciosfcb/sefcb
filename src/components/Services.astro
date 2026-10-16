@@ -1,0 +1,158 @@
+---
+import type { Lang } from '../i18n/content';
+import { content, links } from '../i18n/content';
+import Icon from './Icon.astro';
+import ServiceVisual from './ServiceVisual.astro';
+interface Props { lang: Lang }
+const { lang } = Astro.props;
+const all = content[lang];
+const t = all.services;
+const labelsFor = (k: string) => k === 'obesidad' ? t.plate : k === 'consulta' ? t.sounds : k === 'transporte' ? all.locations.sedes.map((s) => s.name) : [];
+const total = String(t.items.length).padStart(2, '0');
+---
+<section id="servicios" class="servicios seccion" aria-labelledby="servicios-titulo">
+  <div class="contenedor">
+    <header class="sec-cab">
+      <h2 id="servicios-titulo" data-split>{t.title}</h2>
+      <p data-reveal>{t.lead}</p>
+    </header>
+
+    <div class="serv-grid">
+      <div class="serv-panel" aria-hidden="true">
+        <div class="panel-in" data-panel>
+          <div class="panel-vis-zona">
+            {t.items.map((it, i) => (
+              <figure class="panel-vis" data-panel-vis={i}>
+                <ServiceVisual kind={it.key} labels={labelsFor(it.key)} uid={`p${i}`} />
+                <figcaption>{it.caption}</figcaption>
+              </figure>
+            ))}
+          </div>
+          <div class="panel-pie">
+            <span class="panel-cuenta"><span data-panel-count>01</span> / {total}</span>
+            <span class="panel-barras">
+              {t.items.map((_, i) => <span class:list={['barra', { on: i === 0 }]} data-panel-bar={i}></span>)}
+            </span>
+          </div>
+        </div>
+      </div>
+
+      <ul class="serv-lista">
+        {t.items.map((it, i) => (
+          <li class="serv" data-serv={i}>
+            <div class="serv-vis-movil" aria-hidden="true" data-vis-movil>
+              <ServiceVisual kind={it.key} labels={labelsFor(it.key)} uid={`m${i}`} />
+            </div>
+            <p class="serv-tag">{it.tag}</p>
+            <h3>{it.name}</h3>
+            <p class="serv-txt">{it.text}</p>
+            {it.list.length > 0 && (
+              <ul class="serv-items">
+                {it.list.map((x) => <li><Icon name="check" />{x}</li>)}
+              </ul>
+            )}
+          </li>
+        ))}
+      </ul>
+    </div>
+
+    <div class="serv-cta" data-reveal>
+      <a class="btn btn-primario" href={links.portal} rel="noopener" data-magnet>{t.cta}<Icon name="arrow" /></a>
+    </div>
+  </div>
+</section>
+
+<script>
+  const items = [...document.querySelectorAll<HTMLElement>('[data-serv]')];
+  const vis = [...document.querySelectorAll<HTMLElement>('[data-panel-vis]')];
+  const bars = [...document.querySelectorAll<HTMLElement>('[data-panel-bar]')];
+  const count = document.querySelector<HTMLElement>('[data-panel-count]');
+  let current = -1;
+  const activate = (i: number) => {
+    if (i === current) return;
+    current = i;
+    vis.forEach((v, k) => v.classList.toggle('activa', k === i));
+    bars.forEach((b, k) => b.classList.toggle('on', k <= i));
+    items.forEach((it, k) => it.classList.toggle('actual', k === i));
+    if (count) count.textContent = String(i + 1).padStart(2, '0');
+  };
+  items[0]?.classList.add('actual');
+  // El panel muestra el primer servicio en cuanto aparece en pantalla
+  const panel = document.querySelector('[data-panel]');
+  if (panel) {
+    const ioPanel = new IntersectionObserver(([e]) => { if (e.isIntersecting && current < 0) { activate(0); ioPanel.disconnect(); } }, { threshold: .25 });
+    ioPanel.observe(panel);
+  }
+  const io = new IntersectionObserver((entries) => {
+    entries.forEach((e) => { if (e.isIntersecting) activate(Number((e.target as HTMLElement).dataset.serv)); });
+  }, { rootMargin: '-48% 0px -48% 0px' });
+  items.forEach((it) => io.observe(it));
+
+  // En celular cada servicio anima su propia ilustración al entrar en pantalla
+  const ioMovil = new IntersectionObserver((entries) => {
+    entries.forEach((e) => { if (e.isIntersecting) { e.target.classList.add('activa'); ioMovil.unobserve(e.target); } });
+  }, { rootMargin: '0px 0px -15% 0px' });
+  document.querySelectorAll('[data-vis-movil]').forEach((v) => ioMovil.observe(v));
+</script>
+
+<style>
+  .servicios { background: var(--papel); }
+  .serv-grid { display: grid; grid-template-columns: minmax(0, 1.08fr) minmax(0, 1fr); gap: clamp(2rem, 5vw, 6rem); align-items: start; }
+
+  .serv-panel { position: sticky; top: calc(var(--alto-cabecera) + 1.5rem + env(safe-area-inset-top, 0px)); }
+  .panel-in {
+    position: relative; overflow: hidden; isolation: isolate;
+    height: min(38rem, calc(100svh - var(--alto-cabecera) - 3rem));
+    border-radius: var(--radio-xl); background: var(--carbon); color: var(--sobre-oscuro);
+    display: grid; grid-template-rows: 1fr auto; padding: 2rem;
+    box-shadow: 0 50px 90px -50px rgb(var(--sombra) / .7);
+  }
+  .panel-in::before {
+    content: ''; position: absolute; inset: -20%; z-index: -1;
+    background: radial-gradient(40% 40% at 50% 45%, rgb(159 39 40 / .32), transparent 70%);
+    animation: respirar 6s ease-in-out infinite;
+  }
+  @keyframes respirar { 50% { transform: scale(1.12); opacity: .7; } }
+  .panel-vis-zona { position: relative; display: grid; }
+  .panel-vis {
+    grid-area: 1 / 1; display: grid; grid-template-rows: 1fr auto; gap: 1rem; align-items: center;
+    opacity: 0; transform: scale(.96) translateY(10px); filter: blur(6px);
+    transition: opacity .7s var(--ease), transform .9s var(--ease), filter .7s var(--ease);
+  }
+  .panel-vis.activa { opacity: 1; transform: none; filter: none; }
+  .panel-vis :global(.vis) { max-height: 100%; }
+  .panel-vis figcaption { font-size: var(--t-0); color: var(--sobre-oscuro-2); max-width: 26rem; }
+  .panel-pie { display: flex; align-items: center; justify-content: space-between; gap: 1rem; padding-top: 1.2rem; border-top: 1px solid rgb(255 255 255 / .1); }
+  .panel-cuenta { font-family: var(--display); font-size: var(--t-2); color: var(--sobre-oscuro-2); font-variant-numeric: tabular-nums; }
+  .panel-cuenta span { color: #fff; font-weight: 650; }
+  .panel-barras { display: flex; gap: .35rem; }
+  .barra { width: 1.9rem; height: 4px; border-radius: 4px; background: rgb(255 255 255 / .14); position: relative; overflow: hidden; }
+  .barra::after { content: ''; position: absolute; inset: 0; background: var(--rojo-luz); transform: scaleX(0); transform-origin: left; transition: transform .6s var(--ease); }
+  .barra.on::after { transform: none; }
+
+  .serv-lista { list-style: none; }
+  .serv { min-height: 56svh; display: grid; align-content: center; gap: 1rem; padding-block: 3rem; border-top: 1px solid var(--linea); transition: opacity .6s var(--ease); }
+  .serv:first-child { border-top: 0; padding-top: 0; min-height: 48svh; align-content: start; }
+  .serv-tag { display: inline-flex; align-items: center; gap: .6rem; color: var(--rojo); font-weight: 700; font-size: var(--t-0); letter-spacing: .02em; }
+  .serv-tag::before { content: ''; width: .55rem; height: .55rem; border-radius: 50%; background: currentColor; box-shadow: 0 0 0 4px rgb(159 39 40 / .14); }
+  .serv h3 { font-size: var(--t-5); }
+  .serv-txt { font-size: var(--t-2); color: var(--tinta-2); max-width: 34rem; }
+  .serv-items { list-style: none; display: grid; grid-template-columns: repeat(auto-fill, minmax(min(100%, 15rem), 1fr)); gap: .55rem 1.5rem; margin-top: .6rem; }
+  .serv-items li { display: flex; gap: .6rem; align-items: flex-start; font-size: var(--t-0); line-height: 1.4; }
+  .serv-items :global(.icon) { width: 1.1rem; height: 1.1rem; color: var(--rojo); stroke-width: 2.4; flex: none; margin-top: .1rem; }
+  .serv-vis-movil { display: none; }
+  .serv-cta { margin-top: 1rem; }
+
+  @media (min-width: 961px) {
+    .serv:not(.actual) { opacity: .38; }
+  }
+  @media (max-width: 960px) {
+    .serv-grid { grid-template-columns: 1fr; }
+    .serv-panel { display: none; }
+    .serv, .serv:first-child { min-height: 0; padding-block: 2.2rem; border-top: 1px solid var(--linea); }
+    .serv:first-child { border-top: 0; padding-top: 0; }
+    .serv-vis-movil { display: block; background: var(--carbon); border-radius: var(--radio-l); padding: 1.2rem; margin-bottom: .6rem; }
+  }
+  :global(:root[data-contrast='high']) .panel-in::before { display: none; }
+  :global(:root[data-contrast='high']) .serv:not(.actual) { opacity: 1; }
+</style>

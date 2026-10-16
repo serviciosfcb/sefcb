@@ -1,0 +1,12 @@
+# Dependencias y compilación
+node_modules/
+dist/
+.astro/
+
+# Entorno y sistema
+.env
+.env.*
+.DS_Store
+Thumbs.db
+*.log
+__pycache__/

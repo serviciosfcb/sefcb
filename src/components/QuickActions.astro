@@ -1,0 +1,89 @@
+---
+import type { Lang } from '../i18n/content';
+import { content, links } from '../i18n/content';
+import Icon from './Icon.astro';
+interface Props { lang: Lang }
+const { lang } = Astro.props;
+const t = content[lang].actions;
+const hrefs: Record<string, string> = { book: links.portal, results: links.portal, prep: '#pacientes', pay: links.pagos };
+const external = (k: string) => k !== 'prep';
+---
+<section class="accesos" aria-label={t.label}>
+  <div class="contenedor">
+    <ul class="accesos-lista" data-stagger>
+      {t.items.map((it) => (
+        <li data-stagger-item>
+          <a class="acceso" href={hrefs[it.key]} rel={external(it.key) ? 'noopener' : undefined} data-spot>
+            <span class="acceso-ico"><Icon name={it.key} /></span>
+            <span class="acceso-txt">
+              <strong>{it.title}</strong>
+              <span>{it.text}</span>
+            </span>
+            <span class="acceso-flecha" aria-hidden="true"><Icon name="arrow" /></span>
+          </a>
+        </li>
+      ))}
+    </ul>
+  </div>
+</section>
+
+<style>
+  .accesos { position: relative; z-index: 3; margin-top: -6.5rem; }
+  .accesos-lista { list-style: none; display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 1rem; }
+  .acceso {
+    --mx: 50%; --my: 50%;
+    position: relative; isolation: isolate; overflow: hidden; height: 100%;
+    display: grid; grid-template-columns: auto 1fr; grid-template-rows: auto 1fr auto; gap: 1.1rem .9rem;
+    padding: 1.5rem 1.4rem 1.3rem; border-radius: var(--radio-l);
+    background: var(--papel); color: var(--tinta); text-decoration: none;
+    border: 1px solid var(--linea);
+    box-shadow: 0 30px 60px -36px rgb(var(--sombra) / .45), 0 2px 6px -2px rgb(var(--sombra) / .08);
+    transition: transform .6s var(--ease), box-shadow .6s var(--ease), border-color .4s;
+  }
+  .acceso::before {
+    content: ''; position: absolute; inset: 0; z-index: -1;
+    background: radial-gradient(22rem circle at var(--mx) var(--my), rgb(159 39 40 / .09), transparent 55%);
+    opacity: 0; transition: opacity .4s var(--ease);
+  }
+  .acceso::after { content: ''; position: absolute; left: 1.4rem; right: 1.4rem; bottom: 0; height: 3px; border-radius: 3px 3px 0 0; background: var(--rojo); transform: scaleX(0); transform-origin: left; transition: transform .7s var(--ease); }
+  .acceso:hover, .acceso:focus-visible { transform: translateY(-6px); border-color: rgb(159 39 40 / .25); box-shadow: 0 40px 70px -34px rgb(var(--sombra) / .55); }
+  .acceso:hover::before, .acceso:focus-visible::before { opacity: 1; }
+  .acceso:hover::after, .acceso:focus-visible::after { transform: scaleX(1); }
+  .acceso-ico {
+    grid-column: 1; grid-row: 1;
+    width: 3.2rem; height: 3.2rem; border-radius: 1rem; display: grid; place-items: center;
+    background: var(--rojo-tinte); color: var(--rojo); transition: background-color .4s, color .4s;
+  }
+  .acceso:hover .acceso-ico { background: var(--rojo); color: #fff; }
+  .acceso-ico :global(.icon) { width: 1.65rem; height: 1.65rem; }
+  .acceso-txt { grid-column: 1 / -1; grid-row: 2; display: grid; gap: .3rem; }
+  .acceso-txt strong { font-family: var(--display); font-size: 1.28rem; font-weight: 650; letter-spacing: -.02em; line-height: 1.15; }
+  .acceso-txt span { color: var(--tinta-2); font-size: var(--t-0); line-height: 1.45; }
+  .acceso-flecha { grid-column: 2; grid-row: 1; justify-self: end; align-self: start; width: 2.4rem; height: 2.4rem; border-radius: 50%; display: grid; place-items: center; border: 1px solid var(--linea); color: var(--tinta); transition: transform .6s var(--ease), background-color .4s, border-color .4s, color .4s; }
+  .acceso-flecha :global(.icon) { width: 1.05rem; height: 1.05rem; transform: rotate(-45deg); transition: transform .6s var(--ease); }
+  .acceso:hover .acceso-flecha { background: var(--tinta); border-color: var(--tinta); color: #fff; }
+  .acceso:hover .acceso-flecha :global(.icon) { transform: rotate(0); }
+
+  /* Microanimaciones de los iconos */
+  .acceso :global(.anim-check) { stroke-dasharray: 12; stroke-dashoffset: 0; }
+  .acceso:hover :global(.anim-check) { animation: dibujar .7s var(--ease) both; }
+  .acceso:hover :global(.anim-down) { animation: bajar 1s var(--ease) infinite; }
+  .acceso :global(.anim-lines) { stroke-dasharray: 8; }
+  .acceso:hover :global(.anim-lines) { animation: dibujar .8s var(--ease) both; }
+  .acceso:hover :global(.anim-card) { animation: tarjeta .9s var(--ease); transform-origin: center; transform-box: fill-box; }
+  @keyframes dibujar { from { stroke-dashoffset: 12; } to { stroke-dashoffset: 0; } }
+  @keyframes bajar { 0%, 100% { transform: translateY(-1px); } 50% { transform: translateY(2px); } }
+  @keyframes tarjeta { 0% { transform: none; } 40% { transform: rotate(-8deg) scale(1.05); } 100% { transform: none; } }
+
+  @media (max-width: 1080px) { .accesos-lista { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
+  @media (max-width: 560px) {
+    .accesos { margin-top: -4.5rem; }
+    .accesos-lista { grid-template-columns: 1fr; gap: .7rem; }
+    .acceso { grid-template-columns: auto 1fr auto; grid-template-rows: auto; align-items: center; padding: 1rem 1.1rem; border-radius: var(--radio-m); }
+    .acceso-txt { grid-column: 2; grid-row: 1; }
+    .acceso-flecha { grid-column: 3; grid-row: 1; align-self: center; }
+    .acceso-ico { width: 2.8rem; height: 2.8rem; }
+    .acceso-txt strong { font-size: 1.1rem; }
+  }
+  :global(:root[data-contrast='high']) .acceso { border: 2px solid #000; box-shadow: none; }
+</style>

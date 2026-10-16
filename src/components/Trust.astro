@@ -1,0 +1,92 @@
+---
+import type { Lang } from '../i18n/content';
+import { content, links, financials } from '../i18n/content';
+import Icon from './Icon.astro';
+interface Props { lang: Lang }
+const { lang } = Astro.props;
+const q = content[lang].quality;
+const tr = content[lang].transparency;
+---
+<section id="calidad" class="calidad seccion" aria-labelledby="calidad-titulo">
+  <div class="contenedor">
+    <header class="sec-cab">
+      <h2 id="calidad-titulo" data-split>{q.title}</h2>
+      <p data-reveal>{q.lead}</p>
+    </header>
+
+    <ul class="sellos" data-stagger>
+      {q.items.map((it) => (
+        <li class="sello" data-stagger-item>
+          <span class="sello-ico"><Icon name={it.icon} /></span>
+          <h3>{it.title}</h3>
+          <p>{it.text}</p>
+        </li>
+      ))}
+    </ul>
+
+    <div class="transparencia oscuro" id="transparencia" data-reveal>
+      <div class="tr-texto">
+        <h3>{tr.title}</h3>
+        <p>{tr.text}</p>
+        <a class="enlace-flecha claro" href={links.transparencia}>{tr.all}<Icon name="arrow" /></a>
+      </div>
+      <ul class="tr-lista">
+        <li class="tr-fila tr-anios">
+          <span class="tr-nombre"><Icon name="document" />{tr.financials}</span>
+          <span class="anios">
+            {financials.map((f) => <a href={f.href} rel="noopener" aria-label={`${tr.financials} ${f.year}`}>{f.year}</a>)}
+          </span>
+        </li>
+        <li><a class="tr-fila" href={links.informe2021} rel="noopener"><span class="tr-nombre"><Icon name="document" />{tr.report}</span><Icon name="external" /></a></li>
+        <li><a class="tr-fila" href={links.etica} rel="noopener"><span class="tr-nombre"><Icon name="document" />{tr.ethics}</span><Icon name="external" /></a></li>
+        <li><a class="tr-fila" href={links.politicas}><span class="tr-nombre"><Icon name="document" />{tr.policies}</span><Icon name="arrow" /></a></li>
+        <li><a class="tr-fila" href={links.datos} rel="noopener"><span class="tr-nombre"><Icon name="document" />{tr.data}</span><Icon name="external" /></a></li>
+        <li><a class="tr-fila" href={links.sired} rel="noopener"><span class="tr-nombre"><Icon name="document" />{tr.sired}</span><Icon name="external" /></a></li>
+      </ul>
+    </div>
+  </div>
+</section>
+
+<style>
+  .calidad { background: var(--papel); }
+  .sellos { list-style: none; display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); border-top: 1px solid var(--linea); }
+  .sello { display: grid; gap: .8rem; align-content: start; padding: 2.2rem 2rem 2.4rem 0; }
+  .sello + .sello { padding-left: 2rem; border-left: 1px solid var(--linea); }
+  .sello-ico { width: 3.6rem; height: 3.6rem; border-radius: 50%; display: grid; place-items: center; color: var(--rojo); background: var(--rojo-tinte); margin-bottom: .6rem; }
+  .sello-ico :global(.icon) { width: 1.8rem; height: 1.8rem; }
+  .sello h3 { font-size: var(--t-4); }
+  .sello p { color: var(--tinta-2); max-width: 22rem; }
+
+  .transparencia {
+    margin-top: clamp(3rem, 6vw, 5.5rem); border-radius: var(--radio-xl); padding: clamp(2rem, 4vw, 3.5rem);
+    display: grid; grid-template-columns: minmax(0, .8fr) minmax(0, 1.2fr); gap: clamp(2rem, 5vw, 5rem);
+    position: relative; overflow: hidden; isolation: isolate;
+  }
+  .transparencia::before { content: ''; position: absolute; inset: auto -10% -60% auto; width: 34rem; height: 34rem; border-radius: 50%; background: radial-gradient(circle, rgb(159 39 40 / .35), transparent 65%); z-index: -1; }
+  .tr-texto { display: grid; gap: 1rem; align-content: start; }
+  .tr-texto h3 { font-size: var(--t-5); color: #fff; }
+  .tr-texto p { color: var(--sobre-oscuro-2); }
+  .claro { color: #fff; }
+  .tr-lista { list-style: none; display: grid; }
+  .tr-fila {
+    display: flex; align-items: center; justify-content: space-between; gap: 1rem; min-height: 3.6rem; padding-block: .6rem;
+    border-bottom: 1px solid rgb(255 255 255 / .12); color: var(--sobre-oscuro); text-decoration: none; font-weight: 600;
+    transition: padding .4s var(--ease), color .3s;
+  }
+  a.tr-fila:hover { padding-left: .6rem; color: #fff; }
+  a.tr-fila > :global(.icon) { width: 1.1rem; height: 1.1rem; color: var(--sobre-oscuro-2); flex: none; }
+  .tr-nombre { display: inline-flex; align-items: center; gap: .75rem; }
+  .tr-nombre :global(.icon) { width: 1.2rem; height: 1.2rem; color: var(--rojo-luz); flex: none; }
+  .tr-anios { flex-wrap: wrap; }
+  .anios { display: flex; flex-wrap: wrap; gap: .4rem; }
+  .anios a { padding: .3rem .7rem; border-radius: 999px; border: 1px solid rgb(255 255 255 / .2); color: var(--sobre-oscuro); text-decoration: none; font-size: var(--t-0); font-variant-numeric: tabular-nums; transition: background-color .3s, border-color .3s, color .3s; }
+  .anios a:hover { background: #fff; color: var(--tinta); border-color: #fff; }
+
+  @media (max-width: 860px) {
+    .sellos { grid-template-columns: 1fr; }
+    .sello, .sello + .sello { padding: 1.8rem 0; border-left: 0; border-top: 1px solid var(--linea); }
+    .sello:first-child { border-top: 0; }
+    .transparencia { grid-template-columns: 1fr; }
+  }
+  :global(:root[data-contrast='high']) .transparencia::before { display: none; }
+</style>

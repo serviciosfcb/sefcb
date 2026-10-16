@@ -1,0 +1,72 @@
+---
+import type { Lang } from '../i18n/content';
+import { content, links, phones } from '../i18n/content';
+import Logo from './Logo.astro';
+import Icon from './Icon.astro';
+interface Props { lang: Lang; home: string }
+const { lang, home } = Astro.props;
+const t = content[lang].footer;
+const hrefs = links as Record<string, string>;
+const year = 2026;
+---
+<footer class="pie oscuro">
+  <div class="pie-ecg decorativo" aria-hidden="true">
+    <svg viewBox="0 0 1200 60" preserveAspectRatio="none">
+      <path d="M0 34 H 300 l 12 -5 l 8 5 l 10 0 l 7 -26 l 8 46 l 7 -20 l 14 0 l 12 -7 l 10 7 H 700 l 12 -5 l 8 5 l 10 0 l 7 -26 l 8 46 l 7 -20 l 14 0 l 12 -7 l 10 7 H 1200" />
+    </svg>
+  </div>
+  <div class="contenedor pie-grid">
+    <div class="pie-marca">
+      <Logo lang={lang} href={home} variant="blanco" />
+      <p>{t.tagline}</p>
+      <a class="pie-tel" href={`tel:${phones.pbx.tel}`}>PBX {phones.pbx.label}</a>
+      <ul class="redes" aria-label={t.social}>
+        <li><a href={links.facebook} rel="noopener" aria-label="Facebook"><Icon name="facebook" /></a></li>
+        <li><a href={links.instagram} rel="noopener" aria-label="Instagram"><Icon name="instagram" /></a></li>
+        <li><a href={links.youtube} rel="noopener" aria-label="YouTube"><Icon name="youtube" /></a></li>
+      </ul>
+    </div>
+    {t.cols.map((col) => (
+      <nav class="pie-col" aria-label={col.title}>
+        <h2>{col.title}</h2>
+        <ul>
+          {col.items.map(([label, key]) => <li><a href={hrefs[key]}>{label}</a></li>)}
+        </ul>
+      </nav>
+    ))}
+  </div>
+  <div class="contenedor pie-base">
+    <p>© {year} Servicios Especializados del Corazón. {t.rights}</p>
+    <p class="vigilado"><Icon name="eye" />{t.supersalud}</p>
+    <a class="arriba" href="#top" data-top><Icon name="up" />{t.top}</a>
+  </div>
+</footer>
+
+<style>
+  .pie { position: relative; padding-top: clamp(4rem, 7vw, 6.5rem); padding-bottom: calc(2rem + env(safe-area-inset-bottom, 0px)); overflow: hidden; }
+  .pie-ecg { position: absolute; top: 0; left: 0; right: 0; height: 3.75rem; transform: translateY(-50%); }
+  .pie-ecg svg { width: 100%; height: 100%; }
+  .pie-ecg path { fill: none; stroke: var(--rojo-luz); stroke-width: 2; vector-effect: non-scaling-stroke; stroke-dasharray: 1400 3000; animation: pie-ecg 7s linear infinite; filter: drop-shadow(0 0 6px rgb(226 72 77 / .6)); }
+  @keyframes pie-ecg { from { stroke-dashoffset: 1400; } to { stroke-dashoffset: -3000; } }
+  .pie-grid { display: grid; grid-template-columns: minmax(0, 1.5fr) repeat(3, minmax(0, 1fr)); gap: 2.5rem; padding-bottom: 3.5rem; }
+  .pie-marca { display: grid; gap: 1rem; align-content: start; max-width: 22rem; }
+  .pie-marca :global(.logo-img) { height: 3.4rem; }
+  .pie-marca p { color: var(--sobre-oscuro-2); }
+  .pie-tel { color: #fff; font-weight: 700; text-decoration: none; }
+  .redes { list-style: none; display: flex; gap: .6rem; margin-top: .4rem; }
+  .redes a { width: 2.75rem; height: 2.75rem; border-radius: 50%; display: grid; place-items: center; border: 1px solid rgb(255 255 255 / .18); color: var(--sobre-oscuro); transition: background-color .3s, color .3s, transform .5s var(--ease); }
+  .redes a:hover { background: #fff; color: var(--tinta); transform: translateY(-3px); }
+  .redes :global(.icon) { width: 1.2rem; height: 1.2rem; }
+  .pie-col h2 { font-family: var(--texto); font-size: var(--t-0); font-weight: 700; color: #fff; letter-spacing: .02em; margin-bottom: 1rem; }
+  .pie-col ul { list-style: none; display: grid; gap: .6rem; }
+  .pie-col a { color: var(--sobre-oscuro-2); text-decoration: none; font-size: var(--t-0); transition: color .25s; }
+  .pie-col a:hover { color: #fff; text-decoration: underline; text-underline-offset: .25em; }
+  .pie-base { display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 1rem 2rem; padding-top: 1.6rem; border-top: 1px solid rgb(255 255 255 / .1); font-size: var(--t-0); color: var(--sobre-oscuro-2); }
+  .vigilado { display: inline-flex; align-items: center; gap: .5rem; font-weight: 700; color: var(--sobre-oscuro); }
+  .vigilado :global(.icon) { width: 1.1rem; height: 1.1rem; }
+  .arriba { display: inline-flex; align-items: center; gap: .4rem; color: var(--sobre-oscuro); text-decoration: none; font-weight: 600; }
+  .arriba :global(.icon) { width: 1rem; height: 1rem; transition: transform .4s var(--ease); }
+  .arriba:hover :global(.icon) { transform: translateY(-3px); }
+  @media (max-width: 960px) { .pie-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); } .pie-marca { grid-column: 1 / -1; } }
+  @media (max-width: 480px) { .pie-grid { grid-template-columns: 1fr; } }
+</style>

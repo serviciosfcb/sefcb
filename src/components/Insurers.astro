@@ -1,0 +1,74 @@
+---
+import type { Lang } from '../i18n/content';
+import { content, insurers } from '../i18n/content';
+import Icon from './Icon.astro';
+interface Props { lang: Lang }
+const { lang } = Astro.props;
+const t = content[lang].insurers;
+const fila1 = insurers.slice(0, 6), fila2 = insurers.slice(6);
+---
+<section class="convenios seccion" aria-labelledby="convenios-titulo" data-marquee>
+  <div class="contenedor conv-cab">
+    <header class="sec-cab">
+      <h2 id="convenios-titulo" data-split>{t.title}</h2>
+      <p data-reveal>{t.lead}</p>
+    </header>
+    <button class="conv-pausa" type="button" aria-pressed="false" data-marquee-btn data-pause={t.pause} data-play={t.play}>
+      <Icon name="pause" /><span data-label>{t.pause}</span>
+    </button>
+  </div>
+
+  <div class="contenedor"><ul class="visualmente-oculto conv-lista">{insurers.map((n) => <li>{n}</li>)}</ul></div>
+
+  <div class="marquesina" aria-hidden="true">
+    {[fila1, fila2].map((fila, r) => (
+      <div class:list={['fila', { inversa: r === 1 }]}>
+        <div class="pista">
+          {[0, 1, 2].map(() => fila.map((n) => <span class="nombre">{n}<span class="punto"></span></span>))}
+        </div>
+      </div>
+    ))}
+  </div>
+</section>
+
+<script>
+  const sec = document.querySelector<HTMLElement>('[data-marquee]');
+  const btn = sec?.querySelector<HTMLButtonElement>('[data-marquee-btn]');
+  btn?.addEventListener('click', () => {
+    const paused = sec!.classList.toggle('pausada');
+    btn.setAttribute('aria-pressed', String(paused));
+    btn.querySelector('[data-label]')!.textContent = paused ? btn.dataset.play! : btn.dataset.pause!;
+    btn.querySelector('svg')?.classList.toggle('icon-play-on', paused);
+  });
+</script>
+
+<style>
+  .convenios { background: var(--papel); overflow: hidden; padding-bottom: clamp(4rem, 6vw, 7rem); }
+  .conv-cab { display: flex; align-items: end; justify-content: space-between; gap: 2rem; }
+  .conv-pausa { display: inline-flex; align-items: center; gap: .5rem; margin-bottom: clamp(2.5rem, 2rem + 2vw, 4rem); padding: .6rem 1rem; border-radius: 999px; border: 1px solid var(--linea); background: var(--papel); cursor: pointer; font-weight: 600; font-size: var(--t-0); color: var(--tinta); white-space: nowrap; }
+  .conv-pausa:hover { border-color: var(--tinta); }
+  .conv-pausa :global(.icon) { width: 1rem; height: 1rem; }
+  .marquesina { display: grid; gap: .6rem; mask-image: linear-gradient(90deg, transparent, #000 8%, #000 92%, transparent); }
+  .fila { display: flex; overflow: hidden; }
+  .pista { display: flex; flex: none; animation: deslizar 46s linear infinite; }
+  .inversa .pista { animation-direction: reverse; animation-duration: 52s; }
+  .convenios:hover .pista, .convenios.pausada .pista { animation-play-state: paused; }
+  .nombre {
+    display: inline-flex; align-items: center; gap: clamp(1.4rem, 3vw, 2.8rem); padding-right: clamp(1.4rem, 3vw, 2.8rem);
+    font-family: var(--display); font-size: clamp(2.2rem, 1.4rem + 3.4vw, 4.6rem); font-weight: 600; letter-spacing: -.035em; line-height: 1.15;
+    color: transparent; -webkit-text-stroke: 1.2px #b9b7b2; white-space: nowrap; transition: color .4s var(--ease), -webkit-text-stroke-color .4s;
+  }
+  .nombre:hover { color: var(--rojo); -webkit-text-stroke-color: var(--rojo); }
+  .fila.inversa .nombre { color: var(--tinta); -webkit-text-stroke: 0; }
+  .fila.inversa .nombre:hover { color: var(--rojo); }
+  .punto { width: .7rem; height: .7rem; border-radius: 50%; background: var(--rojo); flex: none; }
+  @keyframes deslizar { to { transform: translateX(-33.333%); } }
+  @media (max-width: 640px) { .conv-cab { display: grid; } .conv-pausa { justify-self: start; margin-top: -1.5rem; } }
+  :global(:root[data-contrast='high']) .nombre { color: #000; -webkit-text-stroke: 0; }
+  :global(:root[data-motion='reduced']) .marquesina, :global(:root[data-motion='reduced']) .conv-pausa { display: none; }
+  :global(:root[data-motion='reduced']) .conv-lista { position: static !important; width: auto; height: auto; margin: 0; overflow: visible; clip: auto; white-space: normal; display: flex; flex-wrap: wrap; gap: .6rem 2rem; list-style: none; font-family: var(--display); font-size: var(--t-4); font-weight: 600; }
+  @media (prefers-reduced-motion: reduce) {
+    .marquesina, .conv-pausa { display: none; }
+    .conv-lista { position: static !important; width: auto; height: auto; margin: 0; overflow: visible; clip: auto; white-space: normal; display: flex; flex-wrap: wrap; gap: .6rem 2rem; list-style: none; font-family: var(--display); font-size: var(--t-4); font-weight: 600; }
+  }
+</style>

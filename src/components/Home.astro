@@ -1,0 +1,24 @@
+---
+import type { Lang } from '../i18n/content';
+import Base from '../layouts/Base.astro';
+import Hero from './Hero.astro';
+import QuickActions from './QuickActions.astro';
+import Services from './Services.astro';
+import Visit from './Visit.astro';
+import Portal from './Portal.astro';
+import Insurers from './Insurers.astro';
+import Trust from './Trust.astro';
+import Locations from './Locations.astro';
+interface Props { lang: Lang }
+const { lang } = Astro.props;
+---
+<Base lang={lang}>
+  <Hero lang={lang} />
+  <QuickActions lang={lang} />
+  <Services lang={lang} />
+  <Visit lang={lang} />
+  <Portal lang={lang} />
+  <Insurers lang={lang} />
+  <Trust lang={lang} />
+  <Locations lang={lang} />
+</Base>

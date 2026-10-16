@@ -1,0 +1,85 @@
+---
+import '../styles/global.css';
+import type { Lang } from '../i18n/content';
+import { content, phones } from '../i18n/content';
+import Header from '../components/Header.astro';
+import Footer from '../components/Footer.astro';
+import A11yPanel from '../components/A11yPanel.astro';
+interface Props { lang: Lang }
+const { lang } = Astro.props;
+const t = content[lang];
+const site = 'https://sefcb.co';
+const home = lang === 'es' ? '/' : '/en/';
+const alt = lang === 'es' ? '/en/' : '/';
+const ld = {
+  '@context': 'https://schema.org',
+  '@type': 'MedicalClinic',
+  name: 'Servicios Especializados del Corazón',
+  alternateName: 'SEFCB',
+  url: site,
+  logo: `${site}/marca/icon-512.png`,
+  telephone: phones.pbx.tel,
+  medicalSpecialty: ['Cardiovascular', 'Nuclear medicine'],
+  address: { '@type': 'PostalAddress', streetAddress: 'Calle 19 No. 1-44, Barrio Blanco', addressLocality: 'Cúcuta', addressRegion: 'Norte de Santander', addressCountry: 'CO' },
+  department: [{
+    '@type': 'MedicalClinic',
+    name: 'Servicios Especializados del Corazón, Sede 2 (hemodinamia)',
+    address: { '@type': 'PostalAddress', streetAddress: 'Avenida 11E No. 8-41', addressLocality: 'Cúcuta', addressRegion: 'Norte de Santander', addressCountry: 'CO' },
+  }],
+};
+---
+<!doctype html>
+<html lang={lang} dir="ltr">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+    <title>{t.meta.title}</title>
+    <meta name="claude:viewport-fit-sides" content="cover" />
+    <meta name="description" content={t.meta.description} />
+    <link rel="canonical" href={site + home} />
+    <link rel="alternate" hreflang="es" href={site + '/'} />
+    <link rel="alternate" hreflang="en" href={site + '/en/'} />
+    <link rel="alternate" hreflang="x-default" href={site + '/'} />
+    <meta name="theme-color" content="#1c1a19" />
+    <meta property="og:type" content="website" />
+    <meta property="og:locale" content={t.locale} />
+    <meta property="og:site_name" content="Servicios Especializados del Corazón" />
+    <meta property="og:title" content={t.meta.title} />
+    <meta property="og:description" content={t.meta.description} />
+    <meta property="og:url" content={site + home} />
+    <link rel="icon" href="/favicon-32.png" type="image/png" sizes="32x32" />
+    <link rel="apple-touch-icon" href="/apple-touch-icon.png" />
+    <script is:inline>
+      // Preferencias de accesibilidad antes de pintar, y estado inicial de la entrada animada
+      (function () {
+        var r = document.documentElement;
+        try {
+          var p = JSON.parse(localStorage.getItem('sefcb-a11y') || '{}');
+          ['text', 'contrast', 'links', 'spacing', 'motion'].forEach(function (k) { if (p[k] && !(k === 'text' && p[k] === '1')) r.dataset[k] = p[k]; });
+        } catch (e) {}
+        var still = r.dataset.motion === 'reduced' || (window.matchMedia && matchMedia('(prefers-reduced-motion: reduce)').matches);
+        if (!still) { r.classList.add('intro'); setTimeout(function () { r.classList.remove('intro'); }, 3500); }
+      })();
+    </script>
+    <script type="application/ld+json" set:html={JSON.stringify(ld)} />
+  </head>
+  <body>
+    <div id="top"></div>
+    <a class="saltar" href="#contenido">{t.skip}</a>
+    <Header lang={lang} home={home} alt={alt} />
+    <main id="contenido" tabindex="-1">
+      <slot />
+    </main>
+    <Footer lang={lang} home={home} />
+    <A11yPanel lang={lang} />
+    <script>
+      import { initAnimations } from '../scripts/animations';
+      initAnimations();
+    </script>
+  </body>
+</html>
+
+<style is:global>
+  .intro [data-hero-kicker], .intro [data-hero-title], .intro [data-hero-fade], .intro .accesos [data-stagger-item] { opacity: 0; }
+  main:focus { outline: none; }
+</style>

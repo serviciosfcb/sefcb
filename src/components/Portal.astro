@@ -1,0 +1,143 @@
+---
+import type { Lang } from '../i18n/content';
+import { content, links } from '../i18n/content';
+import Icon from './Icon.astro';
+import marca from '../assets/marca.png';
+interface Props { lang: Lang }
+const { lang } = Astro.props;
+const t = content[lang].portal;
+const m = t.mock;
+const icons = ['book', 'results', 'shield'];
+---
+<section id="portal" class="portal oscuro seccion" aria-labelledby="portal-titulo">
+  <div class="portal-fondo decorativo" aria-hidden="true"></div>
+  <div class="contenedor portal-grid">
+    <div class="portal-texto">
+      <h2 id="portal-titulo" data-split>{t.title}</h2>
+      <p class="portal-lead" data-reveal>{t.lead}</p>
+      <ul class="portal-puntos" data-stagger>
+        {t.points.map((p, i) => (
+          <li data-stagger-item><span class="pp-ico"><Icon name={icons[i]} /></span>{p}</li>
+        ))}
+      </ul>
+      <div class="portal-ctas" data-reveal>
+        <a class="btn btn-primario" href={links.portal} rel="noopener" data-magnet>{t.primary}<Icon name="arrow" /></a>
+        <a class="btn btn-fantasma" href={links.registro} rel="noopener">{t.secondary}</a>
+      </div>
+    </div>
+
+    <div class="portal-escena" data-tilt aria-hidden="true">
+      <div class="telefono" data-tilt-inner>
+        <div class="tel-pantalla">
+          <div class="tel-barra"><span>9:41</span><span class="tel-isla"></span><span class="tel-senal"></span></div>
+          <div class="app">
+            <div class="app-cab">
+              <img src={marca.src} width="34" height="34" alt="" />
+              <div><small>SEFCB</small><strong>{m.hello}</strong></div>
+            </div>
+            <div class="app-tarjeta app-cita">
+              <small>{m.next}</small>
+              <strong>{m.nextVal}</strong>
+              <span class="app-meta"><Icon name="book" />{m.nextWhen}</span>
+              <span class="app-meta"><Icon name="pin" />{m.nextWhere}</span>
+            </div>
+            <p class="app-sub">{m.results}</p>
+            <div class="app-fila">
+              <span class="app-doc"><Icon name="document" /></span>
+              <span class="app-nombre">{m.r1}<em class="ok">{m.r1s}</em></span>
+              <span class="app-boton">{m.download}</span>
+            </div>
+            <div class="app-fila">
+              <span class="app-doc"><Icon name="document" /></span>
+              <span class="app-nombre">{m.r2}<em class="pend">{m.r2s}</em></span>
+            </div>
+            <div class="app-ecg">
+              <svg viewBox="0 0 200 40" preserveAspectRatio="none"><path d="M0 22 H 52 l 4 -3 l 4 3 h 6 l 4 -16 l 5 28 l 4 -12 h 10 l 8 -5 l 7 5 H 200" /></svg>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="aviso" data-toast>
+        <span class="aviso-ico"><Icon name="check" /></span>
+        <span><strong>{m.toast}</strong><small>{m.r1}</small></span>
+      </div>
+      <p class="portal-nota">{m.note}</p>
+    </div>
+  </div>
+</section>
+
+<style>
+  .portal { position: relative; overflow: hidden; isolation: isolate; }
+  .portal-fondo {
+    position: absolute; inset: 0; z-index: -1;
+    background:
+      radial-gradient(40rem 30rem at 78% 50%, rgb(159 39 40 / .35), transparent 70%),
+      radial-gradient(30rem 24rem at 0% 0%, rgb(161 161 159 / .08), transparent 70%);
+  }
+  .portal-grid { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); gap: clamp(3rem, 6vw, 7rem); align-items: center; }
+  .portal-texto { display: grid; gap: 1.6rem; max-width: 36rem; }
+  .portal h2 { font-size: var(--t-6); color: #fff; }
+  .portal-lead { font-size: var(--t-3); color: var(--sobre-oscuro-2); line-height: 1.45; }
+  .portal-puntos { list-style: none; display: grid; gap: .9rem; }
+  .portal-puntos li { display: flex; align-items: center; gap: .9rem; font-weight: 600; }
+  .pp-ico { width: 2.6rem; height: 2.6rem; border-radius: .9rem; display: grid; place-items: center; background: rgb(255 255 255 / .07); border: 1px solid rgb(255 255 255 / .1); color: var(--rojo-luz); flex: none; }
+  .pp-ico :global(.icon) { width: 1.3rem; height: 1.3rem; }
+  .portal-ctas { display: flex; flex-wrap: wrap; gap: .8rem; margin-top: .4rem; }
+
+  .portal-escena { position: relative; display: grid; place-items: center; perspective: 1400px; padding-block: 2rem; }
+  .telefono {
+    width: min(19.5rem, 82vw); aspect-ratio: 9 / 18.6; border-radius: 3rem; padding: .7rem;
+    background: linear-gradient(145deg, #4a4542, #1a1817 40%, #2c2826);
+    box-shadow: 0 0 0 1.5px rgb(255 255 255 / .12), 0 60px 100px -40px rgb(0 0 0 / .9), 0 30px 60px -30px rgb(159 39 40 / .5);
+    transform: rotateY(-14deg) rotateX(6deg) rotateZ(1deg); transform-style: preserve-3d;
+    transition: transform .9s var(--ease);
+  }
+  .tel-pantalla { height: 100%; border-radius: 2.35rem; overflow: hidden; background: #f6f5f3; color: var(--tinta); display: grid; grid-template-rows: auto 1fr; }
+  .tel-barra { display: flex; justify-content: space-between; align-items: center; padding: .7rem 1.4rem .2rem; font-size: .7rem; font-weight: 700; }
+  .tel-isla { width: 5.5rem; height: 1.45rem; border-radius: 999px; background: #111; }
+  .tel-senal { width: 1.6rem; height: .6rem; border-radius: 3px; background: linear-gradient(90deg, #1c1a19 70%, #bbb 70%); }
+  .app { padding: 1rem 1rem 0; display: grid; gap: .7rem; align-content: start; font-size: .78rem; }
+  .app-cab { display: flex; align-items: center; gap: .6rem; margin-bottom: .2rem; }
+  .app-cab img { width: 2rem; height: 2rem; object-fit: contain; }
+  .app-cab small { display: block; font-size: .6rem; letter-spacing: .12em; color: var(--tinta-2); font-weight: 700; }
+  .app-cab strong { font-family: var(--display); font-size: 1.15rem; letter-spacing: -.02em; }
+  .app-tarjeta { border-radius: 1.1rem; padding: .9rem; display: grid; gap: .3rem; }
+  .app-cita { background: var(--rojo); color: #fff; box-shadow: 0 16px 30px -18px rgb(159 39 40 / .9); }
+  .app-cita small { opacity: .8; font-size: .66rem; }
+  .app-cita strong { font-family: var(--display); font-size: .98rem; line-height: 1.2; }
+  .app-meta { display: flex; align-items: center; gap: .35rem; font-size: .68rem; opacity: .92; }
+  .app-meta :global(.icon) { width: .85rem; height: .85rem; }
+  .app-sub { font-weight: 700; font-size: .72rem; color: var(--tinta-2); margin-top: .2rem; }
+  .app-fila { display: grid; grid-template-columns: auto 1fr auto; align-items: center; gap: .55rem; background: #fff; border-radius: .9rem; padding: .6rem .65rem; box-shadow: 0 6px 16px -12px rgb(0 0 0 / .4); }
+  .app-doc { width: 1.9rem; height: 1.9rem; border-radius: .6rem; display: grid; place-items: center; background: var(--rojo-tinte); color: var(--rojo); }
+  .app-doc :global(.icon) { width: 1rem; height: 1rem; }
+  .app-nombre { display: grid; font-weight: 700; font-size: .72rem; line-height: 1.25; }
+  .app-nombre em { font-style: normal; font-weight: 600; font-size: .62rem; }
+  .ok { color: var(--verde); } .pend { color: var(--tinta-2); }
+  .app-boton { font-size: .62rem; font-weight: 700; color: #fff; background: var(--tinta); padding: .35rem .55rem; border-radius: 999px; }
+  .app-ecg { height: 2.4rem; margin-top: .3rem; }
+  .app-ecg svg { width: 100%; height: 100%; }
+  .app-ecg path { fill: none; stroke: var(--rojo); stroke-width: 1.6; stroke-dasharray: 260; stroke-dashoffset: 260; animation: ecg-app 2.6s linear infinite; vector-effect: non-scaling-stroke; }
+  @keyframes ecg-app { 60%, 100% { stroke-dashoffset: 0; } }
+
+  .aviso {
+    position: absolute; right: max(0rem, calc(50% - 17.5rem)); top: 6%;
+    display: flex; align-items: center; gap: .75rem; padding: .85rem 1.1rem .85rem .85rem;
+    border-radius: 1.2rem; background: rgb(255 255 255 / .96); color: var(--tinta);
+    box-shadow: 0 30px 60px -24px rgb(0 0 0 / .7); max-width: 17rem;
+    animation: flotar 6s ease-in-out infinite;
+  }
+  .aviso strong { display: block; font-size: .84rem; line-height: 1.25; }
+  .aviso small { color: var(--tinta-2); font-size: .74rem; }
+  .aviso-ico { width: 2.2rem; height: 2.2rem; border-radius: 50%; background: var(--verde); color: #fff; display: grid; place-items: center; flex: none; }
+  .aviso-ico :global(.icon) { width: 1.1rem; height: 1.1rem; stroke-width: 2.6; }
+  @keyframes flotar { 50% { transform: translateY(-10px); } }
+  .portal-nota { position: absolute; bottom: 0; font-size: .72rem; color: var(--sobre-oscuro-2); opacity: .7; }
+
+  @media (max-width: 960px) {
+    .portal-grid { grid-template-columns: 1fr; }
+    .aviso { right: 0; top: 12%; }
+  }
+  @media (max-width: 520px) { .aviso { position: relative; right: auto; top: auto; margin-top: -3rem; } }
+  :global(:root[data-contrast='high']) .portal-fondo { display: none; }
+</style>

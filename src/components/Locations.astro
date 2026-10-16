@@ -1,0 +1,131 @@
+---
+import type { Lang } from '../i18n/content';
+import { content, links, phones, emails } from '../i18n/content';
+import Icon from './Icon.astro';
+interface Props { lang: Lang }
+const { lang } = Astro.props;
+const t = content[lang].locations;
+const maps = links as Record<string, string>;
+const contacts = [
+  { label: t.citas, value: phones.citas.label, href: links.whatsapp, icon: 'whatsapp', copy: phones.citas.label },
+  { label: t.atencion, value: `${phones.atencion1.label} · ${phones.atencion2.label}`, href: `tel:${phones.atencion1.tel}`, icon: 'phone', copy: `${phones.atencion1.label} / ${phones.atencion2.label}` },
+  { label: t.pbx, value: phones.pbx.label, href: `tel:${phones.pbx.tel}`, icon: 'phone', copy: phones.pbx.label },
+  { label: t.ethics, value: `${emails.etica}`, href: `mailto:${emails.etica}`, icon: 'mail', copy: emails.etica, extra: phones.etica.label },
+  { label: t.legal, value: emails.judicial, href: `mailto:${emails.judicial}`, icon: 'mail', copy: emails.judicial },
+];
+---
+<section id="contacto" class="sedes seccion" aria-labelledby="sedes-titulo">
+  <div class="contenedor">
+    <header class="sec-cab">
+      <h2 id="sedes-titulo" data-split>{t.title}</h2>
+      <p data-reveal>{t.lead}</p>
+    </header>
+
+    <div class="sedes-grid">
+      {t.sedes.map((s, i) => (
+        <article class="sede" data-reveal>
+          <div class="sede-mapa decorativo" aria-hidden="true">
+            <svg viewBox="0 0 400 220" preserveAspectRatio="xMidYMid slice">
+              <g class="m-calles">
+                {[30, 80, 130, 180].map((y) => <line x1="-10" y1={y + i * 10} x2="410" y2={y - 24 + i * 10} />)}
+                {[40, 120, 200, 280, 360].map((x) => <line x1={x - i * 14} y1="-10" x2={x + 30 - i * 14} y2="230" />)}
+              </g>
+              <path class="m-rio" d={i === 0 ? 'M-10 190 C 90 170, 150 120, 230 110 S 350 60, 420 40' : 'M-10 60 C 80 70, 160 120, 240 130 S 360 180, 420 200'} />
+              <g transform="translate(200 104)">
+                <circle r="34" class="m-onda" />
+                <circle r="34" class="m-onda m-onda-2" />
+                <path class="m-pin" d="M0 0c-9-11-15-18-15-26a15 15 0 0 1 30 0c0 8-6 15-15 26z" />
+                <circle cy="-26" r="5.5" class="m-pin-punto" />
+              </g>
+            </svg>
+          </div>
+          <div class="sede-txt">
+            <h3>{s.name}</h3>
+            <p class="sede-dir"><Icon name="pin" />{s.address}</p>
+            <p class="sede-nota">{s.note}</p>
+            <a class="enlace-flecha" href={maps[s.map]} rel="noopener">{t.route}<Icon name="external" /></a>
+          </div>
+        </article>
+      ))}
+    </div>
+
+    <div class="contacto" data-reveal>
+      <h3>{t.contactTitle}</h3>
+      <ul class="contacto-lista">
+        {contacts.map((c) => (
+          <li class="contacto-fila">
+            <span class="c-ico"><Icon name={c.icon} /></span>
+            <span class="c-txt">
+              <span class="c-label">{c.label}</span>
+              <a class="c-valor" href={c.href} rel={c.href.startsWith('http') ? 'noopener' : undefined}>{c.value}</a>
+              {c.extra && <span class="c-extra">{c.extra}</span>}
+            </span>
+            <button class="c-copiar" type="button" data-copy={c.copy} data-copied={t.copied}>
+              <Icon name="copy" /><span class="visualmente-oculto" data-copy-label>{t.copy} {c.label}</span>
+              <span class="c-toast" aria-hidden="true">{t.copied}</span>
+            </button>
+          </li>
+        ))}
+      </ul>
+      <p class="visualmente-oculto" aria-live="polite" data-copy-status></p>
+    </div>
+  </div>
+</section>
+
+<script>
+  const status = document.querySelector<HTMLElement>('[data-copy-status]');
+  document.querySelectorAll<HTMLButtonElement>('[data-copy]').forEach((b) => {
+    b.addEventListener('click', async () => {
+      const text = b.dataset.copy || '';
+      try { await navigator.clipboard.writeText(text); }
+      catch {
+        const r = document.createRange(); const n = b.parentElement?.querySelector('.c-valor');
+        if (n) { r.selectNodeContents(n); const s = getSelection(); s?.removeAllRanges(); s?.addRange(r); }
+      }
+      b.classList.add('copiado');
+      if (status) status.textContent = `${b.dataset.copied}: ${text}`;
+      setTimeout(() => b.classList.remove('copiado'), 1800);
+    });
+  });
+</script>
+
+<style>
+  .sedes { background: var(--niebla); }
+  .sedes-grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 1.4rem; }
+  .sede { border-radius: var(--radio-xl); background: var(--papel); overflow: hidden; border: 1px solid var(--linea); display: grid; grid-template-rows: auto 1fr; transition: transform .6s var(--ease), box-shadow .6s var(--ease); }
+  .sede:hover { transform: translateY(-4px); box-shadow: 0 40px 70px -40px rgb(var(--sombra) / .45); }
+  .sede-mapa { height: 13rem; background: #23201f; }
+  .sede-mapa svg { width: 100%; height: 100%; }
+  .m-calles line { stroke: rgb(255 255 255 / .07); stroke-width: 9; }
+  .m-rio { fill: none; stroke: rgb(161 161 159 / .2); stroke-width: 14; stroke-linecap: round; }
+  .m-onda { fill: rgb(226 72 77 / .22); transform-box: fill-box; transform-origin: center; animation: onda 2.6s var(--ease) infinite; }
+  .m-onda-2 { animation-delay: 1.3s; }
+  @keyframes onda { from { transform: scale(.2); opacity: 1; } to { transform: scale(2.2); opacity: 0; } }
+  .m-pin { fill: #9f2728; stroke: #fff; stroke-width: 2.5; }
+  .m-pin-punto { fill: #fff; }
+  .sede-txt { padding: 1.8rem 2rem 2rem; display: grid; gap: .7rem; align-content: start; }
+  .sede-txt h3 { font-size: var(--t-4); }
+  .sede-dir { display: flex; gap: .5rem; align-items: flex-start; font-weight: 700; font-size: var(--t-2); }
+  .sede-dir :global(.icon) { width: 1.3rem; height: 1.3rem; color: var(--rojo); flex: none; margin-top: .15rem; }
+  .sede-nota { color: var(--tinta-2); }
+
+  .contacto { margin-top: 1.4rem; border-radius: var(--radio-xl); background: var(--papel); border: 1px solid var(--linea); padding: clamp(1.6rem, 3vw, 2.6rem); }
+  .contacto h3 { font-size: var(--t-4); margin-bottom: 1rem; }
+  .contacto-lista { list-style: none; display: grid; grid-template-columns: repeat(auto-fill, minmax(min(100%, 21rem), 1fr)); column-gap: 2.5rem; }
+  .contacto-fila { display: grid; grid-template-columns: auto 1fr auto; gap: .9rem; align-items: center; padding-block: 1rem; border-top: 1px solid var(--linea); }
+  .c-ico { width: 2.6rem; height: 2.6rem; border-radius: 50%; display: grid; place-items: center; background: var(--niebla); color: var(--rojo); }
+  .c-ico :global(.icon) { width: 1.25rem; height: 1.25rem; }
+  .c-txt { display: grid; min-width: 0; }
+  .c-label { font-size: var(--t-0); color: var(--tinta-2); }
+  .c-valor { font-weight: 700; text-decoration: none; overflow-wrap: anywhere; font-variant-numeric: tabular-nums; }
+  .c-valor:hover { color: var(--rojo); text-decoration: underline; }
+  .c-extra { font-size: var(--t-0); font-weight: 600; }
+  .c-copiar { position: relative; width: 2.6rem; height: 2.6rem; border-radius: 50%; border: 1px solid var(--linea); background: var(--papel); cursor: pointer; display: grid; place-items: center; color: var(--tinta-2); transition: border-color .3s, color .3s; }
+  .c-copiar:hover { border-color: var(--tinta); color: var(--tinta); }
+  .c-copiar :global(.icon) { width: 1.1rem; height: 1.1rem; }
+  .c-toast { position: absolute; bottom: calc(100% + .4rem); right: 0; padding: .3rem .6rem; border-radius: 6px; background: var(--tinta); color: #fff; font-size: .75rem; font-weight: 700; white-space: nowrap; opacity: 0; transform: translateY(4px); transition: opacity .3s, transform .4s var(--ease); pointer-events: none; }
+  .copiado .c-toast { opacity: 1; transform: none; }
+  .copiado { border-color: var(--verde); color: var(--verde); }
+
+  @media (max-width: 760px) { .sedes-grid { grid-template-columns: 1fr; } .sede-mapa { height: 10rem; } }
+</style>
