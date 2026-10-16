@@ -1,0 +1,20 @@
+# Encabezados HTTP de Cloudflare Pages
+
+# Las direcciones de prueba (*.pages.dev) no se indexan en buscadores: solo sefcb.co debe aparecer en Google
+https://:project.pages.dev/*
+  X-Robots-Tag: noindex
+
+https://:version.:project.pages.dev/*
+  X-Robots-Tag: noindex
+
+# Seguridad básica para todo el sitio
+/*
+  X-Content-Type-Options: nosniff
+  X-Frame-Options: DENY
+  Referrer-Policy: strict-origin-when-cross-origin
+  Permissions-Policy: camera=(), microphone=(), geolocation=(), payment=(), usb=()
+  Cross-Origin-Opener-Policy: same-origin
+
+# Archivos con huella en el nombre: se guardan en caché un año
+/assets/*
+  Cache-Control: public, max-age=31536000, immutable
