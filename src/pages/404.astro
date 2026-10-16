@@ -1,0 +1,45 @@
+---
+// Página de error 404, en los dos idiomas porque no se sabe de qué versión viene la persona.
+import Base from '../layouts/Base.astro';
+import Icon from '../components/Icon.astro';
+import { r } from '../i18n/routes';
+---
+<Base lang="es" title="Página no encontrada" path="/404/">
+  <section class="nf oscuro">
+    <div class="nf-ecg decorativo" aria-hidden="true">
+      <svg viewBox="0 0 1200 120" preserveAspectRatio="none"><path d="M0 60 H 420 l 12 -6 l 8 6 h 10 l 8 -46 l 9 82 l 8 -36 h 16 l 14 -10 l 12 10 H 640 H 1200" /></svg>
+    </div>
+    <div class="contenedor nf-in">
+      <p class="nf-codigo" aria-hidden="true">404</p>
+      <h1>No encontramos esta página</h1>
+      <p>Es posible que la dirección haya cambiado con el nuevo sitio. Puede volver al inicio o buscar lo que necesita en el mapa del sitio.</p>
+      <div class="nf-ctas">
+        <a class="btn btn-primario" href={r('es', 'inicio')}>Ir al inicio<Icon name="arrow" /></a>
+        <a class="btn btn-fantasma" href={r('es', 'mapa')}>Ver el mapa del sitio</a>
+      </div>
+      <div class="nf-en" lang="en">
+        <h2>We couldn't find this page</h2>
+        <p>The address may have changed with our new website.</p>
+        <p><a href={r('en', 'inicio')}>Go to the English home page</a> · <a href={r('en', 'mapa')}>Site map</a></p>
+      </div>
+    </div>
+  </section>
+</Base>
+
+<style>
+  .nf { position: relative; overflow: hidden; isolation: isolate; min-height: 80svh; display: grid; align-items: center; padding-top: calc(var(--alto-cabecera) + 4rem + env(safe-area-inset-top, 0px)); padding-bottom: 5rem; }
+  .nf::before { content: ''; position: absolute; inset: 0; z-index: -2; background: radial-gradient(36rem 26rem at 70% 40%, rgb(159 39 40 / .3), transparent 70%); }
+  .nf-ecg { position: absolute; left: 0; right: 0; top: 38%; height: 7rem; z-index: -1; opacity: .5; }
+  .nf-ecg svg { width: 100%; height: 100%; }
+  .nf-ecg path { fill: none; stroke: var(--rojo-luz); stroke-width: 2; vector-effect: non-scaling-stroke; }
+  .nf-in { display: grid; gap: 1.2rem; max-width: calc(44rem + 32px); }
+  .nf-codigo { font-family: var(--display); font-size: clamp(5rem, 18vw, 11rem); font-weight: 700; line-height: .85; letter-spacing: -.05em; color: transparent; -webkit-text-stroke: 2px rgb(245 244 242 / .35); }
+  .nf h1 { font-size: var(--t-6); color: #fff; }
+  .nf p { color: var(--sobre-oscuro-2); font-size: var(--t-2); }
+  .nf-ctas { display: flex; flex-wrap: wrap; gap: .8rem; }
+  .nf-en { margin-top: 2rem; padding-top: 1.5rem; border-top: 1px solid rgb(255 255 255 / .12); display: grid; gap: .4rem; }
+  .nf-en h2 { font-size: var(--t-3); color: #fff; }
+  .nf-en p { font-size: var(--t-1); }
+  .nf-en a { color: #fff; }
+  :global(:root[data-contrast='high']) .nf-codigo { color: #fff; -webkit-text-stroke: 0; }
+</style>

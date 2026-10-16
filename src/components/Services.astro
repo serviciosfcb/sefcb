@@ -3,6 +3,7 @@ import type { Lang } from '../i18n/content';
 import { content, links, sedes } from '../i18n/content';
 import Icon from './Icon.astro';
 import ServiceVisual from './ServiceVisual.astro';
+import { r, serviceRoute } from '../i18n/routes';
 interface Props { lang: Lang }
 const { lang } = Astro.props;
 const all = content[lang];
@@ -51,6 +52,7 @@ const total = String(t.items.length).padStart(2, '0');
                 {it.list.map((x) => <li><Icon name="check" />{x}</li>)}
               </ul>
             )}
+            <a class="enlace-flecha serv-mas" href={r(lang, serviceRoute(it.key))}>{t.more}<span class="visualmente-oculto">: {it.name}</span><Icon name="arrow" /></a>
           </li>
         ))}
       </ul>
@@ -58,6 +60,7 @@ const total = String(t.items.length).padStart(2, '0');
 
     <div class="serv-cta" data-reveal>
       <a class="btn btn-primario" href={links.portal} rel="noopener" data-magnet>{t.cta}<Icon name="arrow" /></a>
+      <a class="btn btn-borde" href={r(lang, 'servicios')}>{t.all}</a>
     </div>
   </div>
 </section>
@@ -141,7 +144,8 @@ const total = String(t.items.length).padStart(2, '0');
   .serv-items li { display: flex; gap: .6rem; align-items: flex-start; font-size: var(--t-0); line-height: 1.4; }
   .serv-items :global(.icon) { width: 1.1rem; height: 1.1rem; color: var(--rojo); stroke-width: 2.4; flex: none; margin-top: .1rem; }
   .serv-vis-movil { display: none; }
-  .serv-cta { margin-top: 1rem; }
+  .serv-cta { margin-top: 1rem; display: flex; flex-wrap: wrap; gap: .8rem; }
+  .serv-mas { margin-top: .4rem; justify-self: start; }
 
   @media (min-width: 961px) {
     .serv:not(.actual) { opacity: .38; }

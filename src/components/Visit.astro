@@ -2,10 +2,10 @@
 import type { Lang } from '../i18n/content';
 import { content, links } from '../i18n/content';
 import Icon from './Icon.astro';
+import { to } from '../i18n/routes';
 interface Props { lang: Lang }
 const { lang } = Astro.props;
 const t = content[lang].visit;
-const hrefs = links as Record<string, string>;
 // Un complejo P-QRS-T entre cada par de pasos
 const blip = 'l 10 -4 l 6 4 l 8 0 l 5 -22 l 6 40 l 5 -18 l 12 0 l 10 -6 l 8 6';
 const latido = `M0 30 H 90 ${blip} H 340 ${blip} H 590 ${blip} H 1000`;
@@ -37,7 +37,7 @@ const latido = `M0 30 H 90 ${blip} H 340 ${blip} H 590 ${blip} H 1000`;
 
     <ul class="pasos-mas" data-reveal>
       {t.more.map((m) => (
-        <li><a class="enlace-flecha" href={hrefs[m.href]}>{m.label}<Icon name="arrow" /></a></li>
+        <li><a class="enlace-flecha" href={to(lang, m.href)}>{m.label}<Icon name="arrow" /></a></li>
       ))}
     </ul>
   </div>

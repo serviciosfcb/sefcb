@@ -1,0 +1,36 @@
+---
+// Banda final de las páginas internas: pedir cita o escribir por WhatsApp.
+import type { Lang } from '../i18n/content';
+import { content, links } from '../i18n/content';
+import Icon from './Icon.astro';
+interface Props { lang: Lang }
+const { lang } = Astro.props;
+const h = content[lang].hero;
+const es = lang === 'es';
+---
+<section class="banda oscuro" aria-labelledby="banda-titulo">
+  <div class="banda-ecg decorativo" aria-hidden="true">
+    <svg viewBox="0 0 1200 80" preserveAspectRatio="none"><path d="M0 50 H 520 l 12 -6 l 8 6 h 10 l 8 -38 l 9 66 l 8 -28 h 16 l 14 -9 l 12 9 H 1200" /></svg>
+  </div>
+  <div class="contenedor banda-in">
+    <h2 id="banda-titulo" data-split>{es ? '¿Necesita una cita?' : 'Need an appointment?'}</h2>
+    <p data-reveal>{es ? 'Pídala en línea o escríbanos por WhatsApp. Le respondemos en horario de atención.' : 'Book online or message us on WhatsApp. We reply during opening hours.'}</p>
+    <div class="banda-ctas" data-reveal>
+      <a class="btn btn-primario" href={links.portal} rel="noopener" data-magnet>{h.primary}<Icon name="arrow" /></a>
+      <a class="btn btn-fantasma" href={links.whatsapp} rel="noopener"><Icon name="whatsapp" />{h.secondary}</a>
+    </div>
+  </div>
+</section>
+
+<style>
+  .banda { position: relative; overflow: hidden; isolation: isolate; padding-block: clamp(4rem, 7vw, 6.5rem); }
+  .banda::before { content: ''; position: absolute; inset: 0; z-index: -1; background: radial-gradient(34rem 20rem at 80% 50%, rgb(159 39 40 / .35), transparent 70%); }
+  .banda-ecg { position: absolute; left: 0; right: 0; top: 50%; height: 5rem; transform: translateY(-50%); z-index: -1; opacity: .5; }
+  .banda-ecg svg { width: 100%; height: 100%; }
+  .banda-ecg path { fill: none; stroke: var(--rojo-luz); stroke-width: 2; vector-effect: non-scaling-stroke; }
+  .banda-in { display: grid; gap: 1.1rem; justify-items: start; }
+  .banda h2 { font-size: var(--t-6); color: #fff; max-width: 32rem; }
+  .banda p { color: var(--sobre-oscuro-2); font-size: var(--t-2); max-width: 34rem; }
+  .banda-ctas { display: flex; flex-wrap: wrap; gap: .8rem; margin-top: .4rem; }
+  :global(:root[data-contrast='high']) .banda::before, :global(:root[data-contrast='high']) .banda-ecg { display: none; }
+</style>

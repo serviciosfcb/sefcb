@@ -1,16 +1,420 @@
 {
   "estados_financieros": [
-    { "anio": "2025", "archivo": "https://drive.google.com/file/d/1AWqucUWWMS50gX7qbw-S08px_7hsy6mR/view" },
-    { "anio": "2024", "archivo": "https://drive.google.com/file/d/1zEyEftijdGdLYXav8tozrXAgHAtcYkci/view" },
-    { "anio": "2023", "archivo": "https://drive.google.com/file/d/1u6B1joHp4abMPiW7H_Efdd14rvnEHZHK/view" },
-    { "anio": "2022", "archivo": "https://drive.google.com/file/d/1SlAOzzhd0QAqpzQUmxngcuxz6HghGCeP/view" },
-    { "anio": "2021", "archivo": "https://drive.google.com/file/d/1TaRnfJLFVwvxLgdttEpDpnTf2Y1C6E-c/view" }
+    {
+      "anio": "2025",
+      "archivo": "https://drive.google.com/file/d/1AWqucUWWMS50gX7qbw-S08px_7hsy6mR/view"
+    },
+    {
+      "anio": "2024",
+      "archivo": "https://drive.google.com/file/d/1zEyEftijdGdLYXav8tozrXAgHAtcYkci/view"
+    },
+    {
+      "anio": "2023",
+      "archivo": "https://drive.google.com/file/d/1u6B1joHp4abMPiW7H_Efdd14rvnEHZHK/view"
+    },
+    {
+      "anio": "2022",
+      "archivo": "https://drive.google.com/file/d/1SlAOzzhd0QAqpzQUmxngcuxz6HghGCeP/view"
+    },
+    {
+      "anio": "2021",
+      "archivo": "https://drive.google.com/file/d/1TaRnfJLFVwvxLgdttEpDpnTf2Y1C6E-c/view"
+    }
   ],
   "documentos": [
-    { "titulo": "Informe de gestión 2021", "titulo_en": "Management report 2021", "archivo": "https://drive.google.com/file/d/1SNWkUpquVoad-aOBB1pIlWIP16VLRfy2/view" },
-    { "titulo": "Código de ética y buen gobierno", "titulo_en": "Code of ethics and corporate governance", "archivo": "https://drive.google.com/file/d/1mjmSa6US-DnnrB_JF4nMs3MpUDXhBRGx/view" },
-    { "titulo": "Políticas institucionales", "titulo_en": "Institutional policies", "archivo": "https://sefcb.co/politicas-institucionales/" },
-    { "titulo": "Política de tratamiento de datos", "titulo_en": "Personal data policy", "archivo": "https://drive.google.com/file/d/1DgnyTj1MBxcLUqfHnFqFHKkCqo9JcCYW/view" },
-    { "titulo": "SIRED", "titulo_en": "SIRED", "archivo": "https://sites.google.com/sefcb.co/siredsefcb2" }
+    {
+      "titulo": "Informe de gestión 2021",
+      "titulo_en": "Management report 2021",
+      "archivo": "https://drive.google.com/file/d/1SNWkUpquVoad-aOBB1pIlWIP16VLRfy2/view"
+    },
+    {
+      "titulo": "Código de ética y buen gobierno",
+      "titulo_en": "Code of ethics and corporate governance",
+      "archivo": "https://drive.google.com/file/d/1mjmSa6US-DnnrB_JF4nMs3MpUDXhBRGx/view"
+    },
+    {
+      "titulo": "Políticas institucionales",
+      "titulo_en": "Institutional policies",
+      "archivo": "https://sefcb.co/politicas-institucionales/"
+    },
+    {
+      "titulo": "Política de tratamiento de datos",
+      "titulo_en": "Personal data policy",
+      "archivo": "https://drive.google.com/file/d/1DgnyTj1MBxcLUqfHnFqFHKkCqo9JcCYW/view"
+    },
+    {
+      "titulo": "SIRED",
+      "titulo_en": "SIRED",
+      "archivo": "https://sites.google.com/sefcb.co/siredsefcb2"
+    }
+  ],
+  "secciones": [
+    {
+      "titulo": "Mecanismos de contacto",
+      "titulo_en": "Contact channels",
+      "items": [
+        {
+          "titulo": "Canales de atención al ciudadano y de peticiones, quejas, reclamos y denuncias",
+          "titulo_en": "Channels for public inquiries, petitions, complaints and reports",
+          "ruta": "contacto",
+          "archivo": ""
+        }
+      ]
+    },
+    {
+      "titulo": "Información de interés",
+      "titulo_en": "Information of interest",
+      "items": [
+        {
+          "titulo": "Datos abiertos",
+          "titulo_en": "Open data",
+          "ruta": "",
+          "archivo": ""
+        },
+        {
+          "titulo": "Estudios, investigaciones y otras publicaciones",
+          "titulo_en": "Studies, research and other publications",
+          "ruta": "",
+          "archivo": ""
+        },
+        {
+          "titulo": "Convocatorias",
+          "titulo_en": "Calls and announcements",
+          "ruta": "",
+          "archivo": ""
+        },
+        {
+          "titulo": "Preguntas y respuestas frecuentes",
+          "titulo_en": "Frequently asked questions",
+          "ruta": "faq",
+          "archivo": ""
+        },
+        {
+          "titulo": "Glosario",
+          "titulo_en": "Glossary",
+          "ruta": "",
+          "archivo": "https://docs.google.com/spreadsheets/d/1T3A4RXxoH3xCXgIw3BbR62DVwr1aIUDnOwErI1unCJc/edit"
+        },
+        {
+          "titulo": "Noticias",
+          "titulo_en": "News",
+          "ruta": "noticias",
+          "archivo": ""
+        },
+        {
+          "titulo": "Calendario de actividades",
+          "titulo_en": "Calendar of activities",
+          "ruta": "",
+          "archivo": ""
+        },
+        {
+          "titulo": "Información para niñas, niños y adolescentes",
+          "titulo_en": "Information for children and adolescents",
+          "ruta": "",
+          "archivo": ""
+        },
+        {
+          "titulo": "Información para mujeres",
+          "titulo_en": "Information for women",
+          "ruta": "",
+          "archivo": ""
+        },
+        {
+          "titulo": "Información para otros grupos de interés",
+          "titulo_en": "Information for other stakeholders",
+          "ruta": "",
+          "archivo": ""
+        }
+      ]
+    },
+    {
+      "titulo": "Estructura orgánica y talento humano",
+      "titulo_en": "Organizational structure and staff",
+      "items": [
+        {
+          "titulo": "Misión y visión",
+          "titulo_en": "Mission and vision",
+          "ruta": "",
+          "archivo": ""
+        },
+        {
+          "titulo": "Funciones y deberes",
+          "titulo_en": "Roles and duties",
+          "ruta": "",
+          "archivo": "https://drive.google.com/file/d/1vfwj0UcMxTRmFvZ1x0ZH8HBdNgWf6DEr/view"
+        },
+        {
+          "titulo": "Procesos y procedimientos",
+          "titulo_en": "Processes and procedures",
+          "ruta": "faq",
+          "archivo": ""
+        },
+        {
+          "titulo": "Organigrama",
+          "titulo_en": "Organization chart",
+          "ruta": "",
+          "archivo": "https://drive.google.com/file/d/18a8xSYkWukUQXGAm-yaqmH11L3SSX-Zo/view"
+        },
+        {
+          "titulo": "Directorio de entidades",
+          "titulo_en": "Directory of oversight bodies",
+          "ruta": "entidades",
+          "archivo": ""
+        },
+        {
+          "titulo": "Directorio institucional",
+          "titulo_en": "Staff directory",
+          "ruta": "equipo",
+          "archivo": ""
+        },
+        {
+          "titulo": "Directorio de agremiaciones, asociaciones y otros grupos de interés",
+          "titulo_en": "Directory of associations and other stakeholders",
+          "ruta": "",
+          "archivo": ""
+        },
+        {
+          "titulo": "Ofertas de empleo",
+          "titulo_en": "Job openings",
+          "ruta": "empleo",
+          "archivo": ""
+        }
+      ]
+    },
+    {
+      "titulo": "Normatividad",
+      "titulo_en": "Regulations",
+      "items": [
+        {
+          "titulo": "Normas generales y reglamentarias relacionadas con la operación",
+          "titulo_en": "General and regulatory norms that apply to our operation",
+          "ruta": "",
+          "archivo": "https://drive.google.com/file/d/1R7p-tupEMpBUoR5ofQe3-Ur-5rg-BfHG/view"
+        }
+      ]
+    },
+    {
+      "titulo": "Presupuesto",
+      "titulo_en": "Budget",
+      "estados": true,
+      "items": [
+        {
+          "titulo": "Presupuesto general asignado",
+          "titulo_en": "General budget",
+          "ruta": "",
+          "archivo": ""
+        },
+        {
+          "titulo": "Ejecución presupuestal histórica anual",
+          "titulo_en": "Historical annual budget execution",
+          "ruta": "",
+          "archivo": ""
+        }
+      ]
+    },
+    {
+      "titulo": "Planeación",
+      "titulo_en": "Planning",
+      "items": [
+        {
+          "titulo": "Políticas, lineamientos y manuales",
+          "titulo_en": "Policies, guidelines and manuals",
+          "ruta": "",
+          "archivo": ""
+        },
+        {
+          "titulo": "Plan de acción y plan de gasto",
+          "titulo_en": "Action plan and spending plan",
+          "ruta": "",
+          "archivo": ""
+        },
+        {
+          "titulo": "Metas, objetivos e indicadores de gestión",
+          "titulo_en": "Goals, objectives and performance indicators",
+          "ruta": "",
+          "archivo": "https://drive.google.com/file/d/15qTAHQhf0cLsBKkgXU4Qv6XtrMwJUuBw/view"
+        },
+        {
+          "titulo": "Participación en la formulación de políticas",
+          "titulo_en": "Participation in policy-making",
+          "ruta": "",
+          "archivo": ""
+        }
+      ]
+    },
+    {
+      "titulo": "Control",
+      "titulo_en": "Oversight",
+      "items": [
+        {
+          "titulo": "Informes de gestión, evaluación y auditoría",
+          "titulo_en": "Management, evaluation and audit reports",
+          "ruta": "",
+          "archivo": "https://drive.google.com/file/d/18hJScOaKUjPnwwQBQqNBmEl9PE9vMn82/view"
+        },
+        {
+          "titulo": "Entes de control que vigilan a la entidad y mecanismos de supervisión",
+          "titulo_en": "Oversight bodies and supervision mechanisms",
+          "ruta": "entidades",
+          "archivo": ""
+        },
+        {
+          "titulo": "Defensa judicial",
+          "titulo_en": "Legal defense",
+          "ruta": "",
+          "archivo": ""
+        }
+      ]
+    },
+    {
+      "titulo": "Contratación",
+      "titulo_en": "Procurement",
+      "items": [
+        {
+          "titulo": "Publicación de la ejecución de contratos",
+          "titulo_en": "Contract execution",
+          "ruta": "",
+          "archivo": ""
+        },
+        {
+          "titulo": "Procedimientos, lineamientos y políticas de adquisiciones y compras",
+          "titulo_en": "Procurement procedures, guidelines and policies",
+          "ruta": "",
+          "archivo": ""
+        }
+      ]
+    },
+    {
+      "titulo": "Trámites y servicios",
+      "titulo_en": "Procedures and services",
+      "items": [
+        {
+          "titulo": "Trámites y servicios para pacientes",
+          "titulo_en": "Procedures and services for patients",
+          "ruta": "pacientes",
+          "archivo": ""
+        },
+        {
+          "titulo": "Certificados tributarios",
+          "titulo_en": "Tax withholding certificates",
+          "ruta": "tributarios",
+          "archivo": ""
+        }
+      ]
+    },
+    {
+      "titulo": "Instrumentos de gestión de información pública",
+      "titulo_en": "Public information management instruments",
+      "items": [
+        {
+          "titulo": "Información mínima",
+          "titulo_en": "Minimum information",
+          "ruta": "",
+          "archivo": ""
+        },
+        {
+          "titulo": "Registro de activos de información",
+          "titulo_en": "Information asset register",
+          "ruta": "",
+          "archivo": ""
+        },
+        {
+          "titulo": "Índice de información clasificada y reservada",
+          "titulo_en": "Index of classified and restricted information",
+          "ruta": "",
+          "archivo": ""
+        },
+        {
+          "titulo": "Esquema de publicación de información",
+          "titulo_en": "Information publication scheme",
+          "ruta": "",
+          "archivo": ""
+        },
+        {
+          "titulo": "Programa de gestión documental",
+          "titulo_en": "Records management program",
+          "ruta": "",
+          "archivo": ""
+        },
+        {
+          "titulo": "Tablas de retención documental",
+          "titulo_en": "Records retention schedules",
+          "ruta": "",
+          "archivo": ""
+        },
+        {
+          "titulo": "Registro de publicaciones",
+          "titulo_en": "Publications register",
+          "ruta": "",
+          "archivo": ""
+        },
+        {
+          "titulo": "Costos de reproducción",
+          "titulo_en": "Reproduction costs",
+          "ruta": "",
+          "archivo": ""
+        },
+        {
+          "titulo": "Mecanismos para presentar quejas y reclamos",
+          "titulo_en": "How to file complaints",
+          "ruta": "",
+          "archivo": "PQRS"
+        },
+        {
+          "titulo": "Informe de peticiones, quejas, reclamos, denuncias y solicitudes de información",
+          "titulo_en": "Report on petitions, complaints, reports and information requests",
+          "ruta": "",
+          "archivo": ""
+        }
+      ]
+    },
+    {
+      "titulo": "Transparencia pasiva",
+      "titulo_en": "Information requests",
+      "items": [
+        {
+          "titulo": "Medios de seguimiento de las solicitudes de información pública",
+          "titulo_en": "Tracking of public information requests",
+          "ruta": "",
+          "archivo": ""
+        },
+        {
+          "titulo": "Formulario para solicitudes de información pública",
+          "titulo_en": "Form for public information requests",
+          "ruta": "",
+          "archivo": "PQRS"
+        }
+      ]
+    },
+    {
+      "titulo": "Criterio diferencial de accesibilidad",
+      "titulo_en": "Accessibility",
+      "items": [
+        {
+          "titulo": "Formato alternativo para grupos étnicos y culturales",
+          "titulo_en": "Alternative formats for ethnic and cultural groups",
+          "ruta": "",
+          "archivo": ""
+        },
+        {
+          "titulo": "Accesibilidad en medios electrónicos para personas con discapacidad",
+          "titulo_en": "Accessibility of digital channels for people with disabilities",
+          "ruta": "accesibilidad",
+          "archivo": ""
+        }
+      ]
+    },
+    {
+      "titulo": "Protección de datos personales",
+      "titulo_en": "Personal data protection",
+      "items": [
+        {
+          "titulo": "Política de tratamiento de datos personales",
+          "titulo_en": "Personal data policy",
+          "ruta": "datos",
+          "archivo": ""
+        }
+      ]
+    }
   ]
 }

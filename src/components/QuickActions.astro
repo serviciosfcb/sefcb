@@ -2,10 +2,11 @@
 import type { Lang } from '../i18n/content';
 import { content, links } from '../i18n/content';
 import Icon from './Icon.astro';
+import { to } from '../i18n/routes';
 interface Props { lang: Lang }
 const { lang } = Astro.props;
 const t = content[lang].actions;
-const hrefs: Record<string, string> = { book: links.portal, results: links.portal, prep: '#pacientes', pay: links.pagos };
+const hrefs: Record<string, string> = { book: links.portal, results: links.portal, prep: to(lang, 'antes'), pay: links.pagos };
 const external = (k: string) => k !== 'prep';
 ---
 <section class="accesos" aria-label={t.label}>

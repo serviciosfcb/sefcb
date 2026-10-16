@@ -1,0 +1,66 @@
+---
+// Navegación de la sección: en computador una columna fija; en celular un desplegable al inicio.
+import type { Lang } from '../i18n/content';
+import { content, links, phones } from '../i18n/content';
+import Icon from './Icon.astro';
+interface Item { label: string; href: string }
+interface Props { lang: Lang; title: string; items: Item[]; current: string; showHelp?: boolean }
+const { lang, title, items, current, showHelp = true } = Astro.props;
+const t = content[lang].pages;
+---
+<details class="nav-seccion-movil">
+  <summary><span>{t.inSection}: <strong>{title}</strong></span><Icon name="arrow" /></summary>
+  <ul>
+    {items.map((it) => <li><a href={it.href} aria-current={it.href === current ? 'page' : undefined}>{it.label}</a></li>)}
+  </ul>
+</details>
+
+<aside class="lateral">
+  <nav class="nav-seccion" aria-label={`${t.inSection}: ${title}`}>
+    <p class="nav-titulo">{title}</p>
+    <ul>
+      {items.map((it) => <li><a href={it.href} aria-current={it.href === current ? 'page' : undefined}>{it.label}</a></li>)}
+    </ul>
+  </nav>
+  {showHelp && (
+    <div class="ayuda">
+      <p class="ayuda-titulo">{t.help}</p>
+      <p>{t.helpText}</p>
+      <a class="btn btn-primario btn-pequeno" href={links.whatsapp} rel="noopener"><Icon name="whatsapp" />{phones.citas.label}</a>
+      <a class="ayuda-tel" href={`tel:${phones.pbx.tel}`}>PBX {phones.pbx.label}</a>
+    </div>
+  )}
+</aside>
+
+<style>
+  .lateral { position: sticky; top: calc(var(--alto-cabecera) + 1.5rem + env(safe-area-inset-top, 0px)); display: grid; gap: 1.5rem; align-self: start; }
+  .nav-titulo { font-family: var(--display); font-weight: 650; font-size: var(--t-2); margin-bottom: .6rem; }
+  .nav-seccion ul { list-style: none; display: grid; border-left: 2px solid var(--linea); }
+  .nav-seccion a {
+    display: block; padding: .5rem 0 .5rem 1rem; margin-left: -2px; border-left: 2px solid transparent;
+    color: var(--tinta-2); text-decoration: none; font-size: var(--t-0); font-weight: 600; line-height: 1.35;
+    transition: color .25s, border-color .25s;
+  }
+  .nav-seccion a:hover { color: var(--tinta); border-left-color: var(--gris-marca); }
+  .nav-seccion a[aria-current] { color: var(--rojo); border-left-color: var(--rojo); }
+  .ayuda { display: grid; gap: .7rem; padding: 1.3rem; border-radius: var(--radio-m); background: var(--niebla); font-size: var(--t-0); }
+  .ayuda-titulo { font-weight: 700; font-size: var(--t-1); }
+  .ayuda p { color: var(--tinta-2); }
+  .ayuda .btn { justify-self: start; }
+  .ayuda-tel { color: var(--tinta); font-weight: 700; text-decoration: none; }
+  .ayuda-tel:hover { text-decoration: underline; }
+
+  .nav-seccion-movil { display: none; border: 1px solid var(--linea); border-radius: var(--radio-m); background: var(--papel); }
+  .nav-seccion-movil summary { list-style: none; display: flex; align-items: center; justify-content: space-between; gap: 1rem; padding: .9rem 1.1rem; cursor: pointer; font-size: var(--t-0); }
+  .nav-seccion-movil summary::-webkit-details-marker { display: none; }
+  .nav-seccion-movil summary :global(.icon) { width: 1.1rem; height: 1.1rem; transform: rotate(90deg); transition: transform .3s var(--ease); flex: none; }
+  .nav-seccion-movil[open] summary :global(.icon) { transform: rotate(-90deg); }
+  .nav-seccion-movil ul { list-style: none; display: grid; padding: 0 1.1rem 1rem; }
+  .nav-seccion-movil a { display: block; padding: .55rem 0; border-top: 1px solid var(--linea); color: var(--tinta); text-decoration: none; font-weight: 600; }
+  .nav-seccion-movil a[aria-current] { color: var(--rojo); }
+
+  @media (max-width: 960px) {
+    .lateral { display: none; }
+    .nav-seccion-movil { display: block; }
+  }
+</style>

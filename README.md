@@ -20,7 +20,9 @@ Sitio institucional de la IPS (sefcb.co), en español e inglés, construido con 
 
 | Qué quiero cambiar | Archivo |
 | --- | --- |
-| Noticias, teléfonos, horarios, convenios y documentos de transparencia | Panel de contenido en `/admin` |
+| Noticias, textos de páginas y servicios, teléfonos, horarios, convenios, equipo y transparencia | Panel de contenido en `/admin` |
+| Direcciones (URL) de las páginas | `src/i18n/routes.ts` |
+| Redirecciones de direcciones viejas | `public/_redirects` |
 | Textos fijos del sitio, en español o en inglés | `src/i18n/content.ts` |
 | Enlaces externos (portal, PQRS, pagos, redes) | `src/i18n/content.ts` (al inicio del archivo) |
 | Colores, tipografía y tamaños | `src/styles/global.css` (variables en `:root`) |
@@ -37,6 +39,9 @@ Las personas sin conocimientos técnicos editan desde `https://sefcb.pages.dev/a
 Desde el panel se edita:
 
 - **Noticias** (`src/content/noticias/`): título, fecha, resumen, foto, contenido y su versión en inglés.
+- **Páginas** (`src/content/paginas/es` y `/en`): textos de cada página interna. Cada archivo tiene una `key` que lo une con su dirección en `src/i18n/routes.ts` y con su versión en el otro idioma.
+- **Servicios** (`src/content/servicios/es` y `/en`): descripción, procedimientos y sede de cada servicio.
+- **Equipo y directorio** (`src/data/equipo.json`)
 - **Contacto, sedes y horarios** (`src/data/contacto.json`)
 - **Convenios** (`src/data/convenios.json`)
 - **Transparencia** (`src/data/transparencia.json`): estados financieros y otros documentos.
@@ -66,6 +71,9 @@ src/
   i18n/content.ts      Textos fijos del sitio, en los dos idiomas
   data/*.json          Contacto, sedes, convenios y transparencia (editables desde el panel)
   content/noticias/    Noticias en Markdown (editables desde el panel)
+  content/paginas/     Páginas internas en Markdown, en es/ y en/
+  content/servicios/   Servicios en Markdown, en es/ y en/
+  i18n/routes.ts       Direcciones de todas las páginas en los dos idiomas
   layouts/Base.astro   Estructura común: cabecera, pie, metadatos y datos para Google
   components/          Secciones de la página (héroe, servicios, contacto…)
   scripts/hero.ts      Animación del héroe: partículas del logo y trazo de ECG
@@ -76,6 +84,12 @@ public/                Archivos que se publican tal cual (incluye admin/ y uploa
 functions/api/         Inicio de sesión del panel con GitHub
 scripts/preview.py     Arma una copia con rutas relativas para vistas previas
 ```
+
+## Crear una página nueva
+
+1. Agregue su dirección en `src/i18n/routes.ts`, con una clave nueva y las rutas en español e inglés.
+2. Cree `src/content/paginas/es/<seccion>/<nombre>.md` y su par en `en/`, con la misma `key`.
+3. Si debe editarse desde el panel, agréguela en `public/admin/config.yml`.
 
 ## Accesibilidad
 

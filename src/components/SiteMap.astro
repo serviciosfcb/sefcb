@@ -1,0 +1,49 @@
+---
+// Mapa del sitio generado a partir de las páginas, los servicios y las noticias.
+import type { Lang } from '../i18n/content';
+import { content } from '../i18n/content';
+import { r } from '../i18n/routes';
+import { getPaginas, getServicios, pathOfPagina, pathOfServicio } from '../lib/paginas';
+import { getNoticias, slugOf, textos } from '../lib/noticias';
+interface Props { lang: Lang }
+const { lang } = Astro.props;
+const t = content[lang].pages;
+const pages = await getPaginas(lang);
+const services = await getServicios(lang);
+const news = await getNoticias();
+const order = ['servicios', 'pacientes', 'nosotros', 'transparencia', 'contacto', 'legal'] as const;
+---
+<div class="mapa">
+  <section>
+    <h2><a href={r(lang, 'inicio')}>{t.home}</a></h2>
+  </section>
+  {order.map((sec) => {
+    const list = pages.filter((p) => p.data.section === sec);
+    const index = list.find((p) => p.data.layout === 'seccion' || p.data.layout === 'servicios');
+    return (
+      <section>
+        <h2>{index ? <a href={pathOfPagina(index)}>{t.sections[sec]}</a> : t.sections[sec]}</h2>
+        <ul>
+          {sec === 'servicios' && services.map((s) => <li><a href={pathOfServicio(s)}>{s.data.title}</a></li>)}
+          {list.filter((p) => p !== index).map((p) => <li><a href={pathOfPagina(p)}>{p.data.title}</a></li>)}
+        </ul>
+      </section>
+    );
+  })}
+  <section>
+    <h2><a href={r(lang, 'noticias')}>{t.sitemapNews}</a></h2>
+    <ul>
+      {news.map((n) => <li><a href={`${content[lang].news.base}${slugOf(n)}/`}>{textos(n, lang).title}</a></li>)}
+    </ul>
+  </section>
+</div>
+
+<style>
+  .mapa { display: grid; grid-template-columns: repeat(auto-fill, minmax(min(100%, 16rem), 1fr)); gap: 2rem 2.5rem; margin-top: 1rem; }
+  .mapa h2 { font-size: var(--t-3); margin-bottom: .7rem; }
+  .mapa h2 a { color: inherit; text-decoration: none; }
+  .mapa h2 a:hover { color: var(--rojo); }
+  .mapa ul { list-style: none; display: grid; gap: .45rem; }
+  .mapa li a { color: var(--tinta-2); font-size: var(--t-0); text-decoration: none; }
+  .mapa li a:hover { color: var(--rojo); text-decoration: underline; }
+</style>

@@ -1,0 +1,73 @@
+---
+// Plantilla de las páginas internas. El diseño cambia según el campo "layout" de cada página.
+import type { Lang } from '../i18n/content';
+import { content } from '../i18n/content';
+import { render } from 'astro:content';
+import { r, sections, type RouteKey } from '../i18n/routes';
+import { type Pagina, getPaginas, pathOfPagina, altPath } from '../lib/paginas';
+import Base from '../layouts/Base.astro';
+import PageHero from './PageHero.astro';
+import SideNav from './SideNav.astro';
+import SectionCards from './SectionCards.astro';
+import ServicesGrid from './ServicesGrid.astro';
+import TeamDirectory from './TeamDirectory.astro';
+import TransparencyList from './TransparencyList.astro';
+import SiteMap from './SiteMap.astro';
+import Locations from './Locations.astro';
+import CtaBand from './CtaBand.astro';
+interface Props { p: Pagina; lang: Lang }
+const { p, lang } = Astro.props;
+const t = content[lang].pages;
+const d = p.data;
+const path = pathOfPagina(p);
+const { Content } = await render(p);
+
+const all = await getPaginas(lang);
+const sectionKey = sections[d.section] as RouteKey;
+const index = all.find((x) => x.data.key === sectionKey);
+const isIndex = d.key === sectionKey;
+const siblings = all.filter((x) => x.data.section === d.section);
+const navItems = siblings
+  .sort((a, b) => (a.data.key === sectionKey ? -1 : b.data.key === sectionKey ? 1 : a.data.order - b.data.order))
+  .map((x) => ({ label: x.data.title, href: pathOfPagina(x) }));
+const sectionTitle = t.sections[d.section];
+
+const crumbs = [{ label: t.home, href: r(lang, 'inicio') }];
+if (index && !isIndex) crumbs.push({ label: index.data.title, href: pathOfPagina(index) });
+crumbs.push({ label: d.title });
+
+const wide = ['seccion', 'servicios', 'contacto', 'mapa'].includes(d.layout);
+const showNav = !wide && navItems.length > 1;
+---
+<Base lang={lang} title={d.title} description={d.description || d.lead} path={path} altPath={altPath(d.key, lang)}>
+  <PageHero title={d.title} lead={d.lead} crumbs={crumbs} crumbsLabel={t.crumbs} />
+
+  <div class:list={['interior', 'seccion', { ancho: !showNav }]}>
+    <div class="contenedor interior-grid">
+      {showNav && <SideNav lang={lang} title={sectionTitle} items={navItems} current={path} />}
+      <div class="interior-cuerpo">
+        <div class="prosa" data-reveal>
+          <Content />
+        </div>
+        {d.layout === 'seccion' && <SectionCards lang={lang} section={d.section} excludeKey={d.key} />}
+        {d.layout === 'servicios' && <ServicesGrid lang={lang} />}
+        {d.layout === 'equipo' && <TeamDirectory lang={lang} />}
+        {d.layout === 'transparencia' && <TransparencyList lang={lang} />}
+        {d.layout === 'mapa' && <SiteMap lang={lang} />}
+      </div>
+    </div>
+  </div>
+
+  {d.layout === 'contacto' && <Locations lang={lang} />}
+  {d.section !== 'transparencia' && d.section !== 'legal' && <CtaBand lang={lang} />}
+</Base>
+
+<style>
+  .interior { background: var(--papel); padding-top: clamp(3rem, 5vw, 4.5rem); }
+  .interior-grid { display: grid; grid-template-columns: 16.5rem minmax(0, 1fr); gap: clamp(2rem, 5vw, 5rem); align-items: start; }
+  .ancho .interior-grid { grid-template-columns: minmax(0, 1fr); }
+  .interior-cuerpo { min-width: 0; display: grid; gap: 2.5rem; align-content: start; }
+  .interior-cuerpo > .prosa { max-width: 46rem; }
+  .interior-cuerpo > .prosa:empty { display: none; }
+  @media (max-width: 960px) { .interior-grid { grid-template-columns: minmax(0, 1fr); gap: 1.5rem; } }
+</style>

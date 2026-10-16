@@ -2,6 +2,7 @@
 import type { Lang } from '../i18n/content';
 import { content, links, financials, documents } from '../i18n/content';
 import Icon from './Icon.astro';
+import { to } from '../i18n/routes';
 interface Props { lang: Lang }
 const { lang } = Astro.props;
 const q = content[lang].quality;
@@ -28,7 +29,7 @@ const tr = content[lang].transparency;
       <div class="tr-texto">
         <h3>{tr.title}</h3>
         <p>{tr.text}</p>
-        <a class="enlace-flecha claro" href={links.transparencia}>{tr.all}<Icon name="arrow" /></a>
+        <a class="enlace-flecha claro" href={to(lang, 'transparencia')}>{tr.all}<Icon name="arrow" /></a>
       </div>
       <ul class="tr-lista">
         <li class="tr-fila tr-anios">

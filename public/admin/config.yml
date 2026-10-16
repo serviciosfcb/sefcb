@@ -30,6 +30,59 @@ slug:
   clean_accents: true
   sanitize_replacement: '-'
 
+# Campos reutilizables (anclas de YAML)
+x-campos-pagina: &campos_pagina
+  - { label: Clave (no cambiar), name: key, widget: hidden }
+  - { label: Sección (no cambiar), name: section, widget: hidden }
+  - { label: Diseño (no cambiar), name: layout, widget: hidden, required: false }
+  - { label: Orden, name: order, widget: hidden, required: false }
+  - { label: Título, name: title, widget: string }
+  - { label: Entradilla, name: lead, widget: text, required: false, hint: 'Una o dos frases bajo el título.' }
+  - { label: Descripción para Google, name: description, widget: text, required: false, hint: 'Máximo 160 caracteres.' }
+  - { label: Texto de la tarjeta, name: card, widget: string, required: false, hint: 'Frase corta que aparece en la tarjeta de esta página en su sección.' }
+  - { label: Nota interna, name: review, widget: hidden, required: false }
+  - label: Contenido
+    name: body
+    widget: markdown
+    required: false
+    buttons: [bold, italic, link, heading-two, heading-three, bulleted-list, numbered-list, quote]
+    editor_components: [image]
+
+x-campos-servicio: &campos_servicio
+  - { label: Clave (no cambiar), name: key, widget: hidden }
+  - { label: Orden, name: order, widget: hidden }
+  - { label: Nombre del servicio, name: title, widget: string }
+  - { label: Etiqueta, name: tag, widget: string, hint: 'Ej. Adultos y niños' }
+  - { label: Resumen, name: summary, widget: text }
+  - label: Sede donde se presta
+    name: sede
+    widget: select
+    options: [{ label: Sede principal, value: 0 }, { label: Sede 2, value: 1 }]
+  - { label: Nota de ubicación, name: location, widget: text, required: false }
+  - { label: Nota interna, name: review, widget: hidden, required: false }
+  - label: Procedimientos
+    name: groups
+    label_singular: grupo
+    widget: list
+    required: false
+    summary: '{{fields.title}}'
+    fields:
+      - { label: Título del grupo, name: title, widget: string }
+      - { label: Introducción, name: intro, widget: text, required: false }
+      - label: Elementos
+        name: items
+        label_singular: elemento
+        widget: list
+        summary: '{{fields.name}}'
+        fields:
+          - { label: Nombre, name: name, widget: string }
+          - { label: Explicación, name: detail, widget: text, required: false }
+  - label: Descripción
+    name: body
+    widget: markdown
+    buttons: [bold, italic, link, heading-two, heading-three, bulleted-list, numbered-list]
+    editor_components: []
+
 collections:
   - name: noticias
     label: Noticias
@@ -168,6 +221,40 @@ collections:
             widget: list
             field: { label: Nombre, name: nombre, widget: string }
 
+      - name: equipo
+        label: Equipo y directorio
+        file: src/data/equipo.json
+        fields:
+          - label: Directorio institucional
+            name: directorio
+            label_singular: persona
+            widget: list
+            summary: '{{fields.cargo}}: {{fields.nombre}}'
+            fields:
+              - label: Área
+                name: area
+                widget: select
+                options: [{ label: Dirección, value: direccion }, { label: Administrativa, value: administrativo }, { label: Asistencial, value: asistencial }]
+              - { label: Cargo, name: cargo, widget: string }
+              - { label: Cargo en inglés, name: cargo_en, widget: string }
+              - { label: Nombre, name: nombre, widget: string, required: false }
+              - { label: Correo, name: correo, widget: string, required: false }
+              - { label: Extensión, name: extension, widget: string, required: false }
+              - { label: Celular, name: celular, widget: string, required: false }
+              - label: Sede
+                name: sede
+                widget: select
+                options: [{ label: Sede principal, value: 0 }, { label: Sede 2, value: 1 }]
+          - label: Médicos especialistas
+            name: especialistas
+            label_singular: área
+            widget: list
+            summary: '{{fields.area}}'
+            fields:
+              - { label: Área, name: area, widget: string }
+              - { label: Área en inglés, name: area_en, widget: string }
+              - { label: Nombres, name: nombres, widget: list, field: { label: Nombre, name: nombre, widget: string } }
+
       - name: transparencia
         label: Transparencia
         file: src/data/transparencia.json
@@ -190,3 +277,288 @@ collections:
               - { label: Título, name: titulo, widget: string }
               - { label: Título en inglés, name: titulo_en, widget: string }
               - { label: Archivo PDF o enlace, name: archivo, widget: file, choose_url: true }
+
+          - label: Categorías de la Ley 1712 (página de transparencia)
+            name: secciones
+            label_singular: categoría
+            widget: list
+            summary: '{{fields.titulo}}'
+            fields:
+              - { label: Categoría, name: titulo, widget: string }
+              - { label: Categoría en inglés, name: titulo_en, widget: string }
+              - { label: Mostrar aquí los estados financieros, name: estados, widget: boolean, required: false, default: false }
+              - label: Elementos
+                name: items
+                label_singular: elemento
+                widget: list
+                summary: '{{fields.titulo}}'
+                fields:
+                  - { label: Título, name: titulo, widget: string }
+                  - { label: Título en inglés, name: titulo_en, widget: string }
+                  - label: Página del sitio
+                    name: ruta
+                    widget: select
+                    required: false
+                    hint: Elija una página del sitio, o deje vacío y use el campo de archivo.
+                    options: ['inicio', 'noticias', 'servicios', 'pacientes', 'cita', 'antes', 'resultados', 'derechos', 'faq', 'asociacion', 'educacion', 'visitantes', 'nosotros', 'calidad', 'equipo', 'empleo', 'bienestar', 'transparencia', 'entidades', 'tributarios', 'contacto', 'datos', 'accesibilidad', 'mapa']
+                  - { label: Archivo PDF o enlace, name: archivo, widget: file, required: false, choose_url: true, hint: 'Escriba PQRS para enlazar el formulario de PQRS.' }
+
+  # Las páginas y los servicios ya existen; desde aquí se editan sus textos.
+  # Para crear una página nueva hace falta registrar su dirección en src/i18n/routes.ts (equipo de sistemas).
+
+  - name: paginas_es
+    label: Páginas en español
+    description: Textos de las páginas internas del sitio.
+    editor:
+      preview: false
+    files:
+      - name: es-contacto
+        label: "Contacto"
+        file: src/content/paginas/es/contacto.md
+        fields: *campos_pagina
+      - name: es-legal-accesibilidad
+        label: "Accesibilidad"
+        file: src/content/paginas/es/legal/accesibilidad.md
+        fields: *campos_pagina
+      - name: es-legal-mapa-del-sitio
+        label: "Mapa del sitio"
+        file: src/content/paginas/es/legal/mapa-del-sitio.md
+        fields: *campos_pagina
+      - name: es-legal-politica-de-datos
+        label: "Política de tratamiento de datos personales"
+        file: src/content/paginas/es/legal/politica-de-datos.md
+        fields: *campos_pagina
+      - name: es-nosotros-calidad
+        label: "Calidad y reconocimientos"
+        file: src/content/paginas/es/nosotros/calidad.md
+        fields: *campos_pagina
+      - name: es-nosotros-equipo
+        label: "Nuestro equipo"
+        file: src/content/paginas/es/nosotros/equipo.md
+        fields: *campos_pagina
+      - name: es-nosotros-index
+        label: "Quiénes somos"
+        file: src/content/paginas/es/nosotros/index.md
+        fields: *campos_pagina
+      - name: es-nosotros-programa-de-bienestar
+        label: "Programa de bienestar"
+        file: src/content/paginas/es/nosotros/programa-de-bienestar.md
+        fields: *campos_pagina
+      - name: es-nosotros-trabaje-con-nosotros
+        label: "Trabaje con nosotros"
+        file: src/content/paginas/es/nosotros/trabaje-con-nosotros.md
+        fields: *campos_pagina
+      - name: es-pacientes-antes-de-su-atencion
+        label: "Antes de su atención"
+        file: src/content/paginas/es/pacientes/antes-de-su-atencion.md
+        fields: *campos_pagina
+      - name: es-pacientes-asociacion-de-usuarios
+        label: "Asociación de usuarios"
+        file: src/content/paginas/es/pacientes/asociacion-de-usuarios.md
+        fields: *campos_pagina
+      - name: es-pacientes-como-pedir-cita
+        label: "Cómo pedir una cita"
+        file: src/content/paginas/es/pacientes/como-pedir-cita.md
+        fields: *campos_pagina
+      - name: es-pacientes-derechos-y-deberes
+        label: "Derechos y deberes de los pacientes"
+        file: src/content/paginas/es/pacientes/derechos-y-deberes.md
+        fields: *campos_pagina
+      - name: es-pacientes-educacion
+        label: "Educación al paciente y su familia"
+        file: src/content/paginas/es/pacientes/educacion.md
+        fields: *campos_pagina
+      - name: es-pacientes-index
+        label: "Pacientes y familias"
+        file: src/content/paginas/es/pacientes/index.md
+        fields: *campos_pagina
+      - name: es-pacientes-pacientes-de-otras-ciudades
+        label: "Si viene de otra ciudad"
+        file: src/content/paginas/es/pacientes/pacientes-de-otras-ciudades.md
+        fields: *campos_pagina
+      - name: es-pacientes-preguntas-frecuentes
+        label: "Preguntas frecuentes"
+        file: src/content/paginas/es/pacientes/preguntas-frecuentes.md
+        fields: *campos_pagina
+      - name: es-pacientes-resultados-e-historia-clinica
+        label: "Resultados e historia clínica"
+        file: src/content/paginas/es/pacientes/resultados-e-historia-clinica.md
+        fields: *campos_pagina
+      - name: es-servicios
+        label: "Nuestros servicios"
+        file: src/content/paginas/es/servicios.md
+        fields: *campos_pagina
+      - name: es-transparencia-certificados-tributarios
+        label: "Certificados tributarios"
+        file: src/content/paginas/es/transparencia/certificados-tributarios.md
+        fields: *campos_pagina
+      - name: es-transparencia-directorio-de-entidades
+        label: "Directorio de entidades"
+        file: src/content/paginas/es/transparencia/directorio-de-entidades.md
+        fields: *campos_pagina
+      - name: es-transparencia-index
+        label: "Transparencia y acceso a la información pública"
+        file: src/content/paginas/es/transparencia/index.md
+        fields: *campos_pagina
+  - name: paginas_en
+    label: Páginas en inglés
+    description: Textos de las páginas internas del sitio.
+    editor:
+      preview: false
+    files:
+      - name: en-about-careers
+        label: "Careers"
+        file: src/content/paginas/en/about/careers.md
+        fields: *campos_pagina
+      - name: en-about-index
+        label: "Who we are"
+        file: src/content/paginas/en/about/index.md
+        fields: *campos_pagina
+      - name: en-about-our-team
+        label: "Our team"
+        file: src/content/paginas/en/about/our-team.md
+        fields: *campos_pagina
+      - name: en-about-quality
+        label: "Quality and awards"
+        file: src/content/paginas/en/about/quality.md
+        fields: *campos_pagina
+      - name: en-about-wellbeing-program
+        label: "Wellbeing program"
+        file: src/content/paginas/en/about/wellbeing-program.md
+        fields: *campos_pagina
+      - name: en-contact
+        label: "Contact"
+        file: src/content/paginas/en/contact.md
+        fields: *campos_pagina
+      - name: en-legal-accessibility
+        label: "Accessibility"
+        file: src/content/paginas/en/legal/accessibility.md
+        fields: *campos_pagina
+      - name: en-legal-privacy
+        label: "Personal data policy"
+        file: src/content/paginas/en/legal/privacy.md
+        fields: *campos_pagina
+      - name: en-legal-sitemap
+        label: "Site map"
+        file: src/content/paginas/en/legal/sitemap.md
+        fields: *campos_pagina
+      - name: en-patients-before-your-visit
+        label: "Before your visit"
+        file: src/content/paginas/en/patients/before-your-visit.md
+        fields: *campos_pagina
+      - name: en-patients-booking
+        label: "Booking an appointment"
+        file: src/content/paginas/en/patients/booking.md
+        fields: *campos_pagina
+      - name: en-patients-faq
+        label: "Frequently asked questions"
+        file: src/content/paginas/en/patients/faq.md
+        fields: *campos_pagina
+      - name: en-patients-health-education
+        label: "Patient and family education"
+        file: src/content/paginas/en/patients/health-education.md
+        fields: *campos_pagina
+      - name: en-patients-index
+        label: "Patients and families"
+        file: src/content/paginas/en/patients/index.md
+        fields: *campos_pagina
+      - name: en-patients-patient-association
+        label: "Patient association"
+        file: src/content/paginas/en/patients/patient-association.md
+        fields: *campos_pagina
+      - name: en-patients-results-and-medical-records
+        label: "Results and medical records"
+        file: src/content/paginas/en/patients/results-and-medical-records.md
+        fields: *campos_pagina
+      - name: en-patients-rights-and-responsibilities
+        label: "Patient rights and responsibilities"
+        file: src/content/paginas/en/patients/rights-and-responsibilities.md
+        fields: *campos_pagina
+      - name: en-patients-traveling-to-cucuta
+        label: "Traveling from another city"
+        file: src/content/paginas/en/patients/traveling-to-cucuta.md
+        fields: *campos_pagina
+      - name: en-services
+        label: "Our services"
+        file: src/content/paginas/en/services.md
+        fields: *campos_pagina
+      - name: en-transparency-index
+        label: "Transparency and access to public information"
+        file: src/content/paginas/en/transparency/index.md
+        fields: *campos_pagina
+      - name: en-transparency-oversight-bodies
+        label: "Oversight bodies"
+        file: src/content/paginas/en/transparency/oversight-bodies.md
+        fields: *campos_pagina
+      - name: en-transparency-tax-certificates
+        label: "Tax withholding certificates"
+        file: src/content/paginas/en/transparency/tax-certificates.md
+        fields: *campos_pagina
+  - name: servicios_es
+    label: Servicios en español
+    description: Descripción, procedimientos y ubicación de cada servicio.
+    editor:
+      preview: false
+    files:
+      - name: es-cardiologia-no-invasiva
+        label: "Cardiología no invasiva"
+        file: src/content/servicios/es/cardiologia-no-invasiva.md
+        fields: *campos_servicio
+      - name: es-medicina-nuclear
+        label: "Medicina nuclear"
+        file: src/content/servicios/es/medicina-nuclear.md
+        fields: *campos_servicio
+      - name: es-intervencionismo
+        label: "Intervencionismo"
+        file: src/content/servicios/es/intervencionismo.md
+        fields: *campos_servicio
+      - name: es-consulta-externa
+        label: "Consulta externa especializada"
+        file: src/content/servicios/es/consulta-externa.md
+        fields: *campos_servicio
+      - name: es-terapia-fisica
+        label: "Terapia física"
+        file: src/content/servicios/es/terapia-fisica.md
+        fields: *campos_servicio
+      - name: es-transporte-asistencial
+        label: "Transporte asistencial básico"
+        file: src/content/servicios/es/transporte-asistencial.md
+        fields: *campos_servicio
+      - name: es-hormesis
+        label: "HORMESIS"
+        file: src/content/servicios/es/hormesis.md
+        fields: *campos_servicio
+  - name: servicios_en
+    label: Servicios en inglés
+    description: Descripción, procedimientos y ubicación de cada servicio.
+    editor:
+      preview: false
+    files:
+      - name: en-non-invasive-cardiology
+        label: "Non-invasive cardiology"
+        file: src/content/servicios/en/non-invasive-cardiology.md
+        fields: *campos_servicio
+      - name: en-nuclear-medicine
+        label: "Nuclear medicine"
+        file: src/content/servicios/en/nuclear-medicine.md
+        fields: *campos_servicio
+      - name: en-interventional-cardiology
+        label: "Interventional cardiology"
+        file: src/content/servicios/en/interventional-cardiology.md
+        fields: *campos_servicio
+      - name: en-specialist-consultations
+        label: "Specialist consultations"
+        file: src/content/servicios/en/specialist-consultations.md
+        fields: *campos_servicio
+      - name: en-physical-therapy
+        label: "Physical therapy"
+        file: src/content/servicios/en/physical-therapy.md
+        fields: *campos_servicio
+      - name: en-ambulance-transport
+        label: "Basic ambulance transport"
+        file: src/content/servicios/en/ambulance-transport.md
+        fields: *campos_servicio
+      - name: en-hormesis
+        label: "HORMESIS"
+        file: src/content/servicios/en/hormesis.md
+        fields: *campos_servicio

@@ -3,6 +3,7 @@ import type { Lang } from '../i18n/content';
 import { content, links, phones } from '../i18n/content';
 import Logo from './Logo.astro';
 import Icon from './Icon.astro';
+import { to } from '../i18n/routes';
 interface Props { lang: Lang; home: string; alt: string }
 const { lang, home, alt } = Astro.props;
 const t = content[lang];
@@ -18,7 +19,7 @@ const current = Astro.url.pathname;
       <ul class="util-links">
         <li><a href={links.pqrs} rel="noopener">{t.util.pqrs}</a></li>
         <li><a href={links.pagos} rel="noopener">{t.util.pay}</a></li>
-        <li><a href={links.empleo}>{t.util.jobs}</a></li>
+        <li><a href={to(lang, 'empleo')}>{t.util.jobs}</a></li>
         <li><button type="button" data-a11y-open><Icon name="access" />{t.util.a11y}</button></li>
       </ul>
     </div>

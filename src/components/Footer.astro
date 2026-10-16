@@ -3,10 +3,10 @@ import type { Lang } from '../i18n/content';
 import { content, links, phones } from '../i18n/content';
 import Logo from './Logo.astro';
 import Icon from './Icon.astro';
+import { to, isExternal } from '../i18n/routes';
 interface Props { lang: Lang; home: string }
 const { lang, home } = Astro.props;
 const t = content[lang].footer;
-const hrefs = links as Record<string, string>;
 const year = 2026;
 ---
 <footer class="pie oscuro">
@@ -30,7 +30,7 @@ const year = 2026;
       <nav class="pie-col" aria-label={col.title}>
         <h2>{col.title}</h2>
         <ul>
-          {col.items.map(([label, key]) => <li><a href={hrefs[key]}>{label}</a></li>)}
+          {col.items.map(([label, key]) => { const h = to(lang, key); return <li><a href={h} rel={isExternal(h) ? 'noopener' : undefined}>{label}</a></li>; })}
         </ul>
       </nav>
     ))}

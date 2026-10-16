@@ -1,0 +1,52 @@
+---
+// Tarjetas de las páginas de una sección, y accesos externos cuando la sección los tiene.
+import type { Lang } from '../i18n/content';
+import { content, links } from '../i18n/content';
+import { getPaginas, pathOfPagina } from '../lib/paginas';
+import Icon from './Icon.astro';
+interface Props { lang: Lang; section: string; excludeKey?: string }
+const { lang, section, excludeKey } = Astro.props;
+const es = lang === 'es';
+const pages = (await getPaginas(lang)).filter((p) => p.data.section === section && p.data.key !== excludeKey && p.data.layout !== 'seccion');
+const cards = pages.map((p) => ({ title: p.data.title, text: p.data.card || p.data.description, href: pathOfPagina(p), external: false }));
+if (section === 'pacientes') {
+  cards.push(
+    { title: es ? 'Portal del paciente' : 'Patient portal', text: es ? 'Pida citas y descargue sus resultados en línea.' : 'Book appointments and download your results online.', href: links.portal, external: true },
+    { title: 'PQRS', text: es ? 'Peticiones, quejas, reclamos, sugerencias y felicitaciones.' : 'Petitions, complaints, suggestions and compliments.', href: links.pqrs, external: true },
+    { title: es ? 'Pagos en línea' : 'Online payments', text: es ? 'Pague su servicio de forma segura con ZonaPagos.' : 'Pay for your service securely with ZonaPagos.', href: links.pagos, external: true },
+  );
+}
+const opens = content[lang].pages.opens;
+---
+<ul class="cards-seccion" data-stagger>
+  {cards.map((c) => (
+    <li data-stagger-item>
+      <a class="card-seccion" href={c.href} rel={c.external ? 'noopener' : undefined} target={c.external ? '_blank' : undefined} data-spot>
+        <span class="cs-titulo">{c.title}</span>
+        {c.text && <span class="cs-texto">{c.text}</span>}
+        <span class="cs-flecha" aria-hidden="true"><Icon name={c.external ? 'external' : 'arrow'} /></span>
+        {c.external && <span class="visualmente-oculto"> ({opens})</span>}
+      </a>
+    </li>
+  ))}
+</ul>
+
+<style>
+  .cards-seccion { list-style: none; display: grid; grid-template-columns: repeat(auto-fill, minmax(min(100%, 17rem), 1fr)); gap: 1rem; }
+  .cards-seccion li { display: grid; }
+  .card-seccion {
+    --mx: 50%; --my: 50%;
+    position: relative; isolation: isolate; overflow: hidden;
+    display: grid; grid-template-columns: 1fr auto; grid-template-rows: auto 1fr; gap: .5rem 1rem; align-content: start;
+    padding: 1.4rem 1.4rem 1.5rem; border-radius: var(--radio-m); border: 1px solid var(--linea); background: var(--papel);
+    color: var(--tinta); text-decoration: none; transition: transform .6s var(--ease), border-color .4s, box-shadow .6s var(--ease);
+  }
+  .card-seccion::before { content: ''; position: absolute; inset: 0; z-index: -1; background: radial-gradient(18rem circle at var(--mx) var(--my), rgb(159 39 40 / .08), transparent 55%); opacity: 0; transition: opacity .4s; }
+  .card-seccion:hover { transform: translateY(-4px); border-color: rgb(159 39 40 / .3); box-shadow: 0 30px 60px -40px rgb(var(--sombra) / .5); }
+  .card-seccion:hover::before { opacity: 1; }
+  .cs-titulo { font-family: var(--display); font-weight: 650; font-size: var(--t-3); letter-spacing: -.02em; line-height: 1.2; }
+  .cs-texto { grid-column: 1 / -1; color: var(--tinta-2); font-size: var(--t-0); }
+  .cs-flecha { grid-column: 2; grid-row: 1; width: 2.2rem; height: 2.2rem; border-radius: 50%; display: grid; place-items: center; border: 1px solid var(--linea); transition: background-color .3s, color .3s, border-color .3s; }
+  .cs-flecha :global(.icon) { width: 1rem; height: 1rem; }
+  .card-seccion:hover .cs-flecha { background: var(--tinta); color: #fff; border-color: var(--tinta); }
+</style>

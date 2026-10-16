@@ -1,0 +1,19 @@
+{
+  "directorio": [
+    { "area": "direccion", "cargo": "Gerencia", "cargo_en": "General management", "nombre": "", "correo": "gerencia@sefcb.co", "extension": "205", "celular": "", "sede": 0 },
+    { "area": "administrativo", "cargo": "Director contable y financiero", "cargo_en": "Accounting and finance director", "nombre": "Norbek Yolimar Duran Jaimes", "correo": "contabilidad@sefcb.co", "extension": "200", "celular": "", "sede": 0 },
+    { "area": "administrativo", "cargo": "Directora administrativa y operativa", "cargo_en": "Administrative and operations director", "nombre": "Deisy Johanna Villamizar Zuñiga", "correo": "sistemas@sefcb.co", "extension": "141", "celular": "", "sede": 0 },
+    { "area": "administrativo", "cargo": "Coordinadora de calidad, SST y proyectos", "cargo_en": "Quality, occupational safety and projects coordinator", "nombre": "Erika Liseth Vera Sanabria", "correo": "calidad@sefcb.co", "extension": "202", "celular": "", "sede": 0 },
+    { "area": "administrativo", "cargo": "Coordinadora SIAU (atención al usuario)", "cargo_en": "Patient services (SIAU) coordinator", "nombre": "Silvana Maria Carrasco Blanco", "correo": "coordinacionsiau@sefcb.co", "extension": "139", "celular": "", "sede": 0 },
+    { "area": "administrativo", "cargo": "Coordinador de talento humano", "cargo_en": "Human resources coordinator", "nombre": "Miguel Angel Ruedas Martinez", "correo": "talentohumano@sefcb.co", "extension": "201", "celular": "", "sede": 0 },
+    { "area": "asistencial", "cargo": "Coordinadora de intervencionismo", "cargo_en": "Interventional unit coordinator", "nombre": "Adriana Ordoñez Leon", "correo": "intervencionismo@sefcb.co", "extension": "", "celular": "316 690 2029", "sede": 1 },
+    { "area": "asistencial", "cargo": "Coordinadora de medicina nuclear", "cargo_en": "Nuclear medicine coordinator", "nombre": "Roxana Galvis Quintero", "correo": "medicina.nuclear@sefcb.co", "extension": "122", "celular": "", "sede": 0 },
+    { "area": "asistencial", "cargo": "Coordinadora asistencial", "cargo_en": "Clinical care coordinator", "nombre": "Doris Marcela Rincon Rojas", "correo": "coordinacionasistencial@sefcb.co", "extension": "121", "celular": "", "sede": 0 }
+  ],
+  "especialistas": [
+    { "area": "Dirección médica", "area_en": "Medical director", "nombres": ["Fernando Carrasco Blanco"] },
+    { "area": "Consulta médica especializada", "area_en": "Specialist consultations", "nombres": ["Rossy Carrillo", "Juan Gallego", "Ismael Ramirez"] },
+    { "area": "Intervencionismo", "area_en": "Interventional cardiology", "nombres": ["Marcos Morales", "Juan Camargo", "Marco Fonseca", "Luis Moreno"] },
+    { "area": "Valoración deportiva", "area_en": "Sports medicine", "nombres": ["Zair Ramos", "Ivar Duran", "Fernando Polo"] }
+  ]
+}

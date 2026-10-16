@@ -1,0 +1,200 @@
+---
+// Página de un servicio: cabecera con su ilustración técnica, procedimientos y datos para pedir la cita.
+import type { Lang } from '../i18n/content';
+import { content, links, phones, sedes } from '../i18n/content';
+import { render } from 'astro:content';
+import { r, serviceRoute } from '../i18n/routes';
+import { type Servicio, pathOfServicio, altPath } from '../lib/paginas';
+import Base from '../layouts/Base.astro';
+import ServiceVisual from './ServiceVisual.astro';
+import ServicesGrid from './ServicesGrid.astro';
+import CtaBand from './CtaBand.astro';
+import Icon from './Icon.astro';
+interface Props { s: Servicio; lang: Lang }
+const { s, lang } = Astro.props;
+const all = content[lang];
+const t = all.pages;
+const d = s.data;
+const en = lang === 'en';
+const path = pathOfServicio(s);
+const { Content } = await render(s);
+const sede = sedes[d.sede] ?? sedes[0];
+const svc = all.services;
+const labels = d.key === 'obesidad' ? svc.plate : d.key === 'consulta' ? svc.sounds : d.key === 'transporte' ? sedes.map((x) => (en ? x.nombre_en || x.nombre : x.nombre)) : [];
+const caption = svc.items.find((x) => x.key === d.key)?.caption ?? '';
+// Muchos grupos cortos (como las especialidades de medicina nuclear) se muestran como cuadrícula
+const compactGroups = d.groups.length > 3 && d.groups.every((g) => !g.intro && g.items.every((it) => !it.detail));
+const ld = {
+  '@context': 'https://schema.org',
+  '@type': 'MedicalProcedure',
+  name: d.title,
+  description: d.summary,
+  procedureType: 'https://schema.org/NoninvasiveProcedure',
+  provider: { '@type': 'MedicalClinic', name: 'Servicios Especializados del Corazón', url: 'https://sefcb.co' },
+};
+if (['intervencionismo'].includes(d.key)) ld.procedureType = 'https://schema.org/PercutaneousProcedure';
+---
+<Base lang={lang} title={d.title} description={d.summary} path={path} altPath={altPath(serviceRoute(d.key), lang)}>
+  <script slot="head" type="application/ld+json" set:html={JSON.stringify(ld)} />
+
+  <section class="sh oscuro" aria-labelledby="sh-titulo">
+    <div class="sh-fondo decorativo" aria-hidden="true"></div>
+    <div class="contenedor sh-grid">
+      <div class="sh-txt">
+        <nav class="migas" aria-label={t.crumbs}>
+          <ol>
+            <li><a href={r(lang, 'inicio')}>{t.home}</a></li>
+            <li><a href={r(lang, 'servicios')}>{t.sections.servicios}</a></li>
+            <li><span aria-current="page">{d.title}</span></li>
+          </ol>
+        </nav>
+        <p class="sh-tag">{d.tag}</p>
+        <h1 id="sh-titulo" data-split>{d.title}</h1>
+        <p class="sh-lead" data-reveal>{d.summary}</p>
+        <div class="sh-ctas" data-reveal>
+          <a class="btn btn-primario" href={links.portal} rel="noopener" data-magnet>{t.book}<Icon name="arrow" /></a>
+          <a class="btn btn-fantasma" href={links.whatsapp} rel="noopener"><Icon name="whatsapp" />WhatsApp</a>
+        </div>
+      </div>
+      <figure class="sh-vis activa" aria-hidden="true">
+        <ServiceVisual kind={d.key} labels={labels} uid="sh" />
+        {caption && <figcaption>{caption}</figcaption>}
+      </figure>
+    </div>
+  </section>
+
+  <div class="interior seccion">
+    <div class="contenedor si-grid">
+      <div class="si-cuerpo">
+        <div class="prosa" data-reveal><Content /></div>
+        {compactGroups ? (
+          <section class="grupo" data-reveal>
+            <h2>{en ? 'Studies by specialty' : 'Estudios por especialidad'}</h2>
+            <div class="grupos-grid">
+              {d.groups.map((g) => (
+                <div class="mini">
+                  <h3>{g.title}</h3>
+                  <ul>{g.items.map((it) => <li>{it.name}</li>)}</ul>
+                </div>
+              ))}
+            </div>
+          </section>
+        ) : d.groups.map((g) => {
+          const detailed = g.items.some((it) => it.detail);
+          return (
+            <section class="grupo" data-reveal>
+              <h2>{g.title}</h2>
+              {g.intro && <p class="grupo-intro">{g.intro}</p>}
+              {g.items.length > 0 && (
+                detailed ? (
+                  <ul class="procs">
+                    {g.items.map((it) => (
+                      <li><h3>{it.name}</h3>{it.detail && <p>{it.detail}</p>}</li>
+                    ))}
+                  </ul>
+                ) : (
+                  <ul class="chequeos">
+                    {g.items.map((it) => <li><Icon name="check" />{it.name}</li>)}
+                  </ul>
+                )
+              )}
+            </section>
+          );
+        })}
+      </div>
+
+      <aside class="si-lateral">
+        <div class="caja">
+          <h2>{t.where}</h2>
+          <p class="caja-sede">{en ? sede.nombre_en || sede.nombre : sede.nombre}</p>
+          <p>{en ? sede.direccion_en || sede.direccion : sede.direccion}</p>
+          {d.location && <p class="caja-nota">{d.location}</p>}
+          <a class="enlace-flecha" href={sede.mapa} rel="noopener" target="_blank">{t.route}<Icon name="external" /><span class="visualmente-oculto"> ({t.opens})</span></a>
+        </div>
+        <div class="caja">
+          <h2>{t.contactLines}</h2>
+          <ul class="lineas">
+            <li><Icon name="whatsapp" /><a href={links.whatsapp} rel="noopener">{phones.citas.label}</a></li>
+            <li><Icon name="phone" /><a href={`tel:${phones.atencion1.tel}`}>{phones.atencion1.label}</a></li>
+            <li><Icon name="phone" /><a href={`tel:${phones.atencion2.tel}`}>{phones.atencion2.label}</a></li>
+            <li><Icon name="phone" /><a href={`tel:${phones.pbx.tel}`}>PBX {phones.pbx.label}</a></li>
+          </ul>
+          <a class="btn btn-primario" href={links.portal} rel="noopener">{t.book}</a>
+        </div>
+      </aside>
+    </div>
+  </div>
+
+  <section class="otros seccion" aria-labelledby="otros-titulo">
+    <div class="contenedor">
+      <h2 id="otros-titulo" class="otros-titulo" data-split>{t.others}</h2>
+      <ServicesGrid lang={lang} exclude={d.key} compact />
+    </div>
+  </section>
+
+  <CtaBand lang={lang} />
+</Base>
+
+<style>
+  .sh { position: relative; overflow: hidden; isolation: isolate; padding-top: calc(var(--alto-cabecera) + 2.6rem + 3rem + env(safe-area-inset-top, 0px)); padding-bottom: clamp(3.5rem, 6vw, 5.5rem); }
+  .sh-fondo { position: absolute; inset: 0; z-index: -1; background: radial-gradient(40rem 30rem at 75% 50%, rgb(159 39 40 / .34), transparent 70%), linear-gradient(180deg, #1c1a19, #171514); }
+  .sh-fondo::before { content: ''; position: absolute; inset: 0; background-image: linear-gradient(rgb(255 255 255 / .04) 1px, transparent 1px), linear-gradient(90deg, rgb(255 255 255 / .04) 1px, transparent 1px); background-size: 40px 40px; mask-image: radial-gradient(ellipse 80% 80% at 70% 50%, #000 30%, transparent 85%); }
+  .sh-grid { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); gap: clamp(2rem, 5vw, 5rem); align-items: center; }
+  .sh-txt { display: grid; gap: 1.1rem; }
+  .migas ol { list-style: none; display: flex; flex-wrap: wrap; gap: .4rem; font-size: var(--t-0); color: var(--sobre-oscuro-2); }
+  .migas li + li::before { content: '/'; margin-right: .4rem; opacity: .5; }
+  .migas a { color: var(--sobre-oscuro-2); text-decoration: none; }
+  .migas a:hover { color: #fff; text-decoration: underline; }
+  .migas [aria-current] { color: #fff; }
+  .sh-tag { color: var(--rojo-luz); font-weight: 700; font-size: var(--t-0); }
+  .sh h1 { font-size: var(--t-6); color: #fff; }
+  .sh-lead { color: var(--sobre-oscuro-2); font-size: var(--t-3); line-height: 1.45; max-width: 34rem; }
+  .sh-ctas { display: flex; flex-wrap: wrap; gap: .8rem; margin-top: .4rem; }
+  .sh-vis { border-radius: var(--radio-xl); background: rgb(255 255 255 / .03); border: 1px solid rgb(255 255 255 / .08); padding: clamp(1rem, 3vw, 2rem); display: grid; gap: 1rem; }
+  .sh-vis figcaption { font-size: var(--t-0); color: var(--sobre-oscuro-2); }
+
+  .interior { background: var(--papel); }
+  .si-grid { display: grid; grid-template-columns: minmax(0, 1fr) 20rem; gap: clamp(2rem, 5vw, 5rem); align-items: start; }
+  .si-cuerpo { display: grid; gap: 2.8rem; min-width: 0; }
+  .si-cuerpo > .prosa { max-width: 46rem; }
+  .grupo { display: grid; gap: 1rem; }
+  .grupo h2 { font-size: var(--t-4); }
+  .grupo-intro { color: var(--tinta-2); max-width: 44rem; }
+  .procs { list-style: none; display: grid; grid-template-columns: repeat(auto-fill, minmax(min(100%, 17rem), 1fr)); gap: 1rem; }
+  .procs li { padding: 1.2rem 1.3rem; border-radius: var(--radio-m); border: 1px solid var(--linea); display: grid; gap: .4rem; align-content: start; transition: border-color .3s, transform .5s var(--ease); }
+  .procs li:hover { border-color: rgb(159 39 40 / .35); transform: translateY(-3px); }
+  .procs h3 { font-size: var(--t-2); letter-spacing: -.01em; line-height: 1.25; }
+  .procs p { color: var(--tinta-2); font-size: var(--t-0); }
+  .chequeos { list-style: none; display: grid; grid-template-columns: repeat(auto-fill, minmax(min(100%, 18rem), 1fr)); gap: .6rem 1.5rem; }
+  .chequeos li { display: flex; gap: .6rem; align-items: flex-start; line-height: 1.4; }
+  .chequeos :global(.icon) { width: 1.15rem; height: 1.15rem; color: var(--rojo); stroke-width: 2.4; flex: none; margin-top: .15rem; }
+
+  .grupos-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(min(100%, 15rem), 1fr)); gap: 1rem; }
+  .mini { padding: 1.2rem 1.3rem; border-radius: var(--radio-m); border: 1px solid var(--linea); display: grid; gap: .6rem; align-content: start; transition: border-color .3s, transform .5s var(--ease); }
+  .mini:hover { border-color: rgb(159 39 40 / .35); transform: translateY(-3px); }
+  .mini h3 { font-size: var(--t-2); color: var(--rojo); }
+  .mini ul { list-style: none; display: grid; gap: .45rem; font-size: var(--t-0); line-height: 1.4; }
+  .mini li { padding-left: 1rem; position: relative; }
+  .mini li::before { content: ''; position: absolute; left: 0; top: .55em; width: .4rem; height: .4rem; border-radius: 50%; background: var(--gris-marca); }
+  .si-lateral { position: sticky; top: calc(var(--alto-cabecera) + 1.5rem + env(safe-area-inset-top, 0px)); display: grid; gap: 1rem; }
+  .caja { padding: 1.4rem; border-radius: var(--radio-m); background: var(--niebla); display: grid; gap: .55rem; font-size: var(--t-0); }
+  .caja h2 { font-size: var(--t-2); margin-bottom: .2rem; }
+  .caja-sede { font-weight: 700; }
+  .caja-nota { color: var(--tinta-2); }
+  .caja .btn { margin-top: .5rem; justify-self: start; }
+  .lineas { list-style: none; display: grid; gap: .45rem; }
+  .lineas li { display: flex; align-items: center; gap: .55rem; }
+  .lineas :global(.icon) { width: 1.05rem; height: 1.05rem; color: var(--rojo); }
+  .lineas a { color: var(--tinta); font-weight: 700; text-decoration: none; font-variant-numeric: tabular-nums; }
+  .lineas a:hover { text-decoration: underline; }
+
+  .otros { background: var(--niebla); }
+  .otros-titulo { font-size: var(--t-5); margin-bottom: 2rem; }
+
+  @media (max-width: 960px) {
+    .sh-grid, .si-grid { grid-template-columns: minmax(0, 1fr); }
+    .si-lateral { position: static; }
+  }
+  :global(:root[data-contrast='high']) .sh-fondo { display: none; }
+  :global(:root[data-contrast='high']) .sh { background: #000; }
+</style>

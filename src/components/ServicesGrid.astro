@@ -1,0 +1,67 @@
+---
+// Tarjetas de los servicios, con su ilustración técnica animada al aparecer.
+import type { Lang } from '../i18n/content';
+import { content, sedes } from '../i18n/content';
+import { getServicios, pathOfServicio } from '../lib/paginas';
+import ServiceVisual from './ServiceVisual.astro';
+import Icon from './Icon.astro';
+interface Props { lang: Lang; exclude?: string; compact?: boolean }
+const { lang, exclude, compact = false } = Astro.props;
+const all = content[lang];
+const t = all.services;
+const list = (await getServicios(lang)).filter((s) => s.data.key !== exclude);
+const labelsFor = (k: string) => k === 'obesidad' ? t.plate : k === 'consulta' ? t.sounds : k === 'transporte' ? sedes.map((s) => (lang === 'en' ? s.nombre_en || s.nombre : s.nombre)) : [];
+---
+<ul class:list={['servicios-grid', { compacta: compact }]} data-stagger>
+  {list.map((s, i) => (
+    <li data-stagger-item>
+      <article class="tarjeta-serv" data-spot>
+        <div class="ts-vis" aria-hidden="true" data-vis-card>
+          <ServiceVisual kind={s.data.key} labels={labelsFor(s.data.key)} uid={`g${compact ? 'c' : ''}${i}`} />
+        </div>
+        <div class="ts-txt">
+          <p class="ts-tag">{s.data.tag}</p>
+          <h2 class="ts-titulo"><a href={pathOfServicio(s)}>{s.data.title}</a></h2>
+          {!compact && <p>{s.data.summary}</p>}
+          <span class="ts-leer" aria-hidden="true">{all.pages.see}<Icon name="arrow" /></span>
+        </div>
+      </article>
+    </li>
+  ))}
+</ul>
+
+<script>
+  const io = new IntersectionObserver((entries) => {
+    entries.forEach((e) => { if (e.isIntersecting) { e.target.classList.add('activa'); io.unobserve(e.target); } });
+  }, { rootMargin: '0px 0px -10% 0px' });
+  document.querySelectorAll('[data-vis-card]').forEach((v) => io.observe(v));
+</script>
+
+<style>
+  .servicios-grid { list-style: none; display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 1.4rem; }
+  .servicios-grid li { display: grid; }
+  .tarjeta-serv {
+    --mx: 50%; --my: 50%;
+    position: relative; isolation: isolate; display: grid; grid-template-rows: auto 1fr;
+    border-radius: var(--radio-l); overflow: hidden; background: var(--papel); border: 1px solid var(--linea);
+    transition: transform .6s var(--ease), box-shadow .6s var(--ease), border-color .4s;
+  }
+  .tarjeta-serv:hover, .tarjeta-serv:focus-within { transform: translateY(-5px); box-shadow: 0 40px 70px -40px rgb(var(--sombra) / .55); border-color: rgb(159 39 40 / .25); }
+  .tarjeta-serv:focus-within { outline: 3px solid var(--foco); outline-offset: 3px; }
+  .ts-vis { aspect-ratio: 4 / 3; max-width: 100%; background: radial-gradient(16rem 12rem at var(--mx) var(--my), rgb(159 39 40 / .32), transparent 70%), var(--carbon); padding: 1rem 1.2rem; display: grid; place-items: center; }
+  .ts-vis :global(.vis) { max-height: 100%; }
+  .ts-txt { display: grid; gap: .55rem; align-content: start; padding: 1.4rem 1.5rem 1.6rem; }
+  .ts-tag { color: var(--rojo); font-weight: 700; font-size: var(--t-0); }
+  .ts-titulo { font-size: var(--t-3); letter-spacing: -.02em; line-height: 1.2; }
+  .ts-titulo a { color: inherit; text-decoration: none; }
+  .ts-titulo a::after { content: ''; position: absolute; inset: 0; z-index: 1; }
+  .ts-titulo a:focus-visible { outline: none; }
+  .ts-txt p:not(.ts-tag) { color: var(--tinta-2); font-size: var(--t-0); }
+  .ts-leer { display: inline-flex; align-items: center; gap: .4rem; font-weight: 700; font-size: var(--t-0); color: var(--rojo); margin-top: .2rem; }
+  .ts-leer :global(.icon) { width: 1rem; height: 1rem; transition: transform .4s var(--ease); }
+  .tarjeta-serv:hover .ts-leer :global(.icon) { transform: translateX(4px); }
+  .compacta { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+  .compacta .ts-vis { aspect-ratio: 16 / 9; }
+  @media (max-width: 960px) { .servicios-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
+  @media (max-width: 600px) { .servicios-grid { grid-template-columns: 1fr; } }
+</style>

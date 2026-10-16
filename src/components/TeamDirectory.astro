@@ -1,0 +1,79 @@
+---
+// Directorio institucional y médicos especialistas (src/data/equipo.json, editable desde el panel).
+import type { Lang } from '../i18n/content';
+import { content, phones } from '../i18n/content';
+import equipo from '../data/equipo.json';
+import Icon from './Icon.astro';
+interface Props { lang: Lang }
+const { lang } = Astro.props;
+const t = content[lang].pages;
+const en = lang === 'en';
+const areas = ['direccion', 'administrativo', 'asistencial'] as const;
+const initials = (s: string) => s.split(' ').filter(Boolean).slice(0, 2).map((w) => w[0]).join('').toUpperCase();
+---
+<section class="equipo-bloque" aria-labelledby="dir-titulo">
+  <h2 id="dir-titulo">{t.directory}</h2>
+  {areas.map((area) => {
+    const people = equipo.directorio.filter((p) => p.area === area);
+    return people.length > 0 && (
+      <div class="area">
+        <h3>{t.areas[area]}</h3>
+        <ul class="personas">
+          {people.map((p) => (
+            <li class="persona">
+              <span class="avatar" aria-hidden="true">{p.nombre ? initials(p.nombre) : <Icon name="award" />}</span>
+              <div class="p-txt">
+                <p class="p-cargo">{en ? p.cargo_en || p.cargo : p.cargo}</p>
+                {p.nombre && <p class="p-nombre">{p.nombre}</p>}
+                <ul class="p-datos">
+                  {p.correo && <li><Icon name="mail" /><a href={`mailto:${p.correo}`}>{p.correo}</a></li>}
+                  {p.extension && <li><Icon name="phone" /><span>PBX {phones.pbx.label}, {t.ext} {p.extension}</span></li>}
+                  {p.celular && <li><Icon name="phone" /><span>{t.mobile} {p.celular}</span></li>}
+                  <li><Icon name="pin" /><span>{t.sede[p.sede] ?? t.sede[0]}</span></li>
+                </ul>
+              </div>
+            </li>
+          ))}
+        </ul>
+      </div>
+    );
+  })}
+</section>
+
+<section class="equipo-bloque" aria-labelledby="esp-titulo">
+  <h2 id="esp-titulo">{t.specialists}</h2>
+  <div class="esp-grid">
+    {equipo.especialistas.map((g) => (
+      <div class="esp-area">
+        <h3>{en ? g.area_en || g.area : g.area}</h3>
+        <ul>
+          {g.nombres.map((n) => <li><span class="avatar pequeno" aria-hidden="true">{initials(n)}</span>{n}</li>)}
+        </ul>
+      </div>
+    ))}
+  </div>
+</section>
+
+<style>
+  .equipo-bloque { display: grid; gap: 1.6rem; margin-top: 3rem; }
+  .equipo-bloque > h2 { font-size: var(--t-5); }
+  .area { display: grid; gap: 1rem; }
+  .area h3 { font-family: var(--texto); font-size: var(--t-0); font-weight: 700; color: var(--tinta-2); letter-spacing: .02em; padding-bottom: .6rem; border-bottom: 1px solid var(--linea); }
+  .personas { list-style: none; display: grid; grid-template-columns: repeat(auto-fill, minmax(min(100%, 19rem), 1fr)); gap: 1rem; margin-bottom: 1rem; }
+  .persona { display: grid; grid-template-columns: auto 1fr; gap: 1rem; align-items: start; padding: 1.2rem; border: 1px solid var(--linea); border-radius: var(--radio-m); background: var(--papel); min-width: 0; }
+  .avatar { width: 3rem; height: 3rem; border-radius: 50%; display: grid; place-items: center; background: var(--rojo-tinte); color: var(--rojo); font-family: var(--display); font-weight: 700; font-size: 1.05rem; flex: none; }
+  .avatar :global(.icon) { width: 1.4rem; height: 1.4rem; }
+  .avatar.pequeno { width: 2.3rem; height: 2.3rem; font-size: .82rem; }
+  .p-txt { display: grid; gap: .25rem; min-width: 0; }
+  .p-cargo { font-weight: 700; line-height: 1.3; }
+  .p-nombre { color: var(--tinta-2); font-size: var(--t-0); }
+  .p-datos { list-style: none; display: grid; gap: .3rem; margin-top: .5rem; font-size: var(--t-0); }
+  .p-datos li { display: flex; gap: .5rem; align-items: center; min-width: 0; }
+  .p-datos :global(.icon) { width: 1rem; height: 1rem; color: var(--rojo); flex: none; }
+  .p-datos a { color: var(--tinta); overflow-wrap: anywhere; }
+  .esp-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(min(100%, 16rem), 1fr)); gap: 1rem; }
+  .esp-area { padding: 1.3rem; border-radius: var(--radio-m); background: var(--niebla); display: grid; gap: .8rem; align-content: start; }
+  .esp-area h3 { font-size: var(--t-2); }
+  .esp-area ul { list-style: none; display: grid; gap: .6rem; }
+  .esp-area li { display: flex; align-items: center; gap: .7rem; font-weight: 600; }
+</style>

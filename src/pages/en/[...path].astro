@@ -1,0 +1,13 @@
+---
+// Inner pages and services in English. Paths come from src/i18n/routes.ts.
+import InnerPage from '../../components/InnerPage.astro';
+import ServicePage from '../../components/ServicePage.astro';
+import { getPaginas, getServicios, pathOfPagina, pathOfServicio, toParam } from '../../lib/paginas';
+export async function getStaticPaths() {
+  const pages = (await getPaginas('en')).map((p) => ({ params: { path: toParam(pathOfPagina(p)) }, props: { kind: 'pagina' as const, p } }));
+  const services = (await getServicios('en')).map((s) => ({ params: { path: toParam(pathOfServicio(s)) }, props: { kind: 'servicio' as const, s } }));
+  return [...pages, ...services];
+}
+const props = Astro.props as any;
+---
+{props.kind === 'pagina' ? <InnerPage p={props.p} lang="en" /> : <ServicePage s={props.s} lang="en" />}
