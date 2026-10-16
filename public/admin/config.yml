@@ -267,7 +267,7 @@ collections:
             hint: Ponga primero el año más reciente.
             fields:
               - { label: Año, name: anio, widget: string }
-              - { label: Archivo PDF o enlace, name: archivo, widget: file, choose_url: true }
+              - { label: Archivo PDF, enlace o página, name: archivo, widget: file, choose_url: true, hint: 'Suba un PDF, pegue un enlace, o escriba el nombre de una página del sitio (por ejemplo politicas o datos).' }
           - label: Otros documentos
             name: documentos
             label_singular: documento
@@ -276,7 +276,7 @@ collections:
             fields:
               - { label: Título, name: titulo, widget: string }
               - { label: Título en inglés, name: titulo_en, widget: string }
-              - { label: Archivo PDF o enlace, name: archivo, widget: file, choose_url: true }
+              - { label: Archivo PDF, enlace o página, name: archivo, widget: file, choose_url: true, hint: 'Suba un PDF, pegue un enlace, o escriba el nombre de una página del sitio (por ejemplo politicas o datos).' }
 
           - label: Categorías de la Ley 1712 (página de transparencia)
             name: secciones
@@ -300,7 +300,7 @@ collections:
                     widget: select
                     required: false
                     hint: Elija una página del sitio, o deje vacío y use el campo de archivo.
-                    options: ['inicio', 'noticias', 'servicios', 'pacientes', 'cita', 'antes', 'resultados', 'derechos', 'faq', 'asociacion', 'educacion', 'visitantes', 'nosotros', 'calidad', 'equipo', 'empleo', 'bienestar', 'transparencia', 'entidades', 'tributarios', 'contacto', 'datos', 'accesibilidad', 'mapa']
+                    options: ['inicio', 'noticias', 'servicios', 'pacientes', 'cita', 'antes', 'resultados', 'derechos', 'faq', 'asociacion', 'educacion', 'visitantes', 'nosotros', 'direccionamiento', 'calidad', 'equipo', 'empleo', 'bienestar', 'transparencia', 'politicas', 'entidades', 'tributarios', 'contacto', 'datos', 'accesibilidad', 'mapa']
                   - { label: Archivo PDF o enlace, name: archivo, widget: file, required: false, choose_url: true, hint: 'Escriba PQRS para enlazar el formulario de PQRS.' }
 
   # Las páginas y los servicios ya existen; desde aquí se editan sus textos.
@@ -331,6 +331,10 @@ collections:
       - name: es-nosotros-calidad
         label: "Calidad y reconocimientos"
         file: src/content/paginas/es/nosotros/calidad.md
+        fields: *campos_pagina
+      - name: es-nosotros-direccionamiento-estrategico
+        label: "Direccionamiento estratégico (misión y visión)"
+        file: src/content/paginas/es/nosotros/direccionamiento-estrategico.md
         fields: *campos_pagina
       - name: es-nosotros-equipo
         label: "Nuestro equipo"
@@ -396,6 +400,10 @@ collections:
         label: "Directorio de entidades"
         file: src/content/paginas/es/transparencia/directorio-de-entidades.md
         fields: *campos_pagina
+      - name: es-transparencia-politicas-institucionales
+        label: "Políticas institucionales"
+        file: src/content/paginas/es/transparencia/politicas-institucionales.md
+        fields: *campos_pagina
       - name: es-transparencia-index
         label: "Transparencia y acceso a la información pública"
         file: src/content/paginas/es/transparencia/index.md
@@ -413,6 +421,10 @@ collections:
       - name: en-about-index
         label: "Who we are"
         file: src/content/paginas/en/about/index.md
+        fields: *campos_pagina
+      - name: en-about-mission-and-vision
+        label: "Mission and vision"
+        file: src/content/paginas/en/about/mission-and-vision.md
         fields: *campos_pagina
       - name: en-about-our-team
         label: "Our team"
@@ -481,6 +493,10 @@ collections:
       - name: en-services
         label: "Our services"
         file: src/content/paginas/en/services.md
+        fields: *campos_pagina
+      - name: en-transparency-institutional-policies
+        label: "Institutional policies"
+        file: src/content/paginas/en/transparency/institutional-policies.md
         fields: *campos_pagina
       - name: en-transparency-index
         label: "Transparency and access to public information"

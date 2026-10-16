@@ -33,10 +33,7 @@ export const links = {
   especialistas: 'https://sefcb.co/especialistas/',
   calidad: 'https://sefcb.co/calidad-certificada/',
   empleo: 'https://sefcb.co/trabaje-con-nosotros/',
-  politicas: 'https://sefcb.co/politicas-institucionales/',
   transparencia: 'https://sefcb.co/quienes-somos/transparencia/',
-  datos: 'https://drive.google.com/file/d/1DgnyTj1MBxcLUqfHnFqFHKkCqo9JcCYW/view',
-  terminos: 'https://drive.google.com/file/d/17FhYgu1wQUTcpEwh__AtMww4Mp8CRJ7Z/view',
   etica: 'https://drive.google.com/file/d/1mjmSa6US-DnnrB_JF4nMs3MpUDXhBRGx/view',
   informe2021: 'https://drive.google.com/file/d/1SNWkUpquVoad-aOBB1pIlWIP16VLRfy2/view',
 };
@@ -301,7 +298,7 @@ const es = {
     cols: [
       { title: 'Pacientes', items: [['Cómo pedir una cita', 'cita'], ['Antes de su atención', 'antes'], ['Resultados e historia clínica', 'resultados'], ['Derechos y deberes', 'derechos'], ['Preguntas frecuentes', 'faq'], ['PQRS', 'pqrs']] },
       { title: 'Institución', items: [['Quiénes somos', 'nosotros'], ['Nuestro equipo', 'equipo'], ['Calidad', 'calidad'], ['Trabaje con nosotros', 'empleo'], ['Transparencia', 'transparencia'], ['Noticias', 'noticias']] },
-      { title: 'Legal', items: [['Política de tratamiento de datos', 'datos'], ['Términos y condiciones', 'terminos'], ['Código de ética', 'etica'], ['Accesibilidad', 'accesibilidad'], ['Mapa del sitio', 'mapa']] },
+      { title: 'Legal', items: [['Política de tratamiento de datos', 'datos'], ['Políticas institucionales', 'politicas'], ['Código de ética', 'etica'], ['Accesibilidad', 'accesibilidad'], ['Mapa del sitio', 'mapa']] },
     ],
     social: 'Redes sociales',
     rights: 'Todos los derechos reservados.',
@@ -570,7 +567,7 @@ const en: Content = {
     cols: [
       { title: 'Patients', items: [['Booking an appointment', 'cita'], ['Before your visit', 'antes'], ['Results and medical records', 'resultados'], ['Rights and responsibilities', 'derechos'], ['FAQ', 'faq'], ['Feedback', 'pqrs']] },
       { title: 'About', items: [['Who we are', 'nosotros'], ['Our team', 'equipo'], ['Quality', 'calidad'], ['Careers', 'empleo'], ['Transparency', 'transparencia'], ['News', 'noticias']] },
-      { title: 'Legal', items: [['Personal data policy', 'datos'], ['Terms and conditions', 'terminos'], ['Code of ethics', 'etica'], ['Accessibility', 'accesibilidad'], ['Site map', 'mapa']] },
+      { title: 'Legal', items: [['Personal data policy', 'datos'], ['Institutional policies', 'politicas'], ['Code of ethics', 'etica'], ['Accessibility', 'accesibilidad'], ['Site map', 'mapa']] },
     ],
     social: 'Social media',
     rights: 'All rights reserved.',

@@ -58,10 +58,10 @@
 /pacientes/ingresar https://app.sefcb.co/pacientes/ingresar?locale=es 301
 /quienes-somos/ /nosotros/ 301
 /quienes-somos /nosotros/ 301
-/direccionamiento-estrategico/ /nosotros/ 301
-/direccionamiento-estrategico /nosotros/ 301
-/planeacion-estrategica/ /nosotros/ 301
-/planeacion-estrategica /nosotros/ 301
+/direccionamiento-estrategico/ /nosotros/direccionamiento-estrategico/ 301
+/direccionamiento-estrategico /nosotros/direccionamiento-estrategico/ 301
+/planeacion-estrategica/ /nosotros/direccionamiento-estrategico/ 301
+/planeacion-estrategica /nosotros/direccionamiento-estrategico/ 301
 /sistema-integrado-de-gestion/ /nosotros/calidad/ 301
 /sistema-integrado-de-gestion /nosotros/calidad/ 301
 /calidad-certificada/ /nosotros/calidad/ 301
@@ -84,8 +84,8 @@
 /direccionamiento-estrategico/estados-financieros-ano-2019 /transparencia/ 301
 /directorio-de-entidades/ /transparencia/directorio-de-entidades/ 301
 /directorio-de-entidades /transparencia/directorio-de-entidades/ 301
-/politicas-institucionales/ /transparencia/ 301
-/politicas-institucionales /transparencia/ 301
+/politicas-institucionales/ /transparencia/politicas-institucionales/ 301
+/politicas-institucionales /transparencia/politicas-institucionales/ 301
 /certificados-tributarios/ /transparencia/certificados-tributarios/ 301
 /certificados-tributarios /transparencia/certificados-tributarios/ 301
 /informacion-para-grupos-especificos/ /transparencia/ 301

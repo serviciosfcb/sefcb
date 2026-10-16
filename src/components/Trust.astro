@@ -2,7 +2,7 @@
 import type { Lang } from '../i18n/content';
 import { content, links, financials, documents } from '../i18n/content';
 import Icon from './Icon.astro';
-import { to } from '../i18n/routes';
+import { to, isExternal } from '../i18n/routes';
 interface Props { lang: Lang }
 const { lang } = Astro.props;
 const q = content[lang].quality;
@@ -38,14 +38,18 @@ const tr = content[lang].transparency;
             {financials.map((f) => <a href={f.href} rel="noopener" aria-label={`${tr.financials} ${f.year}`}>{f.year}</a>)}
           </span>
         </li>
-        {documents.map((d) => (
-          <li>
-            <a class="tr-fila" href={d.archivo} rel={d.archivo.startsWith('http') ? 'noopener' : undefined}>
-              <span class="tr-nombre"><Icon name="document" />{lang === 'en' ? d.titulo_en || d.titulo : d.titulo}</span>
-              <Icon name={d.archivo.startsWith('http') ? 'external' : 'arrow'} />
-            </a>
-          </li>
-        ))}
+        {documents.map((d) => {
+          const href = /^(https?:|\/)/.test(d.archivo) ? d.archivo : to(lang, d.archivo);
+          const ext = isExternal(href);
+          return (
+            <li>
+              <a class="tr-fila" href={href} rel={ext ? 'noopener' : undefined}>
+                <span class="tr-nombre"><Icon name="document" />{lang === 'en' ? d.titulo_en || d.titulo : d.titulo}</span>
+                <Icon name={ext ? 'external' : 'arrow'} />
+              </a>
+            </li>
+          );
+        })}
       </ul>
     </div>
   </div>

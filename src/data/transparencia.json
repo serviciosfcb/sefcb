@@ -35,12 +35,12 @@
     {
       "titulo": "Políticas institucionales",
       "titulo_en": "Institutional policies",
-      "archivo": "https://sefcb.co/politicas-institucionales/"
+      "archivo": "politicas"
     },
     {
       "titulo": "Política de tratamiento de datos",
       "titulo_en": "Personal data policy",
-      "archivo": "https://drive.google.com/file/d/1DgnyTj1MBxcLUqfHnFqFHKkCqo9JcCYW/view"
+      "archivo": "datos"
     },
     {
       "titulo": "SIRED",
@@ -134,7 +134,7 @@
         {
           "titulo": "Misión y visión",
           "titulo_en": "Mission and vision",
-          "ruta": "",
+          "ruta": "direccionamiento",
           "archivo": ""
         },
         {
@@ -219,7 +219,7 @@
         {
           "titulo": "Políticas, lineamientos y manuales",
           "titulo_en": "Policies, guidelines and manuals",
-          "ruta": "",
+          "ruta": "politicas",
           "archivo": ""
         },
         {
