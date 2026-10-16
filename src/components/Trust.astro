@@ -1,6 +1,6 @@
 ---
 import type { Lang } from '../i18n/content';
-import { content, links, financials } from '../i18n/content';
+import { content, links, financials, documents } from '../i18n/content';
 import Icon from './Icon.astro';
 interface Props { lang: Lang }
 const { lang } = Astro.props;
@@ -37,11 +37,14 @@ const tr = content[lang].transparency;
             {financials.map((f) => <a href={f.href} rel="noopener" aria-label={`${tr.financials} ${f.year}`}>{f.year}</a>)}
           </span>
         </li>
-        <li><a class="tr-fila" href={links.informe2021} rel="noopener"><span class="tr-nombre"><Icon name="document" />{tr.report}</span><Icon name="external" /></a></li>
-        <li><a class="tr-fila" href={links.etica} rel="noopener"><span class="tr-nombre"><Icon name="document" />{tr.ethics}</span><Icon name="external" /></a></li>
-        <li><a class="tr-fila" href={links.politicas}><span class="tr-nombre"><Icon name="document" />{tr.policies}</span><Icon name="arrow" /></a></li>
-        <li><a class="tr-fila" href={links.datos} rel="noopener"><span class="tr-nombre"><Icon name="document" />{tr.data}</span><Icon name="external" /></a></li>
-        <li><a class="tr-fila" href={links.sired} rel="noopener"><span class="tr-nombre"><Icon name="document" />{tr.sired}</span><Icon name="external" /></a></li>
+        {documents.map((d) => (
+          <li>
+            <a class="tr-fila" href={d.archivo} rel={d.archivo.startsWith('http') ? 'noopener' : undefined}>
+              <span class="tr-nombre"><Icon name="document" />{lang === 'en' ? d.titulo_en || d.titulo : d.titulo}</span>
+              <Icon name={d.archivo.startsWith('http') ? 'external' : 'arrow'} />
+            </a>
+          </li>
+        ))}
       </ul>
     </div>
   </div>

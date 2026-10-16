@@ -1,0 +1,67 @@
+---
+import type { Lang } from '../i18n/content';
+import { content } from '../i18n/content';
+import { render } from 'astro:content';
+import { type Noticia, slugOf, textos, fecha, isoDate, bodyEn } from '../lib/noticias';
+import Base from '../layouts/Base.astro';
+import PageHero from './PageHero.astro';
+import Icon from './Icon.astro';
+interface Props { n: Noticia; lang: Lang }
+const { n, lang } = Astro.props;
+const t = content[lang].news;
+const x = textos(n, lang);
+const es = lang === 'es';
+const slug = slugOf(n);
+const path = `${t.base}${slug}/`;
+const altPath = es ? `/en/news/${slug}/` : `/noticias/${slug}/`;
+const { Content } = await render(n);
+const html = !es && n.data.body_en ? bodyEn(n) : '';
+const ld = {
+  '@context': 'https://schema.org',
+  '@type': 'NewsArticle',
+  headline: x.title,
+  description: x.summary,
+  datePublished: isoDate(n.data.date),
+  inLanguage: x.contentLang,
+  image: n.data.image ? [`https://sefcb.co${n.data.image}`] : undefined,
+  publisher: { '@type': 'MedicalClinic', name: 'Servicios Especializados del Corazón', url: 'https://sefcb.co' },
+  mainEntityOfPage: `https://sefcb.co${path}`,
+};
+---
+<Base lang={lang} title={x.title} description={x.summary} path={path} altPath={altPath} type="article">
+  <script slot="head" type="application/ld+json" set:html={JSON.stringify(ld)} />
+  <PageHero
+    title={x.title}
+    lead={x.summary}
+    lang={x.contentLang !== lang ? x.contentLang : undefined}
+    meta={fecha(n.data.date, lang)}
+    crumbsLabel={es ? 'Ruta de navegación' : 'Breadcrumb'}
+    crumbs={[{ label: es ? 'Inicio' : 'Home', href: es ? '/' : '/en/' }, { label: t.title, href: t.base }, { label: x.title }]}
+  />
+  <article class="articulo seccion">
+    <div class="contenedor art-in">
+      {!x.translated && <p class="aviso-idioma">{t.onlySpanish}</p>}
+      {n.data.image && (
+        <figure class="art-figura" data-reveal>
+          <img src={n.data.image} alt={x.imageAlt} decoding="async" />
+        </figure>
+      )}
+      <div class="prosa" lang={x.contentLang !== lang ? x.contentLang : undefined}>
+        {html ? <Fragment set:html={html} /> : <Content />}
+      </div>
+      <p class="art-volver"><a class="enlace-flecha" href={t.base}><Icon name="arrow" class="flecha-atras" />{t.back}</a></p>
+      <time class="visualmente-oculto" datetime={isoDate(n.data.date)}>{fecha(n.data.date, lang)}</time>
+    </div>
+  </article>
+</Base>
+
+<style>
+  .articulo { background: var(--papel); padding-top: clamp(3rem, 5vw, 4.5rem); }
+  .art-in { display: grid; gap: 2rem; }
+  .art-in > * { max-width: 44rem; }
+  .aviso-idioma { padding: .9rem 1.1rem; border-radius: var(--radio-s); background: var(--niebla); color: var(--tinta-2); font-weight: 600; }
+  .art-figura { max-width: 56rem !important; border-radius: var(--radio-l); overflow: hidden; }
+  .art-figura img { width: 100%; height: auto; }
+  .art-volver { padding-top: 1.5rem; border-top: 1px solid var(--linea); }
+  .art-volver :global(.flecha-atras) { transform: rotate(180deg); }
+</style>

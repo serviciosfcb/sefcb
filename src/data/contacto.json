@@ -1,0 +1,36 @@
+{
+  "telefonos": {
+    "citas": "+57 320 936 2904",
+    "atencion1": "320 274 5021",
+    "atencion2": "320 274 5025",
+    "pbx": "(607) 595 6075",
+    "etica": "322 790 1271"
+  },
+  "whatsapp": "573209362904",
+  "correos": {
+    "etica": "oficialdecumplimiento@sefcb.co",
+    "judicial": "gerencia@sefcb.co"
+  },
+  "sedes": [
+    {
+      "nombre": "Sede principal",
+      "nombre_en": "Main location",
+      "direccion": "Calle 19 No. 1-44, Barrio Blanco",
+      "direccion_en": "Calle 19 No. 1-44, Barrio Blanco",
+      "nota": "Consulta, cardiología no invasiva y medicina nuclear",
+      "nota_en": "Consultations, non-invasive cardiology and nuclear medicine",
+      "mapa": "https://www.google.com/maps/search/?api=1&query=Calle+19+1-44+Barrio+Blanco+C%C3%BAcuta",
+      "horarios": []
+    },
+    {
+      "nombre": "Sede 2",
+      "nombre_en": "Location 2",
+      "direccion": "Avenida 11E No. 8-41, 2.º piso",
+      "direccion_en": "Avenida 11E No. 8-41, 2nd floor",
+      "nota": "Sala de hemodinamia",
+      "nota_en": "Cardiac catheterization lab",
+      "mapa": "https://www.google.com/maps/search/?api=1&query=Avenida+11E+8-41+C%C3%BAcuta",
+      "horarios": []
+    }
+  ]
+}

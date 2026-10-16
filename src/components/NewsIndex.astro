@@ -1,0 +1,42 @@
+---
+import type { Lang } from '../i18n/content';
+import { content } from '../i18n/content';
+import { getNoticias } from '../lib/noticias';
+import Base from '../layouts/Base.astro';
+import PageHero from './PageHero.astro';
+import NewsCard from './NewsCard.astro';
+interface Props { lang: Lang }
+const { lang } = Astro.props;
+const t = content[lang].news;
+const items = await getNoticias();
+const es = lang === 'es';
+const home = es ? '/' : '/en/';
+---
+<Base lang={lang} title={t.title} description={t.lead} path={t.base} altPath={es ? '/en/news/' : '/noticias/'}>
+  <PageHero
+    title={t.title}
+    lead={t.lead}
+    crumbsLabel={es ? 'Ruta de navegación' : 'Breadcrumb'}
+    crumbs={[{ label: es ? 'Inicio' : 'Home', href: home }, { label: t.title }]}
+  />
+  <section class="lista seccion" aria-label={t.title}>
+    <div class="contenedor">
+      {items.length > 0 ? (
+        <ul class="lista-grid" data-stagger>
+          {items.map((n) => <li data-stagger-item><NewsCard n={n} lang={lang} headingLevel="h2" /></li>)}
+        </ul>
+      ) : (
+        <p class="vacio">{t.empty}</p>
+      )}
+    </div>
+  </section>
+</Base>
+
+<style>
+  .lista { background: var(--papel); padding-top: clamp(3rem, 5vw, 4.5rem); }
+  .lista-grid { list-style: none; display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 1.4rem; }
+  .lista-grid li { display: grid; }
+  .vacio { font-size: var(--t-3); color: var(--tinta-2); }
+  @media (max-width: 960px) { .lista-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
+  @media (max-width: 640px) { .lista-grid { grid-template-columns: 1fr; } }
+</style>

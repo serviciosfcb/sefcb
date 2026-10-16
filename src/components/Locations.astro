@@ -1,11 +1,11 @@
 ---
 import type { Lang } from '../i18n/content';
-import { content, links, phones, emails } from '../i18n/content';
+import { content, links, phones, emails, sedes } from '../i18n/content';
 import Icon from './Icon.astro';
 interface Props { lang: Lang }
 const { lang } = Astro.props;
 const t = content[lang].locations;
-const maps = links as Record<string, string>;
+const en = lang === 'en';
 const contacts = [
   { label: t.citas, value: phones.citas.label, href: links.whatsapp, icon: 'whatsapp', copy: phones.citas.label },
   { label: t.atencion, value: `${phones.atencion1.label} · ${phones.atencion2.label}`, href: `tel:${phones.atencion1.tel}`, icon: 'phone', copy: `${phones.atencion1.label} / ${phones.atencion2.label}` },
@@ -22,7 +22,7 @@ const contacts = [
     </header>
 
     <div class="sedes-grid">
-      {t.sedes.map((s, i) => (
+      {sedes.map((s, i) => (
         <article class="sede" data-reveal>
           <div class="sede-mapa decorativo" aria-hidden="true">
             <svg viewBox="0 0 400 220" preserveAspectRatio="xMidYMid slice">
@@ -40,10 +40,20 @@ const contacts = [
             </svg>
           </div>
           <div class="sede-txt">
-            <h3>{s.name}</h3>
-            <p class="sede-dir"><Icon name="pin" />{s.address}</p>
-            <p class="sede-nota">{s.note}</p>
-            <a class="enlace-flecha" href={maps[s.map]} rel="noopener">{t.route}<Icon name="external" /></a>
+            <h3>{en ? s.nombre_en || s.nombre : s.nombre}</h3>
+            <p class="sede-dir"><Icon name="pin" />{en ? s.direccion_en || s.direccion : s.direccion}</p>
+            <p class="sede-nota">{en ? s.nota_en || s.nota : s.nota}</p>
+            {s.horarios.length > 0 && (
+              <div class="horario">
+                <h4>{t.hours}</h4>
+                <dl>
+                  {s.horarios.map((h) => (
+                    <div><dt>{en ? h.dias_en || h.dias : h.dias}</dt><dd>{h.horas}</dd></div>
+                  ))}
+                </dl>
+              </div>
+            )}
+            <a class="enlace-flecha" href={s.mapa} rel="noopener">{t.route}<Icon name="external" /></a>
           </div>
         </article>
       ))}
@@ -108,6 +118,12 @@ const contacts = [
   .sede-dir { display: flex; gap: .5rem; align-items: flex-start; font-weight: 700; font-size: var(--t-2); }
   .sede-dir :global(.icon) { width: 1.3rem; height: 1.3rem; color: var(--rojo); flex: none; margin-top: .15rem; }
   .sede-nota { color: var(--tinta-2); }
+  .horario { border-top: 1px solid var(--linea); padding-top: .9rem; margin-top: .3rem; display: grid; gap: .5rem; }
+  .horario h4 { font-family: var(--texto); font-size: var(--t-0); font-weight: 700; letter-spacing: .01em; }
+  .horario dl { display: grid; gap: .35rem; }
+  .horario dl div { display: flex; justify-content: space-between; gap: 1rem; font-size: var(--t-0); }
+  .horario dt { color: var(--tinta-2); }
+  .horario dd { margin: 0; font-weight: 700; font-variant-numeric: tabular-nums; text-align: right; }
 
   .contacto { margin-top: 1.4rem; border-radius: var(--radio-xl); background: var(--papel); border: 1px solid var(--linea); padding: clamp(1.6rem, 3vw, 2.6rem); }
   .contacto h3 { font-size: var(--t-4); margin-bottom: 1rem; }

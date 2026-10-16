@@ -1,0 +1,192 @@
+# Configuración del panel de contenido (Decap CMS)
+# Cada cambio guardado en el panel se convierte en un commit en GitHub,
+# y Cloudflare Pages publica el sitio actualizado en uno o dos minutos.
+
+locale: es
+
+backend:
+  name: github
+  repo: serviciosfcb/sefcb
+  branch: main
+  # Al lanzar el sitio en sefcb.co, cambiar estas direcciones y la de la app OAuth de GitHub
+  base_url: https://sefcb.pages.dev
+  auth_endpoint: api/auth
+  commit_messages:
+    create: 'Panel: crear {{collection}} "{{slug}}"'
+    update: 'Panel: actualizar {{collection}} "{{slug}}"'
+    delete: 'Panel: eliminar {{collection}} "{{slug}}"'
+    uploadMedia: 'Panel: subir "{{path}}"'
+    deleteMedia: 'Panel: eliminar "{{path}}"'
+
+site_url: https://sefcb.pages.dev
+display_url: https://sefcb.pages.dev
+logo_url: /apple-touch-icon.png
+
+media_folder: public/uploads
+public_folder: /uploads
+
+slug:
+  encoding: ascii
+  clean_accents: true
+  sanitize_replacement: '-'
+
+collections:
+  - name: noticias
+    label: Noticias
+    label_singular: noticia
+    description: Novedades, campañas y avisos para pacientes. Aparecen en la página de inicio y en la sección Noticias.
+    folder: src/content/noticias
+    create: true
+    slug: '{{year}}-{{month}}-{{day}}-{{slug}}'
+    summary: "{{title}} · {{date | date('DD/MM/YYYY')}}"
+    sortable_fields: ['date', 'title']
+    view_filters:
+      - label: Borradores
+        field: draft
+        pattern: true
+    editor:
+      preview: false
+    fields:
+      - label: Título
+        name: title
+        widget: string
+      - label: Fecha de publicación
+        name: date
+        widget: datetime
+        format: 'YYYY-MM-DD'
+        date_format: 'DD/MM/YYYY'
+        time_format: false
+        picker_utc: true
+      - label: Resumen
+        name: summary
+        widget: text
+        hint: Una o dos frases. Se muestra en el listado y en los resultados de Google.
+      - label: Foto
+        name: image
+        widget: image
+        required: false
+        choose_url: false
+        hint: Opcional. Use fotos propias y horizontales, de al menos 1600 px de ancho.
+      - label: Descripción de la foto
+        name: imageAlt
+        widget: string
+        required: false
+        hint: Qué se ve en la foto, para personas con discapacidad visual. Ej. "Equipo de enfermería en la sala de hemodinamia".
+      - label: Contenido
+        name: body
+        widget: markdown
+        buttons: [bold, italic, link, heading-two, heading-three, bulleted-list, numbered-list, quote]
+        editor_components: [image]
+      - label: Título en inglés
+        name: title_en
+        widget: string
+        required: false
+        hint: Opcional. Si lo deja vacío, la versión en inglés del sitio muestra la noticia en español.
+      - label: Resumen en inglés
+        name: summary_en
+        widget: text
+        required: false
+      - label: Descripción de la foto en inglés
+        name: imageAlt_en
+        widget: string
+        required: false
+      - label: Contenido en inglés
+        name: body_en
+        widget: markdown
+        required: false
+        buttons: [bold, italic, link, heading-two, heading-three, bulleted-list, numbered-list, quote]
+        editor_components: []
+      - label: Guardar como borrador (no publicar todavía)
+        name: draft
+        widget: boolean
+        default: false
+
+  - name: datos
+    label: Datos del sitio
+    description: Teléfonos, sedes, horarios, convenios y documentos de transparencia.
+    editor:
+      preview: false
+    files:
+      - name: contacto
+        label: Contacto, sedes y horarios
+        file: src/data/contacto.json
+        fields:
+          - label: Teléfonos
+            name: telefonos
+            widget: object
+            collapsed: false
+            hint: Escríbalos como deben verse en el sitio.
+            fields:
+              - { label: Central de citas y WhatsApp, name: citas, widget: string }
+              - { label: Línea de atención 1, name: atencion1, widget: string }
+              - { label: Línea de atención 2, name: atencion2, widget: string }
+              - { label: PBX, name: pbx, widget: string }
+              - { label: Línea ética y de transparencia, name: etica, widget: string }
+          - label: Número de WhatsApp
+            name: whatsapp
+            widget: string
+            hint: Solo números, empezando por 57. Ej. 573209362904
+            pattern: ['^57[0-9]{10}$', 'Escriba 57 seguido de los 10 dígitos, sin espacios ni signos.']
+          - label: Correos
+            name: correos
+            widget: object
+            collapsed: false
+            fields:
+              - { label: Línea ética y de transparencia, name: etica, widget: string }
+              - { label: Notificaciones judiciales, name: judicial, widget: string }
+          - label: Sedes
+            name: sedes
+            label_singular: sede
+            widget: list
+            summary: '{{fields.nombre}}'
+            fields:
+              - { label: Nombre, name: nombre, widget: string }
+              - { label: Nombre en inglés, name: nombre_en, widget: string }
+              - { label: Dirección, name: direccion, widget: string }
+              - { label: Dirección en inglés, name: direccion_en, widget: string }
+              - { label: Servicios en esta sede, name: nota, widget: string }
+              - { label: 'Servicios en esta sede (inglés)', name: nota_en, widget: string }
+              - { label: Enlace de Google Maps, name: mapa, widget: string }
+              - label: Horarios
+                name: horarios
+                label_singular: horario
+                widget: list
+                required: false
+                summary: '{{fields.dias}}: {{fields.horas}}'
+                fields:
+                  - { label: Días, name: dias, widget: string, hint: 'Ej. Lunes a viernes' }
+                  - { label: Días en inglés, name: dias_en, widget: string, hint: 'Ej. Monday to Friday' }
+                  - { label: Horario, name: horas, widget: string, hint: 'Ej. 7:00 a. m. – 5:00 p. m.' }
+
+      - name: convenios
+        label: Convenios
+        file: src/data/convenios.json
+        fields:
+          - label: Entidades con convenio
+            name: lista
+            label_singular: entidad
+            widget: list
+            field: { label: Nombre, name: nombre, widget: string }
+
+      - name: transparencia
+        label: Transparencia
+        file: src/data/transparencia.json
+        fields:
+          - label: Estados financieros
+            name: estados_financieros
+            label_singular: año
+            widget: list
+            summary: '{{fields.anio}}'
+            hint: Ponga primero el año más reciente.
+            fields:
+              - { label: Año, name: anio, widget: string }
+              - { label: Archivo PDF o enlace, name: archivo, widget: file, choose_url: true }
+          - label: Otros documentos
+            name: documentos
+            label_singular: documento
+            widget: list
+            summary: '{{fields.titulo}}'
+            fields:
+              - { label: Título, name: titulo, widget: string }
+              - { label: Título en inglés, name: titulo_en, widget: string }
+              - { label: Archivo PDF o enlace, name: archivo, widget: file, choose_url: true }

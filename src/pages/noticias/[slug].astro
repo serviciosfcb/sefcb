@@ -1,0 +1,10 @@
+---
+import NewsArticle from '../../components/NewsArticle.astro';
+import { getNoticias, slugOf } from '../../lib/noticias';
+export async function getStaticPaths() {
+  const list = await getNoticias();
+  return list.map((n) => ({ params: { slug: slugOf(n) }, props: { n } }));
+}
+const { n } = Astro.props;
+---
+<NewsArticle lang="es" n={n} />

@@ -1,0 +1,53 @@
+---
+// Banda oscura de inicio para páginas internas: miga de pan, título y entradilla.
+interface Crumb { label: string; href?: string }
+interface Props { title: string; lead?: string; crumbs?: Crumb[]; meta?: string; lang?: string; crumbsLabel: string }
+const { title, lead, crumbs = [], meta, lang, crumbsLabel } = Astro.props;
+---
+<section class="cabecera-pagina oscuro">
+  <div class="cp-fondo decorativo" aria-hidden="true"></div>
+  <div class="contenedor cp-in">
+    {crumbs.length > 0 && (
+      <nav class="migas" aria-label={crumbsLabel}>
+        <ol>
+          {crumbs.map((c) => (
+            <li>{c.href ? <a href={c.href}>{c.label}</a> : <span aria-current="page">{c.label}</span>}</li>
+          ))}
+        </ol>
+      </nav>
+    )}
+    {meta && <p class="cp-meta">{meta}</p>}
+    <h1 data-split lang={lang}>{title}</h1>
+    {lead && <p class="cp-lead" data-reveal lang={lang}>{lead}</p>}
+  </div>
+</section>
+
+<style>
+  .cabecera-pagina {
+    position: relative; isolation: isolate; overflow: hidden;
+    padding-top: calc(var(--alto-cabecera) + 2.6rem + 3.5rem + env(safe-area-inset-top, 0px));
+    padding-bottom: clamp(3.5rem, 6vw, 5.5rem);
+  }
+  .cp-fondo { position: absolute; inset: 0; z-index: -1;
+    background:
+      radial-gradient(36rem 26rem at 85% 20%, rgb(159 39 40 / .32), transparent 70%),
+      linear-gradient(180deg, #1c1a19, #171514);
+  }
+  .cp-fondo::before {
+    content: ''; position: absolute; inset: 0;
+    background-image: linear-gradient(rgb(255 255 255 / .04) 1px, transparent 1px), linear-gradient(90deg, rgb(255 255 255 / .04) 1px, transparent 1px);
+    background-size: 40px 40px;
+    mask-image: linear-gradient(180deg, #000, transparent 90%);
+  }
+  .cp-in { display: grid; gap: 1.1rem; }
+  .migas ol { list-style: none; display: flex; flex-wrap: wrap; gap: .4rem; font-size: var(--t-0); color: var(--sobre-oscuro-2); }
+  .migas li + li::before { content: '/'; margin-right: .4rem; opacity: .5; }
+  .migas a { color: var(--sobre-oscuro-2); text-decoration: none; }
+  .migas a:hover { color: #fff; text-decoration: underline; text-underline-offset: .2em; }
+  .migas [aria-current] { color: #fff; }
+  .cp-meta { color: var(--rojo-luz); font-weight: 700; font-size: var(--t-0); letter-spacing: .02em; }
+  h1 { font-size: var(--t-6); color: #fff; max-width: 52rem; }
+  .cp-lead { font-size: var(--t-3); color: var(--sobre-oscuro-2); line-height: 1.45; max-width: 40rem; }
+  :global(:root[data-contrast='high']) .cp-fondo { display: none; }
+  :global(:root[data-contrast='high']) .cabecera-pagina { background: #000; }
+</style>

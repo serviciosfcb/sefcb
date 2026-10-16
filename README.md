@@ -20,8 +20,9 @@ Sitio institucional de la IPS (sefcb.co), en español e inglés, construido con 
 
 | Qué quiero cambiar | Archivo |
 | --- | --- |
-| Cualquier texto del sitio, en español o en inglés | `src/i18n/content.ts` |
-| Teléfonos, correos, enlaces externos y estados financieros | `src/i18n/content.ts` (al inicio del archivo) |
+| Noticias, teléfonos, horarios, convenios y documentos de transparencia | Panel de contenido en `/admin` |
+| Textos fijos del sitio, en español o en inglés | `src/i18n/content.ts` |
+| Enlaces externos (portal, PQRS, pagos, redes) | `src/i18n/content.ts` (al inicio del archivo) |
 | Colores, tipografía y tamaños | `src/styles/global.css` (variables en `:root`) |
 | Logo | `src/assets/logo-color.png` y `src/assets/logo-blanco.png` |
 | Ícono del navegador | `public/favicon-32.png` y `public/apple-touch-icon.png` |
@@ -29,18 +30,50 @@ Sitio institucional de la IPS (sefcb.co), en español e inglés, construido con 
 
 Cada texto existe dos veces en `content.ts`: una en el bloque `es` y otra en el bloque `en`. Al cambiar uno, cambie también su traducción.
 
+## Panel de contenido (`/admin`)
+
+Las personas sin conocimientos técnicos editan desde `https://sefcb.pages.dev/admin` (luego `https://sefcb.co/admin`), con su cuenta de GitHub. Cada cambio guardado se convierte en un commit en este repositorio, y Cloudflare publica el sitio en uno o dos minutos.
+
+Desde el panel se edita:
+
+- **Noticias** (`src/content/noticias/`): título, fecha, resumen, foto, contenido y su versión en inglés.
+- **Contacto, sedes y horarios** (`src/data/contacto.json`)
+- **Convenios** (`src/data/convenios.json`)
+- **Transparencia** (`src/data/transparencia.json`): estados financieros y otros documentos.
+
+Las fotos y PDF que se suben desde el panel quedan en `public/uploads/`.
+
+### Activación (una sola vez)
+
+1. En GitHub, en la cuenta `serviciosfcb`: Settings → Developer settings → OAuth Apps → New OAuth App.
+   - Homepage URL: `https://sefcb.pages.dev`
+   - Authorization callback URL: `https://sefcb.pages.dev/api/callback`
+2. Copie el Client ID y genere un Client secret.
+3. En Cloudflare Pages, proyecto `sefcb` → Settings → Variables and Secrets, agregue `GITHUB_CLIENT_ID` y `GITHUB_CLIENT_SECRET` (este último como secreto) y vuelva a desplegar.
+4. Cada persona que vaya a publicar necesita una cuenta de GitHub (con verificación en dos pasos) agregada como colaboradora del repositorio con permiso de escritura.
+
+### Al lanzar en sefcb.co
+
+- En `public/admin/config.yml`, cambie `base_url`, `site_url` y `display_url` a `https://sefcb.co`.
+- En la OAuth App de GitHub, cambie las dos direcciones a `https://sefcb.co`.
+
+El inicio de sesión lo resuelven `functions/api/auth.js` y `functions/api/callback.js` (Cloudflare Pages Functions).
+
 ## Estructura
 
 ```
 src/
-  i18n/content.ts      Todo el contenido, en los dos idiomas
+  i18n/content.ts      Textos fijos del sitio, en los dos idiomas
+  data/*.json          Contacto, sedes, convenios y transparencia (editables desde el panel)
+  content/noticias/    Noticias en Markdown (editables desde el panel)
   layouts/Base.astro   Estructura común: cabecera, pie, metadatos y datos para Google
   components/          Secciones de la página (héroe, servicios, contacto…)
   scripts/hero.ts      Animación del héroe: partículas del logo y trazo de ECG
   scripts/animations.ts Animaciones al hacer scroll (GSAP)
   styles/global.css    Sistema de diseño y modos de accesibilidad
-  pages/               Rutas: index.astro (español) y en/index.astro (inglés)
-public/                Archivos que se publican tal cual
+  pages/               Rutas: inicio y noticias en español, y lo mismo en /en/
+public/                Archivos que se publican tal cual (incluye admin/ y uploads/)
+functions/api/         Inicio de sesión del panel con GitHub
 scripts/preview.py     Arma una copia con rutas relativas para vistas previas
 ```
 

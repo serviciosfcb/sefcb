@@ -1,13 +1,13 @@
 ---
 import type { Lang } from '../i18n/content';
-import { content, links } from '../i18n/content';
+import { content, links, sedes } from '../i18n/content';
 import Icon from './Icon.astro';
 import ServiceVisual from './ServiceVisual.astro';
 interface Props { lang: Lang }
 const { lang } = Astro.props;
 const all = content[lang];
 const t = all.services;
-const labelsFor = (k: string) => k === 'obesidad' ? t.plate : k === 'consulta' ? t.sounds : k === 'transporte' ? all.locations.sedes.map((s) => s.name) : [];
+const labelsFor = (k: string) => k === 'obesidad' ? t.plate : k === 'consulta' ? t.sounds : k === 'transporte' ? sedes.map((s) => (lang === 'en' ? s.nombre_en || s.nombre : s.nombre)) : [];
 const total = String(t.items.length).padStart(2, '0');
 ---
 <section id="servicios" class="servicios seccion" aria-labelledby="servicios-titulo">

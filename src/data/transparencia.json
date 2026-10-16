@@ -1,0 +1,16 @@
+{
+  "estados_financieros": [
+    { "anio": "2025", "archivo": "https://drive.google.com/file/d/1AWqucUWWMS50gX7qbw-S08px_7hsy6mR/view" },
+    { "anio": "2024", "archivo": "https://drive.google.com/file/d/1zEyEftijdGdLYXav8tozrXAgHAtcYkci/view" },
+    { "anio": "2023", "archivo": "https://drive.google.com/file/d/1u6B1joHp4abMPiW7H_Efdd14rvnEHZHK/view" },
+    { "anio": "2022", "archivo": "https://drive.google.com/file/d/1SlAOzzhd0QAqpzQUmxngcuxz6HghGCeP/view" },
+    { "anio": "2021", "archivo": "https://drive.google.com/file/d/1TaRnfJLFVwvxLgdttEpDpnTf2Y1C6E-c/view" }
+  ],
+  "documentos": [
+    { "titulo": "Informe de gestión 2021", "titulo_en": "Management report 2021", "archivo": "https://drive.google.com/file/d/1SNWkUpquVoad-aOBB1pIlWIP16VLRfy2/view" },
+    { "titulo": "Código de ética y buen gobierno", "titulo_en": "Code of ethics and corporate governance", "archivo": "https://drive.google.com/file/d/1mjmSa6US-DnnrB_JF4nMs3MpUDXhBRGx/view" },
+    { "titulo": "Políticas institucionales", "titulo_en": "Institutional policies", "archivo": "https://sefcb.co/politicas-institucionales/" },
+    { "titulo": "Política de tratamiento de datos", "titulo_en": "Personal data policy", "archivo": "https://drive.google.com/file/d/1DgnyTj1MBxcLUqfHnFqFHKkCqo9JcCYW/view" },
+    { "titulo": "SIRED", "titulo_en": "SIRED", "archivo": "https://sites.google.com/sefcb.co/siredsefcb2" }
+  ]
+}

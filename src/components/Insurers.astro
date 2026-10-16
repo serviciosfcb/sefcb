@@ -5,7 +5,8 @@ import Icon from './Icon.astro';
 interface Props { lang: Lang }
 const { lang } = Astro.props;
 const t = content[lang].insurers;
-const fila1 = insurers.slice(0, 6), fila2 = insurers.slice(6);
+const mitad = Math.ceil(insurers.length / 2);
+const fila1 = insurers.slice(0, mitad), fila2 = insurers.slice(mitad);
 ---
 <section class="convenios seccion" aria-labelledby="convenios-titulo" data-marquee>
   <div class="contenedor conv-cab">

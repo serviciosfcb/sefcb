@@ -1,0 +1,42 @@
+---
+// Últimas noticias en la página de inicio. Si no hay noticias publicadas, la sección no aparece.
+import type { Lang } from '../i18n/content';
+import { content } from '../i18n/content';
+import { getNoticias } from '../lib/noticias';
+import NewsCard from './NewsCard.astro';
+import Icon from './Icon.astro';
+interface Props { lang: Lang }
+const { lang } = Astro.props;
+const t = content[lang].news;
+const items = (await getNoticias()).slice(0, 3);
+---
+{items.length > 0 && (
+  <section class="ultimas seccion" aria-labelledby="ultimas-titulo">
+    <div class="contenedor">
+      <div class="ult-cab">
+        <header class="sec-cab">
+          <h2 id="ultimas-titulo" data-split>{t.latest}</h2>
+          <p data-reveal>{t.lead}</p>
+        </header>
+        <a class="enlace-flecha" href={t.base} data-reveal>{t.all}<Icon name="arrow" /></a>
+      </div>
+      <ul class="ult-grid" data-stagger>
+        {items.map((n) => <li data-stagger-item><NewsCard n={n} lang={lang} /></li>)}
+      </ul>
+    </div>
+  </section>
+)}
+
+<style>
+  .ultimas { background: var(--niebla); }
+  .ult-cab { display: flex; align-items: end; justify-content: space-between; gap: 2rem; }
+  .ult-cab .enlace-flecha { margin-bottom: clamp(2.5rem, 2rem + 2vw, 4rem); white-space: nowrap; }
+  .ult-grid { list-style: none; display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 1.4rem; }
+  .ult-grid li { display: grid; }
+  @media (max-width: 960px) { .ult-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
+  @media (max-width: 640px) {
+    .ult-cab { display: grid; }
+    .ult-cab .enlace-flecha { margin: -1.5rem 0 2rem; }
+    .ult-grid { grid-template-columns: 1fr; }
+  }
+</style>

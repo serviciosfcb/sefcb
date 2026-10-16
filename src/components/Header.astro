@@ -7,6 +7,9 @@ interface Props { lang: Lang; home: string; alt: string }
 const { lang, home, alt } = Astro.props;
 const t = content[lang];
 const altLang = lang === 'es' ? 'en' : 'es';
+// Las anclas de la página de inicio funcionan también desde las páginas internas
+const navHref = (href: string) => (href.startsWith('#') ? `${home}${href}` : href);
+const current = Astro.url.pathname;
 ---
 <header class="cabecera" data-header>
   <div class="util">
@@ -28,7 +31,7 @@ const altLang = lang === 'es' ? 'en' : 'es';
       <nav class="nav" aria-label={t.nav.label}>
         <ul>
           {t.nav.items.map((item) => (
-            <li><a href={item.href} data-nav-link>{item.label}</a></li>
+            <li><a href={navHref(item.href)} data-nav-link aria-current={!item.href.startsWith('#') && current.startsWith(item.href) ? 'page' : undefined}>{item.label}</a></li>
           ))}
         </ul>
       </nav>
@@ -52,7 +55,7 @@ const altLang = lang === 'es' ? 'en' : 'es';
       <nav aria-label={t.nav.label}>
         <ul class="menu-lista">
           {t.nav.items.map((item, i) => (
-            <li style={`--i:${i}`}><a href={item.href} data-menu-link>{item.label}</a></li>
+            <li style={`--i:${i}`}><a href={navHref(item.href)} data-menu-link>{item.label}</a></li>
           ))}
         </ul>
       </nav>
@@ -118,15 +121,15 @@ const altLang = lang === 'es' ? 'en' : 'es';
     if (e.shiftKey && document.activeElement === first) { e.preventDefault(); lastEl.focus(); }
     else if (!e.shiftKey && document.activeElement === lastEl) { e.preventDefault(); first.focus(); }
   });
-  matchMedia('(min-width: 1081px)').addEventListener('change', (m) => { if (m.matches) setOpen(false); });
+  matchMedia('(min-width: 1181px)').addEventListener('change', (m) => { if (m.matches) setOpen(false); });
 
   // Sección activa en el menú
-  const navLinks = [...document.querySelectorAll<HTMLAnchorElement>('[data-nav-link]')];
-  const targets = navLinks.map((a) => document.querySelector<HTMLElement>(a.getAttribute('href')!)).filter(Boolean) as HTMLElement[];
+  const navLinks = [...document.querySelectorAll<HTMLAnchorElement>('[data-nav-link]')].filter((a) => a.hash && a.pathname === location.pathname);
+  const targets = navLinks.map((a) => document.getElementById(a.hash.slice(1))).filter(Boolean) as HTMLElement[];
   const io = new IntersectionObserver((entries) => {
     entries.forEach((en) => {
       if (!en.isIntersecting) return;
-      navLinks.forEach((a) => a.toggleAttribute('aria-current', a.getAttribute('href') === `#${en.target.id}`));
+      navLinks.forEach((a) => a.toggleAttribute('aria-current', a.hash === `#${en.target.id}`));
     });
   }, { rootMargin: '-45% 0px -50% 0px' });
   targets.forEach((t) => io.observe(t));
@@ -159,14 +162,14 @@ const altLang = lang === 'es' ? 'en' : 'es';
   .util .icon { width: 1rem; height: 1rem; }
   .util-links { list-style: none; display: flex; gap: 1.6rem; }
 
-  .barra-in { display: flex; align-items: center; gap: 2rem; min-height: var(--alto-cabecera); }
+  .barra-in { display: flex; align-items: center; gap: 1.5rem; min-height: var(--alto-cabecera); }
   .nav { margin-left: auto; }
   .nav ul { list-style: none; display: flex; gap: .25rem; }
   .nav a {
-    position: relative; display: block; padding: .55rem .8rem; border-radius: 999px;
-    color: inherit; text-decoration: none; font-weight: 600; font-size: .95rem; opacity: .86; transition: opacity .25s, background-color .25s;
+    position: relative; display: block; padding: .55rem .62rem; border-radius: 999px;
+    color: inherit; text-decoration: none; font-weight: 600; font-size: .92rem; white-space: nowrap; opacity: .86; transition: opacity .25s, background-color .25s;
   }
-  .nav a::after { content: ''; position: absolute; left: .8rem; right: .8rem; bottom: .25rem; height: 2px; border-radius: 2px; background: var(--rojo-luz); transform: scaleX(0); transform-origin: left; transition: transform .45s var(--ease); }
+  .nav a::after { content: ''; position: absolute; left: .62rem; right: .62rem; bottom: .25rem; height: 2px; border-radius: 2px; background: var(--rojo-luz); transform: scaleX(0); transform-origin: left; transition: transform .45s var(--ease); }
   .cabecera.solida .nav a::after { background: var(--rojo); }
   .nav a:hover, .nav a[aria-current] { opacity: 1; }
   .nav a:hover::after, .nav a[aria-current]::after { transform: scaleX(1); }
@@ -205,7 +208,8 @@ const altLang = lang === 'es' ? 'en' : 'es';
   .menu-util { display: flex; flex-wrap: wrap; gap: 1.4rem; margin-top: .4rem; }
   .menu-util a, .menu-util button { color: var(--sobre-oscuro-2); background: none; border: 0; padding: 0; cursor: pointer; text-decoration: underline; text-underline-offset: .25em; }
 
-  @media (max-width: 1080px) {
+  @media (max-width: 1360px) { .resultados { display: none; } }
+  @media (max-width: 1180px) {
     .nav, .util, .resultados { display: none; }
     .menu-btn { display: grid; }
     .acciones { margin-left: auto; }

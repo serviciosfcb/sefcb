@@ -1,0 +1,63 @@
+---
+import type { Lang } from '../i18n/content';
+import { content } from '../i18n/content';
+import { type Noticia, slugOf, textos, fecha, isoDate } from '../lib/noticias';
+import Icon from './Icon.astro';
+import marca from '../assets/marca.png';
+interface Props { n: Noticia; lang: Lang; headingLevel?: 'h2' | 'h3' }
+const { n, lang, headingLevel = 'h3' } = Astro.props;
+const t = content[lang].news;
+const x = textos(n, lang);
+const href = `${t.base}${slugOf(n)}/`;
+const H = headingLevel;
+---
+<article class="noticia" data-spot>
+  <div class="n-media" aria-hidden={n.data.image ? undefined : 'true'}>
+    {n.data.image ? (
+      <img src={n.data.image} alt={x.imageAlt} loading="lazy" decoding="async" />
+    ) : (
+      <div class="n-placeholder decorativo">
+        <img src={marca.src} alt="" width="64" height="64" />
+        <svg viewBox="0 0 400 80" preserveAspectRatio="none"><path d="M0 50 H 150 l 8 -4 l 6 4 l 8 0 l 6 -34 l 7 54 l 6 -26 l 12 0 l 10 -7 l 8 7 H 400" /></svg>
+      </div>
+    )}
+  </div>
+  <div class="n-txt">
+    <time datetime={isoDate(n.data.date)}>{fecha(n.data.date, lang)}</time>
+    <H class="n-titulo" lang={x.contentLang}><a href={href}>{x.title}</a></H>
+    {x.summary && <p lang={x.contentLang}>{x.summary}</p>}
+    <span class="n-leer" aria-hidden="true">{t.read}<Icon name="arrow" /></span>
+  </div>
+</article>
+
+<style>
+  .noticia {
+    --mx: 50%; --my: 50%;
+    position: relative; isolation: isolate; display: grid; grid-template-rows: auto 1fr;
+    border-radius: var(--radio-l); overflow: hidden; background: var(--papel); border: 1px solid var(--linea);
+    transition: transform .6s var(--ease), box-shadow .6s var(--ease), border-color .4s;
+  }
+  .noticia:hover, .noticia:focus-within { transform: translateY(-5px); box-shadow: 0 40px 70px -40px rgb(var(--sombra) / .5); border-color: rgb(159 39 40 / .25); }
+  .n-media { aspect-ratio: 16 / 9; max-width: 100%; overflow: hidden; background: var(--carbon); }
+  .n-media > img { width: 100%; height: 100%; object-fit: cover; transition: transform 1.2s var(--ease); }
+  .noticia:hover .n-media > img { transform: scale(1.04); }
+  .n-placeholder { position: relative; width: 100%; height: 100%; display: grid; place-items: center;
+    background: radial-gradient(18rem 10rem at var(--mx) var(--my), rgb(159 39 40 / .35), transparent 70%), #1f1c1b; }
+  .n-placeholder img { width: 3.6rem; height: auto; opacity: .9; position: relative; z-index: 1; }
+  .n-placeholder svg { position: absolute; left: 0; right: 0; bottom: 18%; width: 100%; height: 30%; }
+  .n-placeholder path { fill: none; stroke: rgb(226 72 77 / .55); stroke-width: 2; vector-effect: non-scaling-stroke; stroke-dasharray: 520; stroke-dashoffset: 520; transition: stroke-dashoffset 1.6s var(--ease-io); }
+  .noticia:hover .n-placeholder path { stroke-dashoffset: 0; }
+  .n-txt { display: grid; gap: .6rem; align-content: start; padding: 1.4rem 1.5rem 1.6rem; }
+  time { font-size: var(--t-0); color: var(--rojo); font-weight: 700; }
+  .n-titulo { font-size: var(--t-3); letter-spacing: -.02em; line-height: 1.2; }
+  .n-titulo a { color: inherit; text-decoration: none; }
+  .n-titulo a::after { content: ''; position: absolute; inset: 0; z-index: 1; border-radius: inherit; }
+  .n-titulo a:focus-visible { outline: none; }
+  .noticia:focus-within { outline: 3px solid var(--foco); outline-offset: 3px; }
+  .n-txt p { color: var(--tinta-2); font-size: var(--t-0); }
+  .n-leer { display: inline-flex; align-items: center; gap: .4rem; font-weight: 700; font-size: var(--t-0); color: var(--rojo); margin-top: .3rem; }
+  .n-leer :global(.icon) { width: 1rem; height: 1rem; transition: transform .4s var(--ease); }
+  .noticia:hover .n-leer :global(.icon) { transform: translateX(4px); }
+  @media (prefers-reduced-motion: reduce) { .n-placeholder path { stroke-dashoffset: 0; } }
+  :global(:root[data-motion='reduced']) .n-placeholder path { stroke-dashoffset: 0; }
+</style>

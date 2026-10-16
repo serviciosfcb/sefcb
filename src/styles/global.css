@@ -174,3 +174,15 @@ h1, h2, h3 { overflow-wrap: break-word; }
 
 /* Estado inicial de los elementos que se revelan al hacer scroll (solo si hay JavaScript y movimiento) */
 .js-anim [data-reveal] { will-change: transform, opacity; }
+
+/* Texto largo de noticias y páginas internas */
+.prosa { font-size: var(--t-2); line-height: 1.75; color: var(--tinta); }
+.prosa > * + * { margin-top: 1.1em; }
+.prosa h2 { font-size: var(--t-4); margin-top: 1.8em; }
+.prosa h3 { font-size: var(--t-3); margin-top: 1.5em; }
+.prosa a { color: var(--rojo); text-decoration: underline; text-underline-offset: .2em; }
+.prosa ul, .prosa ol { padding-left: 1.3em; }
+.prosa li + li { margin-top: .4em; }
+.prosa blockquote { border-left: 3px solid var(--rojo); padding-left: 1.1em; color: var(--tinta-2); font-style: italic; }
+.prosa img { border-radius: var(--radio-m); height: auto; }
+.prosa strong { font-weight: 700; }

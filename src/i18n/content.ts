@@ -1,12 +1,22 @@
 // Contenido del sitio en español e inglés.
 // Todo texto visible sale de aquí, para que el equipo de sistemas lo edite sin tocar el diseño.
 
+import contacto from '../data/contacto.json';
+import convenios from '../data/convenios.json';
+import transparencia from '../data/transparencia.json';
+
 export type Lang = 'es' | 'en';
+
+// Número en formato internacional para enlaces tel:, a partir del número como se escribe
+const tel = (label: string) => {
+  const d = label.replace(/\D/g, '');
+  return d.startsWith('57') && d.length === 12 ? `+${d}` : `+57${d}`;
+};
 
 export const links = {
   portal: 'https://app.sefcb.co/pacientes/ingresar?locale=es',
   registro: 'https://app.sefcb.co/a/pacientes/registro',
-  whatsapp: 'https://wa.me/573209362904',
+  whatsapp: `https://wa.me/${contacto.whatsapp}`,
   pqrs: 'https://docs.google.com/forms/d/e/1FAIpQLSdNUpQtBaGXjQgKYLvxctA8vwbtnJvuMjyYgKuwYNLGUy0Jgg/viewform',
   pagos: 'https://zonapagos.com/t_Serviciosfcb/pagos.asp',
   sired: 'https://sites.google.com/sefcb.co/siredsefcb2',
@@ -14,8 +24,6 @@ export const links = {
   instagram: 'https://www.instagram.com/serviciosfcb',
   youtube: 'https://www.youtube.com/channel/UCwTHMLhiBc2jkO5SJVJ8hzQ',
   relevo: 'https://centroderelevo.gov.co/',
-  mapaSede1: 'https://www.google.com/maps/search/?api=1&query=Calle+19+1-44+Barrio+Blanco+C%C3%BAcuta',
-  mapaSede2: 'https://www.google.com/maps/search/?api=1&query=Avenida+11E+8-41+C%C3%BAcuta',
   // Páginas del sitio actual que se migrarán; mientras tanto, los enlaces llevan allá.
   derechos: 'https://sefcb.co/derechos-y-deberes-de-los-usuarios/',
   antes: 'https://sefcb.co/antes-de-su-atencion/',
@@ -33,31 +41,23 @@ export const links = {
   informe2021: 'https://drive.google.com/file/d/1SNWkUpquVoad-aOBB1pIlWIP16VLRfy2/view',
 };
 
-export const financials = [
-  { year: '2025', href: 'https://drive.google.com/file/d/1AWqucUWWMS50gX7qbw-S08px_7hsy6mR/view' },
-  { year: '2024', href: 'https://drive.google.com/file/d/1zEyEftijdGdLYXav8tozrXAgHAtcYkci/view' },
-  { year: '2023', href: 'https://drive.google.com/file/d/1u6B1joHp4abMPiW7H_Efdd14rvnEHZHK/view' },
-  { year: '2022', href: 'https://drive.google.com/file/d/1SlAOzzhd0QAqpzQUmxngcuxz6HghGCeP/view' },
-  { year: '2021', href: 'https://drive.google.com/file/d/1TaRnfJLFVwvxLgdttEpDpnTf2Y1C6E-c/view' },
-];
+// Lo que sigue se edita desde el panel de contenido (src/data/*.json)
+export const financials = transparencia.estados_financieros.map((f) => ({ year: f.anio, href: f.archivo }));
+export const documents = transparencia.documentos;
 
+const t_ = contacto.telefonos;
 export const phones = {
-  citas: { label: '+57 320 936 2904', tel: '+573209362904' },
-  atencion1: { label: '320 274 5021', tel: '+573202745021' },
-  atencion2: { label: '320 274 5025', tel: '+573202745025' },
-  pbx: { label: '(607) 595 6075', tel: '+576075956075' },
-  etica: { label: '322 790 1271', tel: '+573227901271' },
+  citas: { label: t_.citas, tel: tel(t_.citas) },
+  atencion1: { label: t_.atencion1, tel: tel(t_.atencion1) },
+  atencion2: { label: t_.atencion2, tel: tel(t_.atencion2) },
+  pbx: { label: t_.pbx, tel: tel(t_.pbx) },
+  etica: { label: t_.etica, tel: tel(t_.etica) },
 };
 
-export const emails = {
-  etica: 'oficialdecumplimiento@sefcb.co',
-  judicial: 'gerencia@sefcb.co',
-};
-
-export const insurers = [
-  'Allianz', 'Axa Colpatria', 'Colmédica', 'Colsanitas', 'Coomeva', 'Ecopetrol',
-  'HDI Seguros', 'Mapfre', 'MedPlus', 'Positiva', 'Seguros Bolívar', 'Sura',
-];
+export const emails = contacto.correos;
+export const insurers: string[] = convenios.lista;
+export type Sede = (typeof contacto.sedes)[number];
+export const sedes: Sede[] = contacto.sedes;
 
 export type ServiceKey = 'noinvasiva' | 'nuclear' | 'intervencionismo' | 'consulta' | 'terapia' | 'transporte' | 'obesidad';
 
@@ -84,6 +84,7 @@ const es = {
       { label: 'Servicios', href: '#servicios' },
       { label: 'Su atención', href: '#pacientes' },
       { label: 'Portal del paciente', href: '#portal' },
+      { label: 'Noticias', href: '/noticias/' },
       { label: 'Nosotros', href: '#calidad' },
       { label: 'Contacto', href: '#contacto' },
     ],
@@ -247,10 +248,7 @@ const es = {
     title: 'Dónde estamos',
     lead: 'Dos sedes en Cúcuta, Norte de Santander.',
     route: 'Cómo llegar',
-    sedes: [
-      { name: 'Sede principal', address: 'Calle 19 No. 1-44, Barrio Blanco', note: 'Consulta, cardiología no invasiva y medicina nuclear', map: 'mapaSede1' },
-      { name: 'Sede 2', address: 'Avenida 11E No. 8-41, 2.º piso', note: 'Sala de hemodinamia', map: 'mapaSede2' },
-    ],
+    hours: 'Horario',
     contactTitle: 'Contacto',
     citas: 'Central de citas y WhatsApp',
     atencion: 'Línea de atención',
@@ -259,6 +257,17 @@ const es = {
     legal: 'Notificaciones judiciales',
     copy: 'Copiar',
     copied: 'Copiado',
+  },
+  news: {
+    title: 'Noticias',
+    lead: 'Novedades, campañas e información importante para nuestros pacientes.',
+    latest: 'Últimas noticias',
+    all: 'Ver todas las noticias',
+    read: 'Leer noticia',
+    back: 'Volver a noticias',
+    empty: 'Pronto publicaremos novedades aquí.',
+    base: '/noticias/',
+    onlySpanish: '',
   },
   footer: {
     tagline: 'Diagnóstico y tratamiento del corazón en Cúcuta.',
@@ -317,6 +326,7 @@ const en: Content = {
       { label: 'Services', href: '#servicios' },
       { label: 'Your visit', href: '#pacientes' },
       { label: 'Patient portal', href: '#portal' },
+      { label: 'News', href: '/en/news/' },
       { label: 'About us', href: '#calidad' },
       { label: 'Contact', href: '#contacto' },
     ],
@@ -480,10 +490,7 @@ const en: Content = {
     title: 'Find us',
     lead: 'Two locations in Cúcuta, Norte de Santander, Colombia.',
     route: 'Get directions',
-    sedes: [
-      { name: 'Main location', address: 'Calle 19 No. 1-44, Barrio Blanco', note: 'Consultations, non-invasive cardiology and nuclear medicine', map: 'mapaSede1' },
-      { name: 'Location 2', address: 'Avenida 11E No. 8-41, 2nd floor', note: 'Cardiac catheterization lab', map: 'mapaSede2' },
-    ],
+    hours: 'Opening hours',
     contactTitle: 'Contact',
     citas: 'Booking desk and WhatsApp',
     atencion: 'Patient line',
@@ -492,6 +499,17 @@ const en: Content = {
     legal: 'Legal notices',
     copy: 'Copy',
     copied: 'Copied',
+  },
+  news: {
+    title: 'News',
+    lead: 'Updates, campaigns and important information for our patients.',
+    latest: 'Latest news',
+    all: 'See all news',
+    read: 'Read article',
+    back: 'Back to news',
+    empty: 'News will be published here soon.',
+    base: '/en/news/',
+    onlySpanish: 'This article is available in Spanish only.',
   },
   footer: {
     tagline: 'Heart diagnosis and treatment in Cúcuta, Colombia.',
