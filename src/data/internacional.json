@@ -1,0 +1,169 @@
+{
+  "contacto": {
+    "whatsapp": "573209362904",
+    "whatsapp_label": "+57 320 936 2904",
+    "correo": "contacto@sefcb.co",
+    "telefono": "+57 (607) 595 6075",
+    "asunto": {
+      "es": "Paciente internacional",
+      "en": "International patient"
+    },
+    "idioma": {
+      "es": "Nuestro personal habla principalmente español. Si necesita apoyo en inglés, indíquelo al escribirnos.",
+      "en": "Our staff mainly speaks Spanish. If you need help in English, let us know when you write."
+    }
+  },
+  "pasos": [
+    {
+      "icono": "chat",
+      "titulo": {
+        "es": "Escríbanos",
+        "en": "Contact us"
+      },
+      "texto": {
+        "es": "Cuéntenos qué servicio necesita y desde qué país viaja. Envíenos su orden médica, el resumen de su historia clínica y sus exámenes recientes.",
+        "en": "Tell us which service you need and which country you are traveling from. Send us your doctor's order, a summary of your medical history and your recent test results."
+      }
+    },
+    {
+      "icono": "prep",
+      "titulo": {
+        "es": "Revisamos su caso",
+        "en": "We review your case"
+      },
+      "texto": {
+        "es": "El especialista revisa su información antes de que viaje y, si su caso lo requiere, programamos una teleconsulta. Si su atención es particular, le enviamos una cotización detallada.",
+        "en": "A specialist reviews your information before you travel and, if needed, we schedule a video consultation. If you are paying privately, we send you a detailed quote."
+      }
+    },
+    {
+      "icono": "plane",
+      "titulo": {
+        "es": "Prepare su viaje",
+        "en": "Plan your trip"
+      },
+      "texto": {
+        "es": "Le confirmamos la fecha y la hora de su cita, la preparación de su examen y los documentos que debe traer.",
+        "en": "We confirm your appointment date and time, how to prepare for your test and the documents to bring."
+      }
+    },
+    {
+      "icono": "heartbeat",
+      "titulo": {
+        "es": "Su atención en Cúcuta",
+        "en": "Your care in Cúcuta"
+      },
+      "texto": {
+        "es": "Le atendemos en la sede que corresponda a su servicio. Traiga los documentos de la lista.",
+        "en": "We see you at the location that offers your service. Bring the documents on the list below."
+      }
+    },
+    {
+      "icono": "results",
+      "titulo": {
+        "es": "De regreso a casa",
+        "en": "Back home"
+      },
+      "texto": {
+        "es": "Consulte sus resultados en el portal del paciente desde cualquier país y pida la copia de su historia clínica para su médico tratante.",
+        "en": "Check your results in the patient portal from any country, and request a copy of your medical record for your own doctor."
+      }
+    }
+  ],
+  "documentos": [
+    {
+      "es": "Pasaporte o documento de identidad vigente. Si vive en Colombia, su documento migratorio vigente.",
+      "en": "A valid passport or ID. If you live in Colombia, your valid immigration document."
+    },
+    {
+      "es": "Orden médica del examen o la consulta.",
+      "en": "Your doctor's order for the test or consultation."
+    },
+    {
+      "es": "Resumen de su historia clínica y resultados de exámenes anteriores, en papel o en digital.",
+      "en": "A summary of your medical history and previous test results, on paper or digital."
+    },
+    {
+      "es": "Lista de los medicamentos que toma, con su dosis.",
+      "en": "A list of the medicines you take, with doses."
+    },
+    {
+      "es": "Si tiene seguro de salud internacional, los datos de su aseguradora.",
+      "en": "If you have international health insurance, your insurer's details."
+    }
+  ],
+  "ingreso": {
+    "texto": {
+      "es": "Antes de comprar su tiquete, verifique los requisitos vigentes para su nacionalidad: visa, registro migratorio y vacunas. Según la lista de Cancillería de 2026, los ciudadanos de Aruba, Curaçao, Países Bajos, Venezuela, Panamá y Estados Unidos no necesitan visa para visitas cortas.",
+      "en": "Before you buy your ticket, check the current requirements for your nationality: visa, immigration registration and vaccines. According to Colombia's Foreign Ministry 2026 list, citizens of Aruba, Curaçao, the Netherlands, Venezuela, Panama and the United States do not need a visa for short visits."
+    },
+    "enlaces": [
+      {
+        "texto": {
+          "es": "Lista de países que necesitan visa (Cancillería)",
+          "en": "Countries that need a visa (Foreign Ministry)"
+        },
+        "url": "https://cancilleria.gov.co/sites/default/files/DOCUMENTOS-2026/Visas/Lista-Paises-exigen-visa-mayo-2026.pdf"
+      },
+      {
+        "texto": {
+          "es": "Requisitos migratorios (Migración Colombia)",
+          "en": "Immigration requirements (Migración Colombia)"
+        },
+        "url": "https://www.migracioncolombia.gov.co/"
+      }
+    ]
+  },
+  "datos": [
+    {
+      "etiqueta": {
+        "es": "Aeropuerto",
+        "en": "Airport"
+      },
+      "valor": {
+        "es": "Internacional Camilo Daza (CUC)",
+        "en": "Camilo Daza International (CUC)"
+      }
+    },
+    {
+      "etiqueta": {
+        "es": "Clima",
+        "en": "Weather"
+      },
+      "valor": {
+        "es": "Cálido todo el año, a 320 m de altitud",
+        "en": "Warm all year, 320 m above sea level"
+      }
+    },
+    {
+      "etiqueta": {
+        "es": "Moneda",
+        "en": "Currency"
+      },
+      "valor": {
+        "es": "Peso colombiano (COP)",
+        "en": "Colombian peso (COP)"
+      }
+    },
+    {
+      "etiqueta": {
+        "es": "Hora",
+        "en": "Time zone"
+      },
+      "valor": {
+        "es": "UTC−5 todo el año",
+        "en": "UTC−5 all year"
+      }
+    },
+    {
+      "etiqueta": {
+        "es": "Frontera",
+        "en": "Border"
+      },
+      "valor": {
+        "es": "Con el estado Táchira, Venezuela",
+        "en": "With Táchira state, Venezuela"
+      }
+    }
+  ]
+}

@@ -1,0 +1,181 @@
+---
+// Pacientes internacionales: ruta de atención, documentos, ingreso a Colombia, datos de Cúcuta y contacto.
+// Textos en src/data/internacional.json (editable en el panel, en "Datos del sitio").
+import type { Lang } from '../i18n/content';
+import { links } from '../i18n/content';
+import { r } from '../i18n/routes';
+import data from '../data/internacional.json';
+import Icon from './Icon.astro';
+interface Props { lang: Lang }
+const { lang } = Astro.props;
+const en = lang === 'en';
+type Txt = { es: string; en: string };
+const tx = (x: Txt) => (en ? x.en || x.es : x.es);
+const c = data.contacto;
+const asunto = tx(c.asunto);
+const wa = `https://wa.me/${c.whatsapp}?text=${encodeURIComponent(`${asunto}: `)}`;
+const mail = `mailto:${c.correo}?subject=${encodeURIComponent(asunto)}`;
+const tel = `tel:${c.telefono.replace(/[^\d+]/g, '')}`;
+const t = en
+  ? {
+      steps: 'Your care, step by step',
+      stepsLead: 'From the first message to your results back home.',
+      bring: 'What to bring',
+      entry: 'Entering Colombia',
+      city: 'Cúcuta at a glance',
+      more: 'How to get to Cúcuta',
+      contactTitle: 'Write to us as an international patient',
+      contactText: `Start your message with “${asunto}” so we can route it to the right team.`,
+      wa: 'WhatsApp',
+      mail: 'Email',
+      phone: 'Phone',
+      pay: 'If you pay privately, you can also pay online.',
+      payLink: 'Online payments',
+      opens: 'opens in a new tab',
+      step: 'Step',
+    }
+  : {
+      steps: 'Su atención, paso a paso',
+      stepsLead: 'Desde el primer mensaje hasta sus resultados de vuelta en casa.',
+      bring: 'Qué traer',
+      entry: 'Ingreso a Colombia',
+      city: 'Cúcuta en breve',
+      more: 'Cómo llegar a Cúcuta',
+      contactTitle: 'Escríbanos como paciente internacional',
+      contactText: `Empiece su mensaje con «${asunto}» para dirigirlo al equipo indicado.`,
+      wa: 'WhatsApp',
+      mail: 'Correo',
+      phone: 'Teléfono',
+      pay: 'Si su atención es particular, también puede pagar en línea.',
+      payLink: 'Pagos en línea',
+      opens: 'se abre en una pestaña nueva',
+      step: 'Paso',
+    };
+---
+<div class="intl">
+  <section class="intl-sec" aria-labelledby="intl-pasos">
+    <header class="intl-cab">
+      <h2 id="intl-pasos">{t.steps}</h2>
+      <p>{t.stepsLead}</p>
+    </header>
+    <ol class="intl-ruta" data-stagger>
+      {data.pasos.map((p, i) => (
+        <li class="intl-paso" data-stagger-item>
+          <span class="intl-nodo" aria-hidden="true"><Icon name={p.icono} /></span>
+          <div class="intl-paso-txt">
+            <span class="intl-num"><span class="visualmente-oculto">{t.step} </span>{String(i + 1).padStart(2, '0')}</span>
+            <h3>{tx(p.titulo)}</h3>
+            <p>{tx(p.texto)}</p>
+          </div>
+        </li>
+      ))}
+    </ol>
+  </section>
+
+  <div class="intl-dos">
+    <section class="intl-caja" aria-labelledby="intl-traer">
+      <h2 id="intl-traer"><span class="intl-ico" aria-hidden="true"><Icon name="passport" /></span>{t.bring}</h2>
+      <ul class="intl-lista">
+        {data.documentos.map((d) => <li><Icon name="check" />{tx(d)}</li>)}
+      </ul>
+    </section>
+    <section class="intl-caja" aria-labelledby="intl-ingreso">
+      <h2 id="intl-ingreso"><span class="intl-ico" aria-hidden="true"><Icon name="globe" /></span>{t.entry}</h2>
+      <p>{tx(data.ingreso.texto)}</p>
+      <ul class="intl-enlaces">
+        {data.ingreso.enlaces.map((l) => (
+          <li><a href={l.url} target="_blank" rel="noopener">{tx(l.texto)}<Icon name="external" /><span class="visualmente-oculto"> ({t.opens})</span></a></li>
+        ))}
+      </ul>
+    </section>
+  </div>
+
+  <section class="intl-sec" aria-labelledby="intl-ciudad">
+    <h2 id="intl-ciudad">{t.city}</h2>
+    <dl class="intl-datos">
+      {data.datos.map((d) => (
+        <div class="intl-dato">
+          <dt>{tx(d.etiqueta)}</dt>
+          <dd>{tx(d.valor)}</dd>
+        </div>
+      ))}
+    </dl>
+    <a class="intl-mas" href={r(lang, 'visitantes')}>{t.more}<Icon name="arrow" /></a>
+  </section>
+
+  <aside class="intl-contacto" aria-labelledby="intl-contacto-t" data-reveal>
+    <div class="intl-contacto-txt">
+      <h2 id="intl-contacto-t">{t.contactTitle}</h2>
+      <p>{t.contactText}</p>
+      <p>{tx(c.idioma)}</p>
+    </div>
+    <ul class="intl-canales">
+      <li><a class="intl-canal intl-canal-wa" href={wa} target="_blank" rel="noopener"><Icon name="whatsapp" /><span><strong>{t.wa}</strong>{c.whatsapp_label}</span><span class="visualmente-oculto"> ({t.opens})</span></a></li>
+      <li><a class="intl-canal" href={mail}><Icon name="mail" /><span><strong>{t.mail}</strong>{c.correo}</span></a></li>
+      <li><a class="intl-canal" href={tel}><Icon name="phone" /><span><strong>{t.phone}</strong>{c.telefono}</span></a></li>
+    </ul>
+    <p class="intl-pago">{t.pay} <a href={links.pagos} target="_blank" rel="noopener">{t.payLink}<span class="visualmente-oculto"> ({t.opens})</span></a></p>
+  </aside>
+</div>
+
+<style>
+  .intl { display: grid; gap: clamp(2.5rem, 5vw, 3.5rem); }
+  .intl-sec { display: grid; gap: 1.3rem; }
+  .intl-cab { display: grid; gap: .4rem; }
+  .intl h2 { font-size: var(--t-5); }
+  .intl-cab p { color: var(--tinta-2); }
+
+  .intl-ruta { list-style: none; display: grid; gap: 0; position: relative; }
+  .intl-paso { position: relative; display: grid; grid-template-columns: 3.4rem minmax(0, 1fr); gap: 1.2rem; padding-bottom: 1.6rem; }
+  .intl-paso:last-child { padding-bottom: 0; }
+  .intl-paso::before { content: ''; position: absolute; left: calc(1.7rem - 1px); top: 3.4rem; bottom: 0; width: 2px; background: linear-gradient(var(--rojo), rgb(159 39 40 / .15)); }
+  .intl-paso:last-child::before { display: none; }
+  .intl-nodo { width: 3.4rem; height: 3.4rem; border-radius: 50%; display: grid; place-items: center; background: var(--papel); color: var(--rojo); border: 2px solid rgb(159 39 40 / .25); box-shadow: 0 10px 24px -16px rgb(159 39 40 / .6); position: relative; z-index: 1; transition: background .3s, color .3s, border-color .3s; }
+  .intl-nodo :global(.icon) { width: 1.5rem; height: 1.5rem; }
+  .intl-paso:hover .intl-nodo { background: var(--rojo); color: #fff; border-color: var(--rojo); }
+  .intl-paso-txt { display: grid; gap: .3rem; padding-top: .2rem; max-width: 40rem; }
+  .intl-num { font-family: var(--texto); font-size: .8rem; font-weight: 700; letter-spacing: .08em; color: var(--rojo); }
+  .intl-paso h3 { font-size: var(--t-3); line-height: 1.2; }
+  .intl-paso p { color: var(--tinta-2); line-height: 1.55; }
+
+  .intl-dos { display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, 19rem), 1fr)); gap: 1rem; }
+  .intl-caja { display: grid; gap: .9rem; align-content: start; padding: clamp(1.2rem, 3vw, 1.6rem); border-radius: var(--radio-l, 22px); background: var(--niebla); }
+  .intl-caja h2 { display: flex; align-items: center; gap: .7rem; font-size: var(--t-3); }
+  .intl-ico { width: 2.5rem; height: 2.5rem; border-radius: 50%; display: grid; place-items: center; background: rgb(159 39 40 / .1); color: var(--rojo); flex: none; }
+  .intl-ico :global(.icon) { width: 1.25rem; height: 1.25rem; }
+  .intl-caja p { font-size: var(--t-0); line-height: 1.55; }
+  .intl-lista { list-style: none; display: grid; gap: .6rem; }
+  .intl-lista li { display: flex; gap: .6rem; align-items: flex-start; font-size: var(--t-0); line-height: 1.5; }
+  .intl-lista li :global(.icon) { width: 1.05rem; height: 1.05rem; color: var(--rojo); flex: none; margin-top: .2rem; stroke-width: 2.4; }
+  .intl-enlaces { list-style: none; display: grid; gap: .5rem; }
+  .intl-enlaces a { display: inline-flex; align-items: center; gap: .35rem; font-weight: 600; font-size: var(--t-0); color: var(--tinta); }
+  .intl-enlaces :global(.icon) { width: .95rem; height: .95rem; flex: none; }
+
+  .intl-datos { display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, 9.5rem), 1fr)); gap: .8rem; }
+  .intl-dato { display: grid; gap: .25rem; padding: 1rem 1.1rem; border-radius: var(--radio-m); border: 1px solid var(--linea); background: var(--papel); }
+  .intl-dato dt { font-size: .8rem; font-weight: 700; letter-spacing: .06em; text-transform: uppercase; color: var(--rojo); }
+  .intl-dato dd { font-weight: 600; line-height: 1.35; }
+  .intl-mas { display: inline-flex; align-items: center; gap: .4rem; justify-self: start; font-weight: 600; color: var(--tinta); }
+  .intl-mas :global(.icon) { width: 1rem; height: 1rem; transition: transform .3s var(--ease); }
+  .intl-mas:hover :global(.icon) { transform: translateX(3px); }
+
+  .intl-contacto { display: grid; gap: 1.2rem; padding: clamp(1.4rem, 3.5vw, 2.2rem); border-radius: var(--radio-l, 22px); background: var(--carbon, #1c1a19); color: #fff; position: relative; overflow: hidden; }
+  .intl-contacto::after { content: ''; position: absolute; right: -4rem; top: -4rem; width: 14rem; height: 14rem; border-radius: 50%; background: radial-gradient(circle, rgb(159 39 40 / .55), transparent 70%); pointer-events: none; }
+  .intl-contacto-txt { display: grid; gap: .5rem; position: relative; z-index: 1; }
+  .intl-contacto h2 { color: #fff; font-size: var(--t-4); }
+  .intl-contacto p { color: rgb(255 255 255 / .8); }
+  .intl-canales { list-style: none; display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, 13rem), 1fr)); gap: .7rem; position: relative; z-index: 1; }
+  .intl-canal { display: flex; gap: .8rem; align-items: center; padding: .9rem 1rem; border-radius: var(--radio-m); background: rgb(255 255 255 / .07); border: 1px solid rgb(255 255 255 / .16); color: #fff; text-decoration: none; transition: background .3s, border-color .3s, transform .3s var(--ease); min-height: 3.5rem; }
+  .intl-canal:hover { background: rgb(255 255 255 / .13); border-color: rgb(255 255 255 / .4); transform: translateY(-2px); }
+  .intl-canal :global(.icon) { width: 1.4rem; height: 1.4rem; flex: none; }
+  .intl-canal span { display: grid; font-size: var(--t-0); overflow-wrap: anywhere; }
+  .intl-canal strong { font-size: .8rem; letter-spacing: .05em; text-transform: uppercase; color: rgb(255 255 255 / .7); }
+  .intl-canal-wa { background: #1f8a4c; border-color: #1f8a4c; }
+  .intl-canal-wa:hover { background: #1a7a43; border-color: #1a7a43; }
+  .intl-canal-wa strong { color: rgb(255 255 255 / .85); }
+  .intl-pago { font-size: var(--t-0); position: relative; z-index: 1; }
+  .intl-pago a { color: #fff; font-weight: 600; }
+  @media (prefers-reduced-motion: reduce) { .intl-canal, .intl-nodo, .intl-mas :global(.icon) { transition: none; } .intl-canal:hover { transform: none; } }
+  :global(:root[data-contrast='high']) .intl-contacto { background: #000; }
+  :global(:root[data-contrast='high']) .intl-canal-wa { background: #000; border-color: #fff; }
+</style>

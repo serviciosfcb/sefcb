@@ -318,7 +318,7 @@ collections:
                     widget: select
                     required: false
                     hint: Elija una página del sitio, o deje vacío y use el campo de archivo.
-                    options: ['inicio', 'noticias', 'servicios', 'pacientes', 'cita', 'antes', 'preparacion', 'resultados', 'seguridad', 'derechos', 'faq', 'asociacion', 'educacion', 'visitantes', 'nosotros', 'direccionamiento', 'calidad', 'equipo', 'empleo', 'bienestar', 'transparencia', 'politicas', 'entidades', 'tributarios', 'contacto', 'datos', 'accesibilidad', 'mapa']
+                    options: ['inicio', 'noticias', 'servicios', 'pacientes', 'cita', 'antes', 'preparacion', 'resultados', 'seguridad', 'derechos', 'internacional', 'faq', 'asociacion', 'educacion', 'visitantes', 'nosotros', 'direccionamiento', 'calidad', 'equipo', 'empleo', 'bienestar', 'transparencia', 'politicas', 'entidades', 'tributarios', 'contacto', 'datos', 'accesibilidad', 'mapa']
                   - { label: Archivo PDF o enlace, name: archivo, widget: file, required: false, choose_url: true, hint: 'Escriba PQRS para enlazar el formulario de PQRS.' }
       - name: vacantes
         label: Ofertas de empleo
@@ -343,6 +343,38 @@ collections:
               - { label: Perfil, name: perfil, widget: list, summary: '{{fields.es}}', fields: [{ label: Texto, name: es, widget: string }, { label: Texto en inglés, name: en, widget: string }] }
               - { label: Habilidades y competencias, name: habilidades, widget: list, required: false, summary: '{{fields.es}}', fields: [{ label: Texto, name: es, widget: string }, { label: Texto en inglés, name: en, widget: string }] }
               - { label: Responsabilidades, name: responsabilidades, widget: list, required: false, summary: '{{fields.es}}', fields: [{ label: Texto, name: es, widget: string }, { label: Texto en inglés, name: en, widget: string }] }
+      - name: internacional
+        label: Pacientes internacionales
+        file: src/data/internacional.json
+        description: Ruta de atención, documentos, ingreso a Colombia, datos de Cúcuta y contacto de la página "Pacientes internacionales".
+        fields:
+          - label: Contacto
+            name: contacto
+            widget: object
+            fields:
+              - { label: WhatsApp (solo números, con 57), name: whatsapp, widget: string }
+              - { label: WhatsApp como se muestra, name: whatsapp_label, widget: string }
+              - { label: Correo, name: correo, widget: string }
+              - { label: Teléfono, name: telefono, widget: string }
+              - { label: Asunto sugerido, name: asunto, widget: object, fields: [{ label: Español, name: es, widget: string }, { label: Inglés, name: en, widget: string }] }
+              - { label: Nota sobre idiomas, name: idioma, widget: object, fields: [{ label: Español, name: es, widget: text }, { label: Inglés, name: en, widget: text }] }
+          - label: Pasos de la ruta
+            name: pasos
+            label_singular: paso
+            widget: list
+            summary: '{{fields.titulo.es}}'
+            fields:
+              - { label: Icono, name: icono, widget: select, options: [chat, prep, plane, heartbeat, results, passport, globe, phone, mail] }
+              - { label: Título, name: titulo, widget: object, fields: [{ label: Español, name: es, widget: string }, { label: Inglés, name: en, widget: string }] }
+              - { label: Texto, name: texto, widget: object, fields: [{ label: Español, name: es, widget: text }, { label: Inglés, name: en, widget: text }] }
+          - { label: Documentos que debe traer, name: documentos, widget: list, summary: '{{fields.es}}', fields: [{ label: Español, name: es, widget: text }, { label: Inglés, name: en, widget: text }] }
+          - label: Ingreso a Colombia
+            name: ingreso
+            widget: object
+            fields:
+              - { label: Texto, name: texto, widget: object, fields: [{ label: Español, name: es, widget: text }, { label: Inglés, name: en, widget: text }] }
+              - { label: Enlaces oficiales, name: enlaces, widget: list, summary: '{{fields.texto.es}}', fields: [{ label: Texto, name: texto, widget: object, fields: [{ label: Español, name: es, widget: string }, { label: Inglés, name: en, widget: string }] }, { label: Dirección, name: url, widget: string }] }
+          - { label: Datos de Cúcuta, name: datos, widget: list, summary: '{{fields.etiqueta.es}}', fields: [{ label: Dato, name: etiqueta, widget: object, fields: [{ label: Español, name: es, widget: string }, { label: Inglés, name: en, widget: string }] }, { label: Valor, name: valor, widget: object, fields: [{ label: Español, name: es, widget: string }, { label: Inglés, name: en, widget: string }] }] }
       - name: indicadores
         label: Indicadores del año
         file: src/data/indicadores.json
@@ -519,6 +551,10 @@ collections:
         label: "Si viene de otra ciudad"
         file: src/content/paginas/es/pacientes/pacientes-de-otras-ciudades.md
         fields: *campos_pagina
+      - name: es-pacientes-pacientes-internacionales
+        label: "Pacientes internacionales"
+        file: src/content/paginas/es/pacientes/pacientes-internacionales.md
+        fields: *campos_pagina
       - name: es-pacientes-preguntas-frecuentes
         label: "Preguntas frecuentes"
         file: src/content/paginas/es/pacientes/preguntas-frecuentes.md
@@ -628,6 +664,10 @@ collections:
       - name: en-patients-exam-preparation
         label: "Preparing for your test"
         file: src/content/paginas/en/patients/exam-preparation.md
+        fields: *campos_pagina
+      - name: en-patients-international-patients
+        label: "International patients"
+        file: src/content/paginas/en/patients/international-patients.md
         fields: *campos_pagina
       - name: en-patients-patient-safety
         label: "Patient safety"

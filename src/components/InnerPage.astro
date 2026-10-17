@@ -17,6 +17,7 @@ import PrepGuide from './PrepGuide.astro';
 import JobOpenings from './JobOpenings.astro';
 import SafetyGuide from './SafetyGuide.astro';
 import QualityStats from './QualityStats.astro';
+import InternationalGuide from './InternationalGuide.astro';
 import Locations from './Locations.astro';
 import CtaBand from './CtaBand.astro';
 interface Props { p: Pagina; lang: Lang }
@@ -62,6 +63,7 @@ const showNav = !wide && navItems.length > 1;
         {d.layout === 'empleo' && <JobOpenings lang={lang} />}
         {d.layout === 'seguridad' && <SafetyGuide lang={lang} />}
         {d.layout === 'calidad' && <QualityStats lang={lang} titulo={false} />}
+        {d.layout === 'internacional' && <InternationalGuide lang={lang} />}
       </div>
     </div>
   </div>

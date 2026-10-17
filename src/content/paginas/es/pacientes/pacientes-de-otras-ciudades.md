@@ -21,3 +21,5 @@ El clima es cálido todo el año, a unos 320 metros sobre el nivel del mar. Para
 ## Antes de viajar
 
 Pida su cita con anticipación y confirme con nosotros la preparación de su examen y los documentos que necesita. Escríbanos por WhatsApp al 320 936 2904.
+
+Si viene desde otro país, vea la información para [pacientes internacionales](/pacientes/pacientes-internacionales/).

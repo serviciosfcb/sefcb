@@ -30,6 +30,7 @@ export const pageRoutes = {
   faq: { es: '/pacientes/preguntas-frecuentes/', en: '/en/patients/faq/' },
   asociacion: { es: '/pacientes/asociacion-de-usuarios/', en: '/en/patients/patient-association/' },
   educacion: { es: '/pacientes/educacion/', en: '/en/patients/health-education/' },
+  internacional: { es: '/pacientes/pacientes-internacionales/', en: '/en/patients/international-patients/' },
   visitantes: { es: '/pacientes/pacientes-de-otras-ciudades/', en: '/en/patients/traveling-to-cucuta/' },
 
   // Nosotros

@@ -296,7 +296,7 @@ const es = {
   footer: {
     tagline: 'Diagnóstico y tratamiento del corazón en Cúcuta.',
     cols: [
-      { title: 'Pacientes', items: [['Cómo pedir una cita', 'cita'], ['Antes de su atención', 'antes'], ['Resultados e historia clínica', 'resultados'], ['Derechos y deberes', 'derechos'], ['Preguntas frecuentes', 'faq'], ['PQRS', 'pqrs']] },
+      { title: 'Pacientes', items: [['Cómo pedir una cita', 'cita'], ['Antes de su atención', 'antes'], ['Resultados e historia clínica', 'resultados'], ['Seguridad del paciente', 'seguridad'], ['Derechos y deberes', 'derechos'], ['Pacientes internacionales', 'internacional'], ['Preguntas frecuentes', 'faq'], ['PQRS', 'pqrs']] },
       { title: 'Institución', items: [['Quiénes somos', 'nosotros'], ['Nuestro equipo', 'equipo'], ['Calidad', 'calidad'], ['Trabaje con nosotros', 'empleo'], ['Transparencia', 'transparencia'], ['Noticias', 'noticias']] },
       { title: 'Legal', items: [['Política de tratamiento de datos', 'datos'], ['Políticas institucionales', 'politicas'], ['Código de ética', 'etica'], ['Accesibilidad', 'accesibilidad'], ['Mapa del sitio', 'mapa']] },
     ],
@@ -565,7 +565,7 @@ const en: Content = {
   footer: {
     tagline: 'Heart diagnosis and treatment in Cúcuta, Colombia.',
     cols: [
-      { title: 'Patients', items: [['Booking an appointment', 'cita'], ['Before your visit', 'antes'], ['Results and medical records', 'resultados'], ['Rights and responsibilities', 'derechos'], ['FAQ', 'faq'], ['Feedback', 'pqrs']] },
+      { title: 'Patients', items: [['Booking an appointment', 'cita'], ['Before your visit', 'antes'], ['Results and medical records', 'resultados'], ['Patient safety', 'seguridad'], ['Rights and responsibilities', 'derechos'], ['International patients', 'internacional'], ['FAQ', 'faq'], ['Feedback', 'pqrs']] },
       { title: 'About', items: [['Who we are', 'nosotros'], ['Our team', 'equipo'], ['Quality', 'calidad'], ['Careers', 'empleo'], ['Transparency', 'transparencia'], ['News', 'noticias']] },
       { title: 'Legal', items: [['Personal data policy', 'datos'], ['Institutional policies', 'politicas'], ['Code of ethics', 'etica'], ['Accessibility', 'accesibilidad'], ['Site map', 'mapa']] },
     ],
