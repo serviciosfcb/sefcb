@@ -26,7 +26,7 @@ groups:
       - name: Executive check-up and cardiovascular prevention
       - name: Cardiovascular risk factors
       - name: Patients taking multiple medications
-      - name: HORMESIS, obesity program
+      - name: HORMESIS, prevention program
 ---
 Prevention is what matters most in health. In this unit, an interdisciplinary team of sports medicine, psychology, nutrition, physical therapy and nursing assesses your overall health.
 

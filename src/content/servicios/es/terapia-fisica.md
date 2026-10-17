@@ -27,7 +27,7 @@ groups:
       - name: Chequeo médico ejecutivo y prevención cardiovascular
       - name: Factores de riesgo cardiovascular
       - name: Pacientes polimedicados
-      - name: HORMESIS, programa de obesidad
+      - name: HORMESIS, programa de prevención
 ---
 Lo más importante en salud es la prevención. En esta unidad evaluamos de forma integral su estado de salud con un equipo interdisciplinario de medicina del deporte, psicología, nutrición, fisioterapia y enfermería.
 

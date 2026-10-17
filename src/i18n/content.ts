@@ -168,8 +168,8 @@ const es = {
       {
         key: 'obesidad' as ServiceKey,
         name: 'HORMESIS',
-        tag: 'Programa de obesidad',
-        text: 'Nuestro programa de acompañamiento integral para pacientes con obesidad, que también cuida la salud de su corazón.',
+        tag: 'Programa de prevención',
+        text: 'Prevención cardiovascular para quienes quieren adelantarse a la enfermedad y acompañamiento integral para pacientes con sobrepeso u obesidad.',
         list: [],
         caption: 'Método del plato para una alimentación balanceada.',
       },
@@ -437,8 +437,8 @@ const en: Content = {
       {
         key: 'obesidad' as ServiceKey,
         name: 'HORMESIS',
-        tag: 'Obesity program',
-        text: 'Our comprehensive care program for patients living with obesity, which also looks after their heart health.',
+        tag: 'Prevention program',
+        text: 'Cardiovascular prevention for people who want to get ahead of disease, and comprehensive support for patients with overweight or obesity.',
         list: [],
         caption: 'The plate method for balanced eating.',
       },
