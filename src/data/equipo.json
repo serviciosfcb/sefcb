@@ -157,21 +157,14 @@
           "nombre": "Juan Manuel Camargo Ballestas",
           "especialidad": "",
           "especialidad_en": "",
-          "foto": ""
+          "foto": "/uploads/equipo/juan-manuel-camargo.webp"
         },
         {
           "titulo": "Dr.",
           "nombre": "Marco Oliverio Fonseca González",
           "especialidad": "",
           "especialidad_en": "",
-          "foto": ""
-        },
-        {
-          "titulo": "Dr.",
-          "nombre": "Luis Alberto Moreno Vera",
-          "especialidad": "",
-          "especialidad_en": "",
-          "foto": ""
+          "foto": "/uploads/equipo/marco-fonseca.webp"
         }
       ]
     },
