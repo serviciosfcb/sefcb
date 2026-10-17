@@ -29,7 +29,6 @@ const t = en
       wa: 'WhatsApp',
       mail: 'Email',
       phone: 'Phone',
-      pay: 'If you pay privately, you can also pay online.',
       payLink: 'Online payments',
       opens: 'opens in a new tab',
       step: 'Step',
@@ -46,7 +45,6 @@ const t = en
       wa: 'WhatsApp',
       mail: 'Correo',
       phone: 'Teléfono',
-      pay: 'Si su atención es particular, también puede pagar en línea.',
       payLink: 'Pagos en línea',
       opens: 'se abre en una pestaña nueva',
       step: 'Paso',
@@ -114,7 +112,7 @@ const t = en
       <li><a class="intl-canal" href={mail}><Icon name="mail" /><span><strong>{t.mail}</strong>{c.correo}</span></a></li>
       <li><a class="intl-canal" href={tel}><Icon name="phone" /><span><strong>{t.phone}</strong>{c.telefono}</span></a></li>
     </ul>
-    <p class="intl-pago">{t.pay} <a href={links.pagos} target="_blank" rel="noopener">{t.payLink}<span class="visualmente-oculto"> ({t.opens})</span></a></p>
+    <p class="intl-pago">{tx(c.pagos)} <a href={links.pagos} target="_blank" rel="noopener">{t.payLink}<span class="visualmente-oculto"> ({t.opens})</span></a></p>
   </aside>
 </div>
 

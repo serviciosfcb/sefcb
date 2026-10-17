@@ -358,6 +358,7 @@ collections:
               - { label: Teléfono, name: telefono, widget: string }
               - { label: Asunto sugerido, name: asunto, widget: object, fields: [{ label: Español, name: es, widget: string }, { label: Inglés, name: en, widget: string }] }
               - { label: Nota sobre idiomas, name: idioma, widget: object, fields: [{ label: Español, name: es, widget: text }, { label: Inglés, name: en, widget: text }] }
+              - { label: Medios de pago, name: pagos, widget: object, fields: [{ label: Español, name: es, widget: text }, { label: Inglés, name: en, widget: text }] }
           - label: Pasos de la ruta
             name: pasos
             label_singular: paso

@@ -11,6 +11,10 @@
     "idioma": {
       "es": "Nuestro personal habla principalmente español. Si necesita apoyo en inglés, indíquelo al escribirnos.",
       "en": "Our staff mainly speaks Spanish. If you need help in English, let us know when you write."
+    },
+    "pagos": {
+      "es": "Si su atención es particular, puede pagar con transferencia internacional o tarjeta de crédito. También puede pagar en línea.",
+      "en": "If you are paying privately, you can pay by international bank transfer or credit card. You can also pay online."
     }
   },
   "pasos": [
