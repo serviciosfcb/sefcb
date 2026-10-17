@@ -11,6 +11,8 @@ Through our Patient and Family Education Program, we want you and your companion
 
 Every day, our patient services office and clinical staff share topics on patient safety, healthy lifestyles and prevention with patients and their families, and explain patients' rights and responsibilities. We do this in all our services: non-invasive cardiology, nuclear medicine, prevention and rehabilitation, and interventional cardiology.
 
+See also our [patient safety goals and how you can help us keep you safe](/en/patients/patient-safety/).
+
 ## What is high blood pressure?
 
 High blood pressure (hypertension) is a persistent rise in blood pressure above normal values: 140 mm Hg for systolic (upper) pressure and 90 mm Hg for diastolic (lower) pressure.

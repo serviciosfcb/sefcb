@@ -25,6 +25,7 @@ export const pageRoutes = {
   antes: { es: '/pacientes/antes-de-su-atencion/', en: '/en/patients/before-your-visit/' },
   preparacion: { es: '/pacientes/preparacion-para-examenes/', en: '/en/patients/exam-preparation/' },
   resultados: { es: '/pacientes/resultados-e-historia-clinica/', en: '/en/patients/results-and-medical-records/' },
+  seguridad: { es: '/pacientes/seguridad-del-paciente/', en: '/en/patients/patient-safety/' },
   derechos: { es: '/pacientes/derechos-y-deberes/', en: '/en/patients/rights-and-responsibilities/' },
   faq: { es: '/pacientes/preguntas-frecuentes/', en: '/en/patients/faq/' },
   asociacion: { es: '/pacientes/asociacion-de-usuarios/', en: '/en/patients/patient-association/' },

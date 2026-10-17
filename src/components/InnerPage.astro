@@ -15,6 +15,7 @@ import TransparencyList from './TransparencyList.astro';
 import SiteMap from './SiteMap.astro';
 import PrepGuide from './PrepGuide.astro';
 import JobOpenings from './JobOpenings.astro';
+import SafetyGuide from './SafetyGuide.astro';
 import Locations from './Locations.astro';
 import CtaBand from './CtaBand.astro';
 interface Props { p: Pagina; lang: Lang }
@@ -58,6 +59,7 @@ const showNav = !wide && navItems.length > 1;
         {d.layout === 'mapa' && <SiteMap lang={lang} />}
         {d.layout === 'preparacion' && <PrepGuide lang={lang} />}
         {d.layout === 'empleo' && <JobOpenings lang={lang} />}
+        {d.layout === 'seguridad' && <SafetyGuide lang={lang} />}
       </div>
     </div>
   </div>

@@ -318,7 +318,7 @@ collections:
                     widget: select
                     required: false
                     hint: Elija una página del sitio, o deje vacío y use el campo de archivo.
-                    options: ['inicio', 'noticias', 'servicios', 'pacientes', 'cita', 'antes', 'preparacion', 'resultados', 'derechos', 'faq', 'asociacion', 'educacion', 'visitantes', 'nosotros', 'direccionamiento', 'calidad', 'equipo', 'empleo', 'bienestar', 'transparencia', 'politicas', 'entidades', 'tributarios', 'contacto', 'datos', 'accesibilidad', 'mapa']
+                    options: ['inicio', 'noticias', 'servicios', 'pacientes', 'cita', 'antes', 'preparacion', 'resultados', 'seguridad', 'derechos', 'faq', 'asociacion', 'educacion', 'visitantes', 'nosotros', 'direccionamiento', 'calidad', 'equipo', 'empleo', 'bienestar', 'transparencia', 'politicas', 'entidades', 'tributarios', 'contacto', 'datos', 'accesibilidad', 'mapa']
                   - { label: Archivo PDF o enlace, name: archivo, widget: file, required: false, choose_url: true, hint: 'Escriba PQRS para enlazar el formulario de PQRS.' }
       - name: vacantes
         label: Ofertas de empleo
@@ -343,6 +343,38 @@ collections:
               - { label: Perfil, name: perfil, widget: list, summary: '{{fields.es}}', fields: [{ label: Texto, name: es, widget: string }, { label: Texto en inglés, name: en, widget: string }] }
               - { label: Habilidades y competencias, name: habilidades, widget: list, required: false, summary: '{{fields.es}}', fields: [{ label: Texto, name: es, widget: string }, { label: Texto en inglés, name: en, widget: string }] }
               - { label: Responsabilidades, name: responsabilidades, widget: list, required: false, summary: '{{fields.es}}', fields: [{ label: Texto, name: es, widget: string }, { label: Texto en inglés, name: en, widget: string }] }
+      - name: seguridad
+        label: Seguridad del paciente
+        file: src/data/seguridad.json
+        description: Metas y recomendaciones de la página "Seguridad del paciente". Cada cambio debe estar aprobado por el referente de seguridad del paciente.
+        fields:
+          - { label: Fuente (no se publica), name: fuente, widget: text, required: false }
+          - label: Metas de seguridad
+            name: metas
+            label_singular: meta
+            widget: list
+            summary: '{{fields.titulo.es}}'
+            fields:
+              - { label: Icono, name: icono, widget: select, options: [idcard, chat, pill, target, hands, steps, shield, results, heartbeat] }
+              - { label: Título, name: titulo, widget: object, fields: [{ label: Español, name: es, widget: string }, { label: Inglés, name: en, widget: string }] }
+              - { label: Texto, name: texto, widget: object, fields: [{ label: Español, name: es, widget: text }, { label: Inglés, name: en, widget: text }] }
+          - label: Recomendaciones
+            name: consejos
+            label_singular: grupo de recomendaciones
+            widget: list
+            summary: '{{fields.titulo.es}}'
+            fields:
+              - { label: Icono, name: icono, widget: select, options: [idcard, chat, pill, target, hands, steps, shield, results, heartbeat] }
+              - { label: Título, name: titulo, widget: object, fields: [{ label: Español, name: es, widget: string }, { label: Inglés, name: en, widget: string }] }
+              - { label: Recomendaciones, name: items, widget: list, summary: '{{fields.es}}', fields: [{ label: Texto, name: es, widget: text }, { label: Texto en inglés, name: en, widget: text }] }
+              - label: Enlace (opcional)
+                name: enlace
+                widget: object
+                required: false
+                collapsed: true
+                fields:
+                  - { label: Página, name: ruta, widget: select, options: ['preparacion', 'antes', 'resultados', 'derechos', 'cita', 'contacto'] }
+                  - { label: Texto del enlace, name: texto, widget: object, fields: [{ label: Español, name: es, widget: string }, { label: Inglés, name: en, widget: string }] }
       - name: preparaciones
         label: Preparación de exámenes
         file: src/data/preparaciones.json
@@ -468,6 +500,10 @@ collections:
         label: "Preparación para sus exámenes"
         file: src/content/paginas/es/pacientes/preparacion-para-examenes.md
         fields: *campos_pagina
+      - name: es-pacientes-seguridad-del-paciente
+        label: "Seguridad del paciente"
+        file: src/content/paginas/es/pacientes/seguridad-del-paciente.md
+        fields: *campos_pagina
       - name: es-pacientes-resultados-e-historia-clinica
         label: "Resultados e historia clínica"
         file: src/content/paginas/es/pacientes/resultados-e-historia-clinica.md
@@ -565,6 +601,10 @@ collections:
       - name: en-patients-exam-preparation
         label: "Preparing for your test"
         file: src/content/paginas/en/patients/exam-preparation.md
+        fields: *campos_pagina
+      - name: en-patients-patient-safety
+        label: "Patient safety"
+        file: src/content/paginas/en/patients/patient-safety.md
         fields: *campos_pagina
       - name: en-patients-results-and-medical-records
         label: "Results and medical records"

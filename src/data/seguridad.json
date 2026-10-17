@@ -1,0 +1,125 @@
+{
+  "fuente": "Programa de seguridad del paciente MA0201C v05 (7/10/2026) y material educativo de la coordinación SIAU «Seguridad del paciente al alcance de todos». Indicaciones de medicina nuclear tomadas de los documentos de preparación de exámenes.",
+  "metas": [
+    {
+      "icono": "idcard",
+      "titulo": { "es": "Identificarle correctamente", "en": "Identify you correctly" },
+      "texto": { "es": "Que cada atención, examen, resultado y procedimiento corresponda a la persona correcta.", "en": "Every visit, test, result and procedure must belong to the right person." }
+    },
+    {
+      "icono": "chat",
+      "titulo": { "es": "Comunicarnos con claridad", "en": "Communicate clearly" },
+      "texto": { "es": "Que la información sobre su atención sea clara y completa entre quienes le atienden, y también con usted y su familia.", "en": "Information about your care must be clear and complete among the people caring for you, and with you and your family." }
+    },
+    {
+      "icono": "pill",
+      "titulo": { "es": "Usar los medicamentos con seguridad", "en": "Use medicines safely" },
+      "texto": { "es": "Aplicar cada medicamento con las verificaciones necesarias, con mayor cuidado en los de alto riesgo.", "en": "Give every medicine with the necessary checks, taking extra care with high-risk medicines." }
+    },
+    {
+      "icono": "target",
+      "titulo": { "es": "Procedimiento correcto, paciente correcto", "en": "Right procedure, right patient" },
+      "texto": { "es": "Verificar antes de cada procedimiento que se realice el indicado, al paciente indicado y en el sitio indicado.", "en": "Before every procedure, confirm it is the right procedure, on the right patient and at the right site." }
+    },
+    {
+      "icono": "hands",
+      "titulo": { "es": "Prevenir infecciones", "en": "Prevent infections" },
+      "texto": { "es": "Reducir el riesgo de infecciones asociadas a la atención, empezando por la higiene de manos.", "en": "Reduce the risk of care-related infections, starting with hand hygiene." }
+    },
+    {
+      "icono": "steps",
+      "titulo": { "es": "Prevenir caídas", "en": "Prevent falls" },
+      "texto": { "es": "Reducir el riesgo de que un paciente se caiga y se haga daño durante su atención.", "en": "Reduce the risk of a patient falling and getting hurt during care." }
+    }
+  ],
+  "consejos": [
+    {
+      "icono": "idcard",
+      "titulo": { "es": "Su identificación", "en": "Your identification" },
+      "items": [
+        { "es": "Dé siempre su nombre completo y su número de documento. No use diminutivos ni apodos.", "en": "Always give your full name and ID number. Do not use nicknames." },
+        { "es": "Pregunte el nombre de quien le atiende y qué atención le va a brindar.", "en": "Ask the name of the person caring for you and what care they will provide." },
+        { "es": "Fíjese en que el personal se dirija a usted por su nombre y sus apellidos.", "en": "Make sure staff address you by your full name." },
+        { "es": "Antes de un examen o procedimiento, confirme que el personal conoce su nombre completo, su documento y lo que le van a realizar. Pídalo con confianza.", "en": "Before a test or procedure, confirm that staff know your full name, your ID and what they are going to do. Feel free to ask." }
+      ]
+    },
+    {
+      "icono": "hands",
+      "titulo": { "es": "Manos limpias", "en": "Clean hands" },
+      "items": [
+        { "es": "Lavarse las manos evita que se transmitan microorganismos y reduce el riesgo de infecciones.", "en": "Washing hands stops germs from spreading and lowers the risk of infection." },
+        { "es": "Puede pedir con respeto al personal que se lave las manos antes de atenderle.", "en": "You may politely ask staff to wash their hands before caring for you." },
+        { "es": "Higienice sus manos antes de entrar a la consulta.", "en": "Clean your hands before entering the consultation room." },
+        { "es": "Si en casa usted o su cuidador aplican medicamentos, como la insulina, o cambian vendajes, lávense las manos antes y háganlo en un sitio limpio y bien iluminado.", "en": "If you or your caregiver give medicines at home, such as insulin, or change dressings, wash your hands first and do it in a clean, well-lit place." }
+      ]
+    },
+    {
+      "icono": "pill",
+      "titulo": { "es": "Sus medicamentos en la consulta", "en": "Your medicines at your visit" },
+      "items": [
+        { "es": "Cuéntele al profesional todos los medicamentos, vitaminas y suplementos que toma, incluso los homeopáticos o naturistas. Traiga la lista.", "en": "Tell your clinician about every medicine, vitamin and supplement you take, including homeopathic or herbal products. Bring the list." },
+        { "es": "Informe siempre sus alergias y las reacciones que haya tenido a algún medicamento.", "en": "Always report your allergies and any reactions you have had to medicines." },
+        { "es": "Si le van a aplicar un medicamento o un medio de contraste, pregunte cuál es y para qué sirve.", "en": "If you are going to receive a medicine or a contrast agent, ask what it is and what it is for." },
+        { "es": "Antes de irse, verifique que entendió cómo tomar lo que le formularon: la vía, la presentación, la dosis y por cuánto tiempo.", "en": "Before you leave, make sure you understand how to take what was prescribed: the route, the form, the dose and for how long." }
+      ]
+    },
+    {
+      "icono": "pill",
+      "titulo": { "es": "Sus medicamentos en casa", "en": "Your medicines at home" },
+      "items": [
+        { "es": "Al comprarlos, verifique que la etiqueta coincida con el medicamento y la presentación que le formularon.", "en": "When you buy them, check that the label matches the medicine and form you were prescribed." },
+        { "es": "Conserve la fórmula para consultarla cuando la necesite.", "en": "Keep your prescription so you can check it whenever you need to." },
+        { "es": "Tómelos en los horarios y la dosis indicados, en un sitio iluminado donde pueda leer la etiqueta. Si un jarabe no trae dosificador, mida la dosis con una jeringa sin aguja.", "en": "Take them at the prescribed times and dose, somewhere bright enough to read the label. If a liquid has no measuring device, measure it with a needle-free syringe." },
+        { "es": "No se automedique ni tome medicamentos formulados a otras personas, y revise la fecha de vencimiento.", "en": "Do not self-medicate or take medicines prescribed to someone else, and check the expiry date." },
+        { "es": "No los guarde en la cocina ni en el baño, ni expuestos a la luz, y no los almacene con productos de aseo, medicamentos de mascotas u otras sustancias tóxicas.", "en": "Do not store them in the kitchen or bathroom or in direct light, and keep them away from cleaning products, pet medicines and other toxic substances." }
+      ]
+    },
+    {
+      "icono": "results",
+      "titulo": { "es": "Exámenes y resultados", "en": "Tests and results" },
+      "items": [
+        { "es": "Pregunte por la preparación, el ayuno o la dieta que necesita antes y después del examen.", "en": "Ask about any preparation, fasting or diet you need before and after the test." },
+        { "es": "Pregunte para qué sirve el examen y cuándo estarán listos los resultados.", "en": "Ask what the test is for and when the results will be ready." },
+        { "es": "Al recibir sus resultados, verifique que sean suyos: nombre, apellidos y número de documento.", "en": "When you receive your results, check that they are yours: name and ID number." }
+      ],
+      "enlace": { "ruta": "preparacion", "texto": { "es": "Ver la preparación de su examen", "en": "See how to prepare for your test" } }
+    },
+    {
+      "icono": "chat",
+      "titulo": { "es": "Durante su atención", "en": "During your care" },
+      "items": [
+        { "es": "Prepare su consulta: anote sus síntomas, los medicamentos que toma y sus preguntas.", "en": "Prepare for your visit: write down your symptoms, the medicines you take and your questions." },
+        { "es": "Traiga los documentos y exámenes que le pidieron.", "en": "Bring the documents and test results you were asked for." },
+        { "es": "Los adultos mayores, los niños y las personas con discapacidad deben venir acompañados, para facilitar la comunicación.", "en": "Older adults, children and people with disabilities should come with a companion, to make communication easier." },
+        { "es": "Haga todas las preguntas que necesite hasta resolver sus dudas.", "en": "Ask as many questions as you need until your doubts are cleared up." }
+      ]
+    },
+    {
+      "icono": "steps",
+      "titulo": { "es": "Prevención de caídas", "en": "Fall prevention" },
+      "items": [
+        { "es": "Si lo necesita, pida ayuda para subirse o bajarse de la camilla.", "en": "If you need it, ask for help getting on or off the exam table." },
+        { "es": "Si la atención es para un bebé o un niño, no lo pierda de vista, sobre todo cuando esté en la camilla.", "en": "If the patient is a baby or child, keep them in sight at all times, especially on the exam table." }
+      ]
+    },
+    {
+      "icono": "target",
+      "titulo": { "es": "Si le van a realizar un procedimiento", "en": "If you are having a procedure" },
+      "items": [
+        { "es": "Venga con un familiar o una persona de confianza que pueda esperarle en la sala.", "en": "Come with a relative or someone you trust who can wait for you." },
+        { "es": "Confirme que el personal conoce su nombre, su documento y el procedimiento que le van a realizar.", "en": "Confirm that staff know your name, your ID and the procedure you are having." },
+        { "es": "Después del procedimiento, siga con atención las recomendaciones del especialista.", "en": "After the procedure, follow your specialist's instructions carefully." }
+      ]
+    },
+    {
+      "icono": "shield",
+      "titulo": { "es": "Medicina nuclear, embarazo y lactancia", "en": "Nuclear medicine, pregnancy and breastfeeding" },
+      "items": [
+        { "es": "Si está o cree que podría estar embarazada, avísenos antes del examen y traiga una prueba de embarazo en sangre.", "en": "If you are or might be pregnant, tell us before the test and bring a blood pregnancy test." },
+        { "es": "Si está lactando, avísele al tecnólogo para recibir las indicaciones de protección para su bebé.", "en": "If you are breastfeeding, tell the technologist so you receive protection guidance for your baby." },
+        { "es": "No venga acompañado de niños ni de mujeres embarazadas.", "en": "Do not come with children or pregnant women." },
+        { "es": "Durante las 24 horas siguientes a la inyección, no esté cerca de niños menores de 15 años ni de mujeres embarazadas.", "en": "For 24 hours after the injection, stay away from children under 15 and pregnant women." }
+      ]
+    }
+  ]
+}
