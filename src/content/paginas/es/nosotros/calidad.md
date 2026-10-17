@@ -6,6 +6,7 @@ description: Sistema integrado de gestión, política y objetivos de calidad, ce
 card: Sistema de gestión, certificaciones y premios.
 section: nosotros
 order: 1
+layout: calidad
 ---
 ## Certificaciones
 
@@ -16,7 +17,7 @@ Nuestros sistemas de gestión están certificados por Icontec, con reconocimient
 
 **¿Qué significan para usted?** La certificación ISO 9001 quiere decir que un organismo independiente revisa periódicamente que nuestros procesos de atención estén documentados, se cumplan y se mejoren a partir de la medición y de la opinión de los usuarios. La ISO 45001 certifica que cuidamos la seguridad y la salud de nuestros colaboradores, las personas que le atienden.
 
-<img src="/uploads/certificaciones/icontec-iqnet.webp" alt="Sellos de certificación Icontec ISO 9001, certificado SC7166-1, e ISO 45001, certificado ST-CER961165, y sello de certificación reconocida IQNet" width="660" height="335" loading="lazy" style="max-width:22rem;height:auto">
+<img src="/uploads/certificaciones/icontec-iqnet.webp" alt="Sellos de certificación Icontec ISO 9001, certificado SC7166-1, e ISO 45001, certificado ST-CER961165, y sello de certificación reconocida IQNet" width="660" height="335" loading="lazy" style="width:100%;max-width:22rem;height:auto">
 
 ## Alcance del sistema de gestión de calidad
 
@@ -42,4 +43,4 @@ Servicios Especializados del Corazón se compromete a fortalecer una cultura de 
 
 ## Indicadores
 
-Consulte nuestros [indicadores normativos](https://drive.google.com/file/d/15qTAHQhf0cLsBKkgXU4Qv6XtrMwJUuBw/view).
+Publicamos cada año los resultados de experiencia del paciente, seguridad y actividad asistencial. Estos son los de 2025. Consulte también nuestros [indicadores normativos](https://drive.google.com/file/d/15qTAHQhf0cLsBKkgXU4Qv6XtrMwJUuBw/view).

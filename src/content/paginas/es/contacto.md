@@ -9,7 +9,9 @@ order: 0
 ---
 ## Peticiones, quejas, reclamos, sugerencias y felicitaciones
 
-Presente sus derechos de petición, quejas, reclamos, sugerencias, felicitaciones, consultas, solicitudes de información y denuncias por posibles actos de corrupción en el [formulario de PQRS](https://docs.google.com/forms/d/e/1FAIpQLSdNUpQtBaGXjQgKYLvxctA8vwbtnJvuMjyYgKuwYNLGUy0Jgg/viewform) o al correo contacto@sefcb.co.
+Presente sus derechos de petición, quejas, reclamos, sugerencias, felicitaciones, consultas, solicitudes de información y denuncias por posibles actos de corrupción en el [formulario de PQRS](https://docs.google.com/forms/d/e/1FAIpQLSdNUpQtBaGXjQgKYLvxctA8vwbtnJvuMjyYgKuwYNLGUy0Jgg/viewform) o al correo contacto@sefcb.co. También puede dejarla en el buzón de sugerencias de nuestras sedes.
+
+Si no está conforme con la respuesta, puede acudir a la Superintendencia Nacional de Salud o al Instituto Departamental de Salud de Norte de Santander. Encuentre sus canales en el [directorio de entidades](/transparencia/directorio-de-entidades/).
 
 ## Horarios
 

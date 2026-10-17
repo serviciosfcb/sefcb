@@ -9,7 +9,9 @@ order: 0
 ---
 ## Petitions, complaints, suggestions and compliments
 
-Submit petitions, complaints, suggestions, compliments, questions, information requests and reports of possible corruption through our [feedback form](https://docs.google.com/forms/d/e/1FAIpQLSdNUpQtBaGXjQgKYLvxctA8vwbtnJvuMjyYgKuwYNLGUy0Jgg/viewform) (in Spanish) or by email to contacto@sefcb.co.
+Submit petitions, complaints, suggestions, compliments, questions, information requests and reports of possible corruption through our [feedback form](https://docs.google.com/forms/d/e/1FAIpQLSdNUpQtBaGXjQgKYLvxctA8vwbtnJvuMjyYgKuwYNLGUy0Jgg/viewform) (in Spanish) or by email to contacto@sefcb.co. You can also use the suggestion box at our locations.
+
+If you are not satisfied with our response, you can contact the National Health Superintendency (Supersalud) or the Norte de Santander Departmental Health Institute. Their channels are listed under [oversight bodies](/en/transparency/oversight-bodies/).
 
 ## Opening hours (Colombia time, UTC−5)
 

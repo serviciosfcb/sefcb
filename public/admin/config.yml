@@ -343,6 +343,33 @@ collections:
               - { label: Perfil, name: perfil, widget: list, summary: '{{fields.es}}', fields: [{ label: Texto, name: es, widget: string }, { label: Texto en inglés, name: en, widget: string }] }
               - { label: Habilidades y competencias, name: habilidades, widget: list, required: false, summary: '{{fields.es}}', fields: [{ label: Texto, name: es, widget: string }, { label: Texto en inglés, name: en, widget: string }] }
               - { label: Responsabilidades, name: responsabilidades, widget: list, required: false, summary: '{{fields.es}}', fields: [{ label: Texto, name: es, widget: string }, { label: Texto en inglés, name: en, widget: string }] }
+      - name: indicadores
+        label: Indicadores del año
+        file: src/data/indicadores.json
+        description: Cifras de las páginas "Calidad y reconocimientos" y "Seguridad del paciente". Tómelas solo del informe de gestión aprobado del año.
+        fields:
+          - { label: Año, name: anio, widget: string }
+          - { label: Fuente, name: fuente, widget: object, fields: [{ label: Español, name: es, widget: string }, { label: Inglés, name: en, widget: string }] }
+          - { label: Enlace a la fuente, name: enlace, widget: string, hint: 'Enlace público del informe de gestión.' }
+          - label: Grupos
+            name: grupos
+            label_singular: grupo
+            widget: list
+            summary: '{{fields.titulo.es}}'
+            fields:
+              - { label: Identificador (no cambiar), name: id, widget: string, hint: 'experiencia, seguridad o actividad. La página de seguridad del paciente muestra el grupo "seguridad".' }
+              - { label: Título, name: titulo, widget: object, fields: [{ label: Español, name: es, widget: string }, { label: Inglés, name: en, widget: string }] }
+              - label: Cifras
+                name: items
+                label_singular: cifra
+                widget: list
+                summary: '{{fields.etiqueta.es}}: {{fields.valor}}{{fields.unidad}}'
+                fields:
+                  - { label: Valor, name: valor, widget: number, value_type: float, hint: 'Con punto decimal, por ejemplo 95.86. El sitio lo muestra con coma.' }
+                  - { label: Decimales que se muestran, name: decimales, widget: number, value_type: int, default: 2 }
+                  - { label: Unidad, name: unidad, widget: select, options: ['%', ''], default: '%', required: false }
+                  - { label: Nombre de la cifra, name: etiqueta, widget: object, fields: [{ label: Español, name: es, widget: string }, { label: Inglés, name: en, widget: string }] }
+                  - { label: Detalle, name: detalle, widget: object, fields: [{ label: Español, name: es, widget: text }, { label: Inglés, name: en, widget: text }] }
       - name: seguridad
         label: Seguridad del paciente
         file: src/data/seguridad.json

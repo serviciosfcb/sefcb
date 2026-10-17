@@ -1,0 +1,193 @@
+{
+  "anio": "2025",
+  "fuente": {
+    "es": "Informe de gestión 2025",
+    "en": "2025 management report"
+  },
+  "enlace": "https://drive.google.com/file/d/1LIKHNgabhdEv7qZFUEm6Qg0WaHHbTZAd/view",
+  "grupos": [
+    {
+      "id": "experiencia",
+      "titulo": {
+        "es": "Experiencia del paciente",
+        "en": "Patient experience"
+      },
+      "items": [
+        {
+          "valor": 95.86,
+          "decimales": 2,
+          "unidad": "%",
+          "etiqueta": {
+            "es": "Satisfacción global",
+            "en": "Overall satisfaction"
+          },
+          "detalle": {
+            "es": "12.040 encuestas en todos los servicios. En 2024 fue 98,44 %.",
+            "en": "12,040 surveys across all services. It was 98.44% in 2024."
+          }
+        },
+        {
+          "valor": 98.43,
+          "decimales": 2,
+          "unidad": "%",
+          "etiqueta": {
+            "es": "Recomendaría la institución",
+            "en": "Would recommend us"
+          },
+          "detalle": {
+            "es": "Encuestados que la recomendarían definitivamente.",
+            "en": "Respondents who would definitely recommend us."
+          }
+        },
+        {
+          "valor": 97.77,
+          "decimales": 2,
+          "unidad": "%",
+          "etiqueta": {
+            "es": "Satisfacción con la oportunidad",
+            "en": "Satisfaction with timeliness"
+          },
+          "detalle": {
+            "es": "Componente de oportunidad en la atención de la encuesta de satisfacción.",
+            "en": "Timeliness of care, as rated in the satisfaction survey."
+          }
+        },
+        {
+          "valor": 96.17,
+          "decimales": 2,
+          "unidad": "%",
+          "etiqueta": {
+            "es": "Satisfacción con el trato humanizado",
+            "en": "Satisfaction with compassionate care"
+          },
+          "detalle": {
+            "es": "Componente de humanización en la atención de la encuesta de satisfacción.",
+            "en": "Compassionate care, as rated in the satisfaction survey."
+          }
+        },
+        {
+          "valor": 96.11,
+          "decimales": 2,
+          "unidad": "%",
+          "etiqueta": {
+            "es": "Satisfacción con la información recibida",
+            "en": "Satisfaction with information provided"
+          },
+          "detalle": {
+            "es": "Componente de comunicación, educación e información de la encuesta de satisfacción.",
+            "en": "Communication, education and information, as rated in the satisfaction survey."
+          }
+        },
+        {
+          "valor": 0.11,
+          "decimales": 2,
+          "unidad": "%",
+          "etiqueta": {
+            "es": "PQRS frente a usuarios atendidos",
+            "en": "Complaints per patients served"
+          },
+          "detalle": {
+            "es": "47 PQRS y 77 felicitaciones entre 43.955 usuarios atendidos.",
+            "en": "47 complaints and requests, and 77 compliments, among 43,955 patients served."
+          }
+        }
+      ]
+    },
+    {
+      "id": "seguridad",
+      "titulo": {
+        "es": "Seguridad del paciente",
+        "en": "Patient safety"
+      },
+      "items": [
+        {
+          "valor": 99.99,
+          "decimales": 2,
+          "unidad": "%",
+          "etiqueta": {
+            "es": "Pacientes identificados correctamente",
+            "en": "Patients correctly identified"
+          },
+          "detalle": {
+            "es": "Proporción de pacientes identificados sin error.",
+            "en": "Share of patients identified without error."
+          }
+        },
+        {
+          "valor": 99.96,
+          "decimales": 2,
+          "unidad": "%",
+          "etiqueta": {
+            "es": "Consentimientos bien diligenciados",
+            "en": "Consent forms correctly completed"
+          },
+          "detalle": {
+            "es": "Consentimientos informados diligenciados correctamente por los usuarios.",
+            "en": "Informed consent forms correctly completed by patients."
+          }
+        },
+        {
+          "valor": 0.007,
+          "decimales": 3,
+          "unidad": "%",
+          "etiqueta": {
+            "es": "Caídas en la institución",
+            "en": "Falls at our facilities"
+          },
+          "detalle": {
+            "es": "Proporción de pacientes que sufrieron una caída.",
+            "en": "Share of patients who had a fall."
+          }
+        }
+      ]
+    },
+    {
+      "id": "actividad",
+      "titulo": {
+        "es": "Atención en cifras",
+        "en": "Care in numbers"
+      },
+      "items": [
+        {
+          "valor": 43955,
+          "decimales": 0,
+          "unidad": "",
+          "etiqueta": {
+            "es": "Usuarios atendidos",
+            "en": "Patients served"
+          },
+          "detalle": {
+            "es": "En todos los servicios.",
+            "en": "Across all services."
+          }
+        },
+        {
+          "valor": 23681,
+          "decimales": 0,
+          "unidad": "",
+          "etiqueta": {
+            "es": "Procedimientos de cardiología no invasiva",
+            "en": "Non-invasive cardiology procedures"
+          },
+          "detalle": {
+            "es": "Electrocardiogramas, ecocardiogramas, Holter y otros.",
+            "en": "ECGs, echocardiograms, Holter monitoring and more."
+          }
+        },
+        {
+          "valor": 9160,
+          "decimales": 0,
+          "unidad": "",
+          "etiqueta": {
+            "es": "Consultas especializadas",
+            "en": "Specialist consultations"
+          },
+          "detalle": {
+            "es": "Consulta externa especializada.",
+            "en": "Outpatient specialist care."
+          }
+        }
+      ]
+    }
+  ]
+}

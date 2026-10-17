@@ -6,6 +6,7 @@ description: Integrated management system, quality policy and objectives, ISO 90
 card: Management system, certifications and awards.
 section: nosotros
 order: 1
+layout: calidad
 ---
 ## Certifications
 
@@ -16,7 +17,7 @@ Our management systems are certified by Icontec, with international recognition 
 
 **What do they mean for you?** ISO 9001 certification means an independent body regularly checks that our care processes are documented, followed and improved based on measurement and patient feedback. ISO 45001 certifies that we look after the safety and health of our staff, the people who care for you.
 
-<img src="/uploads/certificaciones/icontec-iqnet.webp" alt="Icontec certification marks for ISO 9001, certificate SC7166-1, and ISO 45001, certificate ST-CER961165, and the IQNet recognized certification mark" width="660" height="335" loading="lazy" style="max-width:22rem;height:auto">
+<img src="/uploads/certificaciones/icontec-iqnet.webp" alt="Icontec certification marks for ISO 9001, certificate SC7166-1, and ISO 45001, certificate ST-CER961165, and the IQNet recognized certification mark" width="660" height="335" loading="lazy" style="width:100%;max-width:22rem;height:auto">
 
 ## Scope of the quality management system
 
@@ -42,4 +43,4 @@ Servicios Especializados del Corazón is committed to strengthening a culture of
 
 ## Indicators
 
-See our [regulatory indicators](https://drive.google.com/file/d/15qTAHQhf0cLsBKkgXU4Qv6XtrMwJUuBw/view) (in Spanish).
+Every year we publish our results on patient experience, safety and care activity. These are our 2025 results. See also our [regulatory indicators](https://drive.google.com/file/d/15qTAHQhf0cLsBKkgXU4Qv6XtrMwJUuBw/view) (in Spanish).

@@ -184,5 +184,5 @@ h1, h2, h3 { overflow-wrap: break-word; }
 .prosa ul, .prosa ol { padding-left: 1.3em; }
 .prosa li + li { margin-top: .4em; }
 .prosa blockquote { border-left: 3px solid var(--rojo); padding-left: 1.1em; color: var(--tinta-2); font-style: italic; }
-.prosa img { border-radius: var(--radio-m); height: auto; }
+.prosa img { border-radius: var(--radio-m); height: auto; max-width: 100%; }
 .prosa strong { font-weight: 700; }

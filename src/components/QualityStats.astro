@@ -1,0 +1,52 @@
+---
+// Indicadores del año (src/data/indicadores.json, editable en el panel). Se muestran como fichas de cifras.
+// grupos: lista de ids a mostrar (por defecto todos). Los números se formatean según el idioma.
+import type { Lang } from '../i18n/content';
+import data from '../data/indicadores.json';
+import Icon from './Icon.astro';
+interface Props { lang: Lang; grupos?: string[]; titulo?: boolean }
+const { lang, grupos, titulo = true } = Astro.props;
+const en = lang === 'en';
+type Txt = { es: string; en: string };
+const tx = (x: Txt) => (en ? x.en || x.es : x.es);
+const fmt = (v: number, d: number) => new Intl.NumberFormat(en ? 'en-US' : 'es-CO', { minimumFractionDigits: d, maximumFractionDigits: d }).format(v);
+const unidad = (u: string) => (u === '%' ? (en ? '%' : ' %') : u);
+const lista = data.grupos.filter((g) => !grupos || grupos.includes(g.id));
+const idTitulo = `ind-${lista.map((g) => g.id).join('-')}`;
+const t = en
+  ? { title: `Our results in ${data.anio}`, source: 'Source', opens: 'opens in a new tab' }
+  : { title: `Nuestros resultados ${data.anio}`, source: 'Fuente', opens: 'se abre en una pestaña nueva' };
+---
+<section class="ind" aria-labelledby={titulo ? idTitulo : undefined} aria-label={titulo ? undefined : t.title}>
+  {titulo && <h2 id={idTitulo}>{t.title}</h2>}
+  {lista.map((g) => (
+    <div class="ind-grupo">
+      <h3>{tx(g.titulo)}</h3>
+      <ul class="ind-fichas" data-stagger>
+        {g.items.map((i) => (
+          <li class="ind-ficha" data-stagger-item>
+            <span class="ind-etiqueta">{tx(i.etiqueta)}</span>
+            <span class="ind-valor">{fmt(i.valor, i.decimales)}{unidad(i.unidad)}</span>
+            <span class="ind-detalle">{tx(i.detalle)}</span>
+          </li>
+        ))}
+      </ul>
+    </div>
+  ))}
+  <p class="ind-fuente">{t.source}: <a href={data.enlace} target="_blank" rel="noopener">{tx(data.fuente)}<Icon name="external" /><span class="visualmente-oculto"> ({t.opens})</span></a></p>
+</section>
+
+<style>
+  .ind { display: grid; gap: 1.4rem; }
+  .ind > h2 { font-size: var(--t-5); }
+  .ind-grupo { display: grid; gap: .8rem; }
+  .ind-grupo h3 { font-family: var(--texto); font-size: var(--t-0); font-weight: 700; text-transform: uppercase; letter-spacing: .06em; color: var(--rojo); }
+  .ind-fichas { list-style: none; display: grid; grid-template-columns: repeat(auto-fill, minmax(max(min(100%, 13.5rem), calc((100% - 1.6rem) / 3)), 1fr)); gap: .8rem; }
+  .ind-ficha { display: grid; grid-row: span 3; grid-template-rows: subgrid; row-gap: .35rem; align-content: start; padding: 1.1rem 1.2rem 1.2rem; border-radius: var(--radio-m); border: 1px solid var(--linea); background: var(--papel); }
+  .ind-etiqueta { font-size: var(--t-0); font-weight: 600; line-height: 1.3; color: var(--tinta-2); }
+  .ind-valor { font-family: var(--texto); font-weight: 700; font-size: clamp(1.9rem, 3.2vw, 2.4rem); line-height: 1.05; letter-spacing: -.02em; color: var(--tinta); }
+  .ind-detalle { font-size: .875rem; line-height: 1.4; color: var(--tinta-2); }
+  .ind-fuente { font-size: var(--t-0); color: var(--tinta-2); }
+  .ind-fuente a { display: inline-flex; align-items: center; gap: .3rem; color: var(--tinta); font-weight: 600; }
+  .ind-fuente :global(.icon) { width: .95rem; height: .95rem; }
+</style>
