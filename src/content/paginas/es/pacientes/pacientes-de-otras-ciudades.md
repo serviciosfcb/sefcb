@@ -6,7 +6,7 @@ description: Información para pacientes que viajan a Cúcuta para atenderse en 
 card: Cómo llegar a Cúcuta y qué tener en cuenta.
 section: pacientes
 order: 8
-review: Información de transporte tomada del sitio anterior (2019). Validar rutas aéreas vigentes.
+review: Información general de transporte; no se publican rutas ni aerolíneas específicas para no desactualizarse.
 ---
 San José de Cúcuta es la capital de Norte de Santander, en el noreste de Colombia, junto a la frontera con Venezuela. Es el principal centro financiero e industrial de la región.
 
