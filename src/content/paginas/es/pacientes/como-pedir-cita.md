@@ -6,7 +6,7 @@ description: Canales y horarios para pedir, cambiar o cancelar citas en Servicio
 card: Canales, horarios y documentos que necesita.
 section: pacientes
 order: 1
-review: Los horarios del call center no coinciden entre las páginas del sitio anterior (7:00 a. m. a 6:00 p. m. o a 9:00 p. m.). Validar.
+review: Horario del call center confirmado por gerencia (17/10/2026). Falta confirmar el de atención presencial.
 ---
 ## Canales para pedir su cita
 
@@ -23,7 +23,7 @@ Para procedimientos de **intervencionismo**, escriba a secintervencionismo@sefcb
 ## Horarios
 
 - **Atención presencial:** lunes a viernes de 7:00 a. m. a 6:00 p. m. y sábados de 8:00 a. m. a 11:00 a. m.
-- **Call center:** lunes a viernes de 7:00 a. m. a 9:00 p. m. y sábados de 8:00 a. m. a 3:00 p. m.
+- **Call center:** lunes a viernes de 7:00 a. m. a 7:00 p. m. y sábados de 8:00 a. m. a 2:00 p. m.
 
 ## Documentos que necesita
 

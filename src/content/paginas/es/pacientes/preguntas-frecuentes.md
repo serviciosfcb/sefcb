@@ -14,7 +14,7 @@ Lunes a viernes de 7:00 a. m. a 6:00 p. m. y sábados de 8:00 a. m. a 11:00 a. m
 
 ### ¿En qué horario puedo pedir una cita?
 
-En la sede, de lunes a viernes de 6:00 a. m. a 6:00 p. m. y los sábados de 8:00 a. m. a 11:00 a. m. Por el call center, de lunes a viernes de 7:00 a. m. a 9:00 p. m. y los sábados de 8:00 a. m. a 3:00 p. m.
+En la sede, de lunes a viernes de 6:00 a. m. a 6:00 p. m. y los sábados de 8:00 a. m. a 11:00 a. m. Por el call center, de lunes a viernes de 7:00 a. m. a 7:00 p. m. y los sábados de 8:00 a. m. a 2:00 p. m.
 
 ### ¿Qué necesito para pedir una cita?
 

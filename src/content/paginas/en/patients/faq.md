@@ -13,7 +13,7 @@ Monday to Friday, 7:00 a.m. to 6:00 p.m., and Saturday, 8:00 a.m. to 11:00 a.m. 
 
 ### When can I book an appointment?
 
-In person, Monday to Friday, 6:00 a.m. to 6:00 p.m., and Saturday, 8:00 a.m. to 11:00 a.m. Through the call center, Monday to Friday, 7:00 a.m. to 9:00 p.m., and Saturday, 8:00 a.m. to 3:00 p.m.
+In person, Monday to Friday, 6:00 a.m. to 6:00 p.m., and Saturday, 8:00 a.m. to 11:00 a.m. Through the call center, Monday to Friday, 7:00 a.m. to 7:00 p.m., and Saturday, 8:00 a.m. to 2:00 p.m.
 
 ### What do I need to book an appointment?
 

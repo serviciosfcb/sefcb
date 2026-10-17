@@ -14,7 +14,7 @@ Presente sus derechos de petición, quejas, reclamos, sugerencias, felicitacione
 ## Horarios
 
 - **Atención presencial:** lunes a viernes de 7:00 a. m. a 6:00 p. m. y sábados de 8:00 a. m. a 11:00 a. m.
-- **Call center:** lunes a viernes de 7:00 a. m. a 9:00 p. m. y sábados de 8:00 a. m. a 3:00 p. m.
+- **Call center:** lunes a viernes de 7:00 a. m. a 7:00 p. m. y sábados de 8:00 a. m. a 2:00 p. m.
 
 ## Correspondencia
 
