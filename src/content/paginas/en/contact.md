@@ -21,4 +21,14 @@ Submit petitions, complaints, suggestions, compliments, questions, information r
 
 - **Email:** contacto@sefcb.co
 - **Postal address:** Calle 19 No. 1-44, Barrio Blanco, Cúcuta, Norte de Santander, Colombia
-- **Legal notices:** gerencia@sefcb.co
+
+## Email us about your request
+
+- **Petitions, complaints, suggestions, compliments and general questions:** [contacto@sefcb.co](mailto:contacto@sefcb.co)
+- **Results, medical records and the patient association:** [coordinacionsiau@sefcb.co](mailto:coordinacionsiau@sefcb.co)
+- **Interventional cardiology (cath lab) appointments:** [secintervencionismo@sefcb.co](mailto:secintervencionismo@sefcb.co)
+- **Appointments for hospitalized patients:** [atencionalusuario9@sefcb.co](mailto:atencionalusuario9@sefcb.co)
+- **Tax certificates:** [contabilidad@sefcb.co](mailto:contabilidad@sefcb.co)
+- **CVs and internships:** [talentohumano@sefcb.co](mailto:talentohumano@sefcb.co)
+- **Ethics and transparency line:** [oficialdecumplimiento@sefcb.co](mailto:oficialdecumplimiento@sefcb.co)
+- **Legal notices:** [gerencia@sefcb.co](mailto:gerencia@sefcb.co)

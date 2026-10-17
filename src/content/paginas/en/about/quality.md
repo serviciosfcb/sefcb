@@ -14,6 +14,8 @@ Our management systems are certified by Icontec, with international recognition 
 - **NTC ISO 9001:2015, quality management system.** Certificate SC7166-1.
 - **NTC ISO 45001:2018, occupational health and safety management system.** Certificate ST-CER961165.
 
+**What do they mean for you?** ISO 9001 certification means an independent body regularly checks that our care processes are documented, followed and improved based on measurement and patient feedback. ISO 45001 certifies that we look after the safety and health of our staff, the people who care for you.
+
 <img src="/uploads/certificaciones/icontec-iqnet.webp" alt="Icontec certification marks for ISO 9001, certificate SC7166-1, and ISO 45001, certificate ST-CER961165, and the IQNet recognized certification mark" width="660" height="335" loading="lazy" style="max-width:22rem;height:auto">
 
 ## Scope of the quality management system

@@ -21,4 +21,14 @@ Presente sus derechos de petición, quejas, reclamos, sugerencias, felicitacione
 
 - **Correo electrónico institucional:** contacto@sefcb.co
 - **Correo físico:** Calle 19 No. 1-44, Barrio Blanco, Cúcuta, Norte de Santander, Colombia
-- **Notificaciones judiciales:** gerencia@sefcb.co
+
+## Escríbanos según su trámite
+
+- **Peticiones, quejas, reclamos, sugerencias, felicitaciones y consultas generales:** [contacto@sefcb.co](mailto:contacto@sefcb.co)
+- **Resultados, historia clínica y asociación de usuarios:** [coordinacionsiau@sefcb.co](mailto:coordinacionsiau@sefcb.co)
+- **Citas de intervencionismo (hemodinamia):** [secintervencionismo@sefcb.co](mailto:secintervencionismo@sefcb.co)
+- **Citas para pacientes hospitalizados:** [atencionalusuario9@sefcb.co](mailto:atencionalusuario9@sefcb.co)
+- **Certificados tributarios:** [contabilidad@sefcb.co](mailto:contabilidad@sefcb.co)
+- **Hojas de vida y prácticas:** [talentohumano@sefcb.co](mailto:talentohumano@sefcb.co)
+- **Línea ética y de transparencia:** [oficialdecumplimiento@sefcb.co](mailto:oficialdecumplimiento@sefcb.co)
+- **Notificaciones judiciales:** [gerencia@sefcb.co](mailto:gerencia@sefcb.co)

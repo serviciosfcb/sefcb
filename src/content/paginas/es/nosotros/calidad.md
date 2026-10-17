@@ -14,6 +14,8 @@ Nuestros sistemas de gestión están certificados por Icontec, con reconocimient
 - **NTC ISO 9001:2015, sistema de gestión de calidad.** Certificado SC7166-1.
 - **NTC ISO 45001:2018, sistema de gestión de seguridad y salud en el trabajo.** Certificado ST-CER961165.
 
+**¿Qué significan para usted?** La certificación ISO 9001 quiere decir que un organismo independiente revisa periódicamente que nuestros procesos de atención estén documentados, se cumplan y se mejoren a partir de la medición y de la opinión de los usuarios. La ISO 45001 certifica que cuidamos la seguridad y la salud de nuestros colaboradores, las personas que le atienden.
+
 <img src="/uploads/certificaciones/icontec-iqnet.webp" alt="Sellos de certificación Icontec ISO 9001, certificado SC7166-1, e ISO 45001, certificado ST-CER961165, y sello de certificación reconocida IQNet" width="660" height="335" loading="lazy" style="max-width:22rem;height:auto">
 
 ## Alcance del sistema de gestión de calidad
