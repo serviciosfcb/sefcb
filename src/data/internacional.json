@@ -13,8 +13,8 @@
       "en": "You can write to us in English or Spanish."
     },
     "pagos": {
-      "es": "Si su atención es particular, puede pagar con transferencia internacional o tarjeta de crédito. También puede pagar en línea.",
-      "en": "If you are paying privately, you can pay by international bank transfer or credit card. You can also pay online."
+      "es": "Por ahora no tenemos convenios con aseguradoras del exterior, así que la atención es particular. Puede pagar con transferencia internacional o tarjeta de crédito, o en línea.",
+      "en": "We do not yet have agreements with foreign insurers, so care is paid privately. You can pay by international bank transfer or credit card, or online."
     }
   },
   "pasos": [
@@ -133,8 +133,8 @@
       "en": "A list of the medicines you take, with doses."
     },
     {
-      "es": "Si tiene seguro de salud internacional, los datos de su aseguradora.",
-      "en": "If you have international health insurance, your insurer's details."
+      "es": "Si tiene seguro de salud internacional, los datos de su aseguradora, por si le reembolsa la atención.",
+      "en": "If you have international health insurance, your insurer's details, in case it reimburses your care."
     }
   ],
   "ingreso": {
