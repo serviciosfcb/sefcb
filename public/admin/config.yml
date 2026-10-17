@@ -368,6 +368,12 @@ collections:
               - { label: Icono, name: icono, widget: select, options: [chat, prep, plane, heartbeat, results, passport, globe, phone, mail] }
               - { label: Título, name: titulo, widget: object, fields: [{ label: Español, name: es, widget: string }, { label: Inglés, name: en, widget: string }] }
               - { label: Texto, name: texto, widget: object, fields: [{ label: Español, name: es, widget: text }, { label: Inglés, name: en, widget: text }] }
+          - label: Durante la estadía
+            name: estadia
+            widget: object
+            fields:
+              - { label: Título, name: titulo, widget: object, fields: [{ label: Español, name: es, widget: string }, { label: Inglés, name: en, widget: string }] }
+              - { label: Servicios, name: items, widget: list, summary: '{{fields.titulo.es}}', fields: [{ label: Icono, name: icono, widget: select, options: [bed, car, chat, plane, globe, phone] }, { label: Título, name: titulo, widget: object, fields: [{ label: Español, name: es, widget: string }, { label: Inglés, name: en, widget: string }] }, { label: Texto, name: texto, widget: object, fields: [{ label: Español, name: es, widget: text }, { label: Inglés, name: en, widget: text }] }] }
           - { label: Documentos que debe traer, name: documentos, widget: list, summary: '{{fields.es}}', fields: [{ label: Español, name: es, widget: text }, { label: Inglés, name: en, widget: text }] }
           - label: Ingreso a Colombia
             name: ingreso

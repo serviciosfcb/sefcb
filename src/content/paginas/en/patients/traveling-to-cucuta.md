@@ -21,6 +21,6 @@ The climate is warm all year round, at about 320 meters (1,050 feet) above sea l
 
 Book your appointment in advance and confirm with us how to prepare for your test and which documents you need. Message us on WhatsApp at +57 320 936 2904.
 
-Our staff mainly speaks Spanish. If you need help in English, let us know when you book.
+Members of our team can assist you in English. Let us know when you book.
 
 If you are coming from another country, see our information for [international patients](/en/patients/international-patients/).

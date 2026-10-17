@@ -10,4 +10,4 @@ layout: internacional
 ---
 We see patients from other countries for [non-invasive cardiology](/en/services/non-invasive-cardiology/), [nuclear medicine](/en/services/nuclear-medicine/), [interventional cardiology](/en/services/interventional-cardiology/) and [specialist consultations](/en/services/specialist-consultations/). Both of our locations are in Cúcuta, a city with an international airport on the border with Venezuela.
 
-Contact us before you travel, so you arrive with your appointment booked, clear preparation instructions and all your documents.
+Contact us before you travel, so you arrive with your appointment booked, clear preparation instructions, all your documents and, if you need them, your hotel and transfers arranged.

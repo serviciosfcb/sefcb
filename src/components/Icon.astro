@@ -129,6 +129,20 @@ const { name, class: cls } = Astro.props;
     </>
   )}
   {name === 'heartbeat' && <path d="M3 12h4l2-4.5 3 9 2.5-6 1.5 1.5H21" />}
+  {name === 'bed' && (
+    <>
+      <path d="M3 19.5V6M3 15h18v4.5M21 15v-3a3 3 0 0 0-3-3h-7v6" />
+      <circle cx="7" cy="11.5" r="2" />
+    </>
+  )}
+  {name === 'car' && (
+    <>
+      <path d="M4 16.5V12l2-5h12l2 5v4.5H4z" />
+      <path d="M4 12h16" />
+      <circle cx="7.5" cy="16.5" r="1.8" />
+      <circle cx="16.5" cy="16.5" r="1.8" />
+    </>
+  )}
   {name === 'plane' && <path d="M10.5 20.5l2-1v-5.2l7 2.2v-2.1l-7-4.4V5.2a1.5 1.5 0 0 0-3 0V10l-7 4.4v2.1l7-2.2v5.2l1 1z" />}
   {name === 'passport' && (
     <>

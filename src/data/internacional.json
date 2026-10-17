@@ -9,8 +9,8 @@
       "en": "International patient"
     },
     "idioma": {
-      "es": "Nuestro personal habla principalmente español. Si necesita apoyo en inglés, indíquelo al escribirnos.",
-      "en": "Our staff mainly speaks Spanish. If you need help in English, let us know when you write."
+      "es": "Puede escribirnos en español o en inglés.",
+      "en": "You can write to us in English or Spanish."
     },
     "pagos": {
       "es": "Si su atención es particular, puede pagar con transferencia internacional o tarjeta de crédito. También puede pagar en línea.",
@@ -47,8 +47,8 @@
         "en": "Plan your trip"
       },
       "texto": {
-        "es": "Le confirmamos la fecha y la hora de su cita, la preparación de su examen y los documentos que debe traer.",
-        "en": "We confirm your appointment date and time, how to prepare for your test and the documents to bring."
+        "es": "Le confirmamos la fecha y la hora de su cita, la preparación de su examen, los documentos que debe traer y, si los necesita, el hotel y los traslados.",
+        "en": "We confirm your appointment date and time, how to prepare for your test, the documents to bring and, if you need them, your hotel and transfers."
       }
     },
     {
@@ -74,6 +74,47 @@
       }
     }
   ],
+  "estadia": {
+    "titulo": {
+      "es": "Le acompañamos durante su estadía",
+      "en": "We support you during your stay"
+    },
+    "items": [
+      {
+        "icono": "bed",
+        "titulo": {
+          "es": "Hoteles con convenio",
+          "en": "Partner hotels"
+        },
+        "texto": {
+          "es": "Tenemos convenio con hoteles de Cúcuta. Al planear su viaje le damos las opciones.",
+          "en": "We have agreements with hotels in Cúcuta and share the options with you when you plan your trip."
+        }
+      },
+      {
+        "icono": "car",
+        "titulo": {
+          "es": "Transporte institucional",
+          "en": "Institutional transport"
+        },
+        "texto": {
+          "es": "Contamos con transporte institucional para sus traslados durante la atención. Coordínelo con nosotros antes de viajar.",
+          "en": "We provide institutional transport for your transfers during your care. Arrange it with us before you travel."
+        }
+      },
+      {
+        "icono": "chat",
+        "titulo": {
+          "es": "Atención en inglés",
+          "en": "Care in English"
+        },
+        "texto": {
+          "es": "Parte de nuestro equipo le puede atender en inglés.",
+          "en": "Members of our team can assist you in English."
+        }
+      }
+    ]
+  },
   "documentos": [
     {
       "es": "Pasaporte o documento de identidad vigente. Si vive en Colombia, su documento migratorio vigente.",

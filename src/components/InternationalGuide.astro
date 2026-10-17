@@ -70,6 +70,19 @@ const t = en
     </ol>
   </section>
 
+  <section class="intl-sec" aria-labelledby="intl-estadia">
+    <h2 id="intl-estadia">{tx(data.estadia.titulo)}</h2>
+    <ul class="intl-estadia" data-stagger>
+      {data.estadia.items.map((e) => (
+        <li class="intl-servicio" data-stagger-item>
+          <span class="intl-ico intl-ico-l" aria-hidden="true"><Icon name={e.icono} /></span>
+          <h3>{tx(e.titulo)}</h3>
+          <p>{tx(e.texto)}</p>
+        </li>
+      ))}
+    </ul>
+  </section>
+
   <div class="intl-dos">
     <section class="intl-caja" aria-labelledby="intl-traer">
       <h2 id="intl-traer"><span class="intl-ico" aria-hidden="true"><Icon name="passport" /></span>{t.bring}</h2>
@@ -136,6 +149,13 @@ const t = en
   .intl-paso h3 { font-size: var(--t-3); line-height: 1.2; }
   .intl-paso p { color: var(--tinta-2); line-height: 1.55; }
 
+  .intl-estadia { list-style: none; display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, 14rem), 1fr)); gap: 1rem; }
+  .intl-servicio { display: grid; gap: .6rem; align-content: start; padding: 1.3rem 1.4rem 1.4rem; border-radius: var(--radio-l, 22px); border: 1px solid var(--linea); background: var(--papel); transition: border-color .3s, box-shadow .4s, transform .4s var(--ease); }
+  .intl-servicio:hover { border-color: rgb(159 39 40 / .35); box-shadow: 0 18px 40px -28px rgb(28 26 25 / .45); transform: translateY(-2px); }
+  .intl-servicio h3 { font-size: var(--t-2); line-height: 1.25; }
+  .intl-servicio p { font-size: var(--t-0); color: var(--tinta-2); line-height: 1.5; }
+  .intl-ico-l { width: 3rem; height: 3rem; }
+  .intl-ico-l :global(.icon) { width: 1.5rem; height: 1.5rem; }
   .intl-dos { display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, 19rem), 1fr)); gap: 1rem; }
   .intl-caja { display: grid; gap: .9rem; align-content: start; padding: clamp(1.2rem, 3vw, 1.6rem); border-radius: var(--radio-l, 22px); background: var(--niebla); }
   .intl-caja h2 { display: flex; align-items: center; gap: .7rem; font-size: var(--t-3); }
@@ -173,7 +193,7 @@ const t = en
   .intl-canal-wa strong { color: rgb(255 255 255 / .85); }
   .intl-pago { font-size: var(--t-0); position: relative; z-index: 1; }
   .intl-pago a { color: #fff; font-weight: 600; }
-  @media (prefers-reduced-motion: reduce) { .intl-canal, .intl-nodo, .intl-mas :global(.icon) { transition: none; } .intl-canal:hover { transform: none; } }
+  @media (prefers-reduced-motion: reduce) { .intl-canal, .intl-nodo, .intl-servicio, .intl-mas :global(.icon) { transition: none; } .intl-canal:hover, .intl-servicio:hover { transform: none; } }
   :global(:root[data-contrast='high']) .intl-contacto { background: #000; }
   :global(:root[data-contrast='high']) .intl-canal-wa { background: #000; border-color: #fff; }
 </style>
