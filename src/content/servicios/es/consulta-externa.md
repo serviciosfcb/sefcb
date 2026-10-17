@@ -5,7 +5,7 @@ tag: Cardiología y otras especialidades
 summary: Cardiólogos de adultos y pediátricos que lo valoran, interpretan sus exámenes y lo acompañan en el tratamiento.
 order: 4
 sede: 0
-review: Teleconsulta vigente (gerencia, 17/10/2026). Confirmar que sigue en dos fases (visita en casa y videollamada).
+review: Teleconsulta vigente en dos fases, visita en casa y videollamada (gerencia, 17/10/2026).
 groups:
   - title: Especialidades
     items:

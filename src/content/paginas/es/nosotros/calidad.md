@@ -2,15 +2,14 @@
 key: calidad
 title: Calidad y reconocimientos
 lead: Un sistema de gestión certificado y una cultura de servicio que se evalúa con estándares externos.
-description: Sistema integrado de gestión, política y objetivos de calidad, certificaciones ISO 9001 y EFQM, y reconocimientos de Servicios Especializados del Corazón.
+description: Sistema integrado de gestión, política y objetivos de calidad, certificación ISO 9001 y reconocimientos de Servicios Especializados del Corazón.
 card: Sistema de gestión, certificaciones y premios.
 section: nosotros
 order: 1
 ---
-## Certificaciones
+## Certificación
 
 - **ISO 9001:2015.** Nuestro sistema de gestión de calidad está certificado.
-- **EFQM, nivel bronce.** Reconocimiento del modelo europeo de excelencia en la gestión.
 
 ## Alcance del sistema de gestión de calidad
 

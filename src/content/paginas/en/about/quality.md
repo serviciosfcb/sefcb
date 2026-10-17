@@ -2,15 +2,14 @@
 key: calidad
 title: Quality and awards
 lead: A certified management system and a service culture assessed against external standards.
-description: Integrated management system, quality policy and objectives, ISO 9001 and EFQM certifications, and awards of Servicios Especializados del Corazón.
+description: Integrated management system, quality policy and objectives, ISO 9001 certification, and awards of Servicios Especializados del Corazón.
 card: Management system, certifications and awards.
 section: nosotros
 order: 1
 ---
-## Certifications
+## Certification
 
 - **ISO 9001:2015.** Our quality management system is certified.
-- **EFQM, bronze level.** Recognition from the European model for management excellence.
 
 ## Scope of the quality management system
 
