@@ -2,50 +2,42 @@
 key: entidades
 title: Oversight bodies
 lead: The authorities that supervise the institution, and our internal supervision mechanisms.
-description: Oversight and regulatory bodies of Servicios Especializados del Corazón and their contact details.
+description: Oversight and regulatory bodies of Servicios Especializados del Corazón, with links to their service channels.
 card: Oversight and regulatory bodies.
 section: transparencia
 order: 1
 ---
+To file a complaint, question or report with any of these bodies, use the service channels published on their official website.
+
 ## National Health Superintendency (Supersalud)
 
-- **Address:** Carrera 13 No. 28-08, units 21 and 22, Bogotá D.C.
-- **Phone:** 01 8000 513 700
-- **Email:** correointernosns@supersalud.gov.co
-- **Website:** [supersalud.gov.co](https://www.supersalud.gov.co)
-- **Type of oversight:** regulatory
+- **Website and service channels:** [supersalud.gov.co](https://www.supersalud.gov.co)
+- **Type of oversight:** inspection, supervision and control of the health system
 - **Internal supervision:** statutory auditor and internal audits
 
-## Norte de Santander Departmental Health Institute
+## Norte de Santander Departmental Health Institute (IDS)
 
-- **Address:** Avenida 0, Calle 10, Edificio Rosetal, Cúcuta
-- **Phone:** 571 1319
-- **Email:** correspondencia@ids.gov.co
+- **Address:** Avenida 0, Calle 10, Edificio Rosetal, 3rd floor, downtown Cúcuta
+- **Switchboard:** +57 333 602 5249
+- **Correspondence desk:** Monday to Friday, 7:30 to 11:00 a.m. and 2:00 to 4:00 p.m.
 - **Website:** [ids.gov.co](https://ids.gov.co/web/)
-- **Type of oversight:** regulatory
+- **Type of oversight:** licensing and supervision of health services in the department
 - **Internal supervision:** self-assessments and internal audits
 
 ## Cúcuta Municipal Health Department
 
-- **Address:** Avenida 1, Calle 12, La Playa, Cúcuta
-- **Phone:** 578 4949
-- **Type of oversight:** regulatory
-- **Internal supervision:** checklist
+- **Website and service channels:** [cucuta.gov.co](https://www.cucuta.gov.co)
+- **Type of oversight:** public health surveillance in the city
+- **Internal supervision:** checklists
 
-## National Tax and Customs Authority (DIAN)
+## National Tax and Customs Directorate (DIAN)
 
-- **Address:** Calle 8A No. 3-50, Edificio Santander, Palacio Nacional, first floor, Cúcuta
-- **Phones:** 601 307 8064 · 607 595 5177 · 310 315 8199
-- **Email:** asistencia.juridica@dian.gov.co
-- **Website:** [dian.gov.co](https://www.dian.gov.co)
+- **Website and contact points:** [dian.gov.co](https://www.dian.gov.co/atencionciudadano/contactenos/Paginas/puntosdecontacto.aspx)
 - **Type of oversight:** tax
 - **Internal supervision:** statutory auditor
 
 ## Northeastern Border Regional Autonomous Corporation (CORPONOR)
 
-- **Address:** Calle 13, Avenida El Bosque No. 3E-278, Cúcuta
-- **Phone:** 582 8484
-- **Email:** procesosjudiciales@corponor.gov.co
-- **Website:** [corponor.gov.co](https://corponor.gov.co)
-- **Type of oversight:** environmental regulation
-- **Internal supervision:** checklist, environmental management committee and hospital waste committee
+- **Website and service channels:** [corponor.gov.co](https://corponor.gov.co)
+- **Type of oversight:** environmental
+- **Internal supervision:** checklists, environmental management committee and hospital waste committee
