@@ -8,6 +8,7 @@ image: ''
 imageAlt: ''
 imageAlt_en: ''
 draft: false
+ocultar_fecha: true
 body_en: |-
   In accordance with articles 378 to 381 of Colombia's Tax Statute, income tax and ICA withholding certificates are now available.
 

@@ -110,6 +110,12 @@ collections:
         date_format: 'DD/MM/YYYY'
         time_format: false
         picker_utc: true
+      - label: No mostrar la fecha
+        name: ocultar_fecha
+        widget: boolean
+        required: false
+        default: false
+        hint: Actívelo para avisos permanentes. La fecha se sigue usando para ordenar las noticias.
       - label: Resumen
         name: summary
         widget: text

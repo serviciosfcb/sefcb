@@ -21,7 +21,7 @@ const ld = {
   '@type': 'NewsArticle',
   headline: x.title,
   description: x.summary,
-  datePublished: isoDate(n.data.date),
+  ...(n.data.ocultar_fecha ? {} : { datePublished: isoDate(n.data.date) }),
   inLanguage: x.contentLang,
   image: n.data.image ? [`https://sefcb.co${n.data.image}`] : undefined,
   publisher: { '@type': 'MedicalClinic', name: 'Servicios Especializados del Corazón', url: 'https://sefcb.co' },
@@ -34,7 +34,7 @@ const ld = {
     title={x.title}
     lead={x.summary}
     lang={x.contentLang !== lang ? x.contentLang : undefined}
-    meta={fecha(n.data.date, lang)}
+    meta={n.data.ocultar_fecha ? undefined : fecha(n.data.date, lang)}
     crumbsLabel={es ? 'Ruta de navegación' : 'Breadcrumb'}
     crumbs={[{ label: es ? 'Inicio' : 'Home', href: es ? '/' : '/en/' }, { label: t.title, href: t.base }, { label: x.title }]}
   />
@@ -50,7 +50,7 @@ const ld = {
         {html ? <Fragment set:html={html} /> : <Content />}
       </div>
       <p class="art-volver"><a class="enlace-flecha" href={t.base}><Icon name="arrow" class="flecha-atras" />{t.back}</a></p>
-      <time class="visualmente-oculto" datetime={isoDate(n.data.date)}>{fecha(n.data.date, lang)}</time>
+      {!n.data.ocultar_fecha && <time class="visualmente-oculto" datetime={isoDate(n.data.date)}>{fecha(n.data.date, lang)}</time>}
     </div>
   </article>
 </Base>

@@ -23,7 +23,7 @@ const H = headingLevel;
     )}
   </div>
   <div class="n-txt">
-    <time datetime={isoDate(n.data.date)}>{fecha(n.data.date, lang)}</time>
+    {!n.data.ocultar_fecha && <time datetime={isoDate(n.data.date)}>{fecha(n.data.date, lang)}</time>}
     <H class="n-titulo" lang={x.contentLang}><a href={href}>{x.title}</a></H>
     {x.summary && <p lang={x.contentLang}>{x.summary}</p>}
     <span class="n-leer" aria-hidden="true">{t.read}<Icon name="arrow" /></span>

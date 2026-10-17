@@ -26,7 +26,7 @@ export const GET: APIRoute = async () => {
   }
   for (const n of await getNoticias()) {
     const slug = slugOf(n);
-    entries.push({ es: `${content.es.news.base}${slug}/`, en: `${content.en.news.base}${slug}/`, lastmod: isoDate(n.data.date) });
+    entries.push({ es: `${content.es.news.base}${slug}/`, en: `${content.en.news.base}${slug}/`, lastmod: n.data.ocultar_fecha ? undefined : isoDate(n.data.date) });
   }
 
   const url = (loc: string, e: Entry) => `  <url>

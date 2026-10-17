@@ -16,6 +16,8 @@ const noticias = defineCollection({
     imageAlt_en: z.string().optional().default(''),
     body_en: z.string().optional().default(''),
     draft: z.boolean().optional().default(false),
+    // La fecha se usa para ordenar; con ocultar_fecha no se muestra en el sitio
+    ocultar_fecha: z.boolean().optional().default(false),
   }),
 });
 
