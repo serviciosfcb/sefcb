@@ -22,6 +22,8 @@ const sede = sedes[d.sede] ?? sedes[0];
 const svc = all.services;
 const labels = d.key === 'obesidad' ? svc.plate : d.key === 'consulta' ? svc.sounds : d.key === 'transporte' ? sedes.map((x) => (en ? x.nombre_en || x.nombre : x.nombre)) : [];
 const caption = svc.items.find((x) => x.key === d.key)?.caption ?? '';
+// Enlace a la guía de preparación, para los servicios que la tienen
+const prepAnchor = d.key === 'nuclear' ? (en ? 'nuclear-medicine' : 'medicina-nuclear') : d.key === 'noinvasiva' ? (en ? 'non-invasive-cardiology' : 'cardiologia-no-invasiva') : '';
 // Muchos grupos cortos (como las especialidades de medicina nuclear) se muestran como cuadrícula
 const compactGroups = d.groups.length > 3 && d.groups.every((g) => !g.intro && g.items.every((it) => !it.detail));
 const ld = {
@@ -104,6 +106,13 @@ if (['intervencionismo'].includes(d.key)) ld.procedureType = 'https://schema.org
       </div>
 
       <aside class="si-lateral">
+        {prepAnchor && (
+          <a class="caja caja-prep" href={`${r(lang, 'preparacion')}#${prepAnchor}`}>
+            <Icon name="prep" />
+            <span><strong>{en ? 'Preparing for your test' : 'Preparación para su examen'}</strong>
+            <span>{en ? 'Fasting, medicines and what to bring, test by test.' : 'Ayuno, medicamentos y qué llevar, examen por examen.'}</span></span>
+          </a>
+        )}
         <div class="caja">
           <h2>{t.where}</h2>
           <p class="caja-sede">{en ? sede.nombre_en || sede.nombre : sede.nombre}</p>
@@ -176,6 +185,12 @@ if (['intervencionismo'].includes(d.key)) ld.procedureType = 'https://schema.org
   .mini ul { list-style: none; display: grid; gap: .45rem; font-size: var(--t-0); line-height: 1.4; }
   .mini li { padding-left: 1rem; position: relative; }
   .mini li::before { content: ''; position: absolute; left: 0; top: .55em; width: .4rem; height: .4rem; border-radius: 50%; background: var(--gris-marca); }
+  .caja.caja-prep { display: flex; gap: .9rem; align-items: flex-start; text-decoration: none; color: inherit; background: rgb(159 39 40 / .06); border-color: rgb(159 39 40 / .2); transition: transform .4s var(--ease), border-color .3s; }
+  .caja.caja-prep:hover { transform: translateY(-2px); border-color: rgb(159 39 40 / .45); }
+  .caja-prep > :global(.icon) { width: 1.6rem; height: 1.6rem; color: var(--rojo); flex: none; }
+  .caja-prep > span { display: grid; gap: .25rem; }
+  .caja-prep strong { font-size: var(--t-2); }
+  .caja-prep > span > span { font-size: var(--t-0); color: var(--tinta-2); }
   .si-lateral { position: sticky; top: calc(var(--alto-cabecera) + 1.5rem + env(safe-area-inset-top, 0px)); display: grid; gap: 1rem; }
   .caja { padding: 1.4rem; border-radius: var(--radio-m); background: var(--niebla); display: grid; gap: .55rem; font-size: var(--t-0); }
   .caja h2 { font-size: var(--t-2); margin-bottom: .2rem; }

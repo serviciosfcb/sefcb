@@ -18,7 +18,7 @@ If you bring medical records from another institution, please keep them: they ar
 
 ## Preparing for your test
 
-Some tests require fasting, pausing medications or wearing comfortable clothes. We will tell you how to prepare when we schedule your appointment.
+Some tests require fasting, pausing medications or wearing comfortable clothes. We will tell you how to prepare when we schedule your appointment, and you can also check **[preparing for your test](/en/patients/exam-preparation/)**.
 
 If you have questions about your preparation, message us on WhatsApp at +57 320 936 2904 before your appointment. Do not stop any medication unless your doctor tells you to.
 

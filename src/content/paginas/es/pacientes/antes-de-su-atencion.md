@@ -6,7 +6,6 @@ description: Documentos, preparación y recomendaciones antes de su cita o exame
 card: Documentos y preparación para su cita o examen.
 section: pacientes
 order: 2
-review: Faltan las indicaciones de preparación por examen (ayuno, medicamentos, ropa, duración). Deben redactarlas o validarlas las áreas asistenciales.
 ---
 ## El día de su cita, tenga listos
 
@@ -19,7 +18,7 @@ Si trae la historia clínica de otra institución, consérvela: es su responsabi
 
 ## Preparación para su examen
 
-Algunos exámenes piden ayuno, suspender medicamentos o llevar ropa cómoda. Cuando le asignamos la cita le indicamos la preparación de su examen.
+Algunos exámenes piden ayuno, suspender medicamentos o llevar ropa cómoda. Cuando le asignamos la cita le indicamos la preparación de su examen, y también puede consultarla en **[preparación para sus exámenes](/pacientes/preparacion-para-examenes/)**.
 
 Si tiene dudas sobre cómo prepararse, escríbanos por WhatsApp al 320 936 2904 antes de su cita. No suspenda ningún medicamento sin que se lo indique su médico.
 

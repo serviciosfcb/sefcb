@@ -1,0 +1,222 @@
+---
+// Guía de preparación por examen, tomada de los documentos de preparación de cada área (src/data/preparaciones.json).
+// Sin JavaScript se ve completa; con JavaScript se puede buscar y filtrar por servicio.
+import type { Lang } from '../i18n/content';
+import { links, phones } from '../i18n/content';
+import data from '../data/preparaciones.json';
+import Icon from './Icon.astro';
+interface Props { lang: Lang }
+const { lang } = Astro.props;
+const en = lang === 'en';
+type Txt = { es: string; en: string };
+const tx = (x: Txt) => (en ? x.en || x.es : x.es);
+const t = en
+  ? {
+      search: 'Find your test', placeholder: 'For example: thyroid, Holter, stress test', all: 'All',
+      filter: 'Filter by service', fasting: 'Fasting', time: 'Allow', none: 'No tests match your search. Try another word or contact us.',
+      bring: 'Bring', keep: 'Keep in mind', after: 'After the injection', forAll: 'For every test in this service',
+      doc: 'Document', meds: 'When a preparation asks you to stop a medicine, confirm it first with the doctor who prescribed it.',
+      doubts: 'Questions about your preparation? Message us on WhatsApp', count: (n: number) => `${n} ${n === 1 ? 'test' : 'tests'} shown`,
+      nothing: 'No special instructions besides the general ones.',
+      servicios: { cardiologia: 'Non-invasive cardiology', nuclear: 'Nuclear medicine' },
+    }
+  : {
+      search: 'Busque su examen', placeholder: 'Por ejemplo: tiroides, holter, prueba de esfuerzo', all: 'Todos',
+      filter: 'Filtrar por servicio', fasting: 'Ayuno', time: 'Disponga de', none: 'Ningún examen coincide con su búsqueda. Pruebe con otra palabra o escríbanos.',
+      bring: 'Lleve', keep: 'Tenga en cuenta', after: 'Después de la inyección', forAll: 'Para todos los exámenes de este servicio',
+      doc: 'Documento', meds: 'Cuando una preparación pide suspender un medicamento, confírmelo antes con el médico que se lo formuló.',
+      doubts: '¿Dudas con su preparación? Escríbanos por WhatsApp', count: (n: number) => `${n} ${n === 1 ? 'examen' : 'exámenes'} en la lista`,
+      nothing: 'No requiere indicaciones adicionales a las generales.',
+      servicios: { cardiologia: 'Cardiología no invasiva', nuclear: 'Medicina nuclear' },
+    };
+const order = ['cardiologia', 'nuclear'] as const;
+const comunes = data.comunes as Record<string, { llevar: Txt[]; tener_en_cuenta: Txt[]; despues?: Txt[] }>;
+const norm = (s: string) => s.normalize('NFD').replace(/[̀-ͯ]/g, '').toLowerCase();
+---
+<div class="prep" data-prep>
+  <p class="prep-aviso" role="note"><Icon name="shield" />{t.meds}</p>
+
+  <div class="prep-herr" data-prep-tools hidden>
+    <label class="prep-buscar">
+      <span>{t.search}</span>
+      <span class="prep-campo">
+        <Icon name="search" />
+        <input type="search" placeholder={t.placeholder} autocomplete="off" data-prep-q aria-controls="prep-lista" />
+      </span>
+    </label>
+    <div class="prep-filtros" role="group" aria-label={t.filter}>
+      <button type="button" aria-pressed="true" data-prep-f="">{t.all}</button>
+      {order.map((k) => <button type="button" aria-pressed="false" data-prep-f={k}>{t.servicios[k]}</button>)}
+    </div>
+    <p class="visualmente-oculto" aria-live="polite" data-prep-count></p>
+  </div>
+
+  <div id="prep-lista" class="prep-lista">
+    {order.map((k) => {
+      const c = comunes[k];
+      const items = data.examenes.filter((x) => x.servicio === k);
+      return (
+        <section class="prep-sec" id={k === 'nuclear' ? (en ? 'nuclear-medicine' : 'medicina-nuclear') : (en ? 'non-invasive-cardiology' : 'cardiologia-no-invasiva')} data-prep-sec={k}>
+          <h2>{t.servicios[k]}</h2>
+          <div class="prep-comun">
+            <p class="prep-comun-tit">{t.forAll}</p>
+            <div class="prep-comun-grid">
+              <div>
+                <h3>{t.bring}</h3>
+                <ul>{c.llevar.map((x) => <li>{tx(x)}</li>)}</ul>
+              </div>
+              <div>
+                <h3>{t.keep}</h3>
+                <ul>{c.tener_en_cuenta.map((x) => <li>{tx(x)}</li>)}</ul>
+              </div>
+              {c.despues && (
+                <div>
+                  <h3>{t.after}</h3>
+                  <ul>{c.despues.map((x) => <li>{tx(x)}</li>)}</ul>
+                </div>
+              )}
+            </div>
+          </div>
+          <ul class="prep-items">
+            {items.map((x) => {
+              const nombre = en ? x.nombre_en || x.nombre : x.nombre;
+              const ayuno = en ? x.ayuno_en || x.ayuno : x.ayuno;
+              const dur = en ? x.duracion_en || x.duracion : x.duracion;
+              return (
+                <li data-prep-item data-q={norm(`${x.nombre} ${x.nombre_en}`)}>
+                  <details id={`prep-${x.id}`}>
+                    <summary>
+                      <span class="pi-nombre">{nombre}</span>
+                      <span class="pi-datos">
+                        {ayuno && <span class="pi-chip"><strong>{t.fasting}:</strong> {ayuno}</span>}
+                        {dur && <span class="pi-chip"><Icon name="clock" /><strong>{t.time}:</strong> {dur}</span>}
+                      </span>
+                      <span class="pi-flecha" aria-hidden="true"><Icon name="arrow" /></span>
+                    </summary>
+                    <div class="pi-cuerpo">
+                      {x.indicaciones.length ? <ul>{x.indicaciones.map((i) => <li><Icon name="check" /><span>{tx(i)}</span></li>)}</ul> : <p>{t.nothing}</p>}
+                      {x.codigo && <p class="pi-doc">{t.doc} {x.codigo}</p>}
+                    </div>
+                  </details>
+                </li>
+              );
+            })}
+          </ul>
+        </section>
+      );
+    })}
+    <p class="prep-vacio" data-prep-none hidden>{t.none}</p>
+  </div>
+
+  <a class="prep-ayuda" href={links.whatsapp} rel="noopener">
+    <Icon name="whatsapp" /><span>{t.doubts} <strong>{phones.citas.label}</strong></span>
+  </a>
+</div>
+
+<script>
+  const norm = (s: string) => s.normalize('NFD').replace(/[̀-ͯ]/g, '').toLowerCase().trim();
+  document.querySelectorAll<HTMLElement>('[data-prep]').forEach((root) => {
+    const tools = root.querySelector<HTMLElement>('[data-prep-tools]');
+    const q = root.querySelector<HTMLInputElement>('[data-prep-q]');
+    const count = root.querySelector<HTMLElement>('[data-prep-count]');
+    const none = root.querySelector<HTMLElement>('[data-prep-none]');
+    const buttons = [...root.querySelectorAll<HTMLButtonElement>('[data-prep-f]')];
+    const secs = [...root.querySelectorAll<HTMLElement>('[data-prep-sec]')];
+    if (!tools || !q || !count || !none) return;
+    tools.hidden = false;
+    const en = document.documentElement.lang === 'en';
+    let filtro = '';
+    const update = () => {
+      const term = norm(q.value);
+      let total = 0;
+      secs.forEach((sec) => {
+        const okSec = !filtro || sec.dataset.prepSec === filtro;
+        let visibles = 0;
+        sec.querySelectorAll<HTMLElement>('[data-prep-item]').forEach((li) => {
+          const ok = okSec && (!term || (li.dataset.q ?? '').includes(term));
+          li.hidden = !ok;
+          if (ok) visibles++;
+        });
+        sec.hidden = visibles === 0;
+        total += visibles;
+        // Con una búsqueda que deja pocos resultados, se abren solos
+        if (term) sec.querySelectorAll<HTMLDetailsElement>('[data-prep-item]:not([hidden]) details').forEach((d) => { d.open = visibles <= 2; });
+      });
+      none.hidden = total > 0;
+      count.textContent = en ? `${total} ${total === 1 ? 'test' : 'tests'} shown` : `${total} ${total === 1 ? 'examen' : 'exámenes'} en la lista`;
+    };
+    q.addEventListener('input', update);
+    buttons.forEach((b) => b.addEventListener('click', () => {
+      filtro = b.dataset.prepF ?? '';
+      buttons.forEach((x) => x.setAttribute('aria-pressed', String(x === b)));
+      update();
+    }));
+    // Si la dirección trae #prep-<examen> o el id del servicio, abre y lleva a ese punto
+    const abrir = () => {
+      const el = location.hash ? document.getElementById(decodeURIComponent(location.hash.slice(1))) : null;
+      if (el instanceof HTMLDetailsElement) { el.open = true; el.scrollIntoView({ block: 'start' }); }
+    };
+    abrir();
+    window.addEventListener('hashchange', abrir);
+  });
+</script>
+
+<style>
+  .prep { display: grid; gap: 2rem; margin-top: .5rem; }
+  .prep-aviso { display: flex; gap: .7rem; align-items: flex-start; padding: 1rem 1.2rem; border-radius: var(--radio-m); background: rgb(159 39 40 / .06); border: 1px solid rgb(159 39 40 / .18); font-weight: 600; max-width: 46rem; }
+  .prep-aviso :global(.icon) { width: 1.3rem; height: 1.3rem; flex: none; color: var(--rojo); margin-top: .1rem; }
+
+  .prep-herr { display: grid; gap: 1rem; position: sticky; top: calc(var(--alto-cabecera) + .6rem + env(safe-area-inset-top, 0px)); z-index: 2; padding: .8rem .5rem; margin: 0 -.5rem; background: color-mix(in srgb, var(--papel) 97%, transparent); backdrop-filter: blur(10px); border-radius: var(--radio-m); box-shadow: 0 12px 24px -20px rgb(28 26 25 / .5); }
+  @media (max-width: 700px) { .prep-herr { position: static; box-shadow: none; } }
+  .prep-herr[hidden] { display: none; }
+  .prep-buscar { display: grid; gap: .45rem; font-weight: 700; font-size: var(--t-0); }
+  .prep-campo { position: relative; display: block; }
+  .prep-campo :global(.icon) { position: absolute; left: 1rem; top: 50%; translate: 0 -50%; width: 1.2rem; height: 1.2rem; color: var(--tinta-2); pointer-events: none; }
+  .prep-campo input { width: 100%; font: inherit; font-weight: 400; font-size: var(--t-1); padding: .85rem 1rem .85rem 2.8rem; border-radius: 999px; border: 1.5px solid var(--linea); background: var(--papel); color: var(--tinta); }
+  .prep-campo input:focus-visible { outline: 3px solid var(--rojo); outline-offset: 2px; border-color: var(--rojo); }
+  .prep-filtros { display: flex; flex-wrap: wrap; gap: .5rem; }
+  .prep-filtros button { font: inherit; font-size: var(--t-0); font-weight: 600; padding: .5rem 1rem; min-height: 2.75rem; border-radius: 999px; border: 1.5px solid var(--linea); background: var(--papel); color: var(--tinta); cursor: pointer; transition: background .25s, color .25s, border-color .25s; }
+  .prep-filtros button:hover { border-color: var(--tinta); }
+  .prep-filtros button[aria-pressed='true'] { background: var(--tinta); color: #fff; border-color: var(--tinta); }
+
+  .prep-lista { display: grid; gap: 3rem; }
+  .prep-sec { display: grid; gap: 1.2rem; scroll-margin-top: calc(var(--alto-cabecera) + 9rem); }
+  .prep-sec[hidden] { display: none; }
+  .prep-sec h2 { font-size: var(--t-5); }
+  .prep-comun { border-radius: var(--radio-m); background: var(--niebla); padding: 1.3rem 1.4rem; display: grid; gap: 1rem; }
+  .prep-comun-tit { font-weight: 700; color: var(--rojo); font-size: var(--t-0); text-transform: uppercase; letter-spacing: .06em; }
+  .prep-comun-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, 15rem), 1fr)); gap: 1.2rem 2rem; }
+  .prep-comun h3 { font-size: var(--t-2); margin-bottom: .5rem; }
+  .prep-comun ul { display: grid; gap: .45rem; padding-left: 1.1rem; font-size: var(--t-0); color: var(--tinta-2); line-height: 1.45; }
+
+  .prep-items { list-style: none; display: grid; gap: .6rem; }
+  .prep-items li[hidden] { display: none; }
+  .prep-items details { border: 1px solid var(--linea); border-radius: var(--radio-m); background: var(--papel); transition: border-color .3s, box-shadow .3s; scroll-margin-top: calc(var(--alto-cabecera) + 9rem); }
+  .prep-items details[open] { border-color: rgb(159 39 40 / .35); box-shadow: 0 10px 30px -18px rgb(28 26 25 / .35); }
+  .prep-items summary { list-style: none; cursor: pointer; display: grid; grid-template-columns: minmax(0, 1fr) auto; gap: .5rem 1rem; align-items: center; padding: 1rem 1.2rem; min-height: 3.25rem; }
+  .prep-items summary::-webkit-details-marker { display: none; }
+  .prep-items summary:focus-visible { outline: 3px solid var(--rojo); outline-offset: 2px; border-radius: var(--radio-m); }
+  .pi-nombre { font-weight: 700; font-size: var(--t-2); line-height: 1.3; }
+  .pi-datos { grid-column: 1; display: flex; flex-wrap: wrap; gap: .4rem; }
+  .pi-chip { display: inline-flex; align-items: center; gap: .3rem; font-size: var(--t-0); padding: .2rem .65rem; border-radius: 999px; background: var(--niebla); color: var(--tinta-2); }
+  .pi-chip strong { color: var(--tinta); font-weight: 600; }
+  .pi-chip :global(.icon) { width: .95rem; height: .95rem; }
+  .pi-flecha { grid-column: 2; grid-row: 1 / span 2; width: 2.2rem; height: 2.2rem; border-radius: 50%; display: grid; place-items: center; border: 1px solid var(--linea); transition: transform .35s var(--ease), background .3s; }
+  .pi-flecha :global(.icon) { width: 1rem; height: 1rem; transform: rotate(90deg); }
+  details[open] .pi-flecha { transform: rotate(180deg); background: var(--tinta); color: #fff; border-color: var(--tinta); }
+  .pi-cuerpo { padding: 0 1.2rem 1.2rem; display: grid; gap: .8rem; }
+  .pi-cuerpo ul { list-style: none; display: grid; gap: .6rem; }
+  .pi-cuerpo li { display: flex; gap: .6rem; align-items: flex-start; line-height: 1.5; }
+  .pi-cuerpo li :global(.icon) { width: 1.1rem; height: 1.1rem; color: var(--rojo); flex: none; margin-top: .2rem; stroke-width: 2.4; }
+  .pi-cuerpo > p { color: var(--tinta-2); }
+  .pi-doc { font-size: .8rem; color: var(--tinta-2); }
+  .prep-vacio { padding: 1.2rem; border-radius: var(--radio-m); background: var(--niebla); }
+  .prep-vacio[hidden] { display: none; }
+
+  .prep-ayuda { display: inline-flex; align-items: center; gap: .7rem; justify-self: start; padding: .9rem 1.3rem; border-radius: 999px; background: #1f8a4c; color: #fff; text-decoration: none; font-weight: 600; transition: transform .3s var(--ease), box-shadow .3s; }
+  .prep-ayuda:hover { transform: translateY(-2px); box-shadow: 0 12px 24px -12px rgb(31 138 76 / .7); }
+  .prep-ayuda :global(.icon) { width: 1.3rem; height: 1.3rem; flex: none; }
+
+  @media (prefers-reduced-motion: reduce) { .pi-flecha, .prep-ayuda { transition: none; } }
+  :global(:root[data-contrast='high']) .prep-ayuda { background: #000; }
+</style>

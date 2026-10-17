@@ -23,6 +23,7 @@ export const pageRoutes = {
   pacientes: { es: '/pacientes/', en: '/en/patients/' },
   cita: { es: '/pacientes/como-pedir-cita/', en: '/en/patients/booking/' },
   antes: { es: '/pacientes/antes-de-su-atencion/', en: '/en/patients/before-your-visit/' },
+  preparacion: { es: '/pacientes/preparacion-para-examenes/', en: '/en/patients/exam-preparation/' },
   resultados: { es: '/pacientes/resultados-e-historia-clinica/', en: '/en/patients/results-and-medical-records/' },
   derechos: { es: '/pacientes/derechos-y-deberes/', en: '/en/patients/rights-and-responsibilities/' },
   faq: { es: '/pacientes/preguntas-frecuentes/', en: '/en/patients/faq/' },

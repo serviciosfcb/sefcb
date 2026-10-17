@@ -13,6 +13,7 @@ import ServicesGrid from './ServicesGrid.astro';
 import TeamDirectory from './TeamDirectory.astro';
 import TransparencyList from './TransparencyList.astro';
 import SiteMap from './SiteMap.astro';
+import PrepGuide from './PrepGuide.astro';
 import Locations from './Locations.astro';
 import CtaBand from './CtaBand.astro';
 interface Props { p: Pagina; lang: Lang }
@@ -54,6 +55,7 @@ const showNav = !wide && navItems.length > 1;
         {d.layout === 'equipo' && <TeamDirectory lang={lang} />}
         {d.layout === 'transparencia' && <TransparencyList lang={lang} />}
         {d.layout === 'mapa' && <SiteMap lang={lang} />}
+        {d.layout === 'preparacion' && <PrepGuide lang={lang} />}
       </div>
     </div>
   </div>

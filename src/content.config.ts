@@ -30,7 +30,7 @@ const paginas = defineCollection({
     lead: z.string().optional().default(''),
     section: z.enum(['servicios', 'pacientes', 'nosotros', 'transparencia', 'contacto', 'legal']),
     order: z.number().optional().default(50),
-    layout: z.enum(['texto', 'seccion', 'servicios', 'equipo', 'transparencia', 'contacto', 'mapa']).optional().default('texto'),
+    layout: z.enum(['texto', 'seccion', 'servicios', 'equipo', 'transparencia', 'contacto', 'mapa', 'preparacion']).optional().default('texto'),
     card: z.string().optional().default(''),
     review: z.string().optional().default(''),
   }),

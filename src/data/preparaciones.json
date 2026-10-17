@@ -1,0 +1,779 @@
+{
+  "comunes": {
+    "cardiologia": {
+      "llevar": [
+        {
+          "es": "Orden médica.",
+          "en": "Doctor's order."
+        },
+        {
+          "es": "Copia del documento de identidad y del carné de su EPS o aseguradora.",
+          "en": "Copy of your ID and your health insurance card."
+        },
+        {
+          "es": "Autorización del procedimiento por su EPS o aseguradora.",
+          "en": "Authorization from your health insurer."
+        }
+      ],
+      "tener_en_cuenta": [
+        {
+          "es": "Solo se permite un acompañante, y no debe venir con niños.",
+          "en": "Only one companion is allowed, and please do not bring children."
+        },
+        {
+          "es": "No traiga joyas ni objetos de valor.",
+          "en": "Do not bring jewelry or valuables."
+        }
+      ]
+    },
+    "nuclear": {
+      "llevar": [
+        {
+          "es": "Orden médica.",
+          "en": "Doctor's order."
+        },
+        {
+          "es": "Autorización del procedimiento.",
+          "en": "Authorization for the procedure."
+        },
+        {
+          "es": "Copia del documento de identidad.",
+          "en": "Copy of your ID."
+        },
+        {
+          "es": "Si cree que podría estar embarazada, una prueba de embarazo en sangre (subunidad beta de la gonadotrofina coriónica).",
+          "en": "If you might be pregnant, a blood pregnancy test (beta hCG)."
+        }
+      ],
+      "tener_en_cuenta": [
+        {
+          "es": "No venga acompañado de niños ni de mujeres embarazadas.",
+          "en": "Do not come with children or pregnant women."
+        },
+        {
+          "es": "No traiga joyas ni objetos de valor.",
+          "en": "Do not bring jewelry or valuables."
+        },
+        {
+          "es": "Si el día de la cita tiene síntomas de gripe (tos, fiebre, estornudos o malestar general), avísenos y reprograme su cita.",
+          "en": "If you have flu symptoms on the day (cough, fever, sneezing or feeling unwell), let us know and reschedule."
+        },
+        {
+          "es": "Los estudios de medicina nuclear se realizan en la sede principal, Calle 19 No. 1-44, Barrio Blanco.",
+          "en": "Nuclear medicine studies take place at our main location, Calle 19 No. 1-44, Barrio Blanco."
+        }
+      ],
+      "despues": [
+        {
+          "es": "Tome mínimo 6 vasos de agua desde que le aplican el radiofármaco (la inyección) hasta la hora de las imágenes.",
+          "en": "Drink at least 6 glasses of water from the time of the injection until your imaging appointment."
+        },
+        {
+          "es": "Durante las 24 horas siguientes a la inyección no esté cerca de niños menores de 15 años ni de mujeres embarazadas.",
+          "en": "For 24 hours after the injection, stay away from children under 15 and pregnant women."
+        },
+        {
+          "es": "Si está lactando, avísele al tecnólogo para recibir las indicaciones de protección para su bebé.",
+          "en": "If you are breastfeeding, tell the technologist so you receive protection guidance for your baby."
+        },
+        {
+          "es": "Siga tomando líquidos después del estudio para eliminar el radiofármaco más rápido.",
+          "en": "Keep drinking fluids after the study to clear the radiopharmaceutical faster."
+        }
+      ]
+    }
+  },
+  "examenes": [
+    {
+      "id": "holter-ritmo",
+      "servicio": "cardiologia",
+      "codigo": "MM040103-R2",
+      "nombre": "Holter de ritmo cardíaco",
+      "nombre_en": "Holter heart rhythm monitor",
+      "ayuno": "",
+      "ayuno_en": "",
+      "duracion": "",
+      "duracion_en": "",
+      "indicaciones": [
+        {
+          "es": "Venga bien bañado. Si tiene vello en el pecho, rasúrelo o depílelo.",
+          "en": "Come freshly showered. If you have chest hair, shave or remove it."
+        },
+        {
+          "es": "Si tiene marcapasos, traiga el carné de portador.",
+          "en": "If you have a pacemaker, bring your pacemaker ID card."
+        }
+      ]
+    },
+    {
+      "id": "holter-presion",
+      "servicio": "cardiologia",
+      "codigo": "MM040104-R2",
+      "nombre": "Holter de presión arterial (MAPA)",
+      "nombre_en": "Ambulatory blood pressure monitor",
+      "ayuno": "",
+      "ayuno_en": "",
+      "duracion": "",
+      "duracion_en": "",
+      "indicaciones": [
+        {
+          "es": "Venga bien bañado.",
+          "en": "Come freshly showered."
+        }
+      ]
+    },
+    {
+      "id": "eco-transtoracico",
+      "servicio": "cardiologia",
+      "codigo": "MM040105S",
+      "nombre": "Ecocardiograma transtorácico",
+      "nombre_en": "Transthoracic echocardiogram",
+      "ayuno": "No requiere preparación",
+      "ayuno_en": "No preparation needed",
+      "duracion": "",
+      "duracion_en": "",
+      "indicaciones": [
+        {
+          "es": "Durante el examen deberá retirarse objetos metálicos como cadenas, llaves, aretes y monedas.",
+          "en": "You will be asked to remove metal objects such as chains, keys, earrings and coins."
+        }
+      ]
+    },
+    {
+      "id": "eco-transesofagico",
+      "servicio": "cardiologia",
+      "codigo": "MM040106-R2",
+      "nombre": "Ecocardiograma transesofágico",
+      "nombre_en": "Transesophageal echocardiogram",
+      "ayuno": "6 horas, sin tomar agua",
+      "ayuno_en": "6 hours, no water",
+      "duracion": "",
+      "duracion_en": "",
+      "indicaciones": [
+        {
+          "es": "Llegue 10 minutos antes de su cita para los datos administrativos.",
+          "en": "Arrive 10 minutes early to complete paperwork."
+        },
+        {
+          "es": "Venga con una sola persona adulta.",
+          "en": "Come with one adult companion."
+        },
+        {
+          "es": "Puede pedir sedación para no sentir la molestia del examen. Tiene un costo adicional que no cubre su EPS: pregunte el valor al pedir la cita.",
+          "en": "You can ask for sedation so the test is not uncomfortable. It has an extra cost not covered by your health insurer: ask for the price when you book."
+        },
+        {
+          "es": "Si elige sedación: después del examen no podrá salir solo a la calle, conducir ni firmar documentos importantes.",
+          "en": "If you choose sedation: after the test you cannot leave alone, drive or sign important documents."
+        },
+        {
+          "es": "Si elige sedación: venga con ropa cómoda (camiseta y sudadera), sin maquillaje, sin tacones y sin esmalte en las uñas, ni siquiera transparente.",
+          "en": "If you choose sedation: wear comfortable clothes (T-shirt and sweatpants), no makeup, no high heels and no nail polish, not even clear."
+        },
+        {
+          "es": "Avise si ha tenido alergias o reacciones a anestésicos, y si tiene resinas, prótesis o blanqueamiento dental, para colocarle un protector.",
+          "en": "Tell us about any allergies or reactions to anesthetics, and whether you have dental resins, prosthetics or whitening, so we can use a mouth guard."
+        }
+      ]
+    },
+    {
+      "id": "eco-estres",
+      "servicio": "cardiologia",
+      "codigo": "",
+      "nombre": "Ecocardiograma de estrés y prueba de esfuerzo",
+      "nombre_en": "Stress echocardiogram and exercise test",
+      "ayuno": "5 horas, sin sólidos ni líquidos",
+      "ayuno_en": "5 hours, no food or drinks",
+      "duracion": "",
+      "duracion_en": "",
+      "indicaciones": [
+        {
+          "es": "Traiga su historia clínica o los resultados de exámenes del corazón anteriores.",
+          "en": "Bring your medical records or previous heart test results."
+        },
+        {
+          "es": "Traiga la lista o las fórmulas de los medicamentos que toma.",
+          "en": "Bring the list or prescriptions of the medicines you take."
+        },
+        {
+          "es": "No consuma cafeína en las 24 horas anteriores: café, té, gaseosas (incluso las descafeinadas), chocolate y algunos analgésicos que la contienen.",
+          "en": "Avoid caffeine for 24 hours before: coffee, tea, sodas (even decaf), chocolate and some painkillers that contain it."
+        },
+        {
+          "es": "Si toma betabloqueadores (como metoprolol, propranolol, carvedilol o bisoprolol) o calcioantagonistas (como verapamilo, diltiazem, amlodipino o nifedipino), pregúntele a su médico si debe suspenderlos. El protocolo pide suspenderlos 48 y 72 horas antes, respectivamente, solo si no hay contraindicación.",
+          "en": "If you take beta blockers (such as metoprolol, propranolol, carvedilol or bisoprolol) or calcium channel blockers (such as verapamil, diltiazem, amlodipine or nifedipine), ask your doctor whether to stop them. The protocol asks to stop them 48 and 72 hours before, respectively, only if there is no contraindication."
+        },
+        {
+          "es": "Venga con zapatos cómodos y ropa suelta para hacer ejercicio. El pecho debe estar limpio; los hombres, con el pecho rasurado.",
+          "en": "Wear comfortable shoes and loose clothes for exercise. Your chest should be clean; men should shave their chest."
+        },
+        {
+          "es": "Venga con un adulto autorizado para tomar decisiones y firmar el consentimiento.",
+          "en": "Come with an adult who can make decisions and sign the consent form."
+        }
+      ]
+    },
+    {
+      "id": "perfusion-esfuerzo",
+      "servicio": "nuclear",
+      "codigo": "MM040326-R2",
+      "nombre": "Perfusión miocárdica en reposo y después del ejercicio",
+      "nombre_en": "Myocardial perfusion at rest and after stress",
+      "ayuno": "6 horas",
+      "ayuno_en": "6 hours",
+      "duracion": "4 horas",
+      "duracion_en": "4 hours",
+      "indicaciones": [
+        {
+          "es": "Si toma alguno de estos medicamentos, el protocolo pide suspenderlo 48 horas antes: aminofilina, metoprolol (Betaloc, Lopresor), carvedilol (Dilatrend), bisoprolol (Concor), propranolol, sotalol, verapamilo (Isoptin), amlodipino (Norvasc) o diltiazem. Confírmelo antes con su médico.",
+          "en": "If you take any of these medicines, the protocol asks you to stop it 48 hours before: aminophylline, metoprolol (Betaloc, Lopresor), carvedilol (Dilatrend), bisoprolol (Concor), propranolol, sotalol, verapamil (Isoptin), amlodipine (Norvasc) or diltiazem. Confirm with your doctor first."
+        },
+        {
+          "es": "No tome bebidas oscuras ni chocolate en las 48 horas anteriores: té, café, gaseosas oscuras como la cola.",
+          "en": "Avoid dark drinks and chocolate for 48 hours before: tea, coffee and dark sodas such as cola."
+        },
+        {
+          "es": "Venga con ropa cómoda para hacer ejercicio: tenis, sudadera o pantaloneta.",
+          "en": "Wear comfortable clothes for exercise: sneakers, sweatpants or shorts."
+        },
+        {
+          "es": "Traiga copia de estudios anteriores: cateterismos, ecocardiogramas, pruebas de esfuerzo u holter.",
+          "en": "Bring copies of previous studies: cardiac catheterizations, echocardiograms, stress tests or Holter."
+        },
+        {
+          "es": "Solo se permite un acompañante.",
+          "en": "Only one companion is allowed."
+        }
+      ]
+    },
+    {
+      "id": "perfusion-reposo",
+      "servicio": "nuclear",
+      "codigo": "MM040326-R3",
+      "nombre": "Perfusión miocárdica en reposo",
+      "nombre_en": "Myocardial perfusion at rest",
+      "ayuno": "No requiere preparación",
+      "ayuno_en": "No preparation needed",
+      "duracion": "2 horas",
+      "duracion_en": "2 hours",
+      "indicaciones": [
+        {
+          "es": "Traiga copia de estudios anteriores: cateterismos, ecocardiogramas, pruebas de esfuerzo u holter.",
+          "en": "Bring copies of previous studies: cardiac catheterizations, echocardiograms, stress tests or Holter."
+        },
+        {
+          "es": "Solo se permite un acompañante.",
+          "en": "Only one companion is allowed."
+        }
+      ]
+    },
+    {
+      "id": "ventriculografia",
+      "servicio": "nuclear",
+      "codigo": "MM040331-R1",
+      "nombre": "Ventriculografía isotópica",
+      "nombre_en": "Radionuclide ventriculography",
+      "ayuno": "No requiere ayuno",
+      "ayuno_en": "No fasting needed",
+      "duracion": "1 hora",
+      "duracion_en": "1 hour",
+      "indicaciones": []
+    },
+    {
+      "id": "tiroides",
+      "servicio": "nuclear",
+      "codigo": "MM040308-R1",
+      "nombre": "Gammagrafía de tiroides",
+      "nombre_en": "Thyroid scan",
+      "ayuno": "No requiere ayuno",
+      "ayuno_en": "No fasting needed",
+      "duracion": "1 hora",
+      "duracion_en": "1 hour",
+      "indicaciones": [
+        {
+          "es": "Si toma antitiroideos (metimazol, Tapazol o propiltiouracilo), el protocolo pide suspenderlos 10 días antes. Confírmelo con su médico.",
+          "en": "If you take antithyroid medicines (methimazole, Tapazol or propylthiouracil), the protocol asks you to stop them 10 days before. Confirm with your doctor."
+        },
+        {
+          "es": "Si toma hormona tiroidea (Eutirox, Tirostat, levotiroxina, Eltroxin o Tiroxin), el protocolo pide suspenderla 15 días antes. Confírmelo con su médico.",
+          "en": "If you take thyroid hormone (Eutirox, Tirostat, levothyroxine, Eltroxin or Tiroxin), the protocol asks you to stop it 15 days before. Confirm with your doctor."
+        },
+        {
+          "es": "No debe haberse tinturado el cabello en el último mes.",
+          "en": "You must not have dyed your hair in the last month."
+        },
+        {
+          "es": "No debe haberse realizado estudios con medio de contraste yodado en el último mes.",
+          "en": "You must not have had a study with iodinated contrast in the last month."
+        }
+      ]
+    },
+    {
+      "id": "paratiroides",
+      "servicio": "nuclear",
+      "codigo": "MM040309-R1",
+      "nombre": "Gammagrafía de glándulas paratiroides",
+      "nombre_en": "Parathyroid scan",
+      "ayuno": "No requiere ayuno",
+      "ayuno_en": "No fasting needed",
+      "duracion": "3 horas",
+      "duracion_en": "3 hours",
+      "indicaciones": [
+        {
+          "es": "No debe haberse realizado estudios con medio de contraste yodado el día anterior.",
+          "en": "You must not have had a study with iodinated contrast the day before."
+        }
+      ]
+    },
+    {
+      "id": "salivales",
+      "servicio": "nuclear",
+      "codigo": "MM040310-R1",
+      "nombre": "Gammagrafía de glándulas salivales",
+      "nombre_en": "Salivary gland scan",
+      "ayuno": "4 horas",
+      "ayuno_en": "4 hours",
+      "duracion": "1 hora",
+      "duracion_en": "1 hour",
+      "indicaciones": [
+        {
+          "es": "Traiga un limón.",
+          "en": "Bring a lemon."
+        },
+        {
+          "es": "No debe haberse realizado estudios con medio de contraste yodado el día anterior.",
+          "en": "You must not have had a study with iodinated contrast the day before."
+        }
+      ]
+    },
+    {
+      "id": "reflujo",
+      "servicio": "nuclear",
+      "codigo": "MM040313-R1",
+      "nombre": "Gammagrafía de reflujo gastroesofágico",
+      "nombre_en": "Gastroesophageal reflux scan",
+      "ayuno": "Adultos: 6 horas",
+      "ayuno_en": "Adults: 6 hours",
+      "duracion": "1 hora",
+      "duracion_en": "1 hour",
+      "indicaciones": [
+        {
+          "es": "Adultos: traiga 1 litro de jugo de naranja.",
+          "en": "Adults: bring 1 liter of orange juice."
+        },
+        {
+          "es": "Niños de 0 a 3 meses: ayuno de 3 horas. Traiga un tetero con fórmula láctea; si toma leche materna, traiga 1 onza en un tetero y venga con la mamá.",
+          "en": "Babies 0 to 3 months: fast for 3 hours. Bring a bottle of formula; if breastfed, bring 1 ounce of breast milk in a bottle and come with the mother."
+        },
+        {
+          "es": "Niños de 4 meses a 5 años: ayuno de 6 horas. Traiga un tetero con fórmula láctea; si toma leche materna, traiga 1 onza en un tetero y venga con la mamá.",
+          "en": "Children 4 months to 5 years: fast for 6 hours. Bring a bottle of formula; if breastfed, bring 1 ounce of breast milk in a bottle and come with the mother."
+        },
+        {
+          "es": "Niños de 5 a 10 años: ayuno de 6 horas. Traiga 500 ml de avena o del jugo que le guste.",
+          "en": "Children 5 to 10 years: fast for 6 hours. Bring 500 ml of oat drink or a juice they like."
+        },
+        {
+          "es": "Suspenda el medicamento antirreflujo 24 horas antes, si su médico lo autoriza.",
+          "en": "Stop your anti-reflux medicine 24 hours before, if your doctor approves."
+        },
+        {
+          "es": "No debe haberse realizado estudios con medio de contraste yodado el día anterior.",
+          "en": "You must not have had a study with iodinated contrast the day before."
+        }
+      ]
+    },
+    {
+      "id": "transito",
+      "servicio": "nuclear",
+      "codigo": "MM040312-R1",
+      "nombre": "Gammagrafía de tránsito gastroesofágico",
+      "nombre_en": "Esophageal transit scan",
+      "ayuno": "Adultos: 6 horas",
+      "ayuno_en": "Adults: 6 hours",
+      "duracion": "1 hora",
+      "duracion_en": "1 hour",
+      "indicaciones": [
+        {
+          "es": "Adultos: traiga 1 litro de jugo de naranja.",
+          "en": "Adults: bring 1 liter of orange juice."
+        },
+        {
+          "es": "Niños de 0 a 3 meses: ayuno de 3 horas. Traiga un tetero con fórmula láctea; si toma leche materna, traiga 1 onza en un tetero y venga con la mamá.",
+          "en": "Babies 0 to 3 months: fast for 3 hours. Bring a bottle of formula; if breastfed, bring 1 ounce of breast milk in a bottle and come with the mother."
+        },
+        {
+          "es": "Niños de 4 meses a 5 años: ayuno de 6 horas. Traiga un tetero con fórmula láctea; si toma leche materna, traiga 1 onza en un tetero y venga con la mamá.",
+          "en": "Children 4 months to 5 years: fast for 6 hours. Bring a bottle of formula; if breastfed, bring 1 ounce of breast milk in a bottle and come with the mother."
+        },
+        {
+          "es": "Niños de 5 a 10 años: ayuno de 6 horas. Traiga 500 ml de avena o del jugo que le guste.",
+          "en": "Children 5 to 10 years: fast for 6 hours. Bring 500 ml of oat drink or a juice they like."
+        },
+        {
+          "es": "Suspenda el medicamento antirreflujo 24 horas antes, si su médico lo autoriza.",
+          "en": "Stop your anti-reflux medicine 24 hours before, if your doctor approves."
+        },
+        {
+          "es": "No debe haberse realizado estudios con medio de contraste yodado el día anterior.",
+          "en": "You must not have had a study with iodinated contrast the day before."
+        }
+      ]
+    },
+    {
+      "id": "vaciamiento-liquidos",
+      "servicio": "nuclear",
+      "codigo": "MM040314-R1",
+      "nombre": "Vaciamiento gástrico en fase líquida",
+      "nombre_en": "Gastric emptying, liquid phase",
+      "ayuno": "Adultos: 6 horas",
+      "ayuno_en": "Adults: 6 hours",
+      "duracion": "5 horas",
+      "duracion_en": "5 hours",
+      "indicaciones": [
+        {
+          "es": "Adultos: traiga 1 litro de jugo de naranja.",
+          "en": "Adults: bring 1 liter of orange juice."
+        },
+        {
+          "es": "Niños de 0 a 3 meses: ayuno de 3 horas. Traiga un tetero con fórmula láctea; si toma leche materna, traiga 1 onza en un tetero y venga con la mamá.",
+          "en": "Babies 0 to 3 months: fast for 3 hours. Bring a bottle of formula; if breastfed, bring 1 ounce of breast milk in a bottle and come with the mother."
+        },
+        {
+          "es": "Niños de 4 meses a 5 años: ayuno de 6 horas. Traiga un tetero con fórmula láctea; si toma leche materna, traiga 1 onza en un tetero y venga con la mamá.",
+          "en": "Children 4 months to 5 years: fast for 6 hours. Bring a bottle of formula; if breastfed, bring 1 ounce of breast milk in a bottle and come with the mother."
+        },
+        {
+          "es": "Niños de 5 a 10 años: ayuno de 6 horas. Traiga 500 ml de avena o del jugo que le guste.",
+          "en": "Children 5 to 10 years: fast for 6 hours. Bring 500 ml of oat drink or a juice they like."
+        },
+        {
+          "es": "Suspenda el medicamento antirreflujo 24 horas antes, si su médico lo autoriza.",
+          "en": "Stop your anti-reflux medicine 24 hours before, if your doctor approves."
+        },
+        {
+          "es": "No debe haberse realizado estudios con medio de contraste yodado el día anterior.",
+          "en": "You must not have had a study with iodinated contrast the day before."
+        }
+      ]
+    },
+    {
+      "id": "vaciamiento-solidos",
+      "servicio": "nuclear",
+      "codigo": "MM040314-R2",
+      "nombre": "Vaciamiento gástrico en fase sólida",
+      "nombre_en": "Gastric emptying, solid phase",
+      "ayuno": "Adultos: 6 horas. Niños: 4 horas",
+      "ayuno_en": "Adults: 6 hours. Children: 4 hours",
+      "duracion": "5 horas",
+      "duracion_en": "5 hours",
+      "indicaciones": [
+        {
+          "es": "Traiga 2 tostadas de pan, 2 huevos cocidos y pelados, mermelada y mantequilla.",
+          "en": "Bring 2 slices of toast, 2 peeled hard-boiled eggs, jam and butter."
+        },
+        {
+          "es": "Suspenda el medicamento antirreflujo 24 horas antes, si su médico lo autoriza.",
+          "en": "Stop your anti-reflux medicine 24 hours before, if your doctor approves."
+        },
+        {
+          "es": "No debe haberse realizado estudios con medio de contraste yodado el día anterior.",
+          "en": "You must not have had a study with iodinated contrast the day before."
+        }
+      ]
+    },
+    {
+      "id": "mucosa-ectopica",
+      "servicio": "nuclear",
+      "codigo": "MM040311-R1",
+      "nombre": "Gammagrafía para mucosa gástrica ectópica",
+      "nombre_en": "Ectopic gastric mucosa scan",
+      "ayuno": "Adultos: 6 horas. Bebés de 0 a 6 meses: 3 horas",
+      "ayuno_en": "Adults: 6 hours. Babies 0 to 6 months: 3 hours",
+      "duracion": "2 horas",
+      "duracion_en": "2 hours",
+      "indicaciones": [
+        {
+          "es": "No debe haberse realizado estudios con medio de contraste yodado el día anterior.",
+          "en": "You must not have had a study with iodinated contrast the day before."
+        }
+      ]
+    },
+    {
+      "id": "hemorragia",
+      "servicio": "nuclear",
+      "codigo": "MM040315-R1",
+      "nombre": "Investigación de hemorragia digestiva",
+      "nombre_en": "Gastrointestinal bleeding scan",
+      "ayuno": "6 horas",
+      "ayuno_en": "6 hours",
+      "duracion": "4 horas",
+      "duracion_en": "4 hours",
+      "indicaciones": [
+        {
+          "es": "No debe haberse realizado estudios con medio de contraste yodado el día anterior.",
+          "en": "You must not have had a study with iodinated contrast the day before."
+        }
+      ]
+    },
+    {
+      "id": "hepatobiliar",
+      "servicio": "nuclear",
+      "codigo": "MM040317-R1",
+      "nombre": "Gammagrafía hepatobiliar",
+      "nombre_en": "Hepatobiliary scan",
+      "ayuno": "4 horas",
+      "ayuno_en": "4 hours",
+      "duracion": "3 horas",
+      "duracion_en": "3 hours",
+      "indicaciones": [
+        {
+          "es": "En recién nacidos con sospecha de atresia biliar, el médico formula una preparación con fenobarbital para los días anteriores al estudio. Siga exactamente la fórmula.",
+          "en": "For newborns with suspected biliary atresia, the doctor prescribes phenobarbital for the days before the study. Follow the prescription exactly."
+        },
+        {
+          "es": "No debe haberse realizado estudios con medio de contraste yodado el día anterior.",
+          "en": "You must not have had a study with iodinated contrast the day before."
+        }
+      ]
+    },
+    {
+      "id": "hepatoesplenica",
+      "servicio": "nuclear",
+      "codigo": "MM040316-R1",
+      "nombre": "Gammagrafía hepatoesplénica",
+      "nombre_en": "Liver and spleen scan",
+      "ayuno": "No requiere ayuno",
+      "ayuno_en": "No fasting needed",
+      "duracion": "1 hora",
+      "duracion_en": "1 hour",
+      "indicaciones": [
+        {
+          "es": "No debe haberse realizado estudios con medio de contraste el día anterior.",
+          "en": "You must not have had a contrast study the day before."
+        }
+      ]
+    },
+    {
+      "id": "hemangioma",
+      "servicio": "nuclear",
+      "codigo": "MM040318-R1",
+      "nombre": "Gammagrafía para hemangioma (pirofosfatos)",
+      "nombre_en": "Hemangioma scan (pyrophosphate)",
+      "ayuno": "6 horas",
+      "ayuno_en": "6 hours",
+      "duracion": "4 horas",
+      "duracion_en": "4 hours",
+      "indicaciones": [
+        {
+          "es": "No debe haberse realizado estudios con medio de contraste yodado el día anterior.",
+          "en": "You must not have had a study with iodinated contrast the day before."
+        }
+      ]
+    },
+    {
+      "id": "renograma",
+      "servicio": "nuclear",
+      "codigo": "MM040322-R1",
+      "nombre": "Renograma secuencial y filtración glomerular",
+      "nombre_en": "Renogram and glomerular filtration rate",
+      "ayuno": "",
+      "ayuno_en": "",
+      "duracion": "2 horas",
+      "duracion_en": "2 hours",
+      "indicaciones": [
+        {
+          "es": "Tome abundante líquido desde el día anterior y 4 vasos de agua 1 hora antes del estudio. Puede orinar.",
+          "en": "Drink plenty of fluids from the day before, and 4 glasses of water 1 hour before the study. You may urinate."
+        },
+        {
+          "es": "No debe realizarse estudios con medio de contraste radiográfico en las 24 horas anteriores, porque pueden interferir con la función renal.",
+          "en": "Do not have any study with radiographic contrast in the 24 hours before, as it can interfere with kidney function."
+        },
+        {
+          "es": "Niños menores de 3 años: traigan una sonda (le indicamos el número), solución salina de 500 cc, equipo de microgoteo y un pañal desechable, y pidan las indicaciones para que el niño llegue con sueño.",
+          "en": "Children under 3: bring a catheter (we will tell you the size), 500 cc saline solution, a microdrip set and a disposable diaper, and ask for instructions to keep the child awake the night before."
+        }
+      ]
+    },
+    {
+      "id": "renal-dmsa",
+      "servicio": "nuclear",
+      "codigo": "MM040319-R1",
+      "nombre": "Gammagrafía renal (DMSA)",
+      "nombre_en": "Renal cortical scan (DMSA)",
+      "ayuno": "No requiere ayuno",
+      "ayuno_en": "No fasting needed",
+      "duracion": "3 horas",
+      "duracion_en": "3 hours",
+      "indicaciones": [
+        {
+          "es": "No debe haberse realizado estudios con medio de contraste yodado el día anterior.",
+          "en": "You must not have had a study with iodinated contrast the day before."
+        },
+        {
+          "es": "Si el paciente es menor de 5 años, pida las indicaciones para que el niño llegue con sueño (trasnocho).",
+          "en": "If the patient is under 5, ask for instructions to keep the child awake the night before so they arrive sleepy."
+        }
+      ]
+    },
+    {
+      "id": "cistogammagrafia",
+      "servicio": "nuclear",
+      "codigo": "MM040327-R1",
+      "nombre": "Cistogammagrafía",
+      "nombre_en": "Radionuclide cystography",
+      "ayuno": "No requiere ayuno",
+      "ayuno_en": "No fasting needed",
+      "duracion": "1 hora",
+      "duracion_en": "1 hour",
+      "indicaciones": [
+        {
+          "es": "No debe realizarse estudios con medio de contraste radiográfico en las 24 horas anteriores, porque pueden interferir con la función renal.",
+          "en": "Do not have any study with radiographic contrast in the 24 hours before, as it can interfere with kidney function."
+        },
+        {
+          "es": "Traiga una sonda vesical Nelaton (le indicamos el número), solución salina de 500 cc y un equipo de macrogoteo.",
+          "en": "Bring a Nelaton urinary catheter (we will tell you the size), 500 cc saline solution and a macrodrip set."
+        },
+        {
+          "es": "Si el paciente es menor de 5 años, pida las indicaciones para que el niño llegue con sueño (trasnocho).",
+          "en": "If the patient is under 5, ask for instructions to keep the child awake the night before so they arrive sleepy."
+        }
+      ]
+    },
+    {
+      "id": "testicular",
+      "servicio": "nuclear",
+      "codigo": "MM040325-R1",
+      "nombre": "Gammagrafía de contenido escrotal (perfusión testicular)",
+      "nombre_en": "Testicular perfusion scan",
+      "ayuno": "No requiere ayuno",
+      "ayuno_en": "No fasting needed",
+      "duracion": "1 hora",
+      "duracion_en": "1 hour",
+      "indicaciones": []
+    },
+    {
+      "id": "osea",
+      "servicio": "nuclear",
+      "codigo": "MM040320-R1",
+      "nombre": "Gammagrafía ósea",
+      "nombre_en": "Bone scan",
+      "ayuno": "No requiere ayuno",
+      "ayuno_en": "No fasting needed",
+      "duracion": "4 horas",
+      "duracion_en": "4 hours",
+      "indicaciones": [
+        {
+          "es": "No debe haberse realizado estudios con medio de contraste yodado el día anterior.",
+          "en": "You must not have had a study with iodinated contrast the day before."
+        }
+      ]
+    },
+    {
+      "id": "pulmonar-pv",
+      "servicio": "nuclear",
+      "codigo": "MM040321-R1",
+      "nombre": "Gammagrafía pulmonar de perfusión y ventilación",
+      "nombre_en": "Lung perfusion and ventilation scan",
+      "ayuno": "No requiere ayuno",
+      "ayuno_en": "No fasting needed",
+      "duracion": "1 hora",
+      "duracion_en": "1 hour",
+      "indicaciones": [
+        {
+          "es": "No debe haberse realizado estudios con medio de contraste el día anterior.",
+          "en": "You must not have had a contrast study the day before."
+        }
+      ]
+    },
+    {
+      "id": "pulmonar-p",
+      "servicio": "nuclear",
+      "codigo": "MM040321-R2",
+      "nombre": "Gammagrafía pulmonar de perfusión",
+      "nombre_en": "Lung perfusion scan",
+      "ayuno": "No requiere ayuno",
+      "ayuno_en": "No fasting needed",
+      "duracion": "1 hora",
+      "duracion_en": "1 hour",
+      "indicaciones": [
+        {
+          "es": "No debe haberse realizado estudios con medio de contraste yodado el día anterior.",
+          "en": "You must not have had a study with iodinated contrast the day before."
+        }
+      ]
+    },
+    {
+      "id": "spect-cerebral",
+      "servicio": "nuclear",
+      "codigo": "MM040324-R1",
+      "nombre": "SPECT cerebral",
+      "nombre_en": "Brain SPECT",
+      "ayuno": "No requiere ayuno",
+      "ayuno_en": "No fasting needed",
+      "duracion": "2 horas",
+      "duracion_en": "2 hours",
+      "indicaciones": []
+    },
+    {
+      "id": "cisternografia",
+      "servicio": "nuclear",
+      "codigo": "MM040329-R1",
+      "nombre": "Cisternografía isotópica",
+      "nombre_en": "Radionuclide cisternography",
+      "ayuno": "4 horas",
+      "ayuno_en": "4 hours",
+      "duracion": "6 horas; puede haber imágenes hasta 24 horas después",
+      "duracion_en": "6 hours; images may continue up to 24 hours later",
+      "indicaciones": [
+        {
+          "es": "No debe realizarse estudios con medio de contraste radiográfico en las 24 horas anteriores, porque pueden interferir con la función renal.",
+          "en": "Do not have any study with radiographic contrast in the 24 hours before, as it can interfere with kidney function."
+        }
+      ]
+    },
+    {
+      "id": "dacriocistografia",
+      "servicio": "nuclear",
+      "codigo": "MM040328-R1",
+      "nombre": "Dacriocistogammagrafía",
+      "nombre_en": "Radionuclide dacryocystography",
+      "ayuno": "No requiere ayuno",
+      "ayuno_en": "No fasting needed",
+      "duracion": "2 horas",
+      "duracion_en": "2 hours",
+      "indicaciones": []
+    },
+    {
+      "id": "ganglios",
+      "servicio": "nuclear",
+      "codigo": "MM040333S",
+      "nombre": "Gammagrafía de ganglios linfáticos (linfogammagrafía)",
+      "nombre_en": "Lymph node scan (lymphoscintigraphy)",
+      "ayuno": "No requiere ayuno",
+      "ayuno_en": "No fasting needed",
+      "duracion": "3 horas",
+      "duracion_en": "3 hours",
+      "indicaciones": []
+    },
+    {
+      "id": "radio-223",
+      "servicio": "nuclear",
+      "codigo": "MM040334-R1",
+      "nombre": "Terapia con radio 223",
+      "nombre_en": "Radium-223 therapy",
+      "ayuno": "",
+      "ayuno_en": "",
+      "duracion": "1 hora",
+      "duracion_en": "1 hour",
+      "indicaciones": [
+        {
+          "es": "No debe realizarse estudios con medio de contraste radiográfico en las 24 horas anteriores, porque pueden interferir con la función renal.",
+          "en": "Do not have any study with radiographic contrast in the 24 hours before, as it can interfere with kidney function."
+        }
+      ]
+    }
+  ]
+}

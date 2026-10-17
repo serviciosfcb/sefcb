@@ -311,8 +311,47 @@ collections:
                     widget: select
                     required: false
                     hint: Elija una página del sitio, o deje vacío y use el campo de archivo.
-                    options: ['inicio', 'noticias', 'servicios', 'pacientes', 'cita', 'antes', 'resultados', 'derechos', 'faq', 'asociacion', 'educacion', 'visitantes', 'nosotros', 'direccionamiento', 'calidad', 'equipo', 'empleo', 'bienestar', 'transparencia', 'politicas', 'entidades', 'tributarios', 'contacto', 'datos', 'accesibilidad', 'mapa']
+                    options: ['inicio', 'noticias', 'servicios', 'pacientes', 'cita', 'antes', 'preparacion', 'resultados', 'derechos', 'faq', 'asociacion', 'educacion', 'visitantes', 'nosotros', 'direccionamiento', 'calidad', 'equipo', 'empleo', 'bienestar', 'transparencia', 'politicas', 'entidades', 'tributarios', 'contacto', 'datos', 'accesibilidad', 'mapa']
                   - { label: Archivo PDF o enlace, name: archivo, widget: file, required: false, choose_url: true, hint: 'Escriba PQRS para enlazar el formulario de PQRS.' }
+      - name: preparaciones
+        label: Preparación de exámenes
+        file: src/data/preparaciones.json
+        description: Indicaciones de preparación que se muestran en la página "Preparación para sus exámenes". Cada cambio debe estar aprobado por el área asistencial.
+        fields:
+          - label: Indicaciones comunes
+            name: comunes
+            widget: object
+            collapsed: true
+            fields:
+              - label: Cardiología no invasiva
+                name: cardiologia
+                widget: object
+                fields:
+                  - { label: Lleve, name: llevar, widget: list, summary: '{{fields.es}}', fields: [{ label: Texto, name: es, widget: text }, { label: Texto en inglés, name: en, widget: text }] }
+                  - { label: Tenga en cuenta, name: tener_en_cuenta, widget: list, summary: '{{fields.es}}', fields: [{ label: Texto, name: es, widget: text }, { label: Texto en inglés, name: en, widget: text }] }
+              - label: Medicina nuclear
+                name: nuclear
+                widget: object
+                fields:
+                  - { label: Lleve, name: llevar, widget: list, summary: '{{fields.es}}', fields: [{ label: Texto, name: es, widget: text }, { label: Texto en inglés, name: en, widget: text }] }
+                  - { label: Tenga en cuenta, name: tener_en_cuenta, widget: list, summary: '{{fields.es}}', fields: [{ label: Texto, name: es, widget: text }, { label: Texto en inglés, name: en, widget: text }] }
+                  - { label: Después de la inyección, name: despues, widget: list, summary: '{{fields.es}}', fields: [{ label: Texto, name: es, widget: text }, { label: Texto en inglés, name: en, widget: text }] }
+          - label: Exámenes
+            name: examenes
+            label_singular: examen
+            widget: list
+            summary: '{{fields.nombre}}'
+            fields:
+              - { label: Identificador (sin espacios ni tildes), name: id, widget: string, hint: 'Se usa en la dirección para enlazar directo al examen, por ejemplo tiroides.' }
+              - { label: Servicio, name: servicio, widget: select, options: [{ label: Cardiología no invasiva, value: cardiologia }, { label: Medicina nuclear, value: nuclear }] }
+              - { label: Código del documento, name: codigo, widget: string, required: false }
+              - { label: Nombre del examen, name: nombre, widget: string }
+              - { label: Nombre en inglés, name: nombre_en, widget: string }
+              - { label: Ayuno, name: ayuno, widget: string, required: false, hint: 'Por ejemplo "6 horas" o "No requiere ayuno". Vacío si el documento no lo indica.' }
+              - { label: Ayuno en inglés, name: ayuno_en, widget: string, required: false }
+              - { label: Tiempo que debe disponer, name: duracion, widget: string, required: false }
+              - { label: Tiempo en inglés, name: duracion_en, widget: string, required: false }
+              - { label: Indicaciones, name: indicaciones, widget: list, required: false, summary: '{{fields.es}}', fields: [{ label: Texto, name: es, widget: text }, { label: Texto en inglés, name: en, widget: text }] }
 
   # Las páginas y los servicios ya existen; desde aquí se editan sus textos.
   # Para crear una página nueva hace falta registrar su dirección en src/i18n/routes.ts (equipo de sistemas).
@@ -394,6 +433,10 @@ collections:
       - name: es-pacientes-preguntas-frecuentes
         label: "Preguntas frecuentes"
         file: src/content/paginas/es/pacientes/preguntas-frecuentes.md
+        fields: *campos_pagina
+      - name: es-pacientes-preparacion-para-examenes
+        label: "Preparación para sus exámenes"
+        file: src/content/paginas/es/pacientes/preparacion-para-examenes.md
         fields: *campos_pagina
       - name: es-pacientes-resultados-e-historia-clinica
         label: "Resultados e historia clínica"
@@ -488,6 +531,10 @@ collections:
       - name: en-patients-patient-association
         label: "Patient association"
         file: src/content/paginas/en/patients/patient-association.md
+        fields: *campos_pagina
+      - name: en-patients-exam-preparation
+        label: "Preparing for your test"
+        file: src/content/paginas/en/patients/exam-preparation.md
         fields: *campos_pagina
       - name: en-patients-results-and-medical-records
         label: "Results and medical records"
