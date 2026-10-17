@@ -40,4 +40,4 @@ groups:
 ---
 Our interventional unit provides invasive diagnosis and treatment in four areas: cardiovascular, neurology, peripheral vascular and electrophysiology. Our technology allows safe, reliable procedures, so patients do not need to travel to other cities.
 
-To schedule an interventional procedure you can also write to secintervencionismo@sefcb.co.
+To schedule an interventional procedure you can also write to secintervencionismo@sefcb.co or call +57 312 362 1884.
