@@ -1,0 +1,98 @@
+---
+// Ofertas de empleo vigentes (src/data/vacantes.json), editables desde el panel.
+// Cada oferta lleva datos estructurados JobPosting para que aparezca en la búsqueda de empleos de Google.
+import type { Lang } from '../i18n/content';
+import data from '../data/vacantes.json';
+import Icon from './Icon.astro';
+interface Props { lang: Lang }
+const { lang } = Astro.props;
+const en = lang === 'en';
+type Txt = { es: string; en: string };
+const tx = (x: Txt) => (en ? x.en || x.es : x.es);
+const t = en
+  ? { title: 'Current openings', none: 'We have no open positions right now. You can still join our CV bank.', profile: 'Profile', skills: 'Skills and competencies', duties: 'Main responsibilities', apply: 'Apply online', mail: 'Or email your CV to', subject: 'with the subject', opens: 'opens in a new tab', area: 'Area' }
+  : { title: 'Ofertas vigentes', none: 'En este momento no tenemos vacantes abiertas. Puede dejar su hoja de vida en nuestro banco.', profile: 'Perfil', skills: 'Habilidades y competencias', duties: 'Principales responsabilidades', apply: 'Postularme en línea', mail: 'O envíe su hoja de vida a', subject: 'con el asunto', opens: 'se abre en una pestaña nueva', area: 'Área' };
+const mailto = (asunto: string) => `mailto:${data.correo}?subject=${encodeURIComponent(asunto)}`;
+const ld = data.vacantes.map((v) => ({
+  '@context': 'https://schema.org',
+  '@type': 'JobPosting',
+  title: v.cargo,
+  description: [
+    v.area ? `<p>Área: ${v.area}</p>` : '',
+    `<p><strong>Perfil</strong></p><ul>${v.perfil.map((x) => `<li>${x.es}</li>`).join('')}</ul>`,
+    v.habilidades.length ? `<p><strong>Habilidades y competencias</strong></p><ul>${v.habilidades.map((x) => `<li>${x.es}</li>`).join('')}</ul>` : '',
+    v.responsabilidades.length ? `<p><strong>Responsabilidades</strong></p><ul>${v.responsabilidades.map((x) => `<li>${x.es}</li>`).join('')}</ul>` : '',
+  ].join(''),
+  datePosted: v.fecha,
+  hiringOrganization: { '@type': 'MedicalOrganization', name: 'Servicios Especializados del Corazón', sameAs: 'https://sefcb.co', logo: 'https://sefcb.co/marca/icon-512.png' },
+  jobLocation: { '@type': 'Place', address: { '@type': 'PostalAddress', streetAddress: 'Calle 19 No. 1-44, Barrio Blanco', addressLocality: 'Cúcuta', addressRegion: 'Norte de Santander', addressCountry: 'CO' } },
+  directApply: true,
+}));
+---
+<section class="vac" aria-labelledby="vac-titulo">
+  <h2 id="vac-titulo">{t.title}</h2>
+  {data.vacantes.length === 0 ? (
+    <p class="vac-vacio">{t.none}</p>
+  ) : (
+    <ul class="vac-lista" data-stagger>
+      {data.vacantes.map((v) => {
+        const area = en ? v.area_en || v.area : v.area;
+        return (
+          <li class="vac-card" data-stagger-item>
+            <header>
+              <span class="vac-icono" aria-hidden="true"><Icon name="award" /></span>
+              <div>
+                <h3>{en ? v.cargo_en || v.cargo : v.cargo}</h3>
+                {area && <p class="vac-area">{t.area}: {area}</p>}
+              </div>
+            </header>
+            <div class="vac-cols">
+              <div>
+                <h4>{t.profile}</h4>
+                <ul>{v.perfil.map((x) => <li>{tx(x)}</li>)}</ul>
+              </div>
+              {v.habilidades.length > 0 && (
+                <div>
+                  <h4>{t.skills}</h4>
+                  <ul>{v.habilidades.map((x) => <li>{tx(x)}</li>)}</ul>
+                </div>
+              )}
+              {v.responsabilidades.length > 0 && (
+                <div>
+                  <h4>{t.duties}</h4>
+                  <ul>{v.responsabilidades.map((x) => <li>{tx(x)}</li>)}</ul>
+                </div>
+              )}
+            </div>
+            <footer>
+              <a class="btn btn-primario" href={data.formulario} rel="noopener" target="_blank">{t.apply}<Icon name="external" /><span class="visualmente-oculto"> ({t.opens})</span></a>
+              <p class="vac-mail">{t.mail} <a href={mailto(v.asunto)}>{data.correo}</a> {t.subject} <strong>“{v.asunto}”</strong>.</p>
+            </footer>
+          </li>
+        );
+      })}
+    </ul>
+  )}
+</section>
+{ld.map((x) => <script type="application/ld+json" set:html={JSON.stringify(x)} />)}
+
+<style>
+  .vac { display: grid; gap: 1.3rem; }
+  .vac > h2 { font-size: var(--t-5); }
+  .vac-vacio { padding: 1.2rem 1.4rem; border-radius: var(--radio-m); background: var(--niebla); }
+  .vac-lista { list-style: none; display: grid; gap: 1.2rem; }
+  .vac-card { border: 1px solid var(--linea); border-radius: var(--radio-l, 22px); padding: clamp(1.2rem, 3vw, 1.8rem); display: grid; gap: 1.3rem; background: var(--papel); transition: border-color .3s, box-shadow .4s; }
+  .vac-card:hover { border-color: rgb(159 39 40 / .35); box-shadow: 0 18px 40px -28px rgb(28 26 25 / .45); }
+  .vac-card header { display: flex; gap: 1rem; align-items: center; }
+  .vac-icono { width: 3rem; height: 3rem; border-radius: 50%; display: grid; place-items: center; background: rgb(159 39 40 / .08); color: var(--rojo); flex: none; }
+  .vac-icono :global(.icon) { width: 1.5rem; height: 1.5rem; }
+  .vac-card h3 { font-size: var(--t-4); line-height: 1.2; }
+  .vac-area { color: var(--tinta-2); font-size: var(--t-0); margin-top: .2rem; }
+  .vac-cols { display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, 14rem), 1fr)); gap: 1.2rem 2rem; }
+  .vac-cols h4 { font-family: var(--texto); font-size: var(--t-0); text-transform: uppercase; letter-spacing: .06em; color: var(--rojo); margin-bottom: .55rem; }
+  .vac-cols ul { display: grid; gap: .4rem; padding-left: 1.1rem; font-size: var(--t-0); line-height: 1.45; }
+  .vac-card footer { display: flex; flex-wrap: wrap; gap: .8rem 1.4rem; align-items: center; padding-top: 1.1rem; border-top: 1px solid var(--linea); }
+  .vac-card footer .btn :global(.icon) { width: 1rem; height: 1rem; }
+  .vac-mail { font-size: var(--t-0); color: var(--tinta-2); flex: 1 1 18rem; }
+  .vac-mail a { color: var(--tinta); font-weight: 600; }
+</style>

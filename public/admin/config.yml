@@ -314,6 +314,29 @@ collections:
                     hint: Elija una página del sitio, o deje vacío y use el campo de archivo.
                     options: ['inicio', 'noticias', 'servicios', 'pacientes', 'cita', 'antes', 'preparacion', 'resultados', 'derechos', 'faq', 'asociacion', 'educacion', 'visitantes', 'nosotros', 'direccionamiento', 'calidad', 'equipo', 'empleo', 'bienestar', 'transparencia', 'politicas', 'entidades', 'tributarios', 'contacto', 'datos', 'accesibilidad', 'mapa']
                   - { label: Archivo PDF o enlace, name: archivo, widget: file, required: false, choose_url: true, hint: 'Escriba PQRS para enlazar el formulario de PQRS.' }
+      - name: vacantes
+        label: Ofertas de empleo
+        file: src/data/vacantes.json
+        description: Ofertas que se muestran en "Trabaje con nosotros". Para cerrar una oferta, bórrela de la lista.
+        fields:
+          - { label: Correo para hojas de vida, name: correo, widget: string }
+          - { label: Formulario del banco de hojas de vida, name: formulario, widget: string }
+          - { label: Formulario de practicantes, name: formulario_practicas, widget: string }
+          - label: Ofertas vigentes
+            name: vacantes
+            label_singular: oferta
+            widget: list
+            summary: '{{fields.cargo}}'
+            fields:
+              - { label: Cargo, name: cargo, widget: string }
+              - { label: Cargo en inglés, name: cargo_en, widget: string }
+              - { label: Área, name: area, widget: string, required: false }
+              - { label: Área en inglés, name: area_en, widget: string, required: false }
+              - { label: Fecha de publicación, name: fecha, widget: datetime, date_format: 'YYYY-MM-DD', time_format: false, format: 'YYYY-MM-DD' }
+              - { label: Asunto del correo, name: asunto, widget: string, hint: 'Ej. Vacante - Auxiliar administrativo' }
+              - { label: Perfil, name: perfil, widget: list, summary: '{{fields.es}}', fields: [{ label: Texto, name: es, widget: string }, { label: Texto en inglés, name: en, widget: string }] }
+              - { label: Habilidades y competencias, name: habilidades, widget: list, required: false, summary: '{{fields.es}}', fields: [{ label: Texto, name: es, widget: string }, { label: Texto en inglés, name: en, widget: string }] }
+              - { label: Responsabilidades, name: responsabilidades, widget: list, required: false, summary: '{{fields.es}}', fields: [{ label: Texto, name: es, widget: string }, { label: Texto en inglés, name: en, widget: string }] }
       - name: preparaciones
         label: Preparación de exámenes
         file: src/data/preparaciones.json

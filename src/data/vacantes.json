@@ -1,0 +1,151 @@
+{
+  "correo": "talentohumano@sefcb.co",
+  "formulario": "https://forms.gle/rftXpau4WQNtNTTE8",
+  "formulario_practicas": "https://forms.gle/2Z4th8k2YjCb78Gu7",
+  "vacantes": [
+    {
+      "cargo": "Auxiliar administrativo",
+      "cargo_en": "Administrative assistant",
+      "area": "Atención al usuario",
+      "area_en": "Patient services",
+      "fecha": "2026-10-17",
+      "asunto": "Vacante - Auxiliar administrativo",
+      "perfil": [
+        {
+          "es": "Técnico o tecnólogo en áreas administrativas o afines.",
+          "en": "Technical or technologist degree in administration or a related field."
+        },
+        {
+          "es": "Manejo de herramientas ofimáticas.",
+          "en": "Proficiency with office software."
+        },
+        {
+          "es": "Manejo del software Dinámica Gerencial.",
+          "en": "Experience with the Dinámica Gerencial software."
+        },
+        {
+          "es": "6 meses de experiencia en el sector salud.",
+          "en": "6 months of experience in the health sector."
+        },
+        {
+          "es": "Curso en atención integral a víctimas del conflicto armado.",
+          "en": "Course in comprehensive care for victims of the armed conflict."
+        }
+      ],
+      "habilidades": [
+        {
+          "es": "Orientación al cliente.",
+          "en": "Customer focus."
+        },
+        {
+          "es": "Trabajo en equipo y colaboración.",
+          "en": "Teamwork and collaboration."
+        },
+        {
+          "es": "Disciplina.",
+          "en": "Discipline."
+        }
+      ],
+      "responsabilidades": []
+    },
+    {
+      "cargo": "Coordinador de calidad y proyectos",
+      "cargo_en": "Quality and projects coordinator",
+      "area": "",
+      "area_en": "",
+      "fecha": "2026-10-17",
+      "asunto": "Vacante - Coordinador de calidad, SST y Proyectos",
+      "perfil": [
+        {
+          "es": "Profesional en ingeniería industrial o áreas administrativas afines.",
+          "en": "Degree in industrial engineering or a related administrative field."
+        },
+        {
+          "es": "2 años de experiencia en instituciones de salud.",
+          "en": "2 years of experience in health institutions."
+        },
+        {
+          "es": "Formación en auditoría, sistemas de gestión, PAMEC, habilitación y acreditación.",
+          "en": "Training in auditing, management systems, PAMEC, licensing and accreditation."
+        }
+      ],
+      "habilidades": [
+        {
+          "es": "Liderazgo estratégico y toma de decisiones.",
+          "en": "Strategic leadership and decision-making."
+        },
+        {
+          "es": "Adaptación al cambio.",
+          "en": "Adaptability to change."
+        },
+        {
+          "es": "Planeación y orientación al logro.",
+          "en": "Planning and results orientation."
+        },
+        {
+          "es": "Conocimiento del sector salud.",
+          "en": "Knowledge of the health sector."
+        }
+      ],
+      "responsabilidades": [
+        {
+          "es": "Liderar y mantener el sistema de gestión de calidad.",
+          "en": "Lead and maintain the quality management system."
+        },
+        {
+          "es": "Coordinar el PAMEC, la habilitación y la acreditación.",
+          "en": "Coordinate PAMEC, licensing and accreditation."
+        },
+        {
+          "es": "Atender auditorías y visitas de entes de control.",
+          "en": "Handle audits and visits from oversight bodies."
+        },
+        {
+          "es": "Gestionar los indicadores y los proyectos institucionales.",
+          "en": "Manage institutional indicators and projects."
+        }
+      ]
+    },
+    {
+      "cargo": "Tecnólogo en medicina nuclear",
+      "cargo_en": "Nuclear medicine technologist",
+      "area": "Medicina nuclear",
+      "area_en": "Nuclear medicine",
+      "fecha": "2026-10-17",
+      "asunto": "Vacante - Tecnólogo en medicina nuclear",
+      "perfil": [
+        {
+          "es": "Tecnólogo en medicina nuclear.",
+          "en": "Nuclear medicine technologist degree."
+        },
+        {
+          "es": "Curso BLS y curso de protección radiológica (radioprotección) vigentes.",
+          "en": "Current BLS and radiation protection courses."
+        },
+        {
+          "es": "1 año de experiencia en medicina nuclear.",
+          "en": "1 year of experience in nuclear medicine."
+        }
+      ],
+      "habilidades": [
+        {
+          "es": "Orientación al cliente.",
+          "en": "Customer focus."
+        },
+        {
+          "es": "Trabajo en equipo y colaboración.",
+          "en": "Teamwork and collaboration."
+        },
+        {
+          "es": "Disciplina.",
+          "en": "Discipline."
+        },
+        {
+          "es": "Manejo de la tecnología y del software Dinámica Gerencial.",
+          "en": "Comfort with technology and the Dinámica Gerencial software."
+        }
+      ],
+      "responsabilidades": []
+    }
+  ]
+}

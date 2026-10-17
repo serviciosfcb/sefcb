@@ -2,23 +2,17 @@
 key: empleo
 title: Trabaje con nosotros
 lead: Lo invitamos a hacer parte de nuestro equipo.
-description: Vacantes, prácticas y banco de hojas de vida de Servicios Especializados del Corazón en Cúcuta.
-card: Vacantes, prácticas y banco de hojas de vida.
+description: Ofertas de empleo, prácticas y banco de hojas de vida de Servicios Especializados del Corazón en Cúcuta.
+card: Ofertas de empleo, prácticas y banco de hojas de vida.
 section: nosotros
 order: 3
-review: Validar las vacantes vigentes y el correo para recibir hojas de vida.
+layout: empleo
+review: Ofertas vigentes enviadas por gerencia el 17/10/2026. Los formularios en línea son los mismos que enlazaba el sitio anterior (banco de hojas de vida y practicantes); confirmar que siguen recibiendo respuestas. Las ofertas se editan en el panel, en Datos → Ofertas de empleo.
 ---
-Queremos contar con usted en nuestro banco de hojas de vida. Registrarla no representa una obligación de vinculación por parte de Servicios Especializados FCB S.A.S.
+Si quiere crecer con nosotros, revise las ofertas vigentes y postúlese. Recuerde adjuntar su hoja de vida con los soportes de su formación académica y su experiencia laboral.
 
-## Ofertas vigentes
+**¿No encuentra una oferta para su perfil?** Deje su hoja de vida en nuestro [banco de hojas de vida](https://forms.gle/rftXpau4WQNtNTTE8). Registrarla no representa una obligación de vinculación por parte de Servicios Especializados FCB S.A.S.
 
-- Auxiliar de enfermería
-- Jefe de enfermería
-
-## Cómo postularse
-
-Envíe su hoja de vida con los soportes de formación académica y experiencia laboral al correo talentohumano@sefcb.co, indicando el cargo al que aspira.
-
-¿Quiere fortalecer sus habilidades profesionales? También recibimos hojas de vida para **prácticas**.
+**¿Quiere hacer sus prácticas con nosotros?** Postúlese como [practicante](https://forms.gle/2Z4th8k2YjCb78Gu7).
 
 Los datos que nos envíe se tratan según nuestra [política de tratamiento de datos personales](/politica-de-datos/).
