@@ -3,6 +3,7 @@
 import type { APIRoute } from 'astro';
 import { getPaginas, getServicios, pathOfPagina, pathOfServicio } from '../lib/paginas';
 import { getNoticias, slugOf, isoDate } from '../lib/noticias';
+import { getFichas, pathOfFicha } from '../lib/educacion';
 import { pageRoutes } from '../i18n/routes';
 import { content } from '../i18n/content';
 
@@ -23,6 +24,11 @@ export const GET: APIRoute = async () => {
   for (const s of sEs) {
     const par = sEn.find((x) => x.data.key === s.data.key);
     if (par) entries.push({ es: pathOfServicio(s), en: pathOfServicio(par) });
+  }
+  const [fEs, fEn] = await Promise.all([getFichas('es'), getFichas('en')]);
+  for (const f of fEs) {
+    const par = fEn.find((x) => x.data.key === f.data.key);
+    if (par) entries.push({ es: pathOfFicha(f), en: pathOfFicha(par) });
   }
   for (const n of await getNoticias()) {
     const slug = slugOf(n);

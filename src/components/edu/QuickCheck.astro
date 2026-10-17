@@ -1,0 +1,72 @@
+---
+// Comprobación al final de la ficha: una pregunta con su explicación. Ayuda a la persona a confirmar que entendió.
+import type { Lang } from '../../i18n/content';
+import Icon from '../Icon.astro';
+interface Props { lang: Lang; pregunta: string; opciones: string[]; correcta: number; explicacion: string }
+const { lang, pregunta, opciones, correcta, explicacion } = Astro.props;
+const en = lang === 'en';
+const t = en
+  ? { title: 'Check what you learned', check: 'Check my answer', ok: 'Correct.', no: 'Not quite.', pick: 'Choose an answer first.' }
+  : { title: 'Compruebe lo que aprendió', check: 'Comprobar', ok: '¡Correcto!', no: 'No exactamente.', pick: 'Elija primero una respuesta.' };
+---
+<section class="edc" aria-labelledby="edc-t" data-edc data-correcta={correcta} data-t={JSON.stringify(t)} data-exp={explicacion}>
+  <div class="edc-cab"><span class="edc-ico" aria-hidden="true"><Icon name="check" /></span><h2 id="edc-t">{t.title}</h2></div>
+  <form data-edc-form>
+    <fieldset>
+      <legend>{pregunta}</legend>
+      <div class="edc-ops">
+        {opciones.map((o, i) => (
+          <label class="edc-op"><input type="radio" name="edc" value={i} />{o}</label>
+        ))}
+      </div>
+    </fieldset>
+    <button class="btn btn-primario" type="submit">{t.check}</button>
+  </form>
+  <div class="edc-res" aria-live="polite" data-edc-res></div>
+</section>
+
+<script>
+  document.querySelectorAll<HTMLElement>('[data-edc]').forEach((box) => {
+    const t = JSON.parse(box.dataset.t || '{}');
+    const ok = Number(box.dataset.correcta);
+    const form = box.querySelector<HTMLFormElement>('[data-edc-form]')!;
+    const res = box.querySelector<HTMLElement>('[data-edc-res]')!;
+    form.addEventListener('submit', (e) => {
+      e.preventDefault();
+      const sel = form.querySelector<HTMLInputElement>('input:checked');
+      const ops = [...form.querySelectorAll<HTMLLabelElement>('.edc-op')];
+      ops.forEach((l) => l.classList.remove('bien', 'mal'));
+      if (!sel) { res.className = 'edc-res'; res.textContent = t.pick; return; }
+      const acierto = Number(sel.value) === ok;
+      ops[ok]?.classList.add('bien');
+      if (!acierto) sel.closest('label')?.classList.add('mal');
+      res.className = `edc-res ${acierto ? 'bien' : 'mal'}`;
+      const b = document.createElement('strong'); b.textContent = acierto ? t.ok : t.no;
+      res.replaceChildren(b, ` ${box.dataset.exp}`);
+    });
+  });
+</script>
+
+<style>
+  .edc { display: grid; gap: 1rem; padding: clamp(1.3rem, 3vw, 2rem); border-radius: var(--radio-l); background: var(--carbon); color: var(--sobre-oscuro); }
+  .edc-cab { display: flex; align-items: center; gap: .8rem; }
+  .edc-cab h2 { font-size: var(--t-4); color: #fff; }
+  .edc-ico { width: 2.6rem; height: 2.6rem; border-radius: 50%; display: grid; place-items: center; background: var(--rojo); color: #fff; flex: none; }
+  .edc-ico :global(.icon) { width: 1.3rem; height: 1.3rem; stroke-width: 2.4; }
+  .edc form { display: grid; gap: 1rem; }
+  .edc fieldset { border: 0; padding: 0; margin: 0; min-width: 0; }
+  .edc legend { font-weight: 700; font-size: var(--t-2); color: #fff; margin-bottom: .9rem; padding: 0; line-height: 1.4; }
+  .edc-ops { display: grid; gap: .5rem; }
+  .edc-op { display: flex; gap: .7rem; align-items: flex-start; padding: .8rem 1rem; border-radius: var(--radio-m); border: 1px solid rgb(255 255 255 / .18); cursor: pointer; line-height: 1.4; transition: border-color .3s, background-color .3s; }
+  .edc-op:hover { border-color: rgb(255 255 255 / .45); }
+  .edc-op input { width: 1.2rem; height: 1.2rem; margin-top: .1rem; accent-color: var(--rojo-luz); flex: none; }
+  .edc-op:has(input:focus-visible) { outline: 3px solid #fff; outline-offset: 2px; }
+  .edc-op.bien { border-color: #6fcf97; background: rgb(111 207 151 / .12); }
+  .edc-op.mal { border-color: var(--rojo-luz); background: rgb(226 72 77 / .14); }
+  .edc .btn { justify-self: start; }
+  .edc-res:empty { display: none; }
+  .edc-res { padding: .9rem 1.1rem; border-radius: var(--radio-m); background: rgb(255 255 255 / .08); line-height: 1.5; }
+  .edc-res.bien :global(strong) { color: #6fcf97; }
+  .edc-res.mal :global(strong) { color: #ff9a9d; }
+  :global(:root[data-contrast='high']) .edc { background: #000; }
+</style>

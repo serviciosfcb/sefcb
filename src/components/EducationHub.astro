@@ -1,0 +1,315 @@
+---
+// Centro de educación al paciente: entrada por situaciones, buscador, temas por categoría, herramientas,
+// glosario y programa de educación. Fichas en src/content/educacion; textos en src/data/educacion.json y glosario.json.
+import type { Lang } from '../i18n/content';
+import { links } from '../i18n/content';
+import { r, type RouteKey } from '../i18n/routes';
+import { getFichas, pathOfFicha, minutosLectura } from '../lib/educacion';
+import data from '../data/educacion.json';
+import glosario from '../data/glosario.json';
+import Icon from './Icon.astro';
+interface Props { lang: Lang }
+const { lang } = Astro.props;
+const en = lang === 'en';
+type Txt = { es: string; en: string };
+const tx = (x: Txt) => (en ? x.en || x.es : x.es);
+const fichas = await getFichas(lang);
+const sinTilde = (s: string) => s.normalize('NFD').replace(/[̀-ͯ]/g, '').toLowerCase();
+
+type Tarjeta = { href: string; titulo: string; texto: string; cat: string; meta: string; tipo: 'ficha' | 'pagina' | 'herramienta' };
+const tarjetas: Tarjeta[] = [
+  ...fichas.map((f) => ({
+    href: pathOfFicha(f),
+    titulo: f.data.title,
+    texto: f.data.summary,
+    cat: f.data.categoria,
+    tipo: (f.data.herramienta && f.data.herramienta !== 'pasos' ? 'herramienta' : 'ficha') as Tarjeta['tipo'],
+    meta: f.data.herramienta && f.data.herramienta !== 'pasos' ? (en ? 'Interactive tool' : 'Herramienta interactiva') : `${minutosLectura(f)} ${en ? 'min read' : 'min de lectura'}`,
+  })),
+  ...data.enlaces.map((e) => ({ href: r(lang, e.ruta as RouteKey), titulo: tx(e.titulo), texto: tx(e.texto), cat: e.categoria, tipo: 'pagina' as const, meta: en ? 'Page' : 'Página' })),
+];
+const orden = data.categorias.map((c) => c.id);
+tarjetas.sort((a, b) => orden.indexOf(a.cat) - orden.indexOf(b.cat));
+const categorias = data.categorias.filter((c) => tarjetas.some((x) => x.cat === c.id));
+const situaciones = data.situaciones.filter((s) => tarjetas.some((x) => s.categorias.includes(x.cat)));
+const herramientas = fichas.filter((f) => f.data.herramienta && f.data.herramienta !== 'pasos');
+const alarma = fichas.find((f) => f.data.herramienta === 'emergencia');
+const iconoHerr: Record<string, string> = { emergencia: 'alert', presion: 'gauge', imc: 'ruler', riesgo: 'target' };
+const terminos = glosario.terminos.map((g) => (en ? g.en : g.es)).sort((a, b) => a.termino.localeCompare(b.termino, lang));
+const p = data.programa;
+const t = en
+  ? { need: 'What do you need today?', explore: 'Explore the topics', search: 'Search a topic', searchPh: 'For example: Holter, salt, pressure', all: 'All', results: 'resources', result: 'resource', showing: 'Showing', clear: 'Clear filter', none: 'We could not find that topic. Try another word or write to us.', tools: 'Tools you can use online', toolsLead: 'They work in your browser. Nothing you type is saved on our servers.', gloss: 'Heart words in plain language', glossLead: 'Tap a word to see what it means.', ask: 'Ask on WhatsApp', alarmLink: 'Learn the warning signs', call: 'Call 123', filters: 'Filter by topic', policy: 'Our commitment' }
+  : { need: '¿Qué necesita hoy?', explore: 'Explore los temas', search: 'Busque un tema', searchPh: 'Por ejemplo: Holter, sal, presión', all: 'Todos', results: 'recursos', result: 'recurso', showing: 'Mostrando', clear: 'Quitar filtro', none: 'No encontramos ese tema. Pruebe con otra palabra o escríbanos.', tools: 'Herramientas para usar en línea', toolsLead: 'Funcionan en su navegador. Lo que escriba no se guarda en nuestros servidores.', gloss: 'Palabras del corazón en lenguaje sencillo', glossLead: 'Toque una palabra para ver qué significa.', ask: 'Preguntar por WhatsApp', alarmLink: 'Conozca las señales de alarma', call: 'Llamar al 123', filters: 'Filtrar por tema', policy: 'Nuestro compromiso' };
+---
+<div class="edh" data-edh>
+  <aside class="edh-urg" aria-label={en ? 'Emergency' : 'Emergencia'}>
+    <span class="edh-urg-ico" aria-hidden="true"><Icon name="alert" /></span>
+    <p>{tx(data.emergencia.texto)}</p>
+    <div class="edh-urg-acc">
+      <a class="btn btn-primario" href={`tel:${data.emergencia.telefono}`}><Icon name="phone" />{t.call}</a>
+      {alarma && <a class="enlace-flecha" href={pathOfFicha(alarma)}>{t.alarmLink}<Icon name="arrow" /></a>}
+    </div>
+  </aside>
+
+  <section class="edh-sec" aria-labelledby="edh-sit-t">
+    <h2 id="edh-sit-t" class="edh-h2">{t.need}</h2>
+    <ul class="edh-sit">
+      {situaciones.map((s, i) => (
+        <li>
+          <a class="edh-sit-btn" href={`?tema=${s.categorias[0]}#temas`} data-edh-sit={s.categorias.join(',')} data-edh-label={tx(s.titulo)} aria-pressed="false">
+            <span class="edh-sit-ico" aria-hidden="true"><Icon name={s.icono} /></span>
+            <span>{tx(s.titulo)}</span>
+            <Icon name="arrow" class="edh-sit-flecha" />
+          </a>
+        </li>
+      ))}
+    </ul>
+  </section>
+
+  <section class="edh-sec" id="temas" aria-labelledby="edh-temas-t">
+    <div class="edh-temas-cab">
+      <h2 id="edh-temas-t" class="edh-h2">{t.explore}</h2>
+      <div class="edh-buscar">
+        <label for="edh-q">{t.search}</label>
+        <div class="edh-buscar-in">
+          <Icon name="search" />
+          <input id="edh-q" type="search" placeholder={t.searchPh} autocomplete="off" data-edh-q />
+        </div>
+      </div>
+    </div>
+    <div class="edh-chips" role="group" aria-label={t.filters}>
+      <button type="button" aria-pressed="true" data-edh-cat="">{t.all}</button>
+      {categorias.map((c) => <button type="button" aria-pressed="false" data-edh-cat={c.id}><Icon name={c.icono} />{tx(c.nombre)}</button>)}
+    </div>
+    <p class="edh-estado" aria-live="polite" data-edh-estado data-uno={t.result} data-varios={t.results} data-mostrando={t.showing}>
+      <span data-edh-n>{tarjetas.length}</span> <span data-edh-u>{t.results}</span>
+      <button type="button" class="edh-quitar" hidden data-edh-quitar>{t.clear}</button>
+    </p>
+    <ul class="edh-lista">
+      {tarjetas.map((x) => {
+        const c = data.categorias.find((k) => k.id === x.cat);
+        return (
+          <li data-edh-item data-cat={x.cat} data-text={sinTilde(`${x.titulo} ${x.texto} ${c ? tx(c.nombre) : ''}`)}>
+            <a class:list={['edh-tarjeta', `tipo-${x.tipo}`]} href={x.href}>
+              <span class="edh-tarjeta-cat">{c && <Icon name={c.icono} />}{c ? tx(c.nombre) : ''}</span>
+              <strong>{x.titulo}</strong>
+              <span class="edh-tarjeta-txt">{x.texto}</span>
+              <span class="edh-tarjeta-meta">{x.tipo === 'herramienta' && <Icon name="target" />}{x.meta}<Icon name="arrow" /></span>
+            </a>
+          </li>
+        );
+      })}
+    </ul>
+    <p class="edh-vacio" hidden data-edh-vacio>{t.none} <a href={links.whatsapp} target="_blank" rel="noopener">{t.ask}</a></p>
+  </section>
+
+  {herramientas.length > 0 && (
+    <section class="edh-sec edh-herr oscuro" aria-labelledby="edh-herr-t">
+      <div class="edh-herr-cab">
+        <h2 id="edh-herr-t" class="edh-h2">{t.tools}</h2>
+        <p>{t.toolsLead}</p>
+      </div>
+      <ul class="edh-herr-lista">
+        {herramientas.map((f) => (
+          <li>
+            <a href={pathOfFicha(f)}>
+              <span class="edh-herr-ico" aria-hidden="true"><Icon name={iconoHerr[f.data.herramienta] ?? 'target'} /></span>
+              <strong>{f.data.title}</strong>
+              <span>{f.data.summary}</span>
+            </a>
+          </li>
+        ))}
+      </ul>
+    </section>
+  )}
+
+  <section class="edh-sec" aria-labelledby="edh-glos-t">
+    <h2 id="edh-glos-t" class="edh-h2">{t.gloss}</h2>
+    <p class="edh-lead">{t.glossLead}</p>
+    <ul class="edh-glos">
+      {terminos.map((g) => (
+        <li><details><summary>{g.termino}</summary><p>{g.definicion}</p></details></li>
+      ))}
+    </ul>
+  </section>
+
+  <section class="edh-sec edh-prog" aria-labelledby="edh-prog-t">
+    <div class="edh-prog-txt">
+      <h2 id="edh-prog-t" class="edh-h2">{tx(p.titulo)}</h2>
+      <p>{tx(p.texto)}</p>
+      <ul class="edh-act">{p.actividades.map((a) => <li><Icon name="check" />{tx(a)}</li>)}</ul>
+    </div>
+    <figure class="edh-politica">
+      <figcaption>{t.policy}</figcaption>
+      <blockquote><p>{tx(p.politica)}</p></blockquote>
+      <p class="edh-politica-fuente">{tx(p.politica_fuente)}</p>
+    </figure>
+  </section>
+</div>
+
+<script>
+  const box = document.querySelector<HTMLElement>('[data-edh]');
+  if (box) {
+    const q = box.querySelector<HTMLInputElement>('[data-edh-q]')!;
+    const chips = [...box.querySelectorAll<HTMLButtonElement>('[data-edh-cat]')];
+    const sits = [...box.querySelectorAll<HTMLAnchorElement>('[data-edh-sit]')];
+    const items = [...box.querySelectorAll<HTMLElement>('[data-edh-item]')];
+    const estado = box.querySelector<HTMLElement>('[data-edh-estado]')!;
+    const nEl = box.querySelector<HTMLElement>('[data-edh-n]')!;
+    const uEl = box.querySelector<HTMLElement>('[data-edh-u]')!;
+    const quitar = box.querySelector<HTMLButtonElement>('[data-edh-quitar]')!;
+    const vacio = box.querySelector<HTMLElement>('[data-edh-vacio]')!;
+    const norm = (s: string) => s.normalize('NFD').replace(/[\u0300-\u036f]/g, '').toLowerCase().trim();
+    const reduce = matchMedia('(prefers-reduced-motion: reduce)').matches || document.documentElement.dataset.motion === 'reduced';
+    let cats: string[] = [];
+    let sitSel: HTMLAnchorElement | null = null;
+
+    const aplicar = (actualizarUrl = true) => {
+      const palabras = norm(q.value).split(/\s+/).filter(Boolean);
+      let n = 0;
+      items.forEach((it) => {
+        const ok = (!cats.length || cats.includes(it.dataset.cat || '')) && palabras.every((p) => (it.dataset.text || '').includes(p));
+        it.hidden = !ok;
+        if (ok) n++;
+      });
+      nEl.textContent = String(n);
+      const etiqueta = sitSel?.dataset.edhLabel;
+      uEl.textContent = `${n === 1 ? estado.dataset.uno : estado.dataset.varios}${etiqueta ? ` · ${estado.dataset.mostrando}: ${etiqueta}` : ''}`;
+      quitar.hidden = !cats.length && !q.value;
+      vacio.hidden = n > 0;
+      chips.forEach((c) => c.setAttribute('aria-pressed', String(!sitSel && (cats.length ? cats.length === 1 && c.dataset.edhCat === cats[0] : c.dataset.edhCat === ''))));
+      sits.forEach((x) => x.setAttribute('aria-pressed', String(x === sitSel)));
+      if (actualizarUrl) {
+        const url = new URL(location.href);
+        if (cats.length === 1 && !sitSel) url.searchParams.set('tema', cats[0]); else url.searchParams.delete('tema');
+        history.replaceState(null, '', url);
+      }
+    };
+
+    chips.forEach((c) => c.addEventListener('click', () => {
+      sitSel = null;
+      cats = c.dataset.edhCat ? [c.dataset.edhCat] : [];
+      aplicar();
+    }));
+    sits.forEach((s) => s.addEventListener('click', (e) => {
+      e.preventDefault();
+      sitSel = s;
+      cats = (s.dataset.edhSit || '').split(',').filter(Boolean);
+      q.value = '';
+      aplicar();
+      document.getElementById('temas')?.scrollIntoView({ behavior: reduce ? 'auto' : 'smooth', block: 'start' });
+    }));
+    q.addEventListener('input', () => { if (sitSel) { sitSel = null; cats = []; } aplicar(false); });
+    quitar.addEventListener('click', () => {
+      sitSel = null; cats = []; q.value = '';
+      aplicar(); q.focus();
+    });
+
+    const inicial = new URL(location.href).searchParams.get('tema');
+    if (inicial && chips.some((c) => c.dataset.edhCat === inicial)) cats = [inicial];
+    aplicar(false);
+  }
+</script>
+
+<style>
+  .edh { display: grid; gap: clamp(3rem, 6vw, 4.5rem); }
+  .edh-sec { display: grid; gap: 1.3rem; }
+  .edh-h2 { font-size: var(--t-5); }
+  .edh-lead { color: var(--tinta-2); margin-top: -.6rem; }
+
+  .edh-urg { display: grid; grid-template-columns: auto minmax(0, 1fr) auto; align-items: center; gap: 1rem 1.3rem; padding: 1.1rem 1.4rem; border-radius: var(--radio-l); background: rgb(159 39 40 / .07); border: 1px solid rgb(159 39 40 / .25); }
+  .edh-urg-ico { width: 2.8rem; height: 2.8rem; border-radius: 50%; display: grid; place-items: center; background: var(--rojo); color: #fff; }
+  .edh-urg-ico :global(.icon) { width: 1.4rem; height: 1.4rem; }
+  .edh-urg p { font-weight: 700; line-height: 1.4; }
+  .edh-urg-acc { display: flex; flex-wrap: wrap; gap: .6rem 1.2rem; align-items: center; justify-content: flex-end; }
+  .edh-urg .btn :global(.icon) { width: 1.05rem; height: 1.05rem; }
+
+  .edh-sit { list-style: none; display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, 13rem), 1fr)); gap: .8rem; }
+  .edh-sit-btn { position: relative; display: grid; gap: 1rem; align-content: space-between; height: 100%; min-height: 9rem; padding: 1.2rem 1.25rem; border-radius: var(--radio-l); background: var(--niebla); color: var(--tinta); text-decoration: none; font-family: var(--display); font-weight: 650; font-size: var(--t-2); line-height: 1.2; border: 2px solid transparent; transition: background-color .35s, border-color .35s, transform .5s var(--ease), color .35s; }
+  .edh-sit-btn:hover { transform: translateY(-3px); border-color: rgb(159 39 40 / .3); }
+  .edh-sit-btn[aria-pressed='true'] { background: var(--carbon); color: #fff; }
+  .edh-sit-btn[aria-pressed='true'] .edh-sit-ico { background: var(--rojo); color: #fff; }
+  .edh-sit-ico { width: 2.8rem; height: 2.8rem; border-radius: 50%; display: grid; place-items: center; background: var(--papel); color: var(--rojo); transition: background-color .35s, color .35s; }
+  .edh-sit-ico :global(.icon) { width: 1.4rem; height: 1.4rem; }
+  .edh-sit-btn :global(.edh-sit-flecha) { position: absolute; right: 1.1rem; top: 1.2rem; width: 1.1rem; height: 1.1rem; opacity: .5; transition: transform .4s var(--ease), opacity .3s; }
+  .edh-sit-btn:hover :global(.edh-sit-flecha) { transform: translateX(3px); opacity: 1; }
+
+  .edh-temas-cab { display: flex; flex-wrap: wrap; justify-content: space-between; align-items: end; gap: 1rem 2rem; }
+  .edh-buscar { display: grid; gap: .35rem; width: min(100%, 24rem); }
+  .edh-buscar label { font-weight: 700; font-size: var(--t-0); }
+  .edh-buscar-in { display: flex; align-items: center; gap: .6rem; padding: 0 1rem; min-height: 3.2rem; border-radius: 999px; border: 1px solid #b9b7b2; background: var(--papel); }
+  .edh-buscar-in:focus-within { outline: 3px solid var(--rojo); outline-offset: 2px; }
+  .edh-buscar-in :global(.icon) { width: 1.15rem; height: 1.15rem; color: var(--tinta-2); flex: none; }
+  .edh-buscar-in input { flex: 1; min-width: 0; border: 0; background: transparent; font: inherit; font-size: 1.05rem; outline: none; min-height: 3rem; }
+  .edh-chips { display: flex; flex-wrap: wrap; gap: .5rem; }
+  .edh-chips button { display: inline-flex; align-items: center; gap: .45rem; min-height: 2.75rem; padding: .45rem 1rem; border-radius: 999px; border: 1px solid var(--linea); background: var(--papel); font: inherit; font-weight: 600; font-size: var(--t-0); color: var(--tinta); cursor: pointer; transition: background-color .3s, border-color .3s, color .3s; }
+  .edh-chips button:hover { border-color: var(--rojo); }
+  .edh-chips button[aria-pressed='true'] { background: var(--rojo); border-color: var(--rojo); color: #fff; }
+  .edh-chips :global(.icon) { width: 1rem; height: 1rem; }
+  .edh-estado { display: flex; flex-wrap: wrap; gap: .3rem 1rem; align-items: baseline; color: var(--tinta-2); font-size: var(--t-0); }
+  .edh-estado [data-edh-n] { font-weight: 800; color: var(--tinta); }
+  .edh-quitar { border: 0; background: none; padding: .3rem 0; font: inherit; font-weight: 700; color: var(--rojo); text-decoration: underline; text-underline-offset: .2em; cursor: pointer; }
+  .edh-quitar[hidden] { display: none; }
+
+  .edh-lista { list-style: none; display: grid; grid-template-columns: repeat(auto-fill, minmax(min(100%, 17rem), 1fr)); gap: 1rem; }
+  .edh-lista li[hidden] { display: none; }
+  .edh-tarjeta { display: grid; grid-template-rows: auto auto 1fr auto; gap: .6rem; height: 100%; padding: 1.3rem 1.4rem 1.2rem; border-radius: var(--radio-m); border: 1px solid var(--linea); background: var(--papel); color: var(--tinta); text-decoration: none; transition: border-color .3s, box-shadow .4s, transform .5s var(--ease); }
+  .edh-tarjeta:hover { border-color: rgb(159 39 40 / .4); box-shadow: 0 18px 40px -28px rgb(28 26 25 / .45); transform: translateY(-3px); }
+  .edh-tarjeta-cat { display: inline-flex; align-items: center; gap: .45rem; font-size: .82rem; font-weight: 700; color: var(--rojo); }
+  .edh-tarjeta-cat :global(.icon) { width: 1rem; height: 1rem; }
+  .edh-tarjeta strong { font-family: var(--display); font-size: var(--t-2); line-height: 1.25; }
+  .edh-tarjeta-txt { font-size: var(--t-0); color: var(--tinta-2); line-height: 1.45; }
+  .edh-tarjeta-meta { display: inline-flex; align-items: center; gap: .4rem; font-size: .85rem; font-weight: 700; color: var(--tinta-2); padding-top: .6rem; border-top: 1px solid var(--linea); }
+  .edh-tarjeta-meta :global(.icon) { width: 1rem; height: 1rem; }
+  .edh-tarjeta-meta :global(.icon-arrow) { margin-left: auto; color: var(--rojo); transition: transform .4s var(--ease); }
+  .edh-tarjeta:hover .edh-tarjeta-meta :global(.icon-arrow) { transform: translateX(3px); }
+  .tipo-herramienta { background: linear-gradient(160deg, var(--rojo-tinte), var(--papel) 55%); }
+  .tipo-herramienta .edh-tarjeta-meta { color: var(--rojo); }
+  .edh-vacio { padding: 1.2rem 1.4rem; border-radius: var(--radio-m); background: var(--niebla); }
+  .edh-vacio[hidden] { display: none; }
+
+  .edh-herr { padding: clamp(1.6rem, 4vw, 2.8rem); border-radius: var(--radio-xl); background: var(--carbon); position: relative; overflow: hidden; isolation: isolate; }
+  .edh-herr::before { content: ''; position: absolute; inset: -40% -10% auto auto; width: 30rem; height: 30rem; border-radius: 50%; background: radial-gradient(circle, rgb(159 39 40 / .4), transparent 65%); z-index: -1; }
+  .edh-herr-cab { display: grid; gap: .4rem; }
+  .edh-herr h2 { color: #fff; }
+  .edh-herr-cab p { color: var(--sobre-oscuro-2); }
+  .edh-herr-lista { list-style: none; display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, 14rem), 1fr)); gap: .9rem; }
+  .edh-herr-lista a { display: grid; gap: .6rem; align-content: start; height: 100%; padding: 1.2rem; border-radius: var(--radio-m); background: rgb(255 255 255 / .05); border: 1px solid rgb(255 255 255 / .12); color: var(--sobre-oscuro); text-decoration: none; transition: background-color .3s, border-color .3s, transform .5s var(--ease); }
+  .edh-herr-lista a:hover { background: rgb(255 255 255 / .1); border-color: rgb(255 255 255 / .3); transform: translateY(-3px); }
+  .edh-herr-lista strong { color: #fff; font-family: var(--display); font-size: var(--t-2); line-height: 1.25; }
+  .edh-herr-lista span:last-child { font-size: var(--t-0); color: var(--sobre-oscuro-2); line-height: 1.45; }
+  .edh-herr-ico { width: 2.6rem; height: 2.6rem; border-radius: 50%; display: grid; place-items: center; background: var(--rojo); color: #fff; }
+  .edh-herr-ico :global(.icon) { width: 1.3rem; height: 1.3rem; }
+
+  .edh-glos { list-style: none; display: grid; grid-template-columns: repeat(auto-fill, minmax(min(100%, 16rem), 1fr)); gap: .5rem; }
+  .edh-glos details { border-radius: var(--radio-s); background: var(--niebla); }
+  .edh-glos summary { display: flex; align-items: center; justify-content: space-between; gap: .6rem; min-height: 3rem; padding: .5rem 1rem; font-weight: 700; cursor: pointer; list-style: none; }
+  .edh-glos summary::-webkit-details-marker { display: none; }
+  .edh-glos summary::after { content: '+'; font-size: 1.3rem; font-weight: 400; color: var(--rojo); transition: transform .3s; }
+  .edh-glos details[open] summary::after { transform: rotate(45deg); }
+  .edh-glos summary:focus-visible { outline: 3px solid var(--rojo); outline-offset: 2px; border-radius: var(--radio-s); }
+  .edh-glos details p { padding: 0 1rem 1rem; font-size: var(--t-0); color: var(--tinta-2); line-height: 1.5; }
+
+  .edh-prog { grid-template-columns: minmax(0, 1.2fr) minmax(0, .8fr); gap: clamp(1.5rem, 4vw, 3.5rem); align-items: start; padding-top: clamp(2rem, 4vw, 3rem); border-top: 1px solid var(--linea); }
+  .edh-prog-txt { display: grid; gap: 1rem; }
+  .edh-prog-txt > p { color: var(--tinta-2); line-height: 1.6; }
+  .edh-act { list-style: none; display: grid; gap: .5rem; }
+  .edh-act li { display: flex; gap: .6rem; align-items: flex-start; }
+  .edh-act :global(.icon) { width: 1.1rem; height: 1.1rem; color: var(--rojo); stroke-width: 2.4; flex: none; margin-top: .2rem; }
+  .edh-politica { display: grid; gap: .8rem; padding: 1.5rem 1.6rem; border-radius: var(--radio-l); background: var(--niebla); border-left: 4px solid var(--rojo); margin: 0; }
+  .edh-politica figcaption { font-size: .82rem; font-weight: 700; letter-spacing: .06em; text-transform: uppercase; color: var(--rojo); }
+  .edh-politica blockquote { margin: 0; font-family: var(--display); font-size: var(--t-2); line-height: 1.4; }
+  .edh-politica-fuente { font-size: var(--t-0); color: var(--tinta-2); }
+
+  @media (max-width: 760px) {
+    .edh-urg { grid-template-columns: auto minmax(0, 1fr); }
+    .edh-urg-acc { grid-column: 1 / -1; justify-content: flex-start; }
+    .edh-prog { grid-template-columns: minmax(0, 1fr); }
+  }
+  @media (max-width: 520px) {
+    .edh-sit { grid-template-columns: minmax(0, 1fr); }
+    .edh-sit-btn { min-height: 0; grid-template-columns: auto minmax(0, 1fr); align-items: center; padding-right: 2.6rem; }
+    .edh-sit-btn :global(.edh-sit-flecha) { top: 50%; margin-top: -.55rem; }
+  }
+  :global(:root[data-contrast='high']) .edh-herr { background: #000; }
+</style>

@@ -1,0 +1,72 @@
+---
+// ¿Es una emergencia? La persona marca las señales que tiene ahora; si marca cualquiera, la indicación es llamar al 123.
+// No guarda ni envía nada.
+import type { Lang } from '../../i18n/content';
+import Icon from '../Icon.astro';
+interface Props { lang: Lang; titulo?: string; items: string[] }
+const { lang, titulo, items } = Astro.props;
+const en = lang === 'en';
+const t = en
+  ? { title: 'Is it an emergency?', hint: titulo || 'Tick what you or the other person has right now.', idle: 'If you tick any of these signs, it is an emergency. If you have another symptom that worries you, or you are not sure, call 123 too.', yes: 'This is an emergency. Call 123 (Colombia\'s emergency number) now or go to the nearest emergency room. Do not wait to see if it goes away.', call: 'Call 123', note: 'Nothing you tick is saved or sent.' }
+  : { title: '¿Es una emergencia?', hint: titulo || 'Marque lo que usted o la otra persona tiene ahora.', idle: 'Si marca cualquiera de estas señales, es una emergencia. Si tiene otro síntoma que le preocupa o no está seguro, llame también al 123.', yes: 'Es una emergencia. Llame ya al 123 o vaya al servicio de urgencias más cercano. No espere a ver si se pasa.', call: 'Llamar al 123', note: 'Lo que marque no se guarda ni se envía.' };
+---
+<section class="ede" aria-labelledby="ede-t" data-ede data-idle={t.idle} data-yes={t.yes}>
+  <div class="ede-cab">
+    <span class="ede-ico" aria-hidden="true"><Icon name="alert" /></span>
+    <h2 id="ede-t">{t.title}</h2>
+  </div>
+  <fieldset class="ede-campo">
+    <legend>{t.hint}</legend>
+    <ul class="ede-lista">
+      {items.map((x, i) => (
+        <li>
+          <input type="checkbox" id={`ede-${i}`} data-ede-item />
+          <label for={`ede-${i}`}>{x}</label>
+        </li>
+      ))}
+    </ul>
+  </fieldset>
+  <div class="ede-res" data-ede-res aria-live="polite"><p>{t.idle}</p></div>
+  <a class="btn btn-primario ede-llamar" href="tel:123"><Icon name="phone" />{t.call}</a>
+  <p class="ede-nota">{t.note}</p>
+</section>
+
+<script>
+  document.querySelectorAll<HTMLElement>('[data-ede]').forEach((box) => {
+    const res = box.querySelector<HTMLElement>('[data-ede-res]');
+    const items = [...box.querySelectorAll<HTMLInputElement>('[data-ede-item]')];
+    if (!res) return;
+    const update = () => {
+      const on = items.some((i) => i.checked);
+      box.classList.toggle('alerta', on);
+      const p = document.createElement('p');
+      p.textContent = on ? box.dataset.yes ?? '' : box.dataset.idle ?? '';
+      res.replaceChildren(p);
+    };
+    items.forEach((i) => i.addEventListener('change', update));
+  });
+</script>
+
+<style>
+  .ede { display: grid; gap: 1.1rem; padding: clamp(1.3rem, 3vw, 2rem); border-radius: var(--radio-l); border: 2px solid rgb(159 39 40 / .25); background: rgb(159 39 40 / .04); transition: border-color .3s, background-color .3s; }
+  .ede.alerta { border-color: var(--rojo); background: rgb(159 39 40 / .08); }
+  .ede-cab { display: flex; align-items: center; gap: .8rem; }
+  .ede-cab h2 { font-size: var(--t-4); }
+  .ede-ico { width: 2.8rem; height: 2.8rem; border-radius: 50%; display: grid; place-items: center; background: var(--rojo); color: #fff; flex: none; }
+  .ede-ico :global(.icon) { width: 1.4rem; height: 1.4rem; }
+  .ede-campo { border: 0; padding: 0; margin: 0; display: grid; gap: .8rem; min-width: 0; }
+  .ede-campo legend { font-weight: 700; padding: 0; margin-bottom: .8rem; }
+  .ede-lista { list-style: none; display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, 18rem), 1fr)); gap: .6rem; }
+  .ede-lista li { position: relative; }
+  .ede-lista input { position: absolute; left: 1rem; top: 1.05rem; width: 1.3rem; height: 1.3rem; accent-color: var(--rojo); margin: 0; }
+  .ede-lista label { display: block; height: 100%; padding: .85rem 1rem .85rem 3rem; border-radius: var(--radio-m); background: var(--papel); border: 1px solid var(--linea); line-height: 1.45; cursor: pointer; transition: border-color .3s, background-color .3s; }
+  .ede-lista input:checked + label { border-color: var(--rojo); background: var(--rojo-tinte); font-weight: 600; }
+  .ede-lista input:focus-visible + label { outline: 3px solid var(--rojo); outline-offset: 2px; }
+  .ede-res :global(p) { padding: .9rem 1.1rem; border-radius: var(--radio-m); background: var(--papel); color: var(--tinta-2); }
+  .ede.alerta .ede-res :global(p) { background: var(--rojo); color: #fff; font-weight: 700; font-size: var(--t-2); line-height: 1.4; }
+  .ede-llamar { justify-self: start; min-height: 3.4rem; padding-inline: 1.6rem; font-size: 1.05rem; }
+  .ede-llamar :global(.icon) { width: 1.15rem; height: 1.15rem; }
+  .ede-nota { font-size: var(--t-0); color: var(--tinta-2); }
+  @media (max-width: 480px) { .ede-llamar { justify-self: stretch; justify-content: center; } }
+  :global(:root[data-contrast='high']) .ede.alerta .ede-res :global(p) { background: #000; }
+</style>

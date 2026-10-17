@@ -1,0 +1,307 @@
+---
+// Ficha de educación al paciente: texto corto, herramienta interactiva, señales de alarma, preguntas para el médico,
+// comprobación y fuentes. Los datos salen de src/content/educacion (editables en el panel).
+import type { Lang } from '../i18n/content';
+import { content, links } from '../i18n/content';
+import { render } from 'astro:content';
+import { r } from '../i18n/routes';
+import { type Ficha, getFichas, pathOfFicha, categoria, minutosLectura } from '../lib/educacion';
+import { getPaginas, pathOfPagina, getServicios, pathOfServicio } from '../lib/paginas';
+import glosario from '../data/glosario.json';
+import Base from '../layouts/Base.astro';
+import PageHero from './PageHero.astro';
+import CtaBand from './CtaBand.astro';
+import Icon from './Icon.astro';
+import ExamSteps from './edu/ExamSteps.astro';
+import EmergencyCheck from './edu/EmergencyCheck.astro';
+import BpLog from './edu/BpLog.astro';
+import BmiWaist from './edu/BmiWaist.astro';
+import RiskCheck from './edu/RiskCheck.astro';
+import QuestionList from './edu/QuestionList.astro';
+import QuickCheck from './edu/QuickCheck.astro';
+interface Props { f: Ficha; alt: string; lang: Lang }
+const { f, alt, lang } = Astro.props;
+const en = lang === 'en';
+const d = f.data;
+const t0 = content[lang].pages;
+const path = pathOfFicha(f);
+const { Content } = await render(f);
+const cat = categoria(d.categoria);
+const catNombre = cat ? (en ? cat.nombre.en : cat.nombre.es) : '';
+const min = minutosLectura(f);
+
+const paginas = await getPaginas(lang);
+const pacientes = paginas.find((p) => p.data.key === 'pacientes');
+const hub = paginas.find((p) => p.data.key === 'educacion');
+const crumbs = [{ label: t0.home, href: r(lang, 'inicio') }];
+if (pacientes) crumbs.push({ label: pacientes.data.title, href: pathOfPagina(pacientes) });
+if (hub) crumbs.push({ label: hub.data.title, href: pathOfPagina(hub) });
+crumbs.push({ label: d.title });
+
+const servicios = (await getServicios(lang)).filter((s) => d.servicios.includes(s.data.key));
+const relacionadas = (await getFichas(lang)).filter((x) => x.id !== f.id && x.data.categoria === d.categoria).slice(0, 3);
+const otras = relacionadas.length < 3 ? (await getFichas(lang)).filter((x) => x.id !== f.id && x.data.categoria !== d.categoria && x.data.destacado).slice(0, 3 - relacionadas.length) : [];
+const masFichas = [...relacionadas, ...otras];
+
+const hubHref = r(lang, 'educacion');
+const absUrl = `https://sefcb.co${path}`;
+const share = `https://wa.me/?text=${encodeURIComponent(`${d.title}: ${absUrl}`)}`;
+const dudas = `${links.whatsapp}?text=${encodeURIComponent(en ? `Hello, I have a question about "${d.title}": ` : `Hola, tengo una pregunta sobre «${d.title}»: `)}`;
+const fmtFecha = (s: string) => {
+  const dt = new Date(`${s}T12:00:00`);
+  return isNaN(dt.getTime()) ? s : dt.toLocaleDateString(en ? 'en-US' : 'es-CO', { day: 'numeric', month: 'long', year: 'numeric' });
+};
+const glosas = glosario.terminos.map((g) => (en ? g.en : g.es));
+const t = en
+  ? { reading: 'min read', tool: 'Interactive tool', topic: 'Topic', print: 'Print this page', share: 'Share on WhatsApp', services: 'Related services', doubts: 'Still have questions?', doubtsText: 'Write to us and our team will guide you. If you have warning signs, call 123.', ask: 'Ask on WhatsApp', book: 'Book an appointment', reviewed: 'Reviewed by', on: 'on', next: 'Next review', sources: 'Sources', more: 'Keep learning', all: 'See all topics', opens: 'opens in a new tab', glossLabel: 'What does this word mean?' }
+  : { reading: 'min de lectura', tool: 'Herramienta interactiva', topic: 'Tema', print: 'Imprimir esta ficha', share: 'Compartir por WhatsApp', services: 'Servicios relacionados', doubts: '¿Le quedó alguna duda?', doubtsText: 'Escríbanos y nuestro equipo le orienta. Si tiene señales de alarma, llame al 123.', ask: 'Preguntar por WhatsApp', book: 'Pedir una cita', reviewed: 'Revisado por', on: 'el', next: 'Próxima revisión', sources: 'Fuentes', more: 'Siga aprendiendo', all: 'Ver todos los temas', opens: 'se abre en otra pestaña', glossLabel: '¿Qué significa esta palabra?' };
+const ld = {
+  '@context': 'https://schema.org',
+  '@type': 'MedicalWebPage',
+  name: d.title,
+  description: d.summary,
+  inLanguage: lang,
+  url: absUrl,
+  audience: { '@type': 'PeopleAudience', audienceType: 'Patient' },
+  publisher: { '@type': 'MedicalClinic', name: 'Servicios Especializados del Corazón', url: 'https://sefcb.co' },
+  ...(d.fecha_revision ? { lastReviewed: d.fecha_revision } : {}),
+  ...(d.revisado_por ? { reviewedBy: { '@type': 'Person', name: d.revisado_por } } : {}),
+};
+const herramientaPrimero = d.herramienta === 'emergencia';
+const alarma = d.alarma && d.alarma.items.length ? d.alarma : undefined;
+const lista = d.lista && d.lista.items.length ? d.lista : undefined;
+const comprobacion = d.comprobacion && d.comprobacion.pregunta && d.comprobacion.opciones.length >= 2 ? d.comprobacion : undefined;
+---
+<Base lang={lang} title={d.title} description={d.summary} path={path} altPath={alt} type="article">
+  <script slot="head" type="application/ld+json" set:html={JSON.stringify(ld)} />
+  <PageHero title={d.title} lead={d.summary} crumbs={crumbs} crumbsLabel={t0.crumbs} meta={catNombre} lang={lang} />
+
+  <div class="interior seccion edf">
+    <div class="contenedor edf-grid">
+      <article class="edf-cuerpo">
+        {herramientaPrimero && alarma && <EmergencyCheck lang={lang} titulo={alarma.titulo} items={alarma.items} />}
+        <div class="prosa" data-glosario data-reveal><Content /></div>
+
+        {d.herramienta === 'pasos' && <ExamSteps lang={lang} prepId={d.prep} pasos={d.pasos} />}
+        {d.herramienta === 'presion' && <BpLog lang={lang} />}
+        {d.herramienta === 'imc' && <BmiWaist lang={lang} />}
+        {d.herramienta === 'riesgo' && lista && <RiskCheck lang={lang} titulo={lista.titulo} items={lista.items} />}
+
+        {!herramientaPrimero && alarma && (
+          <aside class="edf-alarma" aria-labelledby="edf-alarma-t">
+            <span class="edf-alarma-ico" aria-hidden="true"><Icon name="alert" /></span>
+            <div>
+              <h2 id="edf-alarma-t">{alarma.titulo || (en ? 'Seek help right away' : 'Busque ayuda de inmediato')}</h2>
+              <ul>{alarma.items.map((x) => <li>{x}</li>)}</ul>
+              <a class="btn btn-primario" href="tel:123"><Icon name="phone" />{en ? 'Call 123' : 'Llamar al 123'}</a>
+            </div>
+          </aside>
+        )}
+
+        {d.video && (
+          <div class="edf-video">
+            <iframe src={d.video.replace('watch?v=', 'embed/').replace('youtube.com', 'youtube-nocookie.com')} title={d.title} loading="lazy" allow="accelerometer; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+          </div>
+        )}
+
+        {d.preguntas.length > 0 && <QuestionList lang={lang} preguntas={d.preguntas} titulo={d.title} />}
+        {comprobacion && <QuickCheck lang={lang} {...comprobacion} />}
+
+        <aside class="edf-dudas" aria-labelledby="edf-dudas-t">
+          <h2 id="edf-dudas-t">{t.doubts}</h2>
+          <p>{t.doubtsText}</p>
+          <div class="edf-botones">
+            <a class="btn btn-primario" href={dudas} target="_blank" rel="noopener"><Icon name="whatsapp" />{t.ask}<span class="visualmente-oculto"> ({t.opens})</span></a>
+            <a class="btn btn-borde" href={r(lang, 'cita')}>{t.book}</a>
+          </div>
+        </aside>
+
+        {(d.revisado_por || d.fuentes.length > 0) && (
+          <footer class="edf-pie">
+            {d.revisado_por && (
+              <p>{t.reviewed} {d.revisado_por}{d.fecha_revision && <> {t.on} {fmtFecha(d.fecha_revision)}</>}.{d.proxima_revision && <> {t.next}: {fmtFecha(d.proxima_revision)}.</>}</p>
+            )}
+            {d.fuentes.length > 0 && (
+              <div>
+                <h2>{t.sources}</h2>
+                <ul>
+                  {d.fuentes.map((x) => <li>{x.url ? <a href={x.url} target="_blank" rel="noopener">{x.texto}<span class="visualmente-oculto"> ({t.opens})</span></a> : x.texto}</li>)}
+                </ul>
+              </div>
+            )}
+          </footer>
+        )}
+      </article>
+
+      <aside class="edf-lateral">
+        <div class="caja">
+          <p class="edf-meta-cat">
+            {cat && <span class="edf-cat-ico" aria-hidden="true"><Icon name={cat.icono} /></span>}
+            <span><span class="edf-etq">{t.topic}</span><a href={`${hubHref}?tema=${d.categoria}#temas`}>{catNombre}</a></span>
+          </p>
+          <p class="edf-meta">{d.herramienta && d.herramienta !== 'pasos' ? t.tool : `${min} ${t.reading}`}</p>
+          <div class="edf-acc">
+            <button class="edf-acc-btn" type="button" data-imprimir><Icon name="print" />{t.print}</button>
+            <a class="edf-acc-btn" href={share} target="_blank" rel="noopener"><Icon name="share" />{t.share}<span class="visualmente-oculto"> ({t.opens})</span></a>
+          </div>
+        </div>
+        {servicios.length > 0 && (
+          <div class="caja">
+            <h2>{t.services}</h2>
+            <ul class="edf-serv">
+              {servicios.map((s) => <li><a class="enlace-flecha" href={pathOfServicio(s)}>{s.data.title}<Icon name="arrow" /></a></li>)}
+            </ul>
+          </div>
+        )}
+      </aside>
+    </div>
+  </div>
+
+  {masFichas.length > 0 && (
+    <section class="edf-mas seccion" aria-labelledby="edf-mas-t">
+      <div class="contenedor">
+        <div class="edf-mas-cab">
+          <h2 id="edf-mas-t">{t.more}</h2>
+          <a class="enlace-flecha" href={hubHref}>{t.all}<Icon name="arrow" /></a>
+        </div>
+        <ul class="edf-mas-lista">
+          {masFichas.map((x) => {
+            const c = categoria(x.data.categoria);
+            return (
+              <li>
+                <a class="edf-tarjeta" href={pathOfFicha(x)}>
+                  <span class="edf-tarjeta-cat">{c && <Icon name={c.icono} />}{c ? (en ? c.nombre.en : c.nombre.es) : ''}</span>
+                  <strong>{x.data.title}</strong>
+                  <span class="edf-tarjeta-txt">{x.data.summary}</span>
+                </a>
+              </li>
+            );
+          })}
+        </ul>
+      </div>
+    </section>
+  )}
+
+  <CtaBand lang={lang} />
+  <script type="application/json" id="glosario-datos" set:html={JSON.stringify({ label: t.glossLabel, terminos: glosas })} />
+</Base>
+
+<script>
+  // Imprimir la ficha completa
+  document.querySelector('[data-imprimir]')?.addEventListener('click', () => window.print());
+
+  // Glosario: la primera vez que aparece una palabra difícil en el texto, se convierte en un botón
+  // que muestra su significado justo al lado. Sin JavaScript, el texto queda igual.
+  type Termino = { termino: string; formas: string[]; definicion: string };
+  const datos = document.getElementById('glosario-datos');
+  const cont = document.querySelector<HTMLElement>('[data-glosario]');
+  if (datos && cont) {
+    const { label, terminos } = JSON.parse(datos.textContent || '{}') as { label: string; terminos: Termino[] };
+    const escapar = (s: string) => s.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
+    const usados = new Set<string>();
+    let n = 0;
+    const formas = terminos.flatMap((t) => t.formas.map((f) => ({ f, t }))).sort((a, b) => b.f.length - a.f.length);
+    for (const { f, t } of formas) {
+      if (usados.has(t.termino)) continue;
+      const re = new RegExp(`(^|[^\\p{L}])(${escapar(f)})(?![\\p{L}])`, 'iu');
+      const walker = document.createTreeWalker(cont, NodeFilter.SHOW_TEXT, {
+        acceptNode: (node) => (node.parentElement?.closest('a, button, h1, h2, h3, h4, .glosa, code') ? NodeFilter.FILTER_REJECT : NodeFilter.FILTER_ACCEPT),
+      });
+      let node: Node | null;
+      while ((node = walker.nextNode())) {
+        const m = re.exec(node.nodeValue || '');
+        if (!m) continue;
+        const inicio = m.index + m[1].length;
+        const txt = node as Text;
+        const despues = txt.splitText(inicio);
+        despues.splitText(m[2].length);
+        const id = `glosa-${++n}`;
+        const span = document.createElement('span'); span.className = 'glosa';
+        const btn = document.createElement('button');
+        btn.type = 'button'; btn.className = 'glosa-btn'; btn.textContent = despues.nodeValue;
+        btn.setAttribute('aria-expanded', 'false'); btn.setAttribute('aria-controls', id); btn.title = label;
+        const def = document.createElement('span');
+        def.className = 'glosa-def'; def.id = id; def.hidden = true; def.textContent = t.definicion;
+        btn.addEventListener('click', () => { const abierto = btn.getAttribute('aria-expanded') === 'true'; btn.setAttribute('aria-expanded', String(!abierto)); def.hidden = abierto; });
+        btn.addEventListener('keydown', (e) => { if (e.key === 'Escape') { btn.setAttribute('aria-expanded', 'false'); def.hidden = true; } });
+        span.append(btn, def);
+        despues.replaceWith(span);
+        usados.add(t.termino);
+        break;
+      }
+    }
+  }
+</script>
+
+<style>
+  .edf { background: var(--papel); padding-top: clamp(3rem, 5vw, 4.5rem); }
+  .edf-grid { display: grid; grid-template-columns: minmax(0, 1fr) 19rem; gap: clamp(2rem, 5vw, 5rem); align-items: start; }
+  .edf-cuerpo { display: grid; gap: 2.2rem; min-width: 0; }
+  .edf-cuerpo > .prosa { max-width: 46rem; }
+
+  .edf-cuerpo :global(.glosa-btn) { display: inline; padding: 0; border: 0; background: none; font: inherit; color: inherit; cursor: help; text-decoration: underline dotted var(--rojo) 2px; text-underline-offset: .22em; }
+  .edf-cuerpo :global(.glosa-btn[aria-expanded='true']) { color: var(--rojo); }
+  .edf-cuerpo :global(.glosa-btn:focus-visible) { outline: 3px solid var(--rojo); outline-offset: 2px; border-radius: 3px; }
+  .edf-cuerpo :global(.glosa-def) { display: inline; margin: 0 .25em; padding: .1em .45em; border-radius: 6px; background: var(--rojo-tinte); font-size: .92em; line-height: 1.5; box-decoration-break: clone; -webkit-box-decoration-break: clone; }
+  .edf-cuerpo :global(.glosa-def[hidden]) { display: none; }
+
+  .edf-alarma { display: grid; grid-template-columns: auto minmax(0, 1fr); gap: 1rem 1.2rem; padding: clamp(1.3rem, 3vw, 1.8rem); border-radius: var(--radio-l); background: rgb(159 39 40 / .06); border: 1px solid rgb(159 39 40 / .25); }
+  .edf-alarma-ico { width: 2.8rem; height: 2.8rem; border-radius: 50%; display: grid; place-items: center; background: var(--rojo); color: #fff; }
+  .edf-alarma-ico :global(.icon) { width: 1.4rem; height: 1.4rem; }
+  .edf-alarma > div { display: grid; gap: .8rem; }
+  .edf-alarma h2 { font-size: var(--t-3); }
+  .edf-alarma ul { display: grid; gap: .45rem; padding-left: 1.1rem; line-height: 1.5; }
+  .edf-alarma .btn { justify-self: start; }
+  .edf-alarma .btn :global(.icon) { width: 1.05rem; height: 1.05rem; }
+
+  .edf-video { position: relative; aspect-ratio: 16 / 9; border-radius: var(--radio-l); overflow: hidden; background: var(--carbon); }
+  .edf-video iframe { position: absolute; inset: 0; width: 100%; height: 100%; border: 0; }
+
+  .edf-dudas { display: grid; gap: .7rem; padding: clamp(1.3rem, 3vw, 1.8rem); border-radius: var(--radio-l); background: var(--niebla); }
+  .edf-dudas h2 { font-size: var(--t-3); }
+  .edf-dudas p { color: var(--tinta-2); }
+  .edf-botones { display: flex; flex-wrap: wrap; gap: .7rem; }
+  .edf-botones :global(.icon) { width: 1.05rem; height: 1.05rem; }
+
+  .edf-pie { display: grid; gap: 1rem; padding-top: 1.4rem; border-top: 1px solid var(--linea); font-size: var(--t-0); color: var(--tinta-2); }
+  .edf-pie h2 { font-size: var(--t-1); color: var(--tinta); margin-bottom: .4rem; }
+  .edf-pie ul { display: grid; gap: .35rem; padding-left: 1.1rem; }
+  .edf-pie a { color: var(--tinta); }
+
+  .edf-lateral { position: sticky; top: calc(var(--alto-cabecera) + 1.5rem + env(safe-area-inset-top, 0px)); display: grid; gap: 1rem; }
+  .edf-lateral .caja { padding: 1.4rem; border-radius: var(--radio-m); background: var(--niebla); display: grid; gap: .8rem; font-size: var(--t-0); }
+  .edf-lateral h2 { font-size: var(--t-2); }
+  .edf-meta-cat { display: flex; gap: .75rem; align-items: center; }
+  .edf-meta-cat > span:last-child { display: grid; }
+  .edf-etq { font-size: .8rem; color: var(--tinta-2); text-transform: uppercase; letter-spacing: .06em; }
+  .edf-meta-cat a { font-weight: 700; color: var(--tinta); font-size: var(--t-1); }
+  .edf-cat-ico { width: 2.6rem; height: 2.6rem; border-radius: 50%; display: grid; place-items: center; background: var(--papel); color: var(--rojo); flex: none; }
+  .edf-cat-ico :global(.icon) { width: 1.3rem; height: 1.3rem; }
+  .edf-meta { color: var(--tinta-2); }
+  .edf-acc { display: grid; gap: .3rem; padding-top: .6rem; border-top: 1px solid var(--linea); }
+  .edf-acc-btn { display: inline-flex; align-items: center; gap: .55rem; min-height: 2.6rem; padding: 0; border: 0; background: none; font: inherit; font-weight: 600; color: var(--tinta); text-decoration: none; cursor: pointer; justify-self: start; }
+  .edf-acc-btn:hover { color: var(--rojo); }
+  .edf-acc-btn :global(.icon) { width: 1.1rem; height: 1.1rem; color: var(--rojo); }
+  .edf-serv { list-style: none; display: grid; gap: .5rem; }
+
+  .edf-mas { background: var(--niebla); }
+  .edf-mas-cab { display: flex; flex-wrap: wrap; justify-content: space-between; align-items: baseline; gap: 1rem; margin-bottom: 1.8rem; }
+  .edf-mas-cab h2 { font-size: var(--t-5); }
+  .edf-mas-lista { list-style: none; display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, 16rem), 1fr)); gap: 1rem; }
+  .edf-tarjeta { display: grid; gap: .55rem; align-content: start; height: 100%; padding: 1.3rem 1.4rem; border-radius: var(--radio-m); background: var(--papel); color: var(--tinta); text-decoration: none; border: 1px solid transparent; transition: border-color .3s, transform .5s var(--ease); }
+  .edf-tarjeta:hover { border-color: rgb(159 39 40 / .35); transform: translateY(-3px); }
+  .edf-tarjeta-cat { display: inline-flex; align-items: center; gap: .45rem; font-size: .82rem; font-weight: 700; color: var(--rojo); }
+  .edf-tarjeta-cat :global(.icon) { width: 1rem; height: 1rem; }
+  .edf-tarjeta strong { font-family: var(--display); font-size: var(--t-2); line-height: 1.25; }
+  .edf-tarjeta-txt { font-size: var(--t-0); color: var(--tinta-2); line-height: 1.45; }
+
+  @media (max-width: 960px) {
+    .edf-grid { grid-template-columns: minmax(0, 1fr); }
+    .edf-lateral { position: static; }
+  }
+  @media (max-width: 560px) { .edf-alarma { grid-template-columns: minmax(0, 1fr); } }
+  @media print {
+    .edf-lateral, .edf-dudas, .edf-mas, .edf-video { display: none !important; }
+    .edf-grid { grid-template-columns: 1fr; }
+  }
+</style>

@@ -1,0 +1,131 @@
+---
+// Su examen paso a paso: antes, durante y después, en pestañas.
+// "Antes" toma la preparación oficial de src/data/preparaciones.json (la misma de la guía de preparación).
+import type { Lang } from '../../i18n/content';
+import { r } from '../../i18n/routes';
+import prep from '../../data/preparaciones.json';
+import Icon from '../Icon.astro';
+interface Pasos { antes: string[]; durante: string[]; despues: string[] }
+interface Props { lang: Lang; prepId?: string; pasos?: Pasos }
+const { lang, prepId = '', pasos = { antes: [], durante: [], despues: [] } } = Astro.props;
+const en = lang === 'en';
+type Txt = { es: string; en: string };
+const tx = (x: Txt) => (en ? x.en || x.es : x.es);
+const ex = prepId ? prep.examenes.find((e) => e.id === prepId) : undefined;
+const comun = ex ? (prep.comunes as Record<string, { llevar?: Txt[]; tener_en_cuenta?: Txt[]; despues?: Txt[] }>)[ex.servicio] : undefined;
+const ayuno = ex ? (en ? ex.ayuno_en || ex.ayuno : ex.ayuno) : '';
+const duracion = ex ? (en ? ex.duracion_en || ex.duracion : ex.duracion) : '';
+const antes = [...(ex ? ex.indicaciones.map(tx) : []), ...pasos.antes];
+const llevar = comun?.llevar?.map(tx) ?? [];
+const despues = [...pasos.despues, ...(comun?.despues?.map(tx) ?? [])];
+const t = en
+  ? { title: 'Your test, step by step', tabs: 'Stages of the test', before: 'Before', during: 'During', after: 'After', fasting: 'Fasting', prep: 'Preparation', length: 'Length', bring: 'What to bring', full: 'See the full preparation', none: 'No special instructions for this stage.' }
+  : { title: 'Su examen paso a paso', tabs: 'Etapas del examen', before: 'Antes', during: 'Durante', after: 'Después', fasting: 'Ayuno', prep: 'Preparación', length: 'Duración', bring: 'Qué llevar', full: 'Ver la preparación completa', none: 'No hay indicaciones especiales para esta etapa.' };
+const etapas = [
+  { id: 'antes', label: t.before, items: antes },
+  { id: 'durante', label: t.during, items: pasos.durante },
+  { id: 'despues', label: t.after, items: despues },
+];
+const uid = `pasos-${prepId || 'ex'}`;
+---
+<section class="edp" aria-labelledby={`${uid}-t`} data-edp>
+  <h2 id={`${uid}-t`}><span class="edp-ico" aria-hidden="true"><Icon name="prep" /></span>{t.title}</h2>
+  <div class="edp-tabs" role="tablist" aria-label={t.tabs} hidden data-edp-tabs>
+    {etapas.map((e, i) => (
+      <button type="button" role="tab" id={`${uid}-tab-${e.id}`} aria-controls={`${uid}-${e.id}`} aria-selected={i === 0 ? 'true' : 'false'} tabindex={i === 0 ? 0 : -1}>
+        <span class="edp-n" aria-hidden="true">{i + 1}</span>{e.label}
+      </button>
+    ))}
+  </div>
+  {etapas.map((e, i) => (
+    <div class="edp-panel" id={`${uid}-${e.id}`} role="tabpanel" aria-labelledby={`${uid}-tab-${e.id}`} data-edp-panel>
+      <h3 class="edp-h" data-edp-h><span class="edp-n" aria-hidden="true">{i + 1}</span>{e.label}</h3>
+      {e.id === 'antes' && (ayuno || duracion) && (
+        <dl class="edp-datos">
+          {ayuno && <div><dt>{/^(no requiere|no special|no preparation)/i.test(ayuno) ? t.prep : t.fasting}</dt><dd>{ayuno}</dd></div>}
+          {duracion && <div><dt>{t.length}</dt><dd>{duracion}</dd></div>}
+        </dl>
+      )}
+      {e.items.length > 0 ? (
+        <ol class="edp-lista">{e.items.map((x) => <li>{x}</li>)}</ol>
+      ) : (
+        <p class="edp-vacio">{t.none}</p>
+      )}
+      {e.id === 'antes' && llevar.length > 0 && (
+        <div class="edp-llevar">
+          <h4>{t.bring}</h4>
+          <ul>{llevar.map((x) => <li><Icon name="check" />{x}</li>)}</ul>
+        </div>
+      )}
+      {e.id === 'antes' && ex && (
+        <a class="enlace-flecha" href={`${r(lang, 'preparacion')}#prep-${ex.id}`}>{t.full}<Icon name="arrow" /></a>
+      )}
+    </div>
+  ))}
+</section>
+
+<script>
+  // Pestañas accesibles: flechas, Inicio y Fin. Sin JavaScript se ven las tres etapas, una debajo de otra.
+  document.querySelectorAll<HTMLElement>('[data-edp]').forEach((box) => {
+    const list = box.querySelector<HTMLElement>('[data-edp-tabs]');
+    if (!list) return;
+    const tabs = [...list.querySelectorAll<HTMLButtonElement>('[role="tab"]')];
+    const panels = [...box.querySelectorAll<HTMLElement>('[data-edp-panel]')];
+    list.hidden = false;
+    box.classList.add('con-pestanas');
+    const show = (i: number, focus = false) => {
+      tabs.forEach((t, j) => { t.setAttribute('aria-selected', String(i === j)); t.tabIndex = i === j ? 0 : -1; });
+      panels.forEach((p, j) => { p.hidden = i !== j; });
+      if (focus) tabs[i].focus();
+    };
+    tabs.forEach((t, i) => {
+      t.addEventListener('click', () => show(i));
+      t.addEventListener('keydown', (e) => {
+        const k = e.key;
+        let n = -1;
+        if (k === 'ArrowRight') n = (i + 1) % tabs.length;
+        if (k === 'ArrowLeft') n = (i - 1 + tabs.length) % tabs.length;
+        if (k === 'Home') n = 0;
+        if (k === 'End') n = tabs.length - 1;
+        if (n >= 0) { e.preventDefault(); show(n, true); }
+      });
+    });
+    show(0);
+  });
+</script>
+
+<style>
+  .edp { display: grid; gap: 1.2rem; padding: clamp(1.3rem, 3vw, 2rem); border-radius: var(--radio-l); background: var(--niebla); }
+  .edp h2 { display: flex; align-items: center; gap: .75rem; font-size: var(--t-4); }
+  .edp-ico { width: 2.6rem; height: 2.6rem; border-radius: 50%; display: grid; place-items: center; background: var(--papel); color: var(--rojo); flex: none; }
+  .edp-ico :global(.icon) { width: 1.3rem; height: 1.3rem; }
+  .edp-tabs { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: .4rem; padding: .35rem; border-radius: 999px; background: var(--papel); border: 1px solid var(--linea); }
+  .edp-tabs[hidden] { display: none; }
+  .edp-tabs button { display: inline-flex; align-items: center; justify-content: center; gap: .5rem; min-height: 2.9rem; padding: .4rem .6rem; border: 0; border-radius: 999px; background: transparent; font: inherit; font-weight: 700; color: var(--tinta-2); cursor: pointer; transition: background-color .3s, color .3s; }
+  .edp-tabs button:hover { color: var(--tinta); }
+  .edp-tabs button[aria-selected='true'] { background: var(--carbon); color: #fff; }
+  .edp-tabs button[aria-selected='true'] .edp-n { background: var(--rojo-luz); color: #fff; }
+  .edp-n { width: 1.6rem; height: 1.6rem; border-radius: 50%; display: inline-grid; place-items: center; font-size: .85rem; font-weight: 800; background: var(--rojo-tinte); color: var(--rojo); flex: none; }
+  .edp-panel { display: grid; gap: 1rem; padding: .2rem .2rem 0; }
+  .edp-panel + .edp-panel { padding-top: 1.2rem; border-top: 1px solid var(--linea); }
+  .con-pestanas .edp-panel + .edp-panel { padding-top: .2rem; border-top: 0; }
+  .edp-h { display: flex; align-items: center; gap: .6rem; font-size: var(--t-3); }
+  .con-pestanas .edp-h { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; }
+  .edp-datos { display: flex; flex-wrap: wrap; gap: .6rem; }
+  .edp-datos div { display: flex; gap: .45rem; align-items: baseline; padding: .55rem .9rem; border-radius: 999px; background: var(--papel); border: 1px solid var(--linea); font-size: var(--t-0); }
+  .edp-datos dt { color: var(--tinta-2); }
+  .edp-datos dd { font-weight: 700; }
+  .edp-lista { list-style: none; counter-reset: paso; display: grid; gap: .75rem; }
+  .edp-lista li { counter-increment: paso; position: relative; padding-left: 2.6rem; line-height: 1.5; }
+  .edp-lista li::before { content: counter(paso); position: absolute; left: 0; top: -.05rem; width: 1.75rem; height: 1.75rem; border-radius: 50%; display: grid; place-items: center; background: var(--papel); border: 2px solid var(--rojo); color: var(--rojo); font-weight: 800; font-size: .85rem; }
+  .edp-lista li:not(:last-child)::after { content: ''; position: absolute; left: .82rem; top: 1.85rem; bottom: -.7rem; width: 2px; background: rgb(159 39 40 / .2); }
+  .edp-vacio { color: var(--tinta-2); }
+  .edp-llevar { display: grid; gap: .6rem; padding: 1rem 1.1rem; border-radius: var(--radio-m); background: var(--papel); }
+  .edp-llevar h4 { font-size: var(--t-1); }
+  .edp-llevar ul { list-style: none; display: grid; gap: .45rem; font-size: var(--t-0); }
+  .edp-llevar li { display: flex; gap: .55rem; align-items: flex-start; }
+  .edp-llevar :global(.icon) { width: 1.05rem; height: 1.05rem; color: var(--rojo); stroke-width: 2.4; flex: none; margin-top: .15rem; }
+  .edp .enlace-flecha { justify-self: start; }
+  @media (max-width: 480px) { .edp-tabs button { flex-direction: column; gap: .2rem; font-size: .92rem; } }
+  @media print { .edp-tabs { display: none !important; } .edp-panel[hidden] { display: grid !important; } .con-pestanas .edp-h { position: static; width: auto; height: auto; clip: auto; } }
+</style>

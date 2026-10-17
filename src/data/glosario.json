@@ -1,0 +1,439 @@
+{
+  "nota": "Palabras que se explican al tocarlas en las fichas de educación. 'formas' son las variantes que se reconocen en el texto.",
+  "terminos": [
+    {
+      "es": {
+        "termino": "Arritmia",
+        "formas": [
+          "arritmia",
+          "arritmias"
+        ],
+        "definicion": "Alteración del ritmo del corazón: late muy rápido, muy lento o de forma irregular."
+      },
+      "en": {
+        "termino": "Arrhythmia",
+        "formas": [
+          "arrhythmia",
+          "arrhythmias"
+        ],
+        "definicion": "A problem with the heart's rhythm: it beats too fast, too slow or irregularly."
+      }
+    },
+    {
+      "es": {
+        "termino": "Cateterismo",
+        "formas": [
+          "cateterismo",
+          "cateterismos"
+        ],
+        "definicion": "Procedimiento en el que se pasa un tubo delgado (catéter) por una arteria hasta el corazón para ver o tratar sus arterias."
+      },
+      "en": {
+        "termino": "Cardiac catheterization",
+        "formas": [
+          "catheterization",
+          "catheterizations"
+        ],
+        "definicion": "A procedure in which a thin tube (catheter) is passed through an artery to the heart to look at or treat its arteries."
+      }
+    },
+    {
+      "es": {
+        "termino": "Colesterol",
+        "formas": [
+          "colesterol"
+        ],
+        "definicion": "Una grasa de la sangre. Cuando hay demasiado, se acumula en las paredes de las arterias."
+      },
+      "en": {
+        "termino": "Cholesterol",
+        "formas": [
+          "cholesterol"
+        ],
+        "definicion": "A fat in the blood. When there is too much, it builds up in the walls of the arteries."
+      }
+    },
+    {
+      "es": {
+        "termino": "Presión sistólica",
+        "formas": [
+          "sistólica"
+        ],
+        "definicion": "La presión máxima, cuando el corazón se contrae. Es el número de arriba."
+      },
+      "en": {
+        "termino": "Systolic pressure",
+        "formas": [
+          "systolic"
+        ],
+        "definicion": "The highest pressure, when the heart squeezes. It is the top number."
+      }
+    },
+    {
+      "es": {
+        "termino": "Presión diastólica",
+        "formas": [
+          "diastólica"
+        ],
+        "definicion": "La presión mínima, cuando el corazón descansa entre latidos. Es el número de abajo."
+      },
+      "en": {
+        "termino": "Diastolic pressure",
+        "formas": [
+          "diastolic"
+        ],
+        "definicion": "The lowest pressure, when the heart rests between beats. It is the bottom number."
+      }
+    },
+    {
+      "es": {
+        "termino": "Electrodo",
+        "formas": [
+          "electrodos",
+          "electrodo"
+        ],
+        "definicion": "Adhesivo pequeño que se pega en la piel para captar las señales eléctricas del corazón."
+      },
+      "en": {
+        "termino": "Electrode",
+        "formas": [
+          "electrodes",
+          "electrode"
+        ],
+        "definicion": "A small sticker placed on the skin to pick up the heart's electrical signals."
+      }
+    },
+    {
+      "es": {
+        "termino": "Fracción de eyección",
+        "formas": [
+          "fracción de eyección"
+        ],
+        "definicion": "Porcentaje de la sangre del corazón que sale en cada latido. Muestra la fuerza con la que bombea."
+      },
+      "en": {
+        "termino": "Ejection fraction",
+        "formas": [
+          "ejection fraction"
+        ],
+        "definicion": "The percentage of blood the heart pumps out with each beat. It shows how strongly it pumps."
+      }
+    },
+    {
+      "es": {
+        "termino": "Gammacámara",
+        "formas": [
+          "gammacámara"
+        ],
+        "definicion": "Equipo de medicina nuclear que toma imágenes del cuerpo a partir del radiofármaco."
+      },
+      "en": {
+        "termino": "Gamma camera",
+        "formas": [
+          "gamma camera"
+        ],
+        "definicion": "Nuclear medicine equipment that takes images of the body using the radiopharmaceutical."
+      }
+    },
+    {
+      "es": {
+        "termino": "Radiofármaco",
+        "formas": [
+          "radiofármaco",
+          "radiofármacos"
+        ],
+        "definicion": "Medicamento con una pequeña cantidad de una sustancia radiactiva que permite tomar imágenes en medicina nuclear."
+      },
+      "en": {
+        "termino": "Radiopharmaceutical",
+        "formas": [
+          "radiopharmaceutical",
+          "radiopharmaceuticals"
+        ],
+        "definicion": "A medicine with a small amount of a radioactive substance that makes nuclear medicine images possible."
+      }
+    },
+    {
+      "es": {
+        "termino": "Hipertensión",
+        "formas": [
+          "hipertensión"
+        ],
+        "definicion": "Presión arterial alta de forma persistente."
+      },
+      "en": {
+        "termino": "Hypertension",
+        "formas": [
+          "hypertension"
+        ],
+        "definicion": "Blood pressure that stays high over time."
+      }
+    },
+    {
+      "es": {
+        "termino": "Infarto",
+        "formas": [
+          "infarto",
+          "infartos"
+        ],
+        "definicion": "Daño del músculo del corazón porque una de sus arterias se tapa y deja de llegarle sangre."
+      },
+      "en": {
+        "termino": "Heart attack",
+        "formas": [
+          "heart attack",
+          "heart attacks"
+        ],
+        "definicion": "Damage to the heart muscle because one of its arteries gets blocked and blood stops reaching it."
+      }
+    },
+    {
+      "es": {
+        "termino": "Ataque cerebrovascular",
+        "formas": [
+          "ataque cerebrovascular",
+          "ACV"
+        ],
+        "definicion": "Daño del cerebro porque un vaso sanguíneo se tapa o se rompe. También le dicen derrame o trombosis cerebral."
+      },
+      "en": {
+        "termino": "Stroke",
+        "formas": [
+          "stroke",
+          "strokes"
+        ],
+        "definicion": "Damage to the brain because a blood vessel gets blocked or bursts."
+      }
+    },
+    {
+      "es": {
+        "termino": "Válvula",
+        "formas": [
+          "válvulas",
+          "válvula"
+        ],
+        "definicion": "Compuerta del corazón que deja pasar la sangre en una sola dirección."
+      },
+      "en": {
+        "termino": "Valve",
+        "formas": [
+          "valves",
+          "valve"
+        ],
+        "definicion": "A door inside the heart that lets blood flow in only one direction."
+      }
+    },
+    {
+      "es": {
+        "termino": "Soplo",
+        "formas": [
+          "soplos",
+          "soplo"
+        ],
+        "definicion": "Ruido que se escucha cuando la sangre pasa por el corazón. A veces indica que una válvula no funciona bien."
+      },
+      "en": {
+        "termino": "Murmur",
+        "formas": [
+          "murmurs",
+          "murmur"
+        ],
+        "definicion": "A sound heard as blood flows through the heart. Sometimes it means a valve is not working well."
+      }
+    },
+    {
+      "es": {
+        "termino": "Transductor",
+        "formas": [
+          "transductor"
+        ],
+        "definicion": "Aparato que se desliza sobre la piel para tomar imágenes con ultrasonido."
+      },
+      "en": {
+        "termino": "Transducer",
+        "formas": [
+          "transducer"
+        ],
+        "definicion": "A device moved over the skin to take ultrasound images."
+      }
+    },
+    {
+      "es": {
+        "termino": "Palpitaciones",
+        "formas": [
+          "palpitaciones"
+        ],
+        "definicion": "Sensación de que el corazón late fuerte, rápido o de forma irregular."
+      },
+      "en": {
+        "termino": "Palpitations",
+        "formas": [
+          "palpitations"
+        ],
+        "definicion": "Feeling that your heart is pounding, racing or beating irregularly."
+      }
+    },
+    {
+      "es": {
+        "termino": "Consentimiento informado",
+        "formas": [
+          "consentimiento informado"
+        ],
+        "definicion": "Autorización que usted da por escrito después de que le expliquen un procedimiento, sus beneficios y sus riesgos."
+      },
+      "en": {
+        "termino": "Informed consent",
+        "formas": [
+          "informed consent"
+        ],
+        "definicion": "Written permission you give after a procedure, its benefits and its risks have been explained to you."
+      }
+    },
+    {
+      "es": {
+        "termino": "Índice de masa corporal",
+        "formas": [
+          "índice de masa corporal"
+        ],
+        "definicion": "Relación entre el peso y la estatura que ayuda a saber si el peso es saludable."
+      },
+      "en": {
+        "termino": "Body mass index",
+        "formas": [
+          "body mass index"
+        ],
+        "definicion": "A ratio of weight to height that helps show whether a weight is healthy."
+      }
+    },
+    {
+      "es": {
+        "termino": "Holter",
+        "formas": [
+          "Holter"
+        ],
+        "definicion": "Equipo pequeño que se lleva puesto durante horas y registra el ritmo del corazón o la presión arterial mientras usted hace su vida normal."
+      },
+      "en": {
+        "termino": "Holter monitor",
+        "formas": [
+          "Holter"
+        ],
+        "definicion": "A small device you wear for hours that records your heart rhythm or blood pressure while you go about your day."
+      }
+    },
+    {
+      "es": {
+        "termino": "Medicina nuclear",
+        "formas": [
+          "medicina nuclear"
+        ],
+        "definicion": "Especialidad que usa radiofármacos en dosis pequeñas para tomar imágenes de cómo funcionan los órganos."
+      },
+      "en": {
+        "termino": "Nuclear medicine",
+        "formas": [
+          "nuclear medicine"
+        ],
+        "definicion": "A specialty that uses small doses of radiopharmaceuticals to take pictures of how organs work."
+      }
+    },
+    {
+      "es": {
+        "termino": "Perfusión",
+        "formas": [
+          "perfusión"
+        ],
+        "definicion": "La llegada de sangre a un órgano. En el corazón, muestra si la sangre llega bien a todo el músculo."
+      },
+      "en": {
+        "termino": "Perfusion",
+        "formas": [
+          "perfusion"
+        ],
+        "definicion": "Blood flow reaching an organ. In the heart, it shows whether blood reaches all of the muscle."
+      }
+    },
+    {
+      "es": {
+        "termino": "Ultrasonido",
+        "formas": [
+          "ultrasonido"
+        ],
+        "definicion": "Ondas de sonido que no se oyen y que permiten ver el interior del cuerpo, como en una ecografía. No tienen radiación."
+      },
+      "en": {
+        "termino": "Ultrasound",
+        "formas": [
+          "ultrasound"
+        ],
+        "definicion": "Sound waves you cannot hear that show the inside of the body, as in a sonogram. They have no radiation."
+      }
+    },
+    {
+      "es": {
+        "termino": "Tensiómetro",
+        "formas": [
+          "tensiómetro"
+        ],
+        "definicion": "Aparato para medir la presión arterial."
+      },
+      "en": {
+        "termino": "Blood pressure monitor",
+        "formas": [
+          "blood pressure monitor"
+        ],
+        "definicion": "A device that measures blood pressure."
+      }
+    },
+    {
+      "es": {
+        "termino": "Betabloqueador",
+        "formas": [
+          "betabloqueadores",
+          "betabloqueador"
+        ],
+        "definicion": "Tipo de medicamento que hace latir el corazón más despacio y baja la presión, como el metoprolol o el carvedilol."
+      },
+      "en": {
+        "termino": "Beta blocker",
+        "formas": [
+          "beta blockers",
+          "beta blocker"
+        ],
+        "definicion": "A type of medicine that slows the heart rate and lowers blood pressure, such as metoprolol or carvedilol."
+      }
+    },
+    {
+      "es": {
+        "termino": "Leguminosas",
+        "formas": [
+          "leguminosas"
+        ],
+        "definicion": "Fríjoles, lentejas, garbanzos, arvejas y habas. Aportan proteína y fibra."
+      },
+      "en": {
+        "termino": "Legumes",
+        "formas": [
+          "legumes"
+        ],
+        "definicion": "Beans, lentils, chickpeas, peas and fava beans. They provide protein and fiber."
+      }
+    },
+    {
+      "es": {
+        "termino": "Obesidad abdominal",
+        "formas": [
+          "obesidad abdominal"
+        ],
+        "definicion": "Exceso de grasa en el abdomen. Se sospecha cuando la cintura mide más de 80 cm en la mujer o más de 90 cm en el hombre."
+      },
+      "en": {
+        "termino": "Abdominal obesity",
+        "formas": [
+          "abdominal obesity"
+        ],
+        "definicion": "Too much fat around the belly. It is suspected when the waist measures more than 80 cm in women or more than 90 cm in men."
+      }
+    }
+  ]
+}

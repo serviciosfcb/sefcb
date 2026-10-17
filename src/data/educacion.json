@@ -1,0 +1,274 @@
+{
+  "categorias": [
+    {
+      "id": "examenes",
+      "icono": "results",
+      "nombre": {
+        "es": "Conozca su examen",
+        "en": "Know your test"
+      },
+      "texto": {
+        "es": "Qué es, cómo se prepara y qué va a pasar, paso a paso.",
+        "en": "What it is, how to prepare and what will happen, step by step."
+      }
+    },
+    {
+      "id": "urgencias",
+      "icono": "alert",
+      "nombre": {
+        "es": "Urgencias",
+        "en": "Emergencies"
+      },
+      "texto": {
+        "es": "Señales de alarma y qué hacer en los primeros minutos.",
+        "en": "Warning signs and what to do in the first minutes."
+      }
+    },
+    {
+      "id": "enfermedades",
+      "icono": "heartbeat",
+      "nombre": {
+        "es": "Enfermedades del corazón",
+        "en": "Heart conditions"
+      },
+      "texto": {
+        "es": "Qué son, cómo se controlan y qué preguntarle a su médico.",
+        "en": "What they are, how they are managed and what to ask your doctor."
+      }
+    },
+    {
+      "id": "prevencion",
+      "icono": "target",
+      "nombre": {
+        "es": "Prevención",
+        "en": "Prevention"
+      },
+      "texto": {
+        "es": "Los números de su corazón y los factores de riesgo.",
+        "en": "Your heart numbers and risk factors."
+      }
+    },
+    {
+      "id": "estilos",
+      "icono": "leaf",
+      "nombre": {
+        "es": "Estilos de vida",
+        "en": "Healthy living"
+      },
+      "texto": {
+        "es": "Alimentación, actividad física, sueño y manejo del estrés.",
+        "en": "Eating, physical activity, sleep and stress."
+      }
+    },
+    {
+      "id": "tratamiento",
+      "icono": "pill",
+      "nombre": {
+        "es": "Viva con su tratamiento",
+        "en": "Living with your treatment"
+      },
+      "texto": {
+        "es": "Medicamentos, controles en casa y cuidados después de un procedimiento.",
+        "en": "Medicines, home checks and care after a procedure."
+      }
+    },
+    {
+      "id": "seguridad",
+      "icono": "shield",
+      "nombre": {
+        "es": "Seguridad del paciente",
+        "en": "Patient safety"
+      },
+      "texto": {
+        "es": "Cómo participar en su propia seguridad.",
+        "en": "How to take part in your own safety."
+      }
+    },
+    {
+      "id": "derechos",
+      "icono": "document",
+      "nombre": {
+        "es": "Derechos y normatividad",
+        "en": "Rights and regulations"
+      },
+      "texto": {
+        "es": "Sus derechos y deberes, su historia clínica y cómo presentar una PQRS.",
+        "en": "Your rights and responsibilities, your medical record and how to file a complaint."
+      }
+    },
+    {
+      "id": "familias",
+      "icono": "hands",
+      "nombre": {
+        "es": "Familias y cuidadores",
+        "en": "Families and caregivers"
+      },
+      "texto": {
+        "es": "Cómo acompañar a niños, adultos mayores y personas a su cuidado.",
+        "en": "How to support children, older adults and the people you care for."
+      }
+    }
+  ],
+  "situaciones": [
+    {
+      "icono": "results",
+      "titulo": {
+        "es": "Me van a hacer un examen",
+        "en": "I'm having a test"
+      },
+      "categorias": [
+        "examenes"
+      ]
+    },
+    {
+      "icono": "heartbeat",
+      "titulo": {
+        "es": "Me diagnosticaron una enfermedad",
+        "en": "I've been diagnosed"
+      },
+      "categorias": [
+        "enfermedades",
+        "tratamiento"
+      ]
+    },
+    {
+      "icono": "leaf",
+      "titulo": {
+        "es": "Quiero cuidar mi corazón",
+        "en": "I want to look after my heart"
+      },
+      "categorias": [
+        "prevencion",
+        "estilos"
+      ]
+    },
+    {
+      "icono": "hands",
+      "titulo": {
+        "es": "Cuido a un familiar",
+        "en": "I care for a relative"
+      },
+      "categorias": [
+        "familias",
+        "urgencias",
+        "seguridad"
+      ]
+    },
+    {
+      "icono": "document",
+      "titulo": {
+        "es": "Quiero conocer mis derechos",
+        "en": "I want to know my rights"
+      },
+      "categorias": [
+        "derechos",
+        "seguridad"
+      ]
+    }
+  ],
+  "enlaces": [
+    {
+      "ruta": "preparacion",
+      "categoria": "examenes",
+      "titulo": {
+        "es": "Preparación para sus exámenes",
+        "en": "Preparing for your test"
+      },
+      "texto": {
+        "es": "Ayuno, medicamentos y qué llevar, examen por examen.",
+        "en": "Fasting, medicines and what to bring, test by test."
+      }
+    },
+    {
+      "ruta": "seguridad",
+      "categoria": "seguridad",
+      "titulo": {
+        "es": "Seguridad del paciente",
+        "en": "Patient safety"
+      },
+      "texto": {
+        "es": "Nuestras metas y cómo puede ayudarnos a cuidarle.",
+        "en": "Our goals and how you can help us keep you safe."
+      }
+    },
+    {
+      "ruta": "derechos",
+      "categoria": "derechos",
+      "titulo": {
+        "es": "Derechos y deberes de los pacientes",
+        "en": "Patient rights and responsibilities"
+      },
+      "texto": {
+        "es": "Lo que puede exigir y lo que le pedimos durante su atención.",
+        "en": "What you can expect from us and what we ask of you."
+      }
+    },
+    {
+      "ruta": "resultados",
+      "categoria": "derechos",
+      "titulo": {
+        "es": "Resultados e historia clínica",
+        "en": "Results and medical records"
+      },
+      "texto": {
+        "es": "Cómo recibir sus resultados y pedir una copia de su historia clínica.",
+        "en": "How to get your results and request a copy of your medical record."
+      }
+    },
+    {
+      "ruta": "servicio-obesidad",
+      "categoria": "prevencion",
+      "titulo": {
+        "es": "HORMESIS, programa de prevención",
+        "en": "HORMESIS prevention program"
+      },
+      "texto": {
+        "es": "Acompañamiento profesional para cuidar su corazón y cambiar hábitos.",
+        "en": "Professional support to look after your heart and change habits."
+      }
+    }
+  ],
+  "emergencia": {
+    "telefono": "123",
+    "texto": {
+      "es": "¿Tiene ahora dolor en el pecho, la cara caída o le falta el aire? Llame al 123 o vaya a urgencias.",
+      "en": "Chest pain, a drooping face or trouble breathing right now? Call 123 (Colombia's emergency number) or go to the emergency room."
+    }
+  },
+  "programa": {
+    "titulo": {
+      "es": "Nuestro programa de educación",
+      "en": "Our education program"
+    },
+    "texto": {
+      "es": "Con el Programa de Educación al Usuario y su Familia, el personal de atención al usuario y el equipo asistencial comparten cada día con pacientes y acompañantes temas de seguridad del paciente, estilos de vida saludables y prevención, y dan a conocer sus derechos y deberes. Lo hacemos en todos nuestros servicios.",
+      "en": "Through our Patient and Family Education Program, our patient services staff and clinical team share topics on patient safety, healthy living and prevention with patients and companions every day, and explain their rights and responsibilities. We do this in all our services."
+    },
+    "politica": {
+      "es": "Todo nuestro personal asistencial y administrativo tiene un compromiso con su educación: evaluamos sus necesidades de aprendizaje y mantenemos al día los temas que más influyen en su salud y su calidad de vida.",
+      "en": "All our clinical and administrative staff are committed to your education: we assess what you need to learn and keep the topics that matter most for your health and quality of life up to date."
+    },
+    "politica_fuente": {
+      "es": "Política de educación al paciente y su familia, versión 03, septiembre de 2026",
+      "en": "Patient and family education policy, version 03, September 2026"
+    },
+    "actividades": [
+      {
+        "es": "Charlas en las salas de espera",
+        "en": "Talks in our waiting rooms"
+      },
+      {
+        "es": "Videos educativos en las pantallas de nuestras sedes",
+        "en": "Educational videos on the screens at our locations"
+      },
+      {
+        "es": "Semana del Corazón, con tamizaje de riesgo cardiovascular",
+        "en": "Heart Week, with cardiovascular risk screening"
+      },
+      {
+        "es": "Bailoterapia, musicoterapia y técnicas de relajación",
+        "en": "Dance therapy, music therapy and relaxation techniques"
+      }
+    ]
+  }
+}

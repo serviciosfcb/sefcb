@@ -1,0 +1,186 @@
+---
+// Registro de presión arterial. Las medidas se guardan solo en el navegador de la persona (este dispositivo);
+// no se envían a ningún lado. Se puede imprimir para llevarlo a la consulta.
+import type { Lang } from '../../i18n/content';
+import Icon from '../Icon.astro';
+interface Props { lang: Lang }
+const { lang } = Astro.props;
+const en = lang === 'en';
+const t = en
+  ? {
+      title: 'My blood pressure log', lead: 'Write down each reading. Your log stays only on this device: it is not sent anywhere.',
+      date: 'Date', time: 'Time', sys: 'Top number (systolic)', dia: 'Bottom number (diastolic)', pulse: 'Pulse (optional)', unitP: 'mm Hg', unitB: 'beats/min', add: 'Add reading',
+      empty: 'You have no readings yet.', avg: 'Average of', readings: 'readings', print: 'Print my log', clear: 'Delete all', del: 'Delete reading of', confirm: 'Delete all the readings on this device?',
+      high: 'This reading is high. Rest for 5 minutes and measure again. If the top number stays at 180 or higher, or the bottom number at 110 or higher, contact your doctor today; if you can\'t reach them, go to the emergency room. If you have chest pain, shortness of breath, a severe headache, weakness, or trouble seeing or speaking, call 123 (Colombia\'s emergency number), whatever the reading.',
+      invalid: 'Check the numbers: the top number must be between 60 and 260, the bottom one between 30 and 160, and the bottom number must be lower than the top one.', printTitle: 'Blood pressure log', nostore: 'This browser cannot save readings. You can still print them before closing the page.',
+      colDate: 'Date and time', colBp: 'Pressure (mm Hg)', colPulse: 'Pulse',
+    }
+  : {
+      title: 'Mi registro de presión arterial', lead: 'Anote cada medida. Su registro queda solo en este dispositivo: no se envía a ningún lado.',
+      date: 'Fecha', time: 'Hora', sys: 'Máxima (sistólica)', dia: 'Mínima (diastólica)', pulse: 'Pulso (opcional)', unitP: 'mm Hg', unitB: 'latidos/min', add: 'Agregar medida',
+      empty: 'Todavía no tiene medidas anotadas.', avg: 'Promedio de', readings: 'medidas', print: 'Imprimir mi registro', clear: 'Borrar todo', del: 'Borrar la medida del', confirm: '¿Borrar todas las medidas de este dispositivo?',
+      high: 'Esta medida está alta. Descanse 5 minutos y vuelva a medir. Si la máxima sigue en 180 o más, o la mínima en 110 o más, comuníquese hoy mismo con su médico; si no lo logra, vaya a urgencias. Si tiene dolor en el pecho, falta de aire, dolor de cabeza muy fuerte, debilidad o dificultad para ver o para hablar, llame al 123, sin importar la cifra.',
+      invalid: 'Revise los números: la máxima debe estar entre 60 y 260, la mínima entre 30 y 160, y la mínima debe ser menor que la máxima.', printTitle: 'Registro de presión arterial', nostore: 'Este navegador no permite guardar las medidas. Igual puede imprimirlas antes de cerrar la página.',
+      colDate: 'Fecha y hora', colBp: 'Presión (mm Hg)', colPulse: 'Pulso',
+    };
+---
+<section class="edb" aria-labelledby="edb-t" data-edb data-lang={lang} data-t={JSON.stringify(t)}>
+  <div class="edb-cab">
+    <span class="edb-ico" aria-hidden="true"><Icon name="gauge" /></span>
+    <div>
+      <h2 id="edb-t">{t.title}</h2>
+      <p>{t.lead}</p>
+    </div>
+  </div>
+
+  <form class="edb-form" data-edb-form novalidate>
+    <div class="edb-campo"><label for="edb-fecha">{t.date}</label><input id="edb-fecha" name="fecha" type="date" required /></div>
+    <div class="edb-campo"><label for="edb-hora">{t.time}</label><input id="edb-hora" name="hora" type="time" required /></div>
+    <div class="edb-campo"><label for="edb-sis">{t.sys}</label><div class="edb-in"><input id="edb-sis" name="sis" type="number" inputmode="numeric" min="60" max="260" required aria-describedby="edb-u1" /><span id="edb-u1">{t.unitP}</span></div></div>
+    <div class="edb-campo"><label for="edb-dia">{t.dia}</label><div class="edb-in"><input id="edb-dia" name="dia" type="number" inputmode="numeric" min="30" max="160" required aria-describedby="edb-u2" /><span id="edb-u2">{t.unitP}</span></div></div>
+    <div class="edb-campo"><label for="edb-pulso">{t.pulse}</label><div class="edb-in"><input id="edb-pulso" name="pulso" type="number" inputmode="numeric" min="30" max="220" aria-describedby="edb-u3" /><span id="edb-u3">{t.unitB}</span></div></div>
+    <button class="btn btn-primario edb-agregar" type="submit"><Icon name="check" />{t.add}</button>
+  </form>
+  <div class="edb-aviso" data-edb-aviso aria-live="polite"></div>
+
+  <div class="edb-registro" data-edb-registro>
+    <h3 class="edb-titulo-imp">{t.printTitle}</h3>
+    <p class="edb-resumen" data-edb-resumen aria-live="polite">{t.empty}</p>
+    <div class="edb-tabla-env">
+      <table class="edb-tabla" hidden data-edb-tabla>
+        <thead><tr><th scope="col">{t.colDate}</th><th scope="col">{t.colBp}</th><th scope="col">{t.colPulse}</th><th scope="col"><span class="visualmente-oculto">{t.clear}</span></th></tr></thead>
+        <tbody data-edb-filas></tbody>
+      </table>
+    </div>
+  </div>
+  <div class="edb-acciones">
+    <button class="btn btn-borde" type="button" data-edb-imprimir><Icon name="print" />{t.print}</button>
+    <button class="edb-borrar" type="button" data-edb-borrar>{t.clear}</button>
+  </div>
+</section>
+
+<script>
+  type Medida = { fecha: string; hora: string; sis: number; dia: number; pulso?: number };
+  const KEY = 'sefcb-registro-presion';
+  const leer = (): Medida[] => { try { return JSON.parse(localStorage.getItem(KEY) || '[]'); } catch { return []; } };
+  const guardar = (m: Medida[]) => { try { localStorage.setItem(KEY, JSON.stringify(m)); return true; } catch { return false; } };
+
+  document.querySelectorAll<HTMLElement>('[data-edb]').forEach((box) => {
+    const t = JSON.parse(box.dataset.t || '{}');
+    const lang = box.dataset.lang === 'en' ? 'en-US' : 'es-CO';
+    const form = box.querySelector<HTMLFormElement>('[data-edb-form]')!;
+    const aviso = box.querySelector<HTMLElement>('[data-edb-aviso]')!;
+    const tabla = box.querySelector<HTMLTableElement>('[data-edb-tabla]')!;
+    const filas = box.querySelector<HTMLElement>('[data-edb-filas]')!;
+    const resumen = box.querySelector<HTMLElement>('[data-edb-resumen]')!;
+    let medidas = leer();
+    let memoria = false; // sin almacenamiento: las medidas solo viven mientras la página está abierta
+
+    const hoy = new Date();
+    const pad = (n: number) => String(n).padStart(2, '0');
+    (form.elements.namedItem('fecha') as HTMLInputElement).value = `${hoy.getFullYear()}-${pad(hoy.getMonth() + 1)}-${pad(hoy.getDate())}`;
+    (form.elements.namedItem('hora') as HTMLInputElement).value = `${pad(hoy.getHours())}:${pad(hoy.getMinutes())}`;
+
+    const fmtFecha = (m: Medida) => {
+      const d = new Date(`${m.fecha}T${m.hora || '00:00'}`);
+      return isNaN(d.getTime()) ? `${m.fecha} ${m.hora}` : d.toLocaleString(lang, { day: 'numeric', month: 'short', ...(d.getFullYear() !== new Date().getFullYear() ? { year: 'numeric' } : {}), hour: 'numeric', minute: '2-digit' });
+    };
+    const pintar = () => {
+      medidas.sort((a, b) => `${b.fecha}${b.hora}`.localeCompare(`${a.fecha}${a.hora}`));
+      filas.replaceChildren(...medidas.map((m, i) => {
+        const tr = document.createElement('tr');
+        const alta = m.sis >= 180 || m.dia >= 110;
+        if (alta) tr.className = 'alta';
+        const c1 = document.createElement('td'); c1.textContent = fmtFecha(m);
+        const c2 = document.createElement('td'); c2.textContent = `${m.sis}/${m.dia}`;
+        const c3 = document.createElement('td'); c3.textContent = m.pulso ? String(m.pulso) : '—';
+        const c4 = document.createElement('td');
+        const b = document.createElement('button'); b.type = 'button'; b.className = 'edb-x'; b.textContent = '×';
+        b.setAttribute('aria-label', `${t.del} ${fmtFecha(m)}`);
+        b.addEventListener('click', () => { medidas.splice(i, 1); if (!memoria) guardar(medidas); pintar(); });
+        c4.append(b);
+        tr.append(c1, c2, c3, c4);
+        return tr;
+      }));
+      tabla.hidden = medidas.length === 0;
+      if (!medidas.length) { resumen.textContent = t.empty; return; }
+      const prom = (k: 'sis' | 'dia') => Math.round(medidas.reduce((s, m) => s + m[k], 0) / medidas.length);
+      const conPulso = medidas.filter((m) => m.pulso);
+      const pulso = conPulso.length ? Math.round(conPulso.reduce((s, m) => s + (m.pulso || 0), 0) / conPulso.length) : 0;
+      resumen.textContent = `${t.avg} ${medidas.length} ${t.readings}: ${prom('sis')}/${prom('dia')} mm Hg${pulso ? ` · ${t.colPulse} ${pulso}` : ''}`;
+    };
+
+    form.addEventListener('submit', (e) => {
+      e.preventDefault();
+      const f = new FormData(form);
+      const sis = Number(f.get('sis')), dia = Number(f.get('dia')), pulso = Number(f.get('pulso')) || undefined;
+      if (!(sis >= 60 && sis <= 260 && dia >= 30 && dia <= 160 && dia < sis)) { aviso.className = 'edb-aviso error'; aviso.textContent = t.invalid; return; }
+      medidas.push({ fecha: String(f.get('fecha')), hora: String(f.get('hora')), sis, dia, pulso });
+      if (!memoria && !guardar(medidas)) memoria = true;
+      const alta = sis >= 180 || dia >= 110;
+      aviso.className = `edb-aviso${alta ? ' alerta' : memoria ? ' info' : ''}`;
+      aviso.textContent = alta ? t.high : memoria ? t.nostore : '';
+      (form.elements.namedItem('sis') as HTMLInputElement).value = '';
+      (form.elements.namedItem('dia') as HTMLInputElement).value = '';
+      (form.elements.namedItem('pulso') as HTMLInputElement).value = '';
+      pintar();
+    });
+    box.querySelector('[data-edb-borrar]')?.addEventListener('click', () => {
+      if (!medidas.length || !confirm(t.confirm)) return;
+      medidas = []; try { localStorage.removeItem(KEY); } catch { /* sin almacenamiento */ }
+      aviso.textContent = ''; pintar();
+    });
+    box.querySelector('[data-edb-imprimir]')?.addEventListener('click', () => {
+      document.documentElement.classList.add('imprimir-registro');
+      window.print();
+      setTimeout(() => document.documentElement.classList.remove('imprimir-registro'), 500);
+    });
+    pintar();
+  });
+</script>
+
+<style>
+  .edb { display: grid; gap: 1.2rem; padding: clamp(1.3rem, 3vw, 2rem); border-radius: var(--radio-l); background: var(--niebla); }
+  .edb-cab { display: flex; gap: .9rem; align-items: flex-start; }
+  .edb-cab h2 { font-size: var(--t-4); }
+  .edb-cab p { color: var(--tinta-2); font-size: var(--t-0); margin-top: .2rem; }
+  .edb-ico { width: 2.8rem; height: 2.8rem; border-radius: 50%; display: grid; place-items: center; background: var(--papel); color: var(--rojo); flex: none; }
+  .edb-ico :global(.icon) { width: 1.4rem; height: 1.4rem; }
+  .edb-form { display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, 10rem), 1fr)); gap: .9rem; align-items: end; }
+  .edb-in { display: flex; align-items: center; border-radius: var(--radio-s); border: 1px solid #b9b7b2; background: var(--papel); overflow: hidden; }
+  .edb-in:focus-within { outline: 3px solid var(--rojo); outline-offset: 1px; }
+  .edb-in input { border: 0 !important; outline: none !important; flex: 1; min-width: 0; }
+  .edb-in span { padding: 0 .7rem; color: var(--tinta-2); font-size: .85rem; white-space: nowrap; }
+  .edb-campo { display: grid; gap: .3rem; }
+  .edb-campo label { font-weight: 700; font-size: var(--t-0); }
+  .edb-campo input { min-height: 3rem; padding: .5rem .8rem; border-radius: var(--radio-s); border: 1px solid #b9b7b2; background: var(--papel); font: inherit; font-size: 1.1rem; width: 100%; }
+  .edb-campo input:focus-visible { outline: 3px solid var(--rojo); outline-offset: 1px; }
+  .edb-agregar { min-height: 3rem; justify-content: center; }
+  .edb-agregar :global(.icon), .edb-acciones :global(.icon) { width: 1.05rem; height: 1.05rem; }
+  .edb-aviso:empty { display: none; }
+  .edb-aviso { padding: .9rem 1.1rem; border-radius: var(--radio-m); background: var(--papel); line-height: 1.45; }
+  .edb-aviso.alerta { background: var(--rojo); color: #fff; font-weight: 700; }
+  .edb-aviso.error { border: 1px solid var(--rojo); color: var(--rojo); font-weight: 600; }
+  .edb-registro { display: grid; gap: .6rem; }
+  .edb-titulo-imp { display: none; }
+  .edb-resumen { font-weight: 700; }
+  .edb-tabla-env { overflow-x: auto; }
+  .edb-tabla { width: 100%; border-collapse: collapse; background: var(--papel); border-radius: var(--radio-m); overflow: hidden; font-variant-numeric: tabular-nums; }
+  .edb-tabla[hidden] { display: none; }
+  .edb-tabla th, .edb-tabla :global(td) { padding: .65rem .8rem; text-align: left; border-bottom: 1px solid var(--linea); font-size: var(--t-0); }
+  .edb-tabla th { font-size: .85rem; color: var(--tinta-2); font-weight: 700; }
+  .edb-tabla :global(td:first-child) { min-width: 7.5rem; }
+  .edb-tabla :global(td:nth-child(2)), .edb-tabla :global(td:nth-child(3)) { white-space: nowrap; }
+  .edb-tabla :global(tr.alta td:nth-child(2)) { color: var(--rojo); font-weight: 800; }
+  .edb-tabla :global(.edb-x) { width: 2.2rem; height: 2.2rem; border-radius: 50%; border: 1px solid var(--linea); background: var(--papel); font-size: 1.2rem; line-height: 1; cursor: pointer; color: var(--tinta-2); }
+  .edb-tabla :global(.edb-x:hover) { border-color: var(--rojo); color: var(--rojo); }
+  .edb-acciones { display: flex; flex-wrap: wrap; gap: .8rem 1.4rem; align-items: center; }
+  .edb-borrar { border: 0; background: none; font: inherit; font-weight: 600; color: var(--tinta-2); text-decoration: underline; text-underline-offset: .2em; cursor: pointer; padding: .4rem 0; }
+  @media print {
+    :global(html.imprimir-registro body *) { visibility: hidden; }
+    :global(html.imprimir-registro) .edb-registro, :global(html.imprimir-registro) .edb-registro * { visibility: visible; }
+    :global(html.imprimir-registro) .edb-registro { position: absolute; left: 0; top: 0; width: 100%; }
+    .edb-titulo-imp { display: block; font-size: 16pt; }
+    .edb-tabla :global(.edb-x) { display: none; }
+  }
+</style>

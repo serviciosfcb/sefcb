@@ -32,7 +32,7 @@ const paginas = defineCollection({
     lead: z.string().optional().default(''),
     section: z.enum(['servicios', 'pacientes', 'nosotros', 'transparencia', 'contacto', 'legal']),
     order: z.number().optional().default(50),
-    layout: z.enum(['texto', 'seccion', 'servicios', 'equipo', 'transparencia', 'contacto', 'mapa', 'preparacion', 'empleo', 'seguridad', 'calidad', 'internacional']).optional().default('texto'),
+    layout: z.enum(['texto', 'seccion', 'servicios', 'equipo', 'transparencia', 'contacto', 'mapa', 'preparacion', 'empleo', 'seguridad', 'calidad', 'internacional', 'educacion']).optional().default('texto'),
     card: z.string().optional().default(''),
     // Foto de cabecera (opcional): ruta en src/assets/fotos, descripción y encuadre (object-position)
     image: z.string().optional().default(''),
@@ -67,4 +67,43 @@ const servicios = defineCollection({
   }),
 });
 
-export const collections = { noticias, paginas, servicios };
+// Educación al paciente: fichas cortas por categoría. Cada ficha vive en es/ o en/ y se enlaza con su par por "key".
+// La dirección es la de la página de Educación + el nombre del archivo.
+const texto = z.array(z.string()).optional().default([]);
+// Las fechas pueden llegar como texto o como fecha (YAML convierte 2026-10-17 en fecha); se guardan como AAAA-MM-DD
+const fecha = z.preprocess((v) => (v instanceof Date ? v.toISOString().slice(0, 10) : v ?? ''), z.string()).optional().default('');
+const caja = z.object({ titulo: z.string().optional().default(''), items: texto }).optional();
+const educacion = defineCollection({
+  loader: glob({ pattern: '**/*.md', base: './src/content/educacion' }),
+  schema: z.object({
+    key: z.string(),
+    title: z.string(),
+    summary: z.string(),
+    categoria: z.enum(['examenes', 'enfermedades', 'prevencion', 'estilos', 'tratamiento', 'urgencias', 'derechos', 'seguridad', 'familias']),
+    tipo: z.enum(['lectura', 'herramienta', 'video', 'descargable']).optional().default('lectura'),
+    momento: z.array(z.enum(['antes', 'durante', 'despues', 'siempre'])).optional().default([]),
+    servicios: z.array(z.enum(['noinvasiva', 'nuclear', 'intervencionismo', 'consulta', 'terapia', 'transporte', 'obesidad'])).optional().default([]),
+    // Herramienta interactiva que se muestra en la ficha
+    herramienta: z.enum(['', 'pasos', 'emergencia', 'presion', 'imc', 'riesgo']).optional().default(''),
+    // Examen de src/data/preparaciones.json cuya preparación se muestra en "Antes"
+    prep: z.string().optional().default(''),
+    pasos: z.object({ antes: texto, durante: texto, despues: texto }).optional(),
+    alarma: caja,
+    // Lista que usa la herramienta de la ficha (por ejemplo, los factores de riesgo para marcar)
+    lista: caja,
+    preguntas: texto,
+    comprobacion: z.object({ pregunta: z.string().optional().default(''), opciones: texto, correcta: z.coerce.number().int().min(0).optional().default(0), explicacion: z.string().optional().default('') }).optional(),
+    video: z.string().optional().default(''),
+    descargable: z.string().optional().default(''),
+    revisado_por: z.string().optional().default(''),
+    fecha_revision: fecha,
+    proxima_revision: fecha,
+    fuentes: z.array(z.object({ texto: z.string(), url: z.string().optional().default('') })).optional().default([]),
+    orden: z.number().optional().default(50),
+    destacado: z.boolean().optional().default(false),
+    draft: z.boolean().optional().default(false),
+    review: z.string().optional().default(''),
+  }),
+});
+
+export const collections = { noticias, paginas, servicios, educacion };

@@ -90,6 +90,77 @@ x-campos-servicio: &campos_servicio
     buttons: [bold, italic, link, heading-two, heading-three, bulleted-list, numbered-list]
     editor_components: []
 
+x-campos-educacion: &campos_educacion
+  - { label: Clave, name: key, widget: string, hint: 'Una palabra sin espacios ni tildes, igual en español y en inglés (por ejemplo ecocardiograma). Une la ficha con su traducción.' }
+  - { label: Título, name: title, widget: string }
+  - { label: Resumen, name: summary, widget: text, hint: 'Una o dos frases. Aparece bajo el título y en la tarjeta.' }
+  - label: Categoría
+    name: categoria
+    widget: select
+    options: [{ label: Conozca su examen, value: examenes }, { label: Urgencias, value: urgencias }, { label: Enfermedades del corazón, value: enfermedades }, { label: Prevención, value: prevencion }, { label: Estilos de vida, value: estilos }, { label: Viva con su tratamiento, value: tratamiento }, { label: Seguridad del paciente, value: seguridad }, { label: Derechos y normatividad, value: derechos }, { label: Familias y cuidadores, value: familias }]
+  - { label: Tipo, name: tipo, widget: select, default: lectura, options: [{ label: Lectura, value: lectura }, { label: Herramienta, value: herramienta }, { label: Video, value: video }, { label: Descargable, value: descargable }] }
+  - { label: Momento de la atención, name: momento, widget: select, multiple: true, required: false, options: [{ label: Antes, value: antes }, { label: Durante, value: durante }, { label: Después, value: despues }, { label: Siempre, value: siempre }] }
+  - { label: Servicios relacionados, name: servicios, widget: select, multiple: true, required: false, options: [{ label: Cardiología no invasiva, value: noinvasiva }, { label: Medicina nuclear, value: nuclear }, { label: Intervencionismo, value: intervencionismo }, { label: Consulta externa, value: consulta }, { label: Terapia física, value: terapia }, { label: Transporte asistencial, value: transporte }, { label: HORMESIS, value: obesidad }] }
+  - label: Herramienta interactiva
+    name: herramienta
+    widget: select
+    required: false
+    default: ''
+    hint: 'Paso a paso usa la preparación del examen y las listas de abajo. Emergencia usa las señales de alarma. Factores de riesgo usa la lista para marcar.'
+    options: [{ label: Ninguna, value: '' }, { label: Su examen paso a paso, value: pasos }, { label: '¿Es una emergencia?', value: emergencia }, { label: Registro de presión arterial, value: presion }, { label: IMC y cintura, value: imc }, { label: Factores de riesgo para marcar, value: riesgo }]
+  - { label: Examen (preparación), name: prep, widget: select, required: false, default: '', hint: 'La preparación oficial de este examen aparece en "Antes".', options: [{ label: 'Ninguna', value: '' }, { label: "Holter de ritmo cardíaco", value: 'holter-ritmo' }, { label: "Holter de presión arterial (MAPA)", value: 'holter-presion' }, { label: "Ecocardiograma transtorácico", value: 'eco-transtoracico' }, { label: "Ecocardiograma transesofágico", value: 'eco-transesofagico' }, { label: "Ecocardiograma de estrés y prueba de esfuerzo", value: 'eco-estres' }, { label: "Perfusión miocárdica en reposo y después del ejercicio", value: 'perfusion-esfuerzo' }, { label: "Perfusión miocárdica en reposo", value: 'perfusion-reposo' }, { label: "Ventriculografía isotópica", value: 'ventriculografia' }, { label: "Gammagrafía de tiroides", value: 'tiroides' }, { label: "Gammagrafía de glándulas paratiroides", value: 'paratiroides' }, { label: "Gammagrafía de glándulas salivales", value: 'salivales' }, { label: "Gammagrafía de reflujo gastroesofágico", value: 'reflujo' }, { label: "Gammagrafía de tránsito gastroesofágico", value: 'transito' }, { label: "Vaciamiento gástrico en fase líquida", value: 'vaciamiento-liquidos' }, { label: "Vaciamiento gástrico en fase sólida", value: 'vaciamiento-solidos' }, { label: "Gammagrafía para mucosa gástrica ectópica", value: 'mucosa-ectopica' }, { label: "Investigación de hemorragia digestiva", value: 'hemorragia' }, { label: "Gammagrafía hepatobiliar", value: 'hepatobiliar' }, { label: "Gammagrafía hepatoesplénica", value: 'hepatoesplenica' }, { label: "Gammagrafía para hemangioma (pirofosfatos)", value: 'hemangioma' }, { label: "Renograma secuencial y filtración glomerular", value: 'renograma' }, { label: "Gammagrafía renal (DMSA)", value: 'renal-dmsa' }, { label: "Cistogammagrafía", value: 'cistogammagrafia' }, { label: "Gammagrafía de contenido escrotal (perfusión testicular)", value: 'testicular' }, { label: "Gammagrafía ósea", value: 'osea' }, { label: "Gammagrafía pulmonar de perfusión y ventilación", value: 'pulmonar-pv' }, { label: "Gammagrafía pulmonar de perfusión", value: 'pulmonar-p' }, { label: "SPECT cerebral", value: 'spect-cerebral' }, { label: "Cisternografía isotópica", value: 'cisternografia' }, { label: "Dacriocistogammagrafía", value: 'dacriocistografia' }, { label: "Gammagrafía de ganglios linfáticos (linfogammagrafía)", value: 'ganglios' }, { label: "Terapia con radio 223", value: 'radio-223' }] }
+  - label: Paso a paso
+    name: pasos
+    widget: object
+    required: false
+    collapsed: true
+    fields:
+      - { label: Antes (además de la preparación), name: antes, widget: list, required: false, field: { label: Paso, name: paso, widget: text } }
+      - { label: Durante, name: durante, widget: list, required: false, field: { label: Paso, name: paso, widget: text } }
+      - { label: Después, name: despues, widget: list, required: false, field: { label: Paso, name: paso, widget: text } }
+  - label: Señales de alarma
+    name: alarma
+    widget: object
+    required: false
+    collapsed: true
+    fields:
+      - { label: Título, name: titulo, widget: string, required: false }
+      - { label: Señales, name: items, widget: list, required: false, field: { label: Señal, name: item, widget: text } }
+  - label: Lista para marcar (factores de riesgo)
+    name: lista
+    widget: object
+    required: false
+    collapsed: true
+    fields:
+      - { label: Título, name: titulo, widget: string, required: false }
+      - { label: Elementos, name: items, widget: list, required: false, field: { label: Elemento, name: item, widget: text } }
+  - { label: Preguntas para su médico, name: preguntas, widget: list, required: false, field: { label: Pregunta, name: pregunta, widget: string } }
+  - label: Comprobación
+    name: comprobacion
+    widget: object
+    required: false
+    collapsed: true
+    fields:
+      - { label: Pregunta, name: pregunta, widget: string, required: false }
+      - { label: Opciones, name: opciones, widget: list, required: false, field: { label: Opción, name: opcion, widget: string } }
+      - { label: Opción correcta, name: correcta, widget: number, value_type: int, default: 0, hint: '0 es la primera opción, 1 la segunda, 2 la tercera.' }
+      - { label: Explicación, name: explicacion, widget: text, required: false }
+  - { label: Video de YouTube, name: video, widget: string, required: false, hint: 'Pegue el enlace del video (https://www.youtube.com/watch?v=...).' }
+  - { label: Descargable (PDF), name: descargable, widget: file, required: false }
+  - { label: Revisado por, name: revisado_por, widget: string, required: false, hint: 'Nombre y cargo del profesional que validó la ficha. Sin esto, no se publique contenido clínico.' }
+  - { label: Fecha de revisión, name: fecha_revision, widget: datetime, required: false, date_format: 'YYYY-MM-DD', time_format: false, format: 'YYYY-MM-DD' }
+  - { label: Próxima revisión, name: proxima_revision, widget: datetime, required: false, date_format: 'YYYY-MM-DD', time_format: false, format: 'YYYY-MM-DD' }
+  - { label: Fuentes, name: fuentes, widget: list, required: false, summary: '{{fields.texto}}', fields: [{ label: Texto, name: texto, widget: string }, { label: Enlace, name: url, widget: string, required: false }] }
+  - { label: Orden dentro de su categoría, name: orden, widget: number, value_type: int, default: 50 }
+  - { label: Destacada, name: destacado, widget: boolean, default: false, required: false }
+  - { label: Borrador (no publicar todavía), name: draft, widget: boolean, default: false, required: false }
+  - { label: Nota interna, name: review, widget: hidden, required: false }
+  - label: Texto
+    name: body
+    widget: markdown
+    buttons: [bold, italic, link, heading-two, heading-three, bulleted-list, numbered-list]
+    editor_components: []
+
 collections:
   - name: noticias
     label: Noticias
@@ -166,6 +237,32 @@ collections:
         name: draft
         widget: boolean
         default: false
+
+  - name: educacion-es
+    label: Educación al paciente (español)
+    label_singular: ficha
+    description: Fichas del centro de educación al paciente. Cada ficha debe tener su versión en inglés con la misma clave. Nada clínico se publica sin la validación del área asistencial.
+    folder: src/content/educacion/es
+    create: true
+    slug: '{{slug}}'
+    summary: '{{title}}'
+    sortable_fields: [title, categoria, orden]
+    editor:
+      preview: false
+    fields: *campos_educacion
+
+  - name: educacion-en
+    label: Educación al paciente (inglés)
+    label_singular: ficha
+    description: English versions of the patient education pages. Use the same key as the Spanish version.
+    folder: src/content/educacion/en
+    create: true
+    slug: '{{slug}}'
+    summary: '{{title}}'
+    sortable_fields: [title, categoria, orden]
+    editor:
+      preview: false
+    fields: *campos_educacion
 
   - name: datos
     label: Datos del sitio
@@ -389,6 +486,65 @@ collections:
               - { label: Texto, name: texto, widget: object, fields: [{ label: Español, name: es, widget: text }, { label: Inglés, name: en, widget: text }] }
               - { label: Enlaces oficiales, name: enlaces, widget: list, summary: '{{fields.texto.es}}', fields: [{ label: Texto, name: texto, widget: object, fields: [{ label: Español, name: es, widget: string }, { label: Inglés, name: en, widget: string }] }, { label: Dirección, name: url, widget: string }] }
           - { label: Datos de Cúcuta, name: datos, widget: list, summary: '{{fields.etiqueta.es}}', fields: [{ label: Dato, name: etiqueta, widget: object, fields: [{ label: Español, name: es, widget: string }, { label: Inglés, name: en, widget: string }] }, { label: Valor, name: valor, widget: object, fields: [{ label: Español, name: es, widget: string }, { label: Inglés, name: en, widget: string }] }] }
+      - name: educacion
+        label: Centro de educación (textos)
+        file: src/data/educacion.json
+        description: Categorías, situaciones de entrada, páginas enlazadas, aviso de emergencia y programa de educación de la página "Educación al paciente".
+        fields:
+          - label: Categorías
+            name: categorias
+            widget: list
+            summary: '{{fields.nombre.es}}'
+            fields:
+              - { label: Identificador (no cambiar), name: id, widget: string }
+              - { label: Ícono, name: icono, widget: string }
+              - { label: Nombre, name: nombre, widget: object, fields: [{ label: Español, name: es, widget: string }, { label: Inglés, name: en, widget: string }] }
+              - { label: Texto, name: texto, widget: object, fields: [{ label: Español, name: es, widget: string }, { label: Inglés, name: en, widget: string }] }
+          - label: '¿Qué necesita hoy?'
+            name: situaciones
+            widget: list
+            summary: '{{fields.titulo.es}}'
+            fields:
+              - { label: Ícono, name: icono, widget: string }
+              - { label: Texto del botón, name: titulo, widget: object, fields: [{ label: Español, name: es, widget: string }, { label: Inglés, name: en, widget: string }] }
+              - { label: Categorías que muestra, name: categorias, widget: select, multiple: true, options: [examenes, urgencias, enfermedades, prevencion, estilos, tratamiento, seguridad, derechos, familias] }
+          - label: Páginas del sitio que se muestran como temas
+            name: enlaces
+            widget: list
+            summary: '{{fields.titulo.es}}'
+            fields:
+              - { label: Página, name: ruta, widget: string, hint: 'Clave de la página (por ejemplo preparacion, seguridad, derechos, resultados o servicio-obesidad).' }
+              - { label: Categoría, name: categoria, widget: select, options: [examenes, urgencias, enfermedades, prevencion, estilos, tratamiento, seguridad, derechos, familias] }
+              - { label: Título, name: titulo, widget: object, fields: [{ label: Español, name: es, widget: string }, { label: Inglés, name: en, widget: string }] }
+              - { label: Texto, name: texto, widget: object, fields: [{ label: Español, name: es, widget: string }, { label: Inglés, name: en, widget: string }] }
+          - label: Aviso de emergencia
+            name: emergencia
+            widget: object
+            fields:
+              - { label: Teléfono, name: telefono, widget: string }
+              - { label: Texto, name: texto, widget: object, fields: [{ label: Español, name: es, widget: text }, { label: Inglés, name: en, widget: text }] }
+          - label: Programa de educación
+            name: programa
+            widget: object
+            fields:
+              - { label: Título, name: titulo, widget: object, fields: [{ label: Español, name: es, widget: string }, { label: Inglés, name: en, widget: string }] }
+              - { label: Texto, name: texto, widget: object, fields: [{ label: Español, name: es, widget: text }, { label: Inglés, name: en, widget: text }] }
+              - { label: Política, name: politica, widget: object, fields: [{ label: Español, name: es, widget: text }, { label: Inglés, name: en, widget: text }] }
+              - { label: Fuente de la política, name: politica_fuente, widget: object, fields: [{ label: Español, name: es, widget: string }, { label: Inglés, name: en, widget: string }] }
+              - { label: Actividades, name: actividades, widget: list, fields: [{ label: Español, name: es, widget: string }, { label: Inglés, name: en, widget: string }] }
+      - name: glosario
+        label: Glosario de educación
+        file: src/data/glosario.json
+        description: Palabras que se explican al tocarlas en las fichas de educación y en la página de Educación.
+        fields:
+          - { label: Nota (no se publica), name: nota, widget: text, required: false }
+          - label: Términos
+            name: terminos
+            widget: list
+            summary: '{{fields.es.termino}}'
+            fields:
+              - { label: Español, name: es, widget: object, fields: [{ label: Término, name: termino, widget: string }, { label: Formas que se reconocen en el texto, name: formas, widget: list, field: { label: Forma, name: forma, widget: string } }, { label: Definición, name: definicion, widget: text }] }
+              - { label: Inglés, name: en, widget: object, fields: [{ label: Término, name: termino, widget: string }, { label: Formas que se reconocen en el texto, name: formas, widget: list, field: { label: Forma, name: forma, widget: string } }, { label: Definición, name: definicion, widget: text }] }
       - name: galeria
         label: Fotos del inicio
         file: src/data/galeria.json

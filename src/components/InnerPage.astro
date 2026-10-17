@@ -18,6 +18,7 @@ import JobOpenings from './JobOpenings.astro';
 import SafetyGuide from './SafetyGuide.astro';
 import QualityStats from './QualityStats.astro';
 import InternationalGuide from './InternationalGuide.astro';
+import EducationHub from './EducationHub.astro';
 import Locations from './Locations.astro';
 import CtaBand from './CtaBand.astro';
 interface Props { p: Pagina; lang: Lang }
@@ -41,7 +42,7 @@ const crumbs = [{ label: t.home, href: r(lang, 'inicio') }];
 if (index && !isIndex) crumbs.push({ label: index.data.title, href: pathOfPagina(index) });
 crumbs.push({ label: d.title });
 
-const wide = ['seccion', 'servicios', 'contacto', 'mapa'].includes(d.layout);
+const wide = ['seccion', 'servicios', 'contacto', 'mapa', 'educacion'].includes(d.layout);
 const showNav = !wide && navItems.length > 1;
 ---
 <Base lang={lang} title={d.title} description={d.description || d.lead} path={path} altPath={altPath(d.key, lang)}>
@@ -64,6 +65,7 @@ const showNav = !wide && navItems.length > 1;
         {d.layout === 'seguridad' && <SafetyGuide lang={lang} />}
         {d.layout === 'calidad' && <QualityStats lang={lang} titulo={false} />}
         {d.layout === 'internacional' && <InternationalGuide lang={lang} />}
+        {d.layout === 'educacion' && <EducationHub lang={lang} />}
       </div>
     </div>
   </div>

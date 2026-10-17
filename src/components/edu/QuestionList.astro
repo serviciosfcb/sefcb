@@ -1,0 +1,71 @@
+---
+// Preguntas para llevar a la consulta: la persona marca las que le sirven, agrega las suyas e imprime su lista.
+import type { Lang } from '../../i18n/content';
+import Icon from '../Icon.astro';
+interface Props { lang: Lang; preguntas: string[]; titulo: string }
+const { lang, preguntas, titulo } = Astro.props;
+const en = lang === 'en';
+const t = en
+  ? { title: 'Questions to ask your doctor', lead: 'Tick the ones you want to ask, add your own and print your list.', own: 'Other questions', print: 'Print my list', printTitle: 'My questions about' }
+  : { title: 'Preguntas para su médico', lead: 'Marque las que quiere hacer, agregue las suyas e imprima su lista.', own: 'Otras preguntas', print: 'Imprimir mi lista', printTitle: 'Mis preguntas sobre' };
+---
+<section class="edq" aria-labelledby="edq-t" data-edq>
+  <div class="edq-cab">
+    <span class="edq-ico" aria-hidden="true"><Icon name="question" /></span>
+    <div><h2 id="edq-t">{t.title}</h2><p>{t.lead}</p></div>
+  </div>
+  <p class="edq-titulo-imp">{t.printTitle} {titulo}</p>
+  <ul class="edq-lista">
+    {preguntas.map((p, i) => (
+      <li><input type="checkbox" id={`edq-${i}`} checked /><label for={`edq-${i}`}>{p}</label></li>
+    ))}
+  </ul>
+  <div class="edq-propias">
+    <label for="edq-otras">{t.own}</label>
+    <textarea id="edq-otras" rows="3"></textarea>
+    <p class="edq-otras-imp" data-edq-otras></p>
+  </div>
+  <button class="btn btn-borde" type="button" data-edq-imprimir><Icon name="print" />{t.print}</button>
+</section>
+
+<script>
+  document.querySelectorAll<HTMLElement>('[data-edq]').forEach((box) => {
+    const area = box.querySelector<HTMLTextAreaElement>('textarea')!;
+    const copia = box.querySelector<HTMLElement>('[data-edq-otras]')!;
+    box.querySelector('[data-edq-imprimir]')?.addEventListener('click', () => {
+      copia.textContent = area.value;
+      document.documentElement.classList.add('imprimir-preguntas');
+      window.print();
+      setTimeout(() => document.documentElement.classList.remove('imprimir-preguntas'), 500);
+    });
+  });
+</script>
+
+<style>
+  .edq { display: grid; gap: 1rem; padding: clamp(1.3rem, 3vw, 2rem); border-radius: var(--radio-l); border: 1px solid var(--linea); }
+  .edq-cab { display: flex; gap: .9rem; align-items: flex-start; }
+  .edq-cab h2 { font-size: var(--t-4); }
+  .edq-cab p { color: var(--tinta-2); font-size: var(--t-0); margin-top: .2rem; }
+  .edq-ico { width: 2.8rem; height: 2.8rem; border-radius: 50%; display: grid; place-items: center; background: var(--rojo-tinte); color: var(--rojo); flex: none; }
+  .edq-ico :global(.icon) { width: 1.4rem; height: 1.4rem; }
+  .edq-titulo-imp, .edq-otras-imp { display: none; }
+  .edq-lista { list-style: none; display: grid; gap: .5rem; }
+  .edq-lista li { display: flex; gap: .7rem; align-items: flex-start; }
+  .edq-lista input { width: 1.25rem; height: 1.25rem; margin-top: .2rem; accent-color: var(--rojo); flex: none; }
+  .edq-lista label { line-height: 1.45; cursor: pointer; }
+  .edq-propias { display: grid; gap: .35rem; }
+  .edq-propias label { font-weight: 700; font-size: var(--t-0); }
+  .edq-propias textarea { width: 100%; padding: .7rem .8rem; border-radius: var(--radio-s); border: 1px solid #b9b7b2; font: inherit; resize: vertical; }
+  .edq-propias textarea:focus-visible { outline: 3px solid var(--rojo); outline-offset: 1px; }
+  .edq .btn { justify-self: start; }
+  .edq .btn :global(.icon) { width: 1.05rem; height: 1.05rem; }
+  @media print {
+    :global(html.imprimir-preguntas body *) { visibility: hidden; }
+    :global(html.imprimir-preguntas) .edq, :global(html.imprimir-preguntas) .edq * { visibility: visible; }
+    :global(html.imprimir-preguntas) .edq { position: absolute; left: 0; top: 0; width: 100%; border: 0; }
+    .edq-cab, .edq .btn, .edq-propias textarea, .edq-propias label { display: none; }
+    .edq-titulo-imp { display: block; font-size: 16pt; font-weight: 700; }
+    .edq-otras-imp { display: block; white-space: pre-wrap; }
+    .edq-lista li:has(input:not(:checked)) { display: none; }
+  }
+</style>
