@@ -2,14 +2,19 @@
 key: calidad
 title: Calidad y reconocimientos
 lead: Un sistema de gestión certificado y una cultura de servicio que se evalúa con estándares externos.
-description: Sistema integrado de gestión, política y objetivos de calidad, certificación ISO 9001 y reconocimientos de Servicios Especializados del Corazón.
+description: Sistema integrado de gestión, política y objetivos de calidad, certificaciones ISO 9001 e ISO 45001 y reconocimientos de Servicios Especializados del Corazón.
 card: Sistema de gestión, certificaciones y premios.
 section: nosotros
 order: 1
 ---
-## Certificación
+## Certificaciones
 
-- **ISO 9001:2015.** Nuestro sistema de gestión de calidad está certificado.
+Nuestros sistemas de gestión están certificados por Icontec, con reconocimiento internacional de la red IQNet:
+
+- **NTC ISO 9001:2015, sistema de gestión de calidad.** Certificado SC7166-1.
+- **NTC ISO 45001:2018, sistema de gestión de seguridad y salud en el trabajo.** Certificado ST-CER961165.
+
+<img src="/uploads/certificaciones/icontec-iqnet.webp" alt="Sellos de certificación Icontec ISO 9001, certificado SC7166-1, e ISO 45001, certificado ST-CER961165, y sello de certificación reconocida IQNet" width="660" height="335" loading="lazy" style="max-width:22rem;height:auto">
 
 ## Alcance del sistema de gestión de calidad
 

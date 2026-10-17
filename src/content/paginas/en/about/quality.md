@@ -2,14 +2,19 @@
 key: calidad
 title: Quality and awards
 lead: A certified management system and a service culture assessed against external standards.
-description: Integrated management system, quality policy and objectives, ISO 9001 certification, and awards of Servicios Especializados del Corazón.
+description: Integrated management system, quality policy and objectives, ISO 9001 and ISO 45001 certifications, and awards of Servicios Especializados del Corazón.
 card: Management system, certifications and awards.
 section: nosotros
 order: 1
 ---
-## Certification
+## Certifications
 
-- **ISO 9001:2015.** Our quality management system is certified.
+Our management systems are certified by Icontec, with international recognition from the IQNet network:
+
+- **NTC ISO 9001:2015, quality management system.** Certificate SC7166-1.
+- **NTC ISO 45001:2018, occupational health and safety management system.** Certificate ST-CER961165.
+
+<img src="/uploads/certificaciones/icontec-iqnet.webp" alt="Icontec certification marks for ISO 9001, certificate SC7166-1, and ISO 45001, certificate ST-CER961165, and the IQNet recognized certification mark" width="660" height="335" loading="lazy" style="max-width:22rem;height:auto">
 
 ## Scope of the quality management system
 
