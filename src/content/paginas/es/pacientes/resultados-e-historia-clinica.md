@@ -6,7 +6,7 @@ description: Cómo obtener resultados de exámenes y copias de la historia clín
 card: Descarga de resultados y copias de la historia clínica.
 section: pacientes
 order: 3
-review: Los formatos MA0405-R1 y MA0405-R2 están en la biblioteca de medios del sitio anterior; publicarlos aquí cuando lleguen los archivos.
+review: Formatos MA040105-R1 y MA040105-R2 versión 03 (2020), tomados del Drive con autorización de gerencia (17/10/2026). Al actualizar un formato, reemplazar el PDF en public/documentos con el mismo nombre.
 ---
 ## Sus resultados
 
@@ -26,18 +26,25 @@ Si viene a una consulta especializada, puede pedir la copia al terminar su atenc
 
 **Contacto:** coordinacionsiau@sefcb.co · PBX (607) 595 6075, ext. 105.
 
+## Formatos para descargar
+
+Imprímalos, diligéncielos y tráigalos con los demás requisitos.
+
+- [Solicitud de historia clínica y resultados de ayudas diagnósticas (MA040105-R1, PDF, 122 KB)](/documentos/MA040105-R1-solicitud-historia-clinica.pdf)
+- [Autorización de entrega de resultados o historia clínica a terceros (MA040105-R2, PDF, 112 KB)](/documentos/MA040105-R2-autorizacion-entrega-a-terceros.pdf)
+
 ## Requisitos
 
 ### Si la solicita el paciente
 
 1. Copia de su documento de identidad.
-2. Formato de solicitud de historia clínica.
+2. [Formato de solicitud de historia clínica](/documentos/MA040105-R1-solicitud-historia-clinica.pdf).
 
 ### Si la solicita un familiar o una persona autorizada
 
 1. Copia del documento de identidad del paciente.
 2. Copia del documento de identidad de la persona autorizada.
-3. Formato de autorización de entrega de historia clínica a terceros, diligenciado por el paciente.
+3. [Formato de autorización de entrega a terceros](/documentos/MA040105-R2-autorizacion-entrega-a-terceros.pdf), diligenciado por el paciente.
 
 ### Si el paciente es menor de edad
 
@@ -46,14 +53,14 @@ Lo tramitan los padres o el representante legal, con:
 1. Copia del documento de identidad de los padres o del representante legal.
 2. Copia del documento de identidad del menor.
 3. Documento que acredite el parentesco o la representación legal, como el registro civil de nacimiento.
-4. Formato de solicitud de historia clínica.
+4. [Formato de solicitud de historia clínica](/documentos/MA040105-R1-solicitud-historia-clinica.pdf).
 
 ### Si el paciente falleció o no está en condiciones de autorizar
 
 1. Documento de identidad original de quien solicita.
 2. Documentos que demuestren el parentesco, como registro civil de nacimiento o de matrimonio.
 3. Copia del registro civil de defunción, si aplica.
-4. Formato de solicitud de historia clínica.
+4. [Formato de solicitud de historia clínica](/documentos/MA040105-R1-solicitud-historia-clinica.pdf).
 
 ## Normas que aplicamos
 

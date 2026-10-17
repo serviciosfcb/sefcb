@@ -25,18 +25,25 @@ If you come for a specialist consultation, you can ask for a copy at the end of 
 
 **Contact:** coordinacionsiau@sefcb.co · +57 (607) 595 6075, ext. 105.
 
+## Forms to download
+
+Print them, fill them in and bring them with the other requirements. The forms are in Spanish.
+
+- [Request for medical records and diagnostic results (MA040105-R1, PDF, 122 KB)](/documentos/MA040105-R1-solicitud-historia-clinica.pdf)
+- [Authorization to release results or medical records to a third party (MA040105-R2, PDF, 112 KB)](/documentos/MA040105-R2-autorizacion-entrega-a-terceros.pdf)
+
 ## Requirements
 
 ### If the patient requests it
 
 1. Copy of the patient's ID.
-2. Medical records request form.
+2. [Medical records request form](/documentos/MA040105-R1-solicitud-historia-clinica.pdf).
 
 ### If a relative or authorized person requests it
 
 1. Copy of the patient's ID.
 2. Copy of the authorized person's ID.
-3. Third-party release authorization form, completed by the patient.
+3. [Third-party release authorization form](/documentos/MA040105-R2-autorizacion-entrega-a-terceros.pdf), completed by the patient.
 
 ### If the patient is a minor
 
@@ -45,14 +52,14 @@ The parents or legal guardian request it, with:
 1. Copy of the parents' or legal guardian's ID.
 2. Copy of the minor's ID.
 3. A document proving parentage or legal guardianship, such as the birth certificate.
-4. Medical records request form.
+4. [Medical records request form](/documentos/MA040105-R1-solicitud-historia-clinica.pdf).
 
 ### If the patient has died or cannot give authorization
 
 1. Original ID of the person requesting.
 2. Documents proving the family relationship, such as a birth or marriage certificate.
 3. Copy of the death certificate, if applicable.
-4. Medical records request form.
+4. [Medical records request form](/documentos/MA040105-R1-solicitud-historia-clinica.pdf).
 
 ## Regulations we follow
 
