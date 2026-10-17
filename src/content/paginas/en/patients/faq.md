@@ -23,9 +23,9 @@ It depends on your coverage. In general: a medical order, authorization from you
 
 On WhatsApp at +57 320 936 2904, by phone, in the patient portal, by email to contacto@sefcb.co, in person, or by direct message on Facebook and Instagram.
 
-### Is there priority service for private insurance, self-pay and special plan patients?
+### Who receives priority service?
 
-Our ticketing system classifies patients by their health plan and gives priority to private insurance, self-pay and special plan patients.
+We give priority service to children, pregnant women, people with disabilities, older adults (60 and over) and veterans of Colombia's armed forces and police, as required by Decree-Law 019 of 2012 (article 13) and External Circular 004 of 2015 of the National Health Superintendency. If you or the person you are with belongs to one of these groups, let us know when you arrive.
 
 ### How do I get my results?
 

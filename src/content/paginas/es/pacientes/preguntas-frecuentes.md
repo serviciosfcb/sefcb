@@ -6,7 +6,7 @@ description: Horarios, requisitos para pedir una cita, entrega de resultados, hi
 card: Horarios, requisitos, resultados y PQRS.
 section: pacientes
 order: 5
-review: Validar la respuesta sobre atención preferencial por tipo de afiliación. Horarios confirmados por gerencia (17/10/2026).
+review: Atención preferencial ajustada a la norma y horarios confirmados por gerencia (17/10/2026).
 ---
 ### ¿Cuáles son los horarios de atención?
 
@@ -24,9 +24,9 @@ Depende de su afiliación. En general: orden médica, autorización de su EPS o 
 
 Por WhatsApp al 320 936 2904, por teléfono, en el portal del paciente, por correo a contacto@sefcb.co, en la sede o por mensaje directo en Facebook e Instagram.
 
-### ¿Hay atención preferencial para medicina prepagada, particulares y régimen especial?
+### ¿Quiénes tienen atención preferencial?
 
-Nuestro sistema de turnos clasifica a los usuarios según la entidad a la que están afiliados y prioriza los turnos de medicina prepagada, particulares y régimen especial.
+Damos atención preferencial a niñas y niños, mujeres gestantes, personas con discapacidad, adultos mayores (60 años o más) y veteranos de la Fuerza Pública, como lo establecen el Decreto Ley 019 de 2012 (artículo 13) y la Circular Externa 004 de 2015 de la Superintendencia Nacional de Salud. Si usted o la persona a quien acompaña hace parte de uno de estos grupos, infórmelo al llegar.
 
 ### ¿Cómo recibo mis resultados?
 
