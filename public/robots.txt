@@ -1,0 +1,6 @@
+# sefcb.co: todo el sitio se puede indexar, salvo el panel de contenido.
+# Las direcciones de prueba (*.pages.dev) envían "noindex" en sus encabezados.
+User-agent: *
+Disallow: /admin/
+
+Sitemap: https://sefcb.co/sitemap.xml
