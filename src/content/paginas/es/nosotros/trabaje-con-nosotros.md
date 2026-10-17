@@ -7,7 +7,7 @@ card: Ofertas de empleo, prácticas y banco de hojas de vida.
 section: nosotros
 order: 3
 layout: empleo
-review: Ofertas vigentes enviadas por gerencia el 17/10/2026. Los formularios en línea son los mismos que enlazaba el sitio anterior (banco de hojas de vida y practicantes); confirmar que siguen recibiendo respuestas. Las ofertas se editan en el panel, en Datos → Ofertas de empleo.
+review: Ofertas vigentes enviadas por gerencia el 17/10/2026. Formularios de banco de hojas de vida y practicantes confirmados por gerencia. Las ofertas se editan en el panel, en Datos → Ofertas de empleo.
 ---
 Si quiere crecer con nosotros, revise las ofertas vigentes y postúlese. Recuerde adjuntar su hoja de vida con los soportes de su formación académica y su experiencia laboral.
 
