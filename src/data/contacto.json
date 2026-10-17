@@ -20,7 +20,20 @@
       "nota": "Consulta, cardiología no invasiva y medicina nuclear",
       "nota_en": "Consultations, non-invasive cardiology and nuclear medicine",
       "mapa": "https://www.google.com/maps/search/?api=1&query=Calle+19+1-44+Barrio+Blanco+C%C3%BAcuta",
-      "horarios": []
+      "horarios": [
+        {
+          "dias": "Lunes a viernes",
+          "dias_en": "Monday to Friday",
+          "horas": "7:00 a. m. – 6:00 p. m.",
+          "horas_en": "7:00 a.m. – 6:00 p.m."
+        },
+        {
+          "dias": "Sábados",
+          "dias_en": "Saturday",
+          "horas": "8:00 – 11:00 a. m.",
+          "horas_en": "8:00 – 11:00 a.m."
+        }
+      ]
     },
     {
       "nombre": "Sede 2",
@@ -30,7 +43,14 @@
       "nota": "Sala de hemodinamia",
       "nota_en": "Cardiac catheterization lab",
       "mapa": "https://www.google.com/maps/search/?api=1&query=Avenida+11E+8-41+C%C3%BAcuta",
-      "horarios": []
+      "horarios": [
+        {
+          "dias": "Lunes a viernes",
+          "dias_en": "Monday to Friday",
+          "horas": "8:00 a. m. – 12:00 m.",
+          "horas_en": "8:00 a.m. – 12:00 p.m."
+        }
+      ]
     }
   ]
 }

@@ -13,7 +13,8 @@ Presente sus derechos de petición, quejas, reclamos, sugerencias, felicitacione
 
 ## Horarios
 
-- **Atención presencial:** lunes a viernes de 7:00 a. m. a 6:00 p. m. y sábados de 8:00 a. m. a 11:00 a. m.
+- **Atención presencial en la sede principal (Calle 19):** lunes a viernes de 7:00 a. m. a 6:00 p. m. y sábados de 8:00 a. m. a 11:00 a. m.
+- **Atención presencial en la sede 2 (hemodinamia):** lunes a viernes de 8:00 a. m. a 12:00 m.
 - **Call center:** lunes a viernes de 7:00 a. m. a 7:00 p. m. y sábados de 8:00 a. m. a 2:00 p. m.
 
 ## Correspondencia

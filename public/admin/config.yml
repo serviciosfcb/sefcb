@@ -210,6 +210,7 @@ collections:
                   - { label: Días, name: dias, widget: string, hint: 'Ej. Lunes a viernes' }
                   - { label: Días en inglés, name: dias_en, widget: string, hint: 'Ej. Monday to Friday' }
                   - { label: Horario, name: horas, widget: string, hint: 'Ej. 7:00 a. m. – 5:00 p. m.' }
+                  - { label: Horario en inglés, name: horas_en, widget: string, required: false, hint: 'Ej. 7:00 a.m. – 5:00 p.m.' }
 
       - name: convenios
         label: Convenios

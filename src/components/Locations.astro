@@ -48,7 +48,7 @@ const contacts = [
                 <h4>{t.hours}</h4>
                 <dl>
                   {s.horarios.map((h) => (
-                    <div><dt>{en ? h.dias_en || h.dias : h.dias}</dt><dd>{h.horas}</dd></div>
+                    <div><dt>{en ? h.dias_en || h.dias : h.dias}</dt><dd>{en ? h.horas_en || h.horas : h.horas}</dd></div>
                   ))}
                 </dl>
               </div>

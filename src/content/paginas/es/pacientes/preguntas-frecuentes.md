@@ -6,15 +6,15 @@ description: Horarios, requisitos para pedir una cita, entrega de resultados, hi
 card: Horarios, requisitos, resultados y PQRS.
 section: pacientes
 order: 5
-review: Validar la respuesta sobre atención preferencial por tipo de afiliación y los horarios.
+review: Validar la respuesta sobre atención preferencial por tipo de afiliación. Horarios confirmados por gerencia (17/10/2026).
 ---
 ### ¿Cuáles son los horarios de atención?
 
-Lunes a viernes de 7:00 a. m. a 6:00 p. m. y sábados de 8:00 a. m. a 11:00 a. m.
+En la sede principal (Calle 19), de lunes a viernes de 7:00 a. m. a 6:00 p. m. y los sábados de 8:00 a. m. a 11:00 a. m. En la sede 2 (hemodinamia), de lunes a viernes de 8:00 a. m. a 12:00 m.
 
 ### ¿En qué horario puedo pedir una cita?
 
-En la sede, de lunes a viernes de 6:00 a. m. a 6:00 p. m. y los sábados de 8:00 a. m. a 11:00 a. m. Por el call center, de lunes a viernes de 7:00 a. m. a 7:00 p. m. y los sábados de 8:00 a. m. a 2:00 p. m.
+En la sede principal, de lunes a viernes de 7:00 a. m. a 6:00 p. m. y los sábados de 8:00 a. m. a 11:00 a. m. Por el call center, de lunes a viernes de 7:00 a. m. a 7:00 p. m. y los sábados de 8:00 a. m. a 2:00 p. m.
 
 ### ¿Qué necesito para pedir una cita?
 

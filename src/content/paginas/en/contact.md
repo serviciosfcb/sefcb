@@ -13,7 +13,8 @@ Submit petitions, complaints, suggestions, compliments, questions, information r
 
 ## Opening hours (Colombia time, UTC−5)
 
-- **In person:** Monday to Friday, 7:00 a.m. to 6:00 p.m.; Saturday, 8:00 a.m. to 11:00 a.m.
+- **In person at our main location (Calle 19):** Monday to Friday, 7:00 a.m. to 6:00 p.m.; Saturday, 8:00 a.m. to 11:00 a.m.
+- **In person at location 2 (cath lab):** Monday to Friday, 8:00 a.m. to 12:00 p.m.
 - **Call center:** Monday to Friday, 7:00 a.m. to 7:00 p.m.; Saturday, 8:00 a.m. to 2:00 p.m.
 
 ## Correspondence
