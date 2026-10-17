@@ -24,6 +24,10 @@ groups:
         detail: Assesses how the heart responds to progressive physical exercise. Adults and children.
       - name: Tilt table test
         detail: Looks for the cause of fainting (syncope). Adults and children.
+image: /src/assets/fotos/ecocardiografia-estudio.jpg
+image_alt: "A specialist points to the image of a patient's heart on the echocardiography screen while the patient, seen from behind, looks on."
+image_caption: "Echocardiography in one of our exam rooms."
+image_pos: "55% 40%"
 ---
 Our non-invasive cardiology unit brings together an interdisciplinary team of specialists who care for people with diseases of the heart and great vessels, with processes focused on patient safety.
 

@@ -21,6 +21,10 @@ groups:
         detail: Our staff performs the physical exam with telemedicine equipment, from vital signs to blood glucose and an ECG.
       - name: Video consultation
         detail: You connect with the specialist, who reviews the results and decides on next steps.
+image: /src/assets/fotos/consulta-especialista.jpg
+image_alt: "A specialist physician seated in his office, with his diplomas on the wall."
+image_caption: "A visit with one of our specialists."
+image_pos: "50% 58%"
 ---
 To meet all your health needs, our specialist and subspecialist outpatient unit offers cardiology and the specialties that complement heart care.
 

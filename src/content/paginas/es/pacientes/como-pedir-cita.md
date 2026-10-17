@@ -6,6 +6,9 @@ description: Canales y horarios para pedir, cambiar o cancelar citas en Servicio
 card: Canales, horarios y documentos que necesita.
 section: pacientes
 order: 1
+image: /src/assets/fotos/centro-de-contacto.jpg
+image_alt: "Asesoras del centro de contacto atienden llamadas con diadema frente a sus computadores."
+image_pos: "62% 50%"
 ---
 ## Canales para pedir su cita
 

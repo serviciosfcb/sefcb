@@ -40,6 +40,9 @@ x-campos-pagina: &campos_pagina
   - { label: Entradilla, name: lead, widget: text, required: false, hint: 'Una o dos frases bajo el título.' }
   - { label: Descripción para Google, name: description, widget: text, required: false, hint: 'Máximo 160 caracteres.' }
   - { label: Texto de la tarjeta, name: card, widget: string, required: false, hint: 'Frase corta que aparece en la tarjeta de esta página en su sección.' }
+  - { label: Foto de cabecera, name: image, widget: image, required: false, choose_url: false, media_folder: /src/assets/fotos, public_folder: /src/assets/fotos, hint: 'Opcional. Aparece junto al título. Use fotos horizontales de al menos 1600 px de ancho, sin pacientes identificables salvo que haya autorización escrita.' }
+  - { label: Descripción de la foto, name: image_alt, widget: string, required: false, hint: 'Qué se ve en la foto, en una frase (por ejemplo: Una especialista explica a una paciente su ecocardiograma). La leen las personas que usan lectores de pantalla. Obligatoria si hay foto.' }
+  - { label: Encuadre de la foto, name: image_pos, widget: string, required: false, default: '50% 50%', hint: 'Qué parte se conserva cuando la foto se recorta: posición horizontal y vertical. 50% 50% es el centro; 50% 25% conserva la parte de arriba (útil si hay caras arriba).' }
   - { label: Nota interna, name: review, widget: hidden, required: false }
   - label: Contenido
     name: body
@@ -59,6 +62,10 @@ x-campos-servicio: &campos_servicio
     widget: select
     options: [{ label: Sede principal, value: 0 }, { label: Sede 2, value: 1 }]
   - { label: Nota de ubicación, name: location, widget: text, required: false }
+  - { label: Foto del servicio, name: image, widget: image, required: false, choose_url: false, media_folder: /src/assets/fotos, public_folder: /src/assets/fotos, hint: 'Opcional. Aparece arriba de la descripción. Use fotos horizontales de al menos 1600 px de ancho, sin pacientes identificables salvo que haya autorización escrita.' }
+  - { label: Descripción de la foto, name: image_alt, widget: string, required: false, hint: 'Qué se ve en la foto, en una frase (por ejemplo: Una especialista explica a una paciente su ecocardiograma). La leen las personas que usan lectores de pantalla. Obligatoria si hay foto.' }
+  - { label: Pie de foto, name: image_caption, widget: string, required: false, hint: 'Frase corta bajo la foto.' }
+  - { label: Encuadre de la foto, name: image_pos, widget: string, required: false, default: '50% 50%', hint: 'Qué parte se conserva cuando la foto se recorta: posición horizontal y vertical. 50% 50% es el centro; 50% 25% conserva la parte de arriba (útil si hay caras arriba).' }
   - { label: Nota interna, name: review, widget: hidden, required: false }
   - label: Procedimientos
     name: groups
@@ -382,6 +389,24 @@ collections:
               - { label: Texto, name: texto, widget: object, fields: [{ label: Español, name: es, widget: text }, { label: Inglés, name: en, widget: text }] }
               - { label: Enlaces oficiales, name: enlaces, widget: list, summary: '{{fields.texto.es}}', fields: [{ label: Texto, name: texto, widget: object, fields: [{ label: Español, name: es, widget: string }, { label: Inglés, name: en, widget: string }] }, { label: Dirección, name: url, widget: string }] }
           - { label: Datos de Cúcuta, name: datos, widget: list, summary: '{{fields.etiqueta.es}}', fields: [{ label: Dato, name: etiqueta, widget: object, fields: [{ label: Español, name: es, widget: string }, { label: Inglés, name: en, widget: string }] }, { label: Valor, name: valor, widget: object, fields: [{ label: Español, name: es, widget: string }, { label: Inglés, name: en, widget: string }] }] }
+      - name: galeria
+        label: Fotos del inicio
+        file: src/data/galeria.json
+        description: Bloque "Así le atendemos" de la página de inicio. La primera foto sale en grande. Muestra hasta cinco fotos; use fotos con autorización escrita de las personas que aparecen.
+        fields:
+          - { label: Título, name: titulo, widget: object, fields: [{ label: Español, name: es, widget: string }, { label: Inglés, name: en, widget: string }] }
+          - { label: Texto, name: texto, widget: object, fields: [{ label: Español, name: es, widget: text }, { label: Inglés, name: en, widget: text }] }
+          - label: Fotos
+            name: fotos
+            label_singular: foto
+            widget: list
+            max: 5
+            summary: '{{fields.pie.es}}'
+            fields:
+              - { label: Foto, name: src, widget: image, choose_url: false, media_folder: /src/assets/fotos, public_folder: /src/assets/fotos, hint: 'Al menos 1600 px de ancho.' }
+              - { label: Rótulo sobre la foto, name: pie, widget: object, fields: [{ label: Español, name: es, widget: string }, { label: Inglés, name: en, widget: string }] }
+              - { label: Descripción de la foto (para lectores de pantalla), name: alt, widget: object, fields: [{ label: Español, name: es, widget: text }, { label: Inglés, name: en, widget: text }] }
+              - { label: Encuadre, name: pos, widget: string, required: false, default: '50% 50%', hint: 'Posición horizontal y vertical que se conserva al recortar. 50% 50% es el centro.' }
       - name: indicadores
         label: Indicadores del año
         file: src/data/indicadores.json

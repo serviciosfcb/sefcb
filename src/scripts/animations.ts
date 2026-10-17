@@ -54,6 +54,16 @@ function build(withIntro = true) {
       gsap.from(list.querySelectorAll('[data-stagger-item]'), { y: 40, opacity: 0, duration: 1, stagger: .1, ease, scrollTrigger: { trigger: list, start: 'top 88%', once: true } });
     });
 
+    // Fotos: se descubren desde una ventana más pequeña y la imagen se asienta
+    document.querySelectorAll<HTMLElement>('[data-foto-reveal]').forEach((el) => {
+      const img = el.querySelector('img');
+      const rad = getComputedStyle(el).borderRadius || '0px';
+      const idx = el.parentElement ? [...el.parentElement.children].indexOf(el) : 0;
+      const st = { trigger: el, start: 'top 92%', once: true };
+      gsap.fromTo(el, { clipPath: `inset(9% 7% 9% 7% round ${rad})` }, { clipPath: `inset(0% 0% 0% 0% round ${rad})`, duration: 1.5, delay: idx * .08, ease, scrollTrigger: st, clearProps: 'clipPath' });
+      if (img) gsap.fromTo(img, { scale: 1.22 }, { scale: 1, duration: 2, delay: idx * .08, ease, scrollTrigger: st, clearProps: 'transform' });
+    });
+
     // Línea de tiempo de la atención: el latido se dibuja con el scroll y enciende cada paso
     const tl = document.querySelector<HTMLElement>('[data-timeline]');
     if (tl) {

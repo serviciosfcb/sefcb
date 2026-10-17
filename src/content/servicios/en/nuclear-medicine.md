@@ -47,6 +47,10 @@ groups:
   - title: Peripheral vascular
     items:
       - name: Lymph node scan
+image: /src/assets/fotos/medicina-nuclear-gammacamara.jpg
+image_alt: "Nuclear medicine room with the gamma camera during a scan."
+image_caption: "Our nuclear medicine room, with the gamma camera."
+image_pos: "45% 55%"
 ---
 Nuclear medicine shows how organs work, not only what they look like. That is why it complements radiology, which defines anatomy. It is a multidisciplinary specialty that draws on radiopharmacy, medical physics and computing.
 

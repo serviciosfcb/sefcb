@@ -5,6 +5,10 @@ tag: Gammagrafía
 summary: Imágenes que muestran cómo funcionan el corazón y otros órganos, con una dosis mínima de radiofármaco y sin cirugía.
 order: 2
 sede: 0
+image: /src/assets/fotos/medicina-nuclear-gammacamara.jpg
+image_alt: "Sala de medicina nuclear con la gammacámara durante un estudio."
+image_caption: "Sala de medicina nuclear, con la gammacámara."
+image_pos: "45% 55%"
 review: Se omitió la comparación de radiación con estudios convencionales del texto anterior; validar con el área.
 groups:
   - title: Cardiología

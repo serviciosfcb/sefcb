@@ -6,6 +6,9 @@ description: Servicios Especializados del Corazón is a healthcare provider in C
 section: nosotros
 layout: seccion
 order: 0
+image: /src/assets/fotos/equipo-sede-calle-19.jpg
+image_alt: "Members of the SEFCB team, in white shirts and red trousers, at the entrance of our Calle 19 # 1-44 location in Cúcuta."
+image_pos: "50% 40%"
 ---
 Servicios Especializados del Corazón is a company from Norte de Santander created to provide health services, mainly in cardiovascular care. We bring together people, technology and management to offer reliability, good outcomes and the satisfaction our patients expect.
 

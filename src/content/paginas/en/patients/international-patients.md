@@ -7,6 +7,9 @@ card: How to plan your care if you come from abroad.
 section: pacientes
 order: 7.9
 layout: internacional
+image: /src/assets/fotos/bienvenida-atencion-al-usuario.jpg
+image_alt: "Two team members, one in a blue surgical gown, smile in the patient services area."
+image_pos: "50% 34%"
 ---
 We see patients from other countries for [non-invasive cardiology](/en/services/non-invasive-cardiology/), [nuclear medicine](/en/services/nuclear-medicine/), [interventional cardiology](/en/services/interventional-cardiology/) and [specialist consultations](/en/services/specialist-consultations/). Both of our locations are in Cúcuta, a city with an international airport on the border with Venezuela.
 

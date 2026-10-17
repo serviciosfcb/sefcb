@@ -7,6 +7,9 @@ card: Sistema de gestión, certificaciones y premios.
 section: nosotros
 order: 1
 layout: calidad
+image: /src/assets/fotos/trato-humanizado.jpg
+image_alt: "Una integrante del equipo asistencial, con gorro y uniforme, forma un corazón con las manos en la sala de pruebas de esfuerzo."
+image_pos: "50% 42%"
 ---
 ## Certificaciones
 

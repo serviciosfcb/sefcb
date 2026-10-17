@@ -6,6 +6,9 @@ description: Phone numbers, WhatsApp, email, locations, opening hours and feedba
 section: contacto
 layout: contacto
 order: 0
+image: /src/assets/fotos/recepcion.jpg
+image_alt: "A receptionist smiles as she hands a document to someone at the reception desk."
+image_pos: "62% 50%"
 ---
 ## Petitions, complaints, suggestions and compliments
 

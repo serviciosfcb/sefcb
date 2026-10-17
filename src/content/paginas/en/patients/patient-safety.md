@@ -7,6 +7,9 @@ card: Our goals and how you can help keep you safe.
 section: pacientes
 order: 3.5
 layout: seguridad
+image: /src/assets/fotos/monitoreo-presion-arterial.jpg
+image_alt: "A member of our clinical team fits the cuff of a blood pressure monitor on a patient."
+image_pos: "55% 50%"
 ---
 Your safety comes first at every visit, test and procedure. Our patient safety program follows the guidelines of Colombia's Ministry of Health and Social Protection and the World Health Organization, and aims to prevent the risks of care with the active participation of our team, our patients and their families.
 

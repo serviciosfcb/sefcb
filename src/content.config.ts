@@ -34,6 +34,10 @@ const paginas = defineCollection({
     order: z.number().optional().default(50),
     layout: z.enum(['texto', 'seccion', 'servicios', 'equipo', 'transparencia', 'contacto', 'mapa', 'preparacion', 'empleo', 'seguridad', 'calidad', 'internacional']).optional().default('texto'),
     card: z.string().optional().default(''),
+    // Foto de cabecera (opcional): ruta en src/assets/fotos, descripción y encuadre (object-position)
+    image: z.string().optional().default(''),
+    image_alt: z.string().optional().default(''),
+    image_pos: z.string().optional().default('50% 50%'),
     review: z.string().optional().default(''),
   }),
 });
@@ -54,6 +58,11 @@ const servicios = defineCollection({
     })).optional().default([]),
     location: z.string().optional().default(''),
     sede: z.number().optional().default(0),
+    // Foto del servicio (opcional): ruta en src/assets/fotos, descripción, pie de foto y encuadre
+    image: z.string().optional().default(''),
+    image_alt: z.string().optional().default(''),
+    image_caption: z.string().optional().default(''),
+    image_pos: z.string().optional().default('50% 50%'),
     review: z.string().optional().default(''),
   }),
 });

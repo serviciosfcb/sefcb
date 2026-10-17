@@ -1,0 +1,54 @@
+{
+  "titulo": { "es": "Así le atendemos", "en": "How we care for you" },
+  "texto": {
+    "es": "Un equipo que le recibe con calidez y la tecnología para estudiar su corazón, en nuestras dos sedes de Cúcuta.",
+    "en": "A team that welcomes you warmly and the technology to study your heart, at our two locations in Cúcuta."
+  },
+  "fotos": [
+    {
+      "src": "/src/assets/fotos/equipo-sede-calle-19.jpg",
+      "pos": "50% 40%",
+      "pie": { "es": "Nuestro equipo, sede Calle 19", "en": "Our team, Calle 19 location" },
+      "alt": {
+        "es": "Parte del equipo de SEFCB, de camisa blanca y pantalón rojo, a la entrada de la sede de la Calle 19 # 1-44 en Cúcuta.",
+        "en": "Members of the SEFCB team, in white shirts and red trousers, at the entrance of our Calle 19 # 1-44 location in Cúcuta."
+      }
+    },
+    {
+      "src": "/src/assets/fotos/ecocardiografia.jpg",
+      "pos": "60% 40%",
+      "pie": { "es": "Ecocardiografía", "en": "Echocardiography" },
+      "alt": {
+        "es": "Una especialista señala en la pantalla del ecocardiógrafo la imagen del corazón de una paciente.",
+        "en": "A specialist points to the image of a patient's heart on the echocardiography screen."
+      }
+    },
+    {
+      "src": "/src/assets/fotos/medicina-nuclear-gammacamara.jpg",
+      "pos": "45% 55%",
+      "pie": { "es": "Medicina nuclear", "en": "Nuclear medicine" },
+      "alt": {
+        "es": "Sala de medicina nuclear con la gammacámara durante un estudio.",
+        "en": "Nuclear medicine room with the gamma camera during a scan."
+      }
+    },
+    {
+      "src": "/src/assets/fotos/consulta-especialista.jpg",
+      "pos": "50% 52%",
+      "pie": { "es": "Consulta especializada", "en": "Specialist care" },
+      "alt": {
+        "es": "Médico especialista sentado en su consultorio, con sus diplomas en la pared.",
+        "en": "A specialist physician seated in his office, with his diplomas on the wall."
+      }
+    },
+    {
+      "src": "/src/assets/fotos/rincon-infantil.jpg",
+      "pos": "55% 60%",
+      "pie": { "es": "Un espacio para los niños", "en": "A space for children" },
+      "alt": {
+        "es": "Rincón infantil de la sala de espera, con juguetes, mesas pequeñas y sillas de colores.",
+        "en": "Children's corner in the waiting area, with toys, small tables and colorful chairs."
+      }
+    }
+  ]
+}

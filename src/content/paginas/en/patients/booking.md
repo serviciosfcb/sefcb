@@ -6,6 +6,9 @@ description: Channels and hours to book, change or cancel appointments at Servic
 card: Channels, hours and the documents you need.
 section: pacientes
 order: 1
+image: /src/assets/fotos/centro-de-contacto.jpg
+image_alt: "Contact center advisors take calls on headsets at their computers."
+image_pos: "62% 50%"
 ---
 ## Ways to book
 

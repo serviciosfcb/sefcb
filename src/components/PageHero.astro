@@ -1,24 +1,39 @@
 ---
-// Banda oscura de inicio para páginas internas: miga de pan, título y entradilla.
+// Banda oscura de inicio para páginas internas: miga de pan, título, entradilla y, si la página la tiene, una foto.
+import Foto from './Foto.astro';
 interface Crumb { label: string; href?: string }
-interface Props { title: string; lead?: string; crumbs?: Crumb[]; meta?: string; lang?: string; crumbsLabel: string }
-const { title, lead, crumbs = [], meta, lang, crumbsLabel } = Astro.props;
+interface Props { title: string; lead?: string; crumbs?: Crumb[]; meta?: string; lang?: string; crumbsLabel: string; image?: string; imageAlt?: string; imagePos?: string }
+const { title, lead, crumbs = [], meta, lang, crumbsLabel, image, imageAlt = '', imagePos } = Astro.props;
+const conFoto = Boolean(image);
+// Trazo de ECG decorativo bajo la foto
+const blip = 'l 8 -3 l 5 3 l 7 0 l 4 -18 l 5 32 l 4 -14 l 10 0 l 8 -5 l 7 5';
+const latido = `M0 24 H 70 ${blip} H 200 ${blip} H 330 ${blip} H 420`;
 ---
-<section class="cabecera-pagina oscuro">
+<section class:list={['cabecera-pagina', 'oscuro', { 'con-foto': conFoto }]}>
   <div class="cp-fondo decorativo" aria-hidden="true"></div>
   <div class="contenedor cp-in">
-    {crumbs.length > 0 && (
-      <nav class="migas" aria-label={crumbsLabel}>
-        <ol>
-          {crumbs.map((c) => (
-            <li>{c.href ? <a href={c.href}>{c.label}</a> : <span aria-current="page">{c.label}</span>}</li>
-          ))}
-        </ol>
-      </nav>
+    <div class="cp-txt">
+      {crumbs.length > 0 && (
+        <nav class="migas" aria-label={crumbsLabel}>
+          <ol>
+            {crumbs.map((c) => (
+              <li>{c.href ? <a href={c.href}>{c.label}</a> : <span aria-current="page">{c.label}</span>}</li>
+            ))}
+          </ol>
+        </nav>
+      )}
+      {meta && <p class="cp-meta">{meta}</p>}
+      <h1 data-split lang={lang}>{title}</h1>
+      {lead && <p class="cp-lead" data-reveal lang={lang}>{lead}</p>}
+    </div>
+    {conFoto && (
+      <div class="cp-foto-zona">
+        <figure class="cp-foto" data-foto-reveal>
+          <Foto src={image} alt={imageAlt} pos={imagePos} sizes="(min-width: 960px) 560px, 100vw" widths={[480, 800, 1200]} priority />
+        </figure>
+        <svg class="cp-latido decorativo" viewBox="0 0 420 48" aria-hidden="true" focusable="false"><path data-draw d={latido} /></svg>
+      </div>
     )}
-    {meta && <p class="cp-meta">{meta}</p>}
-    <h1 data-split lang={lang}>{title}</h1>
-    {lead && <p class="cp-lead" data-reveal lang={lang}>{lead}</p>}
   </div>
 </section>
 
@@ -40,6 +55,7 @@ const { title, lead, crumbs = [], meta, lang, crumbsLabel } = Astro.props;
     mask-image: linear-gradient(180deg, #000, transparent 90%);
   }
   .cp-in { display: grid; gap: 1.1rem; }
+  .cp-txt { display: grid; gap: 1.1rem; align-content: center; min-width: 0; }
   .migas ol { list-style: none; display: flex; flex-wrap: wrap; gap: .4rem; font-size: var(--t-0); color: var(--sobre-oscuro-2); }
   .migas li + li::before { content: '/'; margin-right: .4rem; opacity: .5; }
   .migas a { color: var(--sobre-oscuro-2); text-decoration: none; }
@@ -48,6 +64,24 @@ const { title, lead, crumbs = [], meta, lang, crumbsLabel } = Astro.props;
   .cp-meta { color: var(--rojo-luz); font-weight: 700; font-size: var(--t-0); letter-spacing: .02em; }
   h1 { font-size: var(--t-6); color: #fff; max-width: 52rem; }
   .cp-lead { font-size: var(--t-3); color: var(--sobre-oscuro-2); line-height: 1.45; max-width: 40rem; }
+
+  /* Con foto: texto a la izquierda y foto a la derecha; en pantallas angostas, la foto va debajo */
+  .con-foto .cp-in { grid-template-columns: minmax(0, 1.1fr) minmax(0, .9fr); gap: clamp(2rem, 5vw, 4.5rem); align-items: center; }
+  .con-foto .cp-fondo { background: radial-gradient(34rem 30rem at 78% 55%, rgb(159 39 40 / .36), transparent 70%), linear-gradient(180deg, #1c1a19, #171514); }
+  .cp-foto-zona { position: relative; min-width: 0; }
+  .cp-foto-zona::before { content: ''; position: absolute; inset: 12% -6% -10% 18%; z-index: -1; border-radius: var(--radio-xl); background: radial-gradient(closest-side, rgb(159 39 40 / .45), transparent); filter: blur(10px); }
+  .cp-foto { aspect-ratio: 5 / 4; border-radius: var(--radio-xl); overflow: hidden; background: rgb(255 255 255 / .04); box-shadow: 0 0 0 1px rgb(255 255 255 / .1), 0 40px 80px -40px rgb(0 0 0 / .7); }
+  .cp-foto :global(img) { display: block; width: 100%; height: 100%; object-fit: cover; }
+  .cp-latido { position: absolute; left: -2.5rem; bottom: -1.6rem; width: min(62%, 17rem); height: auto; overflow: visible; }
+  .cp-latido path { fill: none; stroke: var(--rojo-luz); stroke-width: 2.2; stroke-linejoin: round; stroke-linecap: round; filter: drop-shadow(0 0 6px rgb(226 72 77 / .55)); }
+  :global(.js-anim) .cp-latido path { stroke-dasharray: var(--len, 1000); stroke-dashoffset: var(--len, 1000); animation: cp-dibujo 2.4s var(--ease) .7s forwards; }
+  @keyframes cp-dibujo { to { stroke-dashoffset: 0; } }
+  @media (max-width: 959px) {
+    .con-foto .cp-in { grid-template-columns: minmax(0, 1fr); gap: 2rem; }
+    .cp-foto { aspect-ratio: 16 / 10; border-radius: var(--radio-l); }
+    .cp-latido { left: auto; right: 1rem; bottom: -1.2rem; width: 11rem; }
+  }
   :global(:root[data-contrast='high']) .cp-fondo { display: none; }
   :global(:root[data-contrast='high']) .cabecera-pagina { background: #000; }
+  :global(:root[data-contrast='high']) .cp-foto-zona::before, :global(:root[data-contrast='high']) .cp-latido { display: none; }
 </style>

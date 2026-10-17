@@ -6,6 +6,9 @@ description: Servicios Especializados del Corazón es una IPS de Cúcuta especia
 section: nosotros
 layout: seccion
 order: 0
+image: /src/assets/fotos/equipo-sede-calle-19.jpg
+image_alt: "Parte del equipo de SEFCB, de camisa blanca y pantalón rojo, a la entrada de la sede de la Calle 19 # 1-44 en Cúcuta."
+image_pos: "50% 40%"
 ---
 Servicios Especializados del Corazón es una empresa nortesantandereana creada para prestar servicios de salud, principalmente en el área cardiovascular. Somos una unidad integral de talento humano, tecnología y gestión que ofrece a quienes necesitan nuestros servicios confiabilidad, buenos resultados y la satisfacción que esperan.
 

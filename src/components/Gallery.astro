@@ -1,0 +1,112 @@
+---
+// Inicio: fotos reales del equipo y de las sedes, con dos cifras del informe de gestión.
+// Fotos y textos en src/data/galeria.json (panel: Datos del sitio > Fotos del inicio).
+import type { Lang } from '../i18n/content';
+import { r } from '../i18n/routes';
+import data from '../data/galeria.json';
+import ind from '../data/indicadores.json';
+import { txt } from '../lib/fotos';
+import Foto from './Foto.astro';
+import Icon from './Icon.astro';
+interface Props { lang: Lang }
+const { lang } = Astro.props;
+const en = lang === 'en';
+const fotos = data.fotos.filter((f) => f.src).slice(0, 5);
+const nf = (v: number, dec: number) => new Intl.NumberFormat(en ? 'en-US' : 'es-CO', { minimumFractionDigits: dec, maximumFractionDigits: dec }).format(v);
+const grupo = (id: string) => ind.grupos.find((g) => g.id === id)?.items[0];
+const atendidos = grupo('actividad');
+const satisfaccion = grupo('experiencia');
+const cifras = [
+  atendidos && { valor: nf(atendidos.valor, atendidos.decimales ?? 0), etiqueta: en ? `patients served in ${ind.anio}` : `usuarios atendidos en ${ind.anio}` },
+  satisfaccion && { valor: `${nf(satisfaccion.valor, satisfaccion.decimales ?? 2)}${en ? '' : ' '}${satisfaccion.unidad}`, etiqueta: txt(satisfaccion.etiqueta, en).toLowerCase() },
+].filter(Boolean) as { valor: string; etiqueta: string }[];
+const sizes = ['(min-width: 960px) 620px, (min-width: 600px) 100vw, 80vw', '(min-width: 960px) 310px, (min-width: 600px) 50vw, 80vw'];
+---
+<section class="gal seccion" aria-labelledby="gal-titulo">
+  <div class="contenedor">
+    <div class="gal-cab">
+      <header class="sec-cab">
+        <h2 id="gal-titulo" data-split>{txt(data.titulo, en)}</h2>
+        <p data-reveal>{txt(data.texto, en)}</p>
+      </header>
+      {cifras.length > 0 && (
+        <div class="gal-datos" data-reveal>
+          <dl class="gal-cifras">
+            {cifras.map((c) => (
+              <div class="gal-cifra"><dt>{c.etiqueta}</dt><dd>{c.valor}</dd></div>
+            ))}
+          </dl>
+          <a class="enlace-flecha" href={r(lang, 'calidad')}>{en ? 'See our quality indicators' : 'Ver nuestros indicadores'}<Icon name="arrow" /></a>
+        </div>
+      )}
+    </div>
+
+    <ul class="gal-lista" tabindex="0" aria-label={en ? 'Photos of our team and facilities' : 'Fotos de nuestro equipo y nuestras sedes'}>
+      {fotos.map((f, i) => (
+        <li class:list={['gal-item', { 'gal-grande': i === 0 }]} data-foto-reveal>
+          <figure>
+            <Foto src={f.src} alt={txt(f.alt, en)} pos={f.pos} sizes={sizes[i === 0 ? 0 : 1]} widths={i === 0 ? [480, 800, 1200] : [480, 800]} />
+            {txt(f.pie, en) && <figcaption><span>{txt(f.pie, en)}</span></figcaption>}
+          </figure>
+        </li>
+      ))}
+    </ul>
+  </div>
+</section>
+
+<style>
+  .gal { background: var(--papel); overflow: hidden; }
+  .gal.seccion { padding-top: clamp(1rem, 3vw, 2.5rem); }
+  .gal-cab { display: grid; grid-template-columns: minmax(0, 1fr) auto; align-items: end; gap: 1.5rem 3rem; margin-bottom: clamp(2rem, 1.5rem + 2vw, 3.2rem); }
+  .gal-cab .sec-cab { margin-bottom: 0; }
+  .gal-datos { display: grid; gap: 1rem; justify-items: start; padding-bottom: .4rem; }
+  .gal-cifras { display: flex; gap: 2.2rem; }
+  .gal-cifra { display: flex; flex-direction: column-reverse; justify-content: flex-end; gap: .2rem; }
+  .gal-cifra dd { font-family: var(--display); font-weight: 700; font-size: clamp(2rem, 1.5rem + 1.6vw, 2.9rem); line-height: 1; letter-spacing: -.03em; color: var(--tinta); font-variant-numeric: tabular-nums; }
+  .gal-cifra dt { font-size: var(--t-0); color: var(--tinta-2); max-width: 11rem; line-height: 1.35; }
+  .gal-cifra + .gal-cifra { padding-left: 2.2rem; border-left: 1px solid var(--linea); }
+
+  .gal-lista { list-style: none; display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); grid-template-rows: repeat(2, clamp(14rem, 9rem + 9vw, 19rem)); gap: 1rem; }
+  .gal-item { position: relative; min-width: 0; border-radius: var(--radio-l); overflow: hidden; background: var(--niebla); isolation: isolate; }
+  .gal-grande { grid-column: span 2; grid-row: span 2; }
+  .gal-item figure { height: 100%; }
+  .gal-item :global(img) { display: block; width: 100%; height: 100%; object-fit: cover; transition: transform 1.2s var(--ease); }
+  .gal-item:hover :global(img) { transform: scale(1.045); }
+  .gal-item::after { content: ''; position: absolute; inset: 55% 0 0 0; background: linear-gradient(180deg, transparent, rgb(20 18 17 / .55)); pointer-events: none; }
+  .gal-item figcaption { position: absolute; z-index: 1; left: 1rem; right: 1rem; bottom: 1rem; display: flex; }
+  .gal-item figcaption span {
+    display: inline-flex; align-items: center; gap: .55rem; padding: .5rem .95rem .5rem .8rem; border-radius: 999px;
+    background: rgb(28 26 25 / .62); backdrop-filter: blur(10px); -webkit-backdrop-filter: blur(10px);
+    color: #fff; font-size: var(--t-0); font-weight: 600; line-height: 1.25;
+  }
+  .gal-item figcaption span::before { content: ''; width: .5rem; height: .5rem; border-radius: 50%; background: var(--rojo-luz); flex: none; box-shadow: 0 0 0 3px rgb(226 72 77 / .28); }
+  .gal-grande figcaption { left: 1.4rem; bottom: 1.4rem; }
+  .gal-grande figcaption span { font-size: var(--t-1); padding: .6rem 1.1rem .6rem .95rem; }
+  .gal-lista:focus-visible { outline: 3px solid var(--rojo); outline-offset: 6px; border-radius: var(--radio-l); }
+
+  @media (max-width: 959px) {
+    .gal-cab { grid-template-columns: minmax(0, 1fr); align-items: start; }
+    .gal-lista { grid-template-columns: repeat(2, minmax(0, 1fr)); grid-template-rows: none; grid-auto-rows: auto; }
+    .gal-grande { grid-column: 1 / -1; grid-row: auto; aspect-ratio: 16 / 10; }
+    .gal-item:not(.gal-grande) { aspect-ratio: 4 / 3; }
+  }
+  /* En el teléfono, las fotos se deslizan de lado */
+  @media (max-width: 599px) {
+    .gal-cifras { gap: 1.4rem; }
+    .gal-cifra + .gal-cifra { padding-left: 1.4rem; }
+    .gal-lista {
+      display: grid; grid-auto-flow: column; grid-template-columns: none; grid-auto-columns: 80%; gap: .75rem;
+      overflow-x: auto; overscroll-behavior-x: contain; scroll-snap-type: x mandatory; scroll-padding-inline: var(--gutter-l);
+      margin-inline: calc(var(--gutter-l) * -1) calc(var(--gutter-r) * -1); padding-inline: var(--gutter-l) var(--gutter-r); padding-bottom: .4rem;
+      scrollbar-width: none;
+    }
+    .gal-lista::-webkit-scrollbar { display: none; }
+    .gal-item, .gal-grande, .gal-item:not(.gal-grande) { grid-column: auto; aspect-ratio: 4 / 5; scroll-snap-align: start; border-radius: var(--radio-m); }
+    .gal-grande figcaption, .gal-item figcaption { left: .8rem; right: .8rem; bottom: .8rem; }
+    .gal-grande figcaption span { font-size: var(--t-0); padding: .5rem .95rem .5rem .8rem; }
+  }
+  @media (prefers-reduced-motion: reduce) { .gal-item :global(img) { transition: none; } .gal-item:hover :global(img) { transform: none; } }
+  :global(:root[data-motion='reduced']) .gal-item:hover :global(img) { transform: none; }
+  :global(:root[data-contrast='high']) .gal-item::after { display: none; }
+  :global(:root[data-contrast='high']) .gal-item figcaption span { background: #000; backdrop-filter: none; }
+</style>

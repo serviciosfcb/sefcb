@@ -7,6 +7,9 @@ card: Management system, certifications and awards.
 section: nosotros
 order: 1
 layout: calidad
+image: /src/assets/fotos/trato-humanizado.jpg
+image_alt: "A member of our clinical team, in cap and uniform, makes a heart shape with her hands in the stress test room."
+image_pos: "50% 42%"
 ---
 ## Certifications
 

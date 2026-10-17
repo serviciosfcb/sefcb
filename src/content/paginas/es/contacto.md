@@ -6,6 +6,9 @@ description: Teléfonos, WhatsApp, correos, sedes, horarios y canales de PQRS de
 section: contacto
 layout: contacto
 order: 0
+image: /src/assets/fotos/recepcion.jpg
+image_alt: "Una recepcionista sonríe y entrega un documento a una persona en el mostrador de recepción."
+image_pos: "62% 50%"
 ---
 ## Peticiones, quejas, reclamos, sugerencias y felicitaciones
 

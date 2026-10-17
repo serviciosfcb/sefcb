@@ -7,6 +7,9 @@ card: Ofertas de empleo, prácticas y banco de hojas de vida.
 section: nosotros
 order: 3
 layout: empleo
+image: /src/assets/fotos/equipo-administrativo.jpg
+image_alt: "Dos colaboradoras de SEFCB sonríen frente a una pintura de la sede."
+image_pos: "50% 38%"
 review: Ofertas vigentes enviadas por gerencia el 17/10/2026. Formularios de banco de hojas de vida y practicantes confirmados por gerencia. Las ofertas se editan en el panel, en Datos → Ofertas de empleo.
 ---
 Si quiere crecer con nosotros, revise las ofertas vigentes y postúlese. Recuerde adjuntar su hoja de vida con los soportes de su formación académica y su experiencia laboral.

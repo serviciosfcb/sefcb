@@ -6,6 +6,9 @@ description: Patient and family education program at Servicios Especializados de
 card: Information to look after your health.
 section: pacientes
 order: 7
+image: /src/assets/fotos/educacion-sala-de-espera.jpg
+image_alt: "A staff member points to an educational video on relaxation on the waiting room screen while a patient watches."
+image_pos: "50% 45%"
 ---
 Through our Patient and Family Education Program, we want you and your companions to take an active part in caring for your health.
 

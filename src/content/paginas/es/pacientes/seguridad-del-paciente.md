@@ -7,6 +7,9 @@ card: Nuestras metas y cómo puede ayudarnos a cuidarle.
 section: pacientes
 order: 3.5
 layout: seguridad
+image: /src/assets/fotos/monitoreo-presion-arterial.jpg
+image_alt: "Una integrante del equipo asistencial le coloca a un paciente el brazalete de un monitor de presión arterial."
+image_pos: "55% 50%"
 ---
 Su seguridad es lo primero en cada consulta, examen y procedimiento. Nuestro programa de seguridad del paciente sigue los lineamientos del Ministerio de Salud y Protección Social y de la Organización Mundial de la Salud, y busca prevenir los riesgos de la atención con la participación activa de nuestro equipo, de los pacientes y de sus familias.
 

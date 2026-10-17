@@ -1,0 +1,16 @@
+---
+// Foto institucional optimizada: WebP en varios anchos para que cada pantalla descargue solo lo que necesita.
+// Si la ruta no está en src/assets/fotos (por ejemplo, una foto subida a /uploads), se muestra tal cual.
+import { Image } from 'astro:assets';
+import { foto } from '../lib/fotos';
+interface Props { src?: string; alt: string; sizes: string; pos?: string; class?: string; priority?: boolean; widths?: number[] }
+const { src, alt, sizes, pos = '50% 50%', class: cls, priority = false, widths = [480, 800, 1200, 1600] } = Astro.props;
+const meta = foto(src);
+const style = `object-position: ${pos}`;
+const anchos = meta ? widths.filter((w) => w <= meta.width) : [];
+---
+{meta ? (
+  <Image src={meta} alt={alt} widths={anchos.length ? anchos : [meta.width]} sizes={sizes} format="webp" quality={76} class={cls} style={style} priority={priority} />
+) : src ? (
+  <img src={src} alt={alt} class={cls} style={style} loading={priority ? 'eager' : 'lazy'} decoding="async" />
+) : null}

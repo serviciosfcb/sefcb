@@ -24,6 +24,10 @@ groups:
         detail: Evalúa cómo responde el corazón a un ejercicio físico progresivo. Adultos y niños.
       - name: Prueba de mesa basculante
         detail: Estudia la causa de los desmayos (síncope). Adultos y niños.
+image: /src/assets/fotos/ecocardiografia-estudio.jpg
+image_alt: "Una especialista señala en la pantalla del ecocardiógrafo la imagen del corazón de una paciente, que la mira de espaldas a la cámara."
+image_caption: "Ecocardiografía en una de nuestras salas."
+image_pos: "55% 40%"
 ---
 Nuestra unidad de cardiología no invasiva reúne a un equipo interdisciplinario de profesionales especializados para atender a personas con enfermedades del corazón y de los grandes vasos, con procesos orientados a la seguridad del paciente.
 

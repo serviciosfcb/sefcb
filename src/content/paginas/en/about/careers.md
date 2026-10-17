@@ -7,6 +7,9 @@ card: Openings, internships and our resume bank.
 section: nosotros
 order: 3
 layout: empleo
+image: /src/assets/fotos/equipo-administrativo.jpg
+image_alt: "Two SEFCB staff members smile in front of a painting at our facility."
+image_pos: "50% 38%"
 ---
 If you would like to grow with us, review our current openings and apply. Please attach your resume with proof of your education and work experience.
 

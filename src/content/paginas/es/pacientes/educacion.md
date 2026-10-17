@@ -6,6 +6,9 @@ description: Programa de educación al usuario y su familia en Servicios Especia
 card: Información para cuidar su salud.
 section: pacientes
 order: 7
+image: /src/assets/fotos/educacion-sala-de-espera.jpg
+image_alt: "Una colaboradora señala un video educativo sobre relajación en la pantalla de la sala de espera, mientras un paciente lo mira."
+image_pos: "50% 45%"
 ---
 Con el Programa de Educación al Usuario y su Familia buscamos que usted y sus acompañantes participen de forma activa en el cuidado de su salud.
 

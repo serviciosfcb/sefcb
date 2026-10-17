@@ -45,7 +45,7 @@ const wide = ['seccion', 'servicios', 'contacto', 'mapa'].includes(d.layout);
 const showNav = !wide && navItems.length > 1;
 ---
 <Base lang={lang} title={d.title} description={d.description || d.lead} path={path} altPath={altPath(d.key, lang)}>
-  <PageHero title={d.title} lead={d.lead} crumbs={crumbs} crumbsLabel={t.crumbs} />
+  <PageHero title={d.title} lead={d.lead} crumbs={crumbs} crumbsLabel={t.crumbs} image={d.image} imageAlt={d.image_alt} imagePos={d.image_pos} />
 
   <div class:list={['interior', 'seccion', { ancho: !showNav }]}>
     <div class="contenedor interior-grid">

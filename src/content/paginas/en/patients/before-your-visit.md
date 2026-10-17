@@ -6,6 +6,9 @@ description: Documents, preparation and recommendations before your appointment 
 card: Documents and preparation for your appointment or test.
 section: pacientes
 order: 2
+image: /src/assets/fotos/autoservicio-turnos.jpg
+image_alt: "Someone uses a self-service touch screen at our facility."
+image_pos: "40% 50%"
 ---
 ## On the day of your appointment, bring
 
