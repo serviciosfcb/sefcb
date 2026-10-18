@@ -175,6 +175,19 @@
           }
         },
         {
+          "valor": 787,
+          "decimales": 0,
+          "unidad": "",
+          "etiqueta": {
+            "es": "Procedimientos de intervencionismo",
+            "en": "Interventional procedures"
+          },
+          "detalle": {
+            "es": "En 747 pacientes. En 2024 fueron 949.",
+            "en": "In 747 patients. There were 949 in 2024."
+          }
+        },
+        {
           "valor": 9160,
           "decimales": 0,
           "unidad": "",
