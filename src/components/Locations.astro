@@ -2,10 +2,16 @@
 import type { Lang } from '../i18n/content';
 import { content, links, phones, emails, sedes } from '../i18n/content';
 import Icon from './Icon.astro';
+import { leerHorarios } from '../lib/horarios';
 interface Props { lang: Lang }
 const { lang } = Astro.props;
 const t = content[lang].locations;
 const en = lang === 'en';
+// Franjas de cada sede para el aviso «abierta ahora»; se leen del horario en español del panel
+const franjas = sedes.map((s) => leerHorarios(s.horarios.map((h) => ({ dias: h.dias, horas: h.horas }))));
+const tEstado = en
+  ? { open: 'Open now', closes: 'closes at', closed: 'Closed', opens: 'opens', today: 'today at', tomorrow: 'tomorrow at', on: 'on', at: 'at', holiday: 'Today is a public holiday: please call before you go.', days: ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'], am: 'a.m.', pm: 'p.m.', noon: '12:00\u00a0p.m.' }
+  : { open: 'Abierta ahora', closes: 'cierra a las', closed: 'Cerrada', opens: 'abre', today: 'hoy a las', tomorrow: 'mañana a las', on: 'el', at: 'a las', holiday: 'Hoy es festivo: llame antes de ir.', days: ['domingo', 'lunes', 'martes', 'miércoles', 'jueves', 'viernes', 'sábado'], am: 'a.\u00a0m.', pm: 'p.\u00a0m.', noon: '12:00\u00a0m.' };
 const contacts = [
   { label: t.citas, value: phones.citas.label, href: links.whatsapp, icon: 'whatsapp', copy: phones.citas.label },
   { label: t.atencion, value: `${phones.atencion1.label} · ${phones.atencion2.label}`, href: `tel:${phones.atencion1.tel}`, icon: 'phone', copy: `${phones.atencion1.label} / ${phones.atencion2.label}` },
@@ -44,8 +50,9 @@ const contacts = [
             <p class="sede-dir"><Icon name="pin" />{en ? s.direccion_en || s.direccion : s.direccion}</p>
             <p class="sede-nota">{en ? s.nota_en || s.nota : s.nota}</p>
             {s.horarios.length > 0 && (
-              <div class="horario">
+              <div class="horario" data-horario={franjas[i] ? JSON.stringify(franjas[i]) : undefined}>
                 <h4>{t.hours}</h4>
+                {franjas[i] && <p class="sede-estado" data-sede-estado hidden></p>}
                 <dl>
                   {s.horarios.map((h) => (
                     <div><dt>{en ? h.dias_en || h.dias : h.dias}</dt><dd>{en ? h.horas_en || h.horas : h.horas}</dd></div>
@@ -99,6 +106,79 @@ const contacts = [
   });
 </script>
 
+<script is:inline type="application/json" id="sede-estado-t" set:html={JSON.stringify(tEstado)} />
+<script>
+  // Aviso «Abierta ahora / Cerrada · abre…» con la hora de Cúcuta, sin importar dónde esté la persona.
+  // En festivos colombianos pide llamar antes de ir, porque el horario de festivos no está publicado.
+  type Franja = { dias: number[]; desde: number; hasta: number; festivos: boolean };
+  const t = JSON.parse(document.getElementById('sede-estado-t')?.textContent || '{}');
+  const iso = (d: Date) => d.toISOString().slice(0, 10);
+  const sumar = (d: Date, n: number) => new Date(Date.UTC(d.getUTCFullYear(), d.getUTCMonth(), d.getUTCDate() + n));
+  const pascua = (y: number) => {
+    const a = y % 19, b = Math.floor(y / 100), c = y % 100, d = Math.floor(b / 4), e = b % 4, f = Math.floor((b + 8) / 25);
+    const g = Math.floor((b - f + 1) / 3), h = (19 * a + b - d - g + 15) % 30, i = Math.floor(c / 4), k = c % 4;
+    const l = (32 + 2 * e + 2 * i - h - k) % 7, m = Math.floor((a + 11 * h + 22 * l) / 451);
+    const mes = Math.floor((h + l - 7 * m + 114) / 31), dia = ((h + l - 7 * m + 114) % 31) + 1;
+    return new Date(Date.UTC(y, mes - 1, dia));
+  };
+  const cache = new Map<number, Set<string>>();
+  // Festivos de Colombia: fijos, trasladables al lunes (Ley 51 de 1983) y los que dependen de la Semana Santa
+  const festivos = (y: number) => {
+    if (cache.has(y)) return cache.get(y)!;
+    const f = new Set<string>();
+    [[1, 1], [5, 1], [7, 20], [8, 7], [12, 8], [12, 25]].forEach(([m, d]) => f.add(iso(new Date(Date.UTC(y, m - 1, d)))));
+    [[1, 6], [3, 19], [6, 29], [8, 15], [10, 12], [11, 1], [11, 11]].forEach(([m, d]) => {
+      const x = new Date(Date.UTC(y, m - 1, d));
+      f.add(iso(sumar(x, (8 - x.getUTCDay()) % 7)));
+    });
+    const p = pascua(y);
+    [-3, -2, 43, 64, 71].forEach((n) => f.add(iso(sumar(p, n))));
+    cache.set(y, f);
+    return f;
+  };
+  const ahora = () => {
+    const partes = Object.fromEntries(new Intl.DateTimeFormat('en-US', { timeZone: 'America/Bogota', year: 'numeric', month: 'numeric', day: 'numeric', hour: 'numeric', minute: 'numeric', hourCycle: 'h23' }).formatToParts(new Date()).map((p) => [p.type, p.value]));
+    const fecha = new Date(Date.UTC(Number(partes.year), Number(partes.month) - 1, Number(partes.day)));
+    return { fecha, min: Number(partes.hour) * 60 + Number(partes.minute) };
+  };
+  const hora = (min: number) => {
+    if (min === 720) return t.noon;
+    const h = Math.floor(min / 60), m = String(min % 60).padStart(2, '0');
+    return `${((h + 11) % 12) + 1}:${m}\u00a0${h < 12 ? t.am : t.pm}`;
+  };
+  const estado = (fr: Franja[]) => {
+    const { fecha, min } = ahora();
+    const esFestivo = (d: Date) => festivos(d.getUTCFullYear()).has(iso(d));
+    const aplica = (f: Franja, d: Date) => (esFestivo(d) ? f.festivos : f.dias.includes(d.getUTCDay()));
+    if (esFestivo(fecha) && !fr.some((f) => f.festivos)) return { clase: 'festivo', texto: t.holiday };
+    const abierta = fr.find((f) => aplica(f, fecha) && min >= f.desde && min < f.hasta);
+    if (abierta) return { clase: 'abierta', texto: `${t.open} · ${t.closes} ${hora(abierta.hasta)}` };
+    for (let k = 0; k < 8; k++) {
+      const d = sumar(fecha, k);
+      const prox = fr.filter((f) => aplica(f, d) && (k > 0 || f.desde > min)).sort((a, b) => a.desde - b.desde)[0];
+      if (!prox) continue;
+      const cuando = k === 0 ? `${t.today} ${hora(prox.desde)}` : k === 1 ? `${t.tomorrow} ${hora(prox.desde)}` : `${t.on} ${t.days[d.getUTCDay()]} ${t.at} ${hora(prox.desde)}`;
+      return { clase: 'cerrada', texto: `${t.closed} · ${t.opens} ${cuando}` };
+    }
+    return null;
+  };
+  const pintar = () => {
+    document.querySelectorAll<HTMLElement>('[data-horario]').forEach((box) => {
+      const p = box.querySelector<HTMLElement>('[data-sede-estado]');
+      if (!p) return;
+      try {
+        const e = estado(JSON.parse(box.dataset.horario || '[]'));
+        if (!e) { p.hidden = true; return; }
+        p.textContent = e.texto;
+        p.dataset.clase = e.clase;
+        p.hidden = false;
+      } catch { p.hidden = true; }
+    });
+  };
+  pintar();
+  setInterval(pintar, 60000);
+</script>
+
 <style>
   .sedes { background: var(--niebla); }
   .sedes-grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 1.4rem; }
@@ -120,6 +200,12 @@ const contacts = [
   .sede-nota { color: var(--tinta-2); }
   .horario { border-top: 1px solid var(--linea); padding-top: .9rem; margin-top: .3rem; display: grid; gap: .5rem; }
   .horario h4 { font-family: var(--texto); font-size: var(--t-0); font-weight: 700; letter-spacing: .01em; }
+  .sede-estado { display: inline-flex; align-items: center; gap: .5rem; justify-self: start; font-size: var(--t-0); font-weight: 700; padding: .3rem .75rem; border-radius: .9rem; background: var(--niebla); color: var(--tinta); line-height: 1.35; }
+  .sede-estado::before { content: ''; width: .55rem; height: .55rem; border-radius: 50%; background: #8a8378; flex: none; }
+  .sede-estado[data-clase='abierta'] { background: #e3f1e8; color: #1e5c39; }
+  .sede-estado[data-clase='abierta']::before { background: #2f7d4f; }
+  .sede-estado[data-clase='festivo'] { background: #fbf0db; color: #6b4a0c; }
+  .sede-estado[data-clase='festivo']::before { background: #c98a1b; }
   .horario dl { display: grid; gap: .35rem; }
   .horario dl div { display: flex; justify-content: space-between; gap: 1rem; font-size: var(--t-0); }
   .horario dt { color: var(--tinta-2); }
