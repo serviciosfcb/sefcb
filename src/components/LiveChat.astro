@@ -1,70 +1,109 @@
 ---
 // Chat en línea de tawk.to (el mismo de la página anterior). Los códigos se cambian en el panel:
 // Datos del sitio > Contacto, sedes y horarios > Chat en línea.
-// El script de tawk.to pesa bastante, así que se carga con la primera interacción o unos segundos después de abrir la página.
+// La pestaña propia de tawk.to queda oculta porque se ponía encima del botón de WhatsApp y tawk.to no deja moverla.
+// En su lugar hay un botón redondo, igual a los demás botones flotantes, justo encima del de WhatsApp.
+// El script de tawk.to pesa bastante: se carga con la primera interacción o unos segundos después de abrir la página.
+import type { Lang } from '../i18n/content';
 import contacto from '../data/contacto.json';
+import Icon from './Icon.astro';
+interface Props { lang: Lang }
+const { lang } = Astro.props;
 const chat = (contacto as { chat?: { activo?: boolean; propiedad?: string; widget?: string } }).chat;
-const activo = Boolean(chat?.activo && chat.propiedad);
+const prop = chat?.propiedad || '';
+const widget = chat?.widget || 'default';
+const valido = /^[a-z0-9]+$/i.test(prop) && /^[a-z0-9]+$/i.test(widget);
+const activo = Boolean(chat?.activo && valido);
+const enlace = `https://tawk.to/chat/${prop}/${widget}`;
+const t = lang === 'en' ? { label: 'Live chat', opens: 'opens a chat window' } : { label: 'Chat en línea', opens: 'abre una ventana de chat' };
 ---
-{activo && <div hidden data-chat data-prop={chat!.propiedad} data-widget={chat!.widget || 'default'}></div>}
+{activo && (
+  <a class="flotante chat-flotante" href={enlace} target="_blank" rel="noopener" title={t.label} data-chat data-prop={prop} data-widget={widget}>
+    <Icon name="chat" />
+    <span class="visualmente-oculto">{t.label} ({t.opens})</span>
+    <span class="chat-aviso" aria-hidden="true" hidden data-chat-aviso></span>
+  </a>
+)}
 
 <script>
   type TawkApi = {
-    customStyle?: unknown;
     onLoad?: () => void;
     onChatMinimized?: () => void;
+    onChatMaximized?: () => void;
+    onUnreadCountChanged?: (n: number) => void;
     showWidget?: () => void;
     hideWidget?: () => void;
-    isChatMaximized?: () => boolean;
+    maximize?: () => void;
   };
-  const el = document.querySelector<HTMLElement>('[data-chat]');
-  if (el && /^[a-z0-9]+$/i.test(el.dataset.prop || '') && /^[a-z0-9]+$/i.test(el.dataset.widget || '')) {
+  const btn = document.querySelector<HTMLAnchorElement>('[data-chat]');
+  if (btn) {
+    const aviso = btn.querySelector<HTMLElement>('[data-chat-aviso]')!;
     const w = window as unknown as { Tawk_API?: TawkApi; Tawk_LoadStart?: Date };
     const api: TawkApi = (w.Tawk_API = w.Tawk_API || {});
-    // Abajo a la derecha, encima del botón de WhatsApp (3,5 rem a 18 px del borde)
-    api.customStyle = {
-      visibility: {
-        desktop: { position: 'br', xOffset: 16, yOffset: 88 },
-        mobile: { position: 'br', xOffset: 14, yOffset: 86 },
-      },
+    let estado: 'nada' | 'cargando' | 'listo' | 'error' = 'nada';
+    let abrirAlCargar = false;
+
+    const abrir = () => { api.showWidget?.(); api.maximize?.(); };
+    api.onLoad = () => {
+      estado = 'listo';
+      if (abrirAlCargar) { abrirAlCargar = false; abrir(); } else api.hideWidget?.();
     };
-    // El chat aparece y se oculta junto con los otros botones flotantes, y se esconde mientras el menú del celular está abierto.
-    // Si la persona tiene la conversación abierta, no se le cierra.
-    const wa = document.querySelector('.wa-flotante');
-    const menuBtn = document.querySelector('[data-menu-btn]');
-    let listo = false;
-    let mostrado: boolean | null = null;
-    const sync = () => {
-      if (!listo) return;
-      const on = (!wa || wa.classList.contains('visible')) && menuBtn?.getAttribute('aria-expanded') !== 'true';
-      if (on === mostrado) return;
-      if (on) api.showWidget?.();
-      else if (api.isChatMaximized?.()) return;
-      else api.hideWidget?.();
-      mostrado = on;
-    };
-    api.onLoad = () => { listo = true; mostrado = null; sync(); };
-    api.onChatMinimized = () => { mostrado = null; sync(); };
-    const obs = new MutationObserver(sync);
-    if (wa) obs.observe(wa, { attributes: true, attributeFilter: ['class'] });
-    if (menuBtn) obs.observe(menuBtn, { attributes: true, attributeFilter: ['aria-expanded'] });
+    // Al minimizar la conversación, la pestaña de tawk.to se vuelve a ocultar y queda el botón propio
+    api.onChatMinimized = () => { api.hideWidget?.(); btn.classList.remove('abierto'); };
+    api.onChatMaximized = () => { btn.classList.add('abierto'); aviso.hidden = true; };
+    // Si el equipo responde con la conversación minimizada, el botón muestra cuántos mensajes nuevos hay
+    api.onUnreadCountChanged = (n) => { aviso.textContent = n > 9 ? '9+' : String(n); aviso.hidden = !n; };
 
     const eventos = ['scroll', 'pointerdown', 'keydown', 'touchstart'];
-    let pedido = false;
     const cargar = () => {
-      if (pedido) return;
-      pedido = true;
+      if (estado !== 'nada') return;
+      estado = 'cargando';
       eventos.forEach((e) => removeEventListener(e, cargar));
       w.Tawk_LoadStart = new Date();
       const s = document.createElement('script');
       s.async = true;
-      s.src = `https://embed.tawk.to/${el.dataset.prop}/${el.dataset.widget}`;
+      s.src = `https://embed.tawk.to/${btn.dataset.prop}/${btn.dataset.widget}`;
       s.charset = 'UTF-8';
       s.setAttribute('crossorigin', '*');
+      // Si el script no carga (por ejemplo, por un bloqueador), el botón abre el chat de tawk.to en otra pestaña
+      s.onerror = () => { estado = 'error'; abrirAlCargar = false; };
       document.body.appendChild(s);
     };
+    btn.addEventListener('click', (e) => {
+      if (estado === 'error') return;
+      e.preventDefault();
+      if (estado === 'listo') abrir();
+      else { abrirAlCargar = true; cargar(); }
+    });
     eventos.forEach((e) => addEventListener(e, cargar, { passive: true }));
     if (document.readyState === 'complete') setTimeout(cargar, 6000);
     else addEventListener('load', () => setTimeout(cargar, 6000), { once: true });
   }
 </script>
+
+<style>
+  /* Igual que los demás botones flotantes (A11yPanel), una posición más arriba que el de WhatsApp */
+  .chat-flotante {
+    position: fixed; z-index: 45;
+    right: calc(18px + env(safe-area-inset-right, 0px));
+    bottom: calc(18px + 3.5rem + 12px + env(safe-area-inset-bottom, 0px));
+    width: 3.5rem; height: 3.5rem; border-radius: 999px;
+    display: inline-flex; align-items: center; justify-content: center;
+    background: var(--rojo); color: #fff; text-decoration: none;
+    box-shadow: 0 18px 40px -16px rgb(var(--sombra) / .7);
+    transition: transform .6s var(--ease), box-shadow .5s var(--ease), opacity .4s var(--ease), visibility 0s linear .6s;
+    transform: translateY(160%); opacity: 0; visibility: hidden;
+  }
+  .chat-flotante:global(.visible) { transform: none; opacity: 1; visibility: visible; transition: transform .6s var(--ease), box-shadow .5s var(--ease), opacity .4s var(--ease), visibility 0s; }
+  .chat-flotante:global(.visible):hover { transform: translateY(-3px) scale(1.03); }
+  .chat-flotante:focus-visible { outline: 3px solid var(--foco); outline-offset: 3px; }
+  .chat-flotante :global(.icon) { width: 1.55rem; height: 1.55rem; }
+  .chat-aviso {
+    position: absolute; top: -4px; right: -4px; min-width: 1.35rem; height: 1.35rem; padding: 0 .3rem;
+    border-radius: 999px; background: #fff; color: var(--rojo); border: 2px solid var(--rojo);
+    font: 700 .75rem/1 var(--texto); display: grid; place-items: center;
+  }
+  .chat-aviso[hidden] { display: none; }
+  :global(:root[data-contrast='high']) .chat-flotante { outline: 3px solid #fff; }
+  @media print { .chat-flotante { display: none; } }
+</style>

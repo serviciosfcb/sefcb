@@ -294,7 +294,7 @@ collections:
             name: chat
             widget: object
             collapsed: true
-            hint: El chat aparece abajo a la derecha, encima del botón de WhatsApp. Los códigos están en tawk.to, en Administración > Widget de chat.
+            hint: El botón del chat aparece abajo a la derecha, encima del de WhatsApp. Los códigos están en tawk.to, en Administración > Widget de chat.
             fields:
               - { label: Mostrar el chat, name: activo, widget: boolean, default: true }
               - { label: Código de la propiedad, name: propiedad, widget: string, hint: 'Ej. 57656addec8ca2561a06d100' }
