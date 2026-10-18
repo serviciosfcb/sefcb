@@ -434,6 +434,70 @@
         ],
         "definicion": "Too much fat around the belly. It is suspected when the waist measures more than 80 cm in women or more than 90 cm in men."
       }
+    },
+    {
+      "es": {
+        "termino": "Flexibilidad metabólica",
+        "formas": [
+          "flexibilidad metabólica"
+        ],
+        "definicion": "Capacidad del cuerpo de cambiar de combustible: usar sobre todo azúcar después de comer y más grasa entre comidas o durante la actividad suave y prolongada."
+      },
+      "en": {
+        "termino": "Metabolic flexibility",
+        "formas": [
+          "metabolic flexibility"
+        ],
+        "definicion": "The body's ability to switch fuels: using mostly sugar after a meal and more fat between meals or during gentle, longer activity."
+      }
+    },
+    {
+      "es": {
+        "termino": "Metabolismo",
+        "formas": [
+          "metabolismo"
+        ],
+        "definicion": "Conjunto de procesos con los que el cuerpo transforma los alimentos en energía y la usa o la guarda."
+      },
+      "en": {
+        "termino": "Metabolism",
+        "formas": [
+          "metabolism"
+        ],
+        "definicion": "All the processes the body uses to turn food into energy and to use or store it."
+      }
+    },
+    {
+      "es": {
+        "termino": "Resistencia a la insulina",
+        "formas": [
+          "resistencia a la insulina"
+        ],
+        "definicion": "Cuando el cuerpo responde menos a la insulina, la hormona que ayuda a que el azúcar de la sangre entre a las células. Puede aparecer antes de la diabetes."
+      },
+      "en": {
+        "termino": "Insulin resistance",
+        "formas": [
+          "insulin resistance"
+        ],
+        "definicion": "When the body responds less to insulin, the hormone that helps sugar move from the blood into the cells. It can appear before diabetes."
+      }
+    },
+    {
+      "es": {
+        "termino": "Triglicéridos",
+        "formas": [
+          "triglicéridos"
+        ],
+        "definicion": "Un tipo de grasa de la sangre. Pueden subir con el exceso de azúcares, harinas, alcohol y calorías; también influyen la herencia, la diabetes y algunos medicamentos."
+      },
+      "en": {
+        "termino": "Triglycerides",
+        "formas": [
+          "triglycerides"
+        ],
+        "definicion": "A type of fat in the blood. They can rise with too much sugar, refined flour, alcohol and calories; genes, diabetes and some medicines also play a part."
+      }
     }
   ]
 }

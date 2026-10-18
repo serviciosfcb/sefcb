@@ -84,12 +84,12 @@ const educacion = defineCollection({
     momento: z.array(z.enum(['antes', 'durante', 'despues', 'siempre'])).optional().default([]),
     servicios: z.array(z.enum(['noinvasiva', 'nuclear', 'intervencionismo', 'consulta', 'terapia', 'transporte', 'obesidad'])).optional().default([]),
     // Herramienta interactiva que se muestra en la ficha
-    herramienta: z.enum(['', 'pasos', 'emergencia', 'presion', 'imc', 'riesgo']).optional().default(''),
+    herramienta: z.enum(['', 'pasos', 'emergencia', 'presion', 'imc', 'riesgo', 'curva', 'reto', 'respiracion']).optional().default(''),
     // Examen de src/data/preparaciones.json cuya preparación se muestra en "Antes"
     prep: z.string().optional().default(''),
     pasos: z.object({ antes: texto, durante: texto, despues: texto }).optional(),
     alarma: caja,
-    // Lista que usa la herramienta de la ficha (por ejemplo, los factores de riesgo para marcar)
+    // Lista que usa la herramienta de la ficha (los factores de riesgo para marcar o las acciones del reto de la semana)
     lista: caja,
     preguntas: texto,
     comprobacion: z.object({ pregunta: z.string().optional().default(''), opciones: texto, correcta: z.coerce.number().int().min(0).optional().default(0), explicacion: z.string().optional().default('') }).optional(),

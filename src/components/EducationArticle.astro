@@ -17,6 +17,9 @@ import EmergencyCheck from './edu/EmergencyCheck.astro';
 import BpLog from './edu/BpLog.astro';
 import BmiWaist from './edu/BmiWaist.astro';
 import RiskCheck from './edu/RiskCheck.astro';
+import HormesisCurve from './edu/HormesisCurve.astro';
+import NatureChallenge from './edu/NatureChallenge.astro';
+import BreathingPacer from './edu/BreathingPacer.astro';
 import QuestionList from './edu/QuestionList.astro';
 import QuickCheck from './edu/QuickCheck.astro';
 interface Props { f: Ficha; alt: string; lang: Lang }
@@ -68,6 +71,10 @@ const ld = {
   ...(d.revisado_por ? { reviewedBy: { '@type': 'Person', name: d.revisado_por } } : {}),
 };
 const herramientaPrimero = d.herramienta === 'emergencia';
+// La curva de la hormesis va después de la introducción (antes del primer subtítulo), donde se explica la idea
+const html = f.rendered?.html ?? '';
+const corte = d.herramienta === 'curva' ? html.search(/<h2[\s>]/) : -1;
+const partir = corte > 0;
 const alarma = d.alarma && d.alarma.items.length ? d.alarma : undefined;
 const lista = d.lista && d.lista.items.length ? d.lista : undefined;
 const comprobacion = d.comprobacion && d.comprobacion.pregunta && d.comprobacion.opciones.length >= 2 ? d.comprobacion : undefined;
@@ -80,12 +87,23 @@ const comprobacion = d.comprobacion && d.comprobacion.pregunta && d.comprobacion
     <div class="contenedor edf-grid">
       <article class="edf-cuerpo">
         {herramientaPrimero && alarma && <EmergencyCheck lang={lang} titulo={alarma.titulo} items={alarma.items} />}
-        <div class="prosa" data-glosario data-reveal><Content /></div>
+        {partir ? (
+          <>
+            <div class="prosa" data-glosario data-reveal set:html={html.slice(0, corte)} />
+            <HormesisCurve lang={lang} />
+            <div class="prosa" data-glosario data-reveal set:html={html.slice(corte)} />
+          </>
+        ) : (
+          <div class="prosa" data-glosario data-reveal><Content /></div>
+        )}
 
         {d.herramienta === 'pasos' && <ExamSteps lang={lang} prepId={d.prep} pasos={d.pasos} />}
         {d.herramienta === 'presion' && <BpLog lang={lang} />}
         {d.herramienta === 'imc' && <BmiWaist lang={lang} />}
         {d.herramienta === 'riesgo' && lista && <RiskCheck lang={lang} titulo={lista.titulo} items={lista.items} />}
+        {d.herramienta === 'curva' && !partir && <HormesisCurve lang={lang} />}
+        {d.herramienta === 'reto' && lista && <NatureChallenge lang={lang} clave={d.key} titulo={lista.titulo} items={lista.items} />}
+        {d.herramienta === 'respiracion' && <BreathingPacer lang={lang} />}
 
         {!herramientaPrimero && alarma && (
           <aside class="edf-alarma" aria-labelledby="edf-alarma-t">
@@ -194,8 +212,8 @@ const comprobacion = d.comprobacion && d.comprobacion.pregunta && d.comprobacion
   // que muestra su significado justo al lado. Sin JavaScript, el texto queda igual.
   type Termino = { termino: string; formas: string[]; definicion: string };
   const datos = document.getElementById('glosario-datos');
-  const cont = document.querySelector<HTMLElement>('[data-glosario]');
-  if (datos && cont) {
+  const conts = [...document.querySelectorAll<HTMLElement>('[data-glosario]')];
+  if (datos && conts.length) {
     const { label, terminos } = JSON.parse(datos.textContent || '{}') as { label: string; terminos: Termino[] };
     const escapar = (s: string) => s.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
     const usados = new Set<string>();
@@ -204,30 +222,33 @@ const comprobacion = d.comprobacion && d.comprobacion.pregunta && d.comprobacion
     for (const { f, t } of formas) {
       if (usados.has(t.termino)) continue;
       const re = new RegExp(`(^|[^\\p{L}])(${escapar(f)})(?![\\p{L}])`, 'iu');
-      const walker = document.createTreeWalker(cont, NodeFilter.SHOW_TEXT, {
-        acceptNode: (node) => (node.parentElement?.closest('a, button, h1, h2, h3, h4, .glosa, code') ? NodeFilter.FILTER_REJECT : NodeFilter.FILTER_ACCEPT),
-      });
-      let node: Node | null;
-      while ((node = walker.nextNode())) {
-        const m = re.exec(node.nodeValue || '');
-        if (!m) continue;
-        const inicio = m.index + m[1].length;
-        const txt = node as Text;
-        const despues = txt.splitText(inicio);
-        despues.splitText(m[2].length);
-        const id = `glosa-${++n}`;
-        const span = document.createElement('span'); span.className = 'glosa';
-        const btn = document.createElement('button');
-        btn.type = 'button'; btn.className = 'glosa-btn'; btn.textContent = despues.nodeValue;
-        btn.setAttribute('aria-expanded', 'false'); btn.setAttribute('aria-controls', id); btn.title = label;
-        const def = document.createElement('span');
-        def.className = 'glosa-def'; def.id = id; def.hidden = true; def.textContent = t.definicion;
-        btn.addEventListener('click', () => { const abierto = btn.getAttribute('aria-expanded') === 'true'; btn.setAttribute('aria-expanded', String(!abierto)); def.hidden = abierto; });
-        btn.addEventListener('keydown', (e) => { if (e.key === 'Escape') { btn.setAttribute('aria-expanded', 'false'); def.hidden = true; } });
-        span.append(btn, def);
-        despues.replaceWith(span);
-        usados.add(t.termino);
-        break;
+      for (const cont of conts) {
+        if (usados.has(t.termino)) break;
+        const walker = document.createTreeWalker(cont, NodeFilter.SHOW_TEXT, {
+          acceptNode: (node) => (node.parentElement?.closest('a, button, h1, h2, h3, h4, .glosa, code') ? NodeFilter.FILTER_REJECT : NodeFilter.FILTER_ACCEPT),
+        });
+        let node: Node | null;
+        while ((node = walker.nextNode())) {
+          const m = re.exec(node.nodeValue || '');
+          if (!m) continue;
+          const inicio = m.index + m[1].length;
+          const txt = node as Text;
+          const despues = txt.splitText(inicio);
+          despues.splitText(m[2].length);
+          const id = `glosa-${++n}`;
+          const span = document.createElement('span'); span.className = 'glosa';
+          const btn = document.createElement('button');
+          btn.type = 'button'; btn.className = 'glosa-btn'; btn.textContent = despues.nodeValue;
+          btn.setAttribute('aria-expanded', 'false'); btn.setAttribute('aria-controls', id); btn.title = label;
+          const def = document.createElement('span');
+          def.className = 'glosa-def'; def.id = id; def.hidden = true; def.textContent = t.definicion;
+          btn.addEventListener('click', () => { const abierto = btn.getAttribute('aria-expanded') === 'true'; btn.setAttribute('aria-expanded', String(!abierto)); def.hidden = abierto; });
+          btn.addEventListener('keydown', (e) => { if (e.key === 'Escape') { btn.setAttribute('aria-expanded', 'false'); def.hidden = true; } });
+          span.append(btn, def);
+          despues.replaceWith(span);
+          usados.add(t.termino);
+          break;
+        }
       }
     }
   }

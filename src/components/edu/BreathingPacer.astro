@@ -1,0 +1,108 @@
+---
+// Respiración guiada 4-4-6 (inhalar 4, sostener 4, exhalar 6), la técnica del procedimiento de Vitamina N MM010134S.
+// Con "reducir movimiento", el círculo no cambia de tamaño: solo se muestran la fase y la cuenta.
+import type { Lang } from '../../i18n/content';
+import Icon from '../Icon.astro';
+interface Props { lang: Lang }
+const { lang } = Astro.props;
+const en = lang === 'en';
+const t = en
+  ? { title: 'Guided breathing 4-4-6', lead: 'Breathe in for 4 seconds, hold your breath gently for 4, without straining, and breathe out for 6. If you can, look at a plant, a tree or the sky. Six rounds take less than a minute and a half.', start: 'Start', stop: 'Stop', again: 'Start again', nohold: 'Without holding my breath', nohint: 'If holding your breath is uncomfortable, tick this option: you will breathe in for 4 and out for 6.', inhale: 'Breathe in', hold: 'Hold gently', exhale: 'Breathe out', ready: 'Start whenever you like', round: 'Round', of: 'of', done: 'Well done. Notice how you feel now.', note: 'If you feel dizzy, stop and breathe normally.' }
+  : { title: 'Respiración guiada 4-4-6', lead: 'Inhale durante 4 segundos, sostenga el aire 4 segundos, sin apretar ni hacer fuerza, y exhale durante 6. Si puede, mire una planta, un árbol o el cielo. Seis vueltas toman menos de un minuto y medio.', start: 'Empezar', stop: 'Detener', again: 'Empezar de nuevo', nohold: 'Sin sostener el aire', nohint: 'Si sostener el aire le incomoda, marque esta opción: inhalará en 4 y exhalará en 6.', inhale: 'Inhale', hold: 'Sostenga, sin apretar', exhale: 'Exhale', ready: 'Empiece cuando quiera', round: 'Vuelta', of: 'de', done: 'Muy bien. Note cómo se siente ahora.', note: 'Si se marea, pare y respire normalmente.' };
+---
+<section class="edr2" aria-labelledby="edr2-t" data-resp data-t={JSON.stringify(t)}>
+  <div class="edr2-cab">
+    <span class="edr2-ico" aria-hidden="true"><Icon name="leaf" /></span>
+    <div><h2 id="edr2-t">{t.title}</h2><p>{t.lead}</p></div>
+  </div>
+  <div class="edr2-escena">
+    <div class="edr2-circulo" data-resp-circulo aria-hidden="true"><span data-resp-cuenta></span></div>
+    <p class="edr2-fase" aria-live="polite" data-resp-fase>{t.ready}</p>
+    <p class="edr2-vuelta" data-resp-vuelta></p>
+  </div>
+  <div class="edr2-opc">
+    <button class="btn btn-primario edr2-btn" type="button" data-resp-btn>{t.start}</button>
+    <label class="edr2-check"><input type="checkbox" data-resp-sin aria-describedby="edr2-sin-h" />{t.nohold}</label>
+  </div>
+  <p class="edr2-nota"><span id="edr2-sin-h">{t.nohint}</span> {t.note}</p>
+</section>
+
+<script>
+  document.querySelectorAll<HTMLElement>('[data-resp]').forEach((box) => {
+    const t = JSON.parse(box.dataset.t || '{}');
+    const circulo = box.querySelector<HTMLElement>('[data-resp-circulo]')!;
+    const cuenta = box.querySelector<HTMLElement>('[data-resp-cuenta]')!;
+    const fase = box.querySelector<HTMLElement>('[data-resp-fase]')!;
+    const vuelta = box.querySelector<HTMLElement>('[data-resp-vuelta]')!;
+    const btn = box.querySelector<HTMLButtonElement>('[data-resp-btn]')!;
+    const sin = box.querySelector<HTMLInputElement>('[data-resp-sin]')!;
+    const VUELTAS = 6;
+    let fases: { nombre: string; seg: number; clase: string }[] = [];
+    let activo = false, n = 0, f = 0, s = 0, timer = 0;
+    const reiniciar = () => { n = 0; f = 0; s = 0; circulo.className = 'edr2-circulo'; cuenta.textContent = ''; };
+    const tic = () => {
+      const ph = fases[f];
+      if (s === 0) {
+        circulo.className = `edr2-circulo ${ph.clase}`;
+        circulo.style.setProperty('--dur', `${ph.seg}s`);
+        fase.textContent = ph.nombre;
+        vuelta.textContent = `${t.round} ${n + 1} ${t.of} ${VUELTAS}`;
+      }
+      cuenta.textContent = String(ph.seg - s);
+      s++;
+      if (s >= ph.seg) {
+        s = 0; f++;
+        if (f >= fases.length) { f = 0; n++; }
+        if (n >= VUELTAS) { timer = window.setTimeout(terminar, 1000); return; }
+      }
+      timer = window.setTimeout(tic, 1000);
+    };
+    const terminar = () => {
+      activo = false; reiniciar();
+      fase.textContent = t.done; vuelta.textContent = '';
+      btn.textContent = t.again; sin.disabled = false;
+    };
+    const detener = () => {
+      activo = false; window.clearTimeout(timer); reiniciar();
+      fase.textContent = t.ready; vuelta.textContent = '';
+      btn.textContent = t.start; sin.disabled = false;
+    };
+    btn.addEventListener('click', () => {
+      if (activo) { detener(); return; }
+      fases = [
+        { nombre: t.inhale, seg: 4, clase: 'inhala' },
+        ...(sin.checked ? [] : [{ nombre: t.hold, seg: 4, clase: 'sostiene' }]),
+        { nombre: t.exhale, seg: 6, clase: 'exhala' },
+      ];
+      activo = true; reiniciar();
+      btn.textContent = t.stop; sin.disabled = true;
+      tic();
+    });
+    document.addEventListener('visibilitychange', () => { if (document.hidden && activo) detener(); });
+  });
+</script>
+
+<style>
+  .edr2 { display: grid; gap: 1.1rem; padding: clamp(1.3rem, 3vw, 2rem); border-radius: var(--radio-l); background: linear-gradient(170deg, #e9f3ec, var(--niebla) 65%); }
+  .edr2-cab { display: flex; gap: .9rem; align-items: flex-start; }
+  .edr2-cab h2 { font-size: var(--t-4); }
+  .edr2-cab p { color: var(--tinta-2); font-size: var(--t-0); margin-top: .2rem; }
+  .edr2-ico { width: 2.8rem; height: 2.8rem; border-radius: 50%; display: grid; place-items: center; background: #2f7d4f; color: #fff; flex: none; }
+  .edr2-ico :global(.icon) { width: 1.4rem; height: 1.4rem; }
+  .edr2-escena { display: grid; justify-items: center; gap: .6rem; padding: 1.4rem 1rem; border-radius: var(--radio-m); background: var(--papel); }
+  .edr2-circulo { --dur: 4s; width: 9rem; height: 9rem; border-radius: 50%; display: grid; place-items: center; background: radial-gradient(circle at 35% 30%, #8fd1a8, #2f7d4f); box-shadow: 0 0 0 10px rgb(47 125 79 / .12); transform: scale(.62); transition: transform var(--dur) ease-in-out, box-shadow var(--dur) ease-in-out; }
+  .edr2-circulo.inhala { transform: scale(1); box-shadow: 0 0 0 22px rgb(47 125 79 / .14); }
+  .edr2-circulo.sostiene { transform: scale(1); box-shadow: 0 0 0 22px rgb(47 125 79 / .2); }
+  .edr2-circulo.exhala { transform: scale(.62); }
+  .edr2-circulo span { font-family: var(--display); font-weight: 700; font-size: 2.2rem; color: #fff; }
+  .edr2-fase { font-family: var(--display); font-weight: 700; font-size: var(--t-3); min-height: 1.5em; text-align: center; }
+  .edr2-vuelta { font-size: var(--t-0); color: var(--tinta-2); min-height: 1.4em; }
+  .edr2-opc { display: flex; flex-wrap: wrap; align-items: center; justify-content: center; gap: .6rem 1.4rem; }
+  .edr2-btn { min-width: 11rem; justify-content: center; }
+  .edr2-check { display: inline-flex; align-items: center; gap: .55rem; font-weight: 600; cursor: pointer; min-height: 2.6rem; }
+  .edr2-check input { width: 1.25rem; height: 1.25rem; accent-color: #2f7d4f; }
+  .edr2-check:has(input:disabled) { opacity: .6; cursor: default; }
+  .edr2-nota { font-size: var(--t-0); color: var(--tinta-2); text-align: center; max-width: 36rem; justify-self: center; line-height: 1.5; }
+  @media (prefers-reduced-motion: reduce) { .edr2-circulo, .edr2-circulo.inhala, .edr2-circulo.sostiene, .edr2-circulo.exhala { transition: none; transform: none; } }
+  :global(:root[data-motion='reduced']) .edr2-circulo { transition: none !important; transform: none !important; }
+</style>

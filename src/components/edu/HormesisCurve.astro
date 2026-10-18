@@ -1,0 +1,183 @@
+---
+// La curva de la hormesis: la persona mueve la dosis de un estímulo y ve si la respuesta es insuficiente,
+// adaptativa o excesiva, y cómo cambia cuando no hay recuperación. Basada en la Cartilla 0 de HORMESIS.
+import type { Lang } from '../../i18n/content';
+import Icon from '../Icon.astro';
+interface Props { lang: Lang }
+const { lang } = Astro.props;
+const en = lang === 'en';
+const t = en
+  ? {
+      title: 'Explore the hormesis curve', lead: 'Move the bar to change the dose of a stimulus, such as exercise. Then untick “I sleep and rest enough” to see what happens without recovery.',
+      dose: 'Dose of the stimulus', rest: 'I sleep and rest enough', low: 'Little', high: 'A lot',
+      axisX: 'Dose of the stimulus', axisY: 'Benefit', harm: 'Harm',
+      zones: ['Not enough', 'Adaptive', 'Too much'], zonesLong: ['not enough', 'adaptive zone', 'too much'], vt: 'Dose {x} of 100: {z}',
+      msg: [
+        'Not enough stimulus: the body has no reason to adapt. Example: sitting most of the day.',
+        'The right dose, with recovery: the body responds and gets stronger. Example: walking briskly most days, if your doctor says it is fine, and sleeping well.',
+        'You have passed the point of greatest benefit: more dose no longer adds anything. If it keeps rising, it starts to cause harm.',
+        'Too much, or without recovery: the stimulus can cause harm, injury or exhaustion. Example: training hard every day without rest.',
+      ],
+      msg1norest: 'There is a benefit, but a smaller one, because recovery is missing. Sleeping and resting well are part of the dose.',
+      norest: 'Without enough rest, the same dose reaches the harmful zone sooner and the benefit is smaller.',
+      cycle: ['Stimulus', 'Response', 'Recovery', 'Adaptation'], cycleLabel: 'The hormesis cycle',
+    }
+  : {
+      title: 'Explore la curva de la hormesis', lead: 'Mueva la barra para cambiar la dosis de un estímulo, como el ejercicio. Luego desmarque «Duermo y descanso lo suficiente» para ver qué pasa sin recuperación.',
+      dose: 'Dosis del estímulo', rest: 'Duermo y descanso lo suficiente', low: 'Poca', high: 'Mucha',
+      axisX: 'Dosis del estímulo', axisY: 'Beneficio', harm: 'Daño',
+      zones: ['Insuficiente', 'Adaptativa', 'Excesiva'], zonesLong: ['zona insuficiente', 'zona adaptativa', 'zona excesiva'], vt: 'Dosis {x} de 100: {z}',
+      msg: [
+        'Muy poco estímulo: el cuerpo no tiene razones para adaptarse. Ejemplo: pasar casi todo el día sentado.',
+        'La dosis adecuada, con recuperación: el cuerpo responde y se fortalece. Ejemplo: caminar a paso rápido casi todos los días, si su médico lo autoriza, y dormir bien.',
+        'Ya pasó el punto de mayor beneficio: más dosis no suma. Si sigue subiendo, empieza a hacer daño.',
+        'Demasiado, o sin recuperación: el estímulo puede hacer daño, causar lesiones o agotamiento. Ejemplo: entrenar fuerte todos los días sin descanso.',
+      ],
+      msg1norest: 'Hay beneficio, pero menor, porque falta recuperación. Dormir y descansar bien también es parte de la dosis.',
+      norest: 'Sin descanso suficiente, la misma dosis llega antes a la zona de daño y el beneficio es menor.',
+      cycle: ['Estímulo', 'Respuesta', 'Recuperación', 'Adaptación'], cycleLabel: 'El ciclo de la hormesis',
+    };
+// La misma fórmula que usa el script, para que la curva se vea aunque el JavaScript no cargue.
+// Por debajo de LIM1 no hay efecto; desde LIM1 el beneficio sube, llega al máximo a mitad de camino
+// y se vuelve daño en c (82 con descanso, 58 sin descanso).
+const LIM1 = 24;
+const X = (d: number) => 40 + d * 3.5;
+const Y = (v: number) => 150 - v * 100;
+const curva = (d: number, c: number, b: number) => {
+  if (d <= LIM1) return 0;
+  const u = (d - LIM1) / (c - LIM1);
+  return Math.max(-0.42, b * 4 * u * (1 - u));
+};
+let d0 = '';
+for (let x = 0; x <= 100; x += 2) d0 += `${x ? 'L' : 'M'}${X(x).toFixed(1)} ${Y(curva(x, 82, 1)).toFixed(1)}`;
+const DOSIS0 = 50;
+---
+<section class="edh2" aria-labelledby="edh2-t" data-curva data-zona="1" data-t={JSON.stringify(t)}>
+  <div class="edh2-cab">
+    <span class="edh2-ico" aria-hidden="true"><Icon name="heartbeat" /></span>
+    <div><h2 id="edh2-t">{t.title}</h2><p>{t.lead}</p></div>
+  </div>
+
+  <div class="edh2-grafica">
+    <svg viewBox="0 0 400 230" role="img" aria-label={t.msg[1]} data-curva-svg>
+      <g data-curva-zonas>
+        <rect class="z0" x={X(0)} y="18" width={LIM1 * 3.5} height="182" />
+        <rect class="z1" x={X(LIM1)} y="18" width={(82 - LIM1) * 3.5} height="182" />
+        <rect class="z2" x={X(82)} y="18" width={18 * 3.5} height="182" />
+      </g>
+      <line class="base" x1="40" y1="150" x2="390" y2="150" />
+      <line class="eje" x1="40" y1="18" x2="40" y2="200" />
+      <path class="curva" d={d0} data-curva-path />
+      <circle class="punto" r="8" cx={X(DOSIS0)} cy={Y(curva(DOSIS0, 82, 1))} data-curva-punto />
+      <text class="etq" x="40" y="224">{t.axisX} →</text>
+      <text class="etq" x="34" y="12">↑ {t.axisY}</text>
+      <text class="etq" x="46" y="196">↓ {t.harm}</text>
+      <text class="zt" x={X(LIM1 / 2)} y="34" text-anchor="middle" data-zt="0">{t.zones[0]}</text>
+      <text class="zt" x={X((LIM1 + 82) / 2)} y="34" text-anchor="middle" data-zt="1">{t.zones[1]}</text>
+      <text class="zt" x={X(91)} y="34" text-anchor="middle" data-zt="2">{t.zones[2]}</text>
+    </svg>
+  </div>
+
+  <div class="edh2-controles">
+    <label for="edh2-dosis">{t.dose}</label>
+    <div class="edh2-rango"><span aria-hidden="true">{t.low}</span><input id="edh2-dosis" type="range" min="0" max="100" value={DOSIS0} aria-valuetext={t.vt.replace('{x}', String(DOSIS0)).replace('{z}', t.zonesLong[1])} data-curva-dosis /><span aria-hidden="true">{t.high}</span></div>
+    <label class="edh2-check"><input type="checkbox" checked data-curva-rest />{t.rest}</label>
+  </div>
+  <p class="edh2-msg" aria-live="polite" data-curva-msg>{t.msg[1]}</p>
+
+  <ol class="edh2-ciclo" aria-label={t.cycleLabel}>
+    {t.cycle.map((c) => <li>{c}</li>)}
+  </ol>
+</section>
+
+<script>
+  document.querySelectorAll<HTMLElement>('[data-curva]').forEach((box) => {
+    const t = JSON.parse(box.dataset.t || '{}');
+    const path = box.querySelector<SVGPathElement>('[data-curva-path]')!;
+    const punto = box.querySelector<SVGCircleElement>('[data-curva-punto]')!;
+    const svg = box.querySelector<SVGSVGElement>('[data-curva-svg]')!;
+    const dosis = box.querySelector<HTMLInputElement>('[data-curva-dosis]')!;
+    const rest = box.querySelector<HTMLInputElement>('[data-curva-rest]')!;
+    const msg = box.querySelector<HTMLElement>('[data-curva-msg]')!;
+    const zonas = box.querySelectorAll<SVGRectElement>('[data-curva-zonas] rect');
+    const zt = box.querySelectorAll<SVGTextElement>('[data-zt]');
+    // Coordenadas: x de 40 a 390 (dosis 0 a 100); y = 150 es "sin efecto", hacia arriba beneficio, hacia abajo daño
+    const LIM1 = 24; // igual que en el servidor
+    const X = (d: number) => 40 + d * 3.5;
+    const Y = (v: number) => 150 - v * 100;
+    const curva = (d: number, c: number, b: number) => {
+      if (d <= LIM1) return 0;
+      const u = (d - LIM1) / (c - LIM1);
+      return Math.max(-0.42, b * 4 * u * (1 - u));
+    };
+    let ultimo = msg.textContent || '';
+    const pintar = () => {
+      const conDescanso = rest.checked;
+      const c = conDescanso ? 82 : 58;     // dosis en la que el beneficio se vuelve daño
+      const b = conDescanso ? 1 : 0.68;    // beneficio máximo
+      const pico = (LIM1 + c) / 2;
+      let d = '';
+      for (let x = 0; x <= 100; x += 2) d += `${x ? 'L' : 'M'}${X(x).toFixed(1)} ${Y(curva(x, c, b)).toFixed(1)}`;
+      path.setAttribute('d', d);
+      const anchos = [LIM1, c - LIM1, 100 - c];
+      let acum = 0;
+      zonas.forEach((z, i) => { z.setAttribute('x', String(X(acum))); z.setAttribute('width', String(anchos[i] * 3.5)); acum += anchos[i]; });
+      const centros = [LIM1 / 2, (LIM1 + c) / 2, (c + 100) / 2];
+      zt.forEach((z, i) => z.setAttribute('x', String(X(centros[i]))));
+      const x = Number(dosis.value);
+      punto.setAttribute('cx', String(X(x)));
+      punto.setAttribute('cy', String(Y(curva(x, c, b))));
+      // 0 insuficiente · 1 adaptativa · 2 pasó el mejor punto · 3 excesiva
+      const estado = x < LIM1 ? 0 : x <= pico + (c - LIM1) * 0.12 ? 1 : x <= c ? 2 : 3;
+      const zona = estado === 0 ? 0 : estado === 3 ? 2 : 1;
+      box.dataset.zona = String(zona);
+      box.dataset.estado = String(estado);
+      const texto = conDescanso || estado === 0 ? t.msg[estado] : estado === 1 ? t.msg1norest : `${t.msg[estado]} ${t.norest}`;
+      dosis.setAttribute('aria-valuetext', t.vt.replace('{x}', String(x)).replace('{z}', t.zonesLong[zona]));
+      // El mensaje solo se reescribe cuando cambia, para que el lector de pantalla no lo repita en cada paso
+      if (texto !== ultimo) { msg.textContent = texto; svg.setAttribute('aria-label', texto); ultimo = texto; }
+    };
+    dosis.addEventListener('input', pintar);
+    rest.addEventListener('change', pintar);
+    pintar();
+  });
+</script>
+
+<style>
+  .edh2 { display: grid; gap: 1.1rem; padding: clamp(1.3rem, 3vw, 2rem); border-radius: var(--radio-l); background: var(--niebla); }
+  .edh2-cab { display: flex; gap: .9rem; align-items: flex-start; }
+  .edh2-cab h2 { font-size: var(--t-4); }
+  .edh2-cab p { color: var(--tinta-2); font-size: var(--t-0); margin-top: .2rem; }
+  .edh2-ico { width: 2.8rem; height: 2.8rem; border-radius: 50%; display: grid; place-items: center; background: var(--papel); color: var(--rojo); flex: none; }
+  .edh2-ico :global(.icon) { width: 1.4rem; height: 1.4rem; }
+  .edh2-grafica { border-radius: var(--radio-m); background: var(--papel); padding: .6rem .4rem .2rem; }
+  .edh2-grafica svg { max-width: 38rem; margin-inline: auto; }
+  .edh2-grafica svg { display: block; width: 100%; height: auto; overflow: visible; }
+  .z0 { fill: #ece9e4; } .z1 { fill: #e3f1e8; } .z2 { fill: var(--rojo-tinte); }
+  .base { stroke: var(--tinta-2); stroke-width: 1.2; stroke-dasharray: 4 4; }
+  .eje { stroke: var(--linea); stroke-width: 1.5; }
+  .curva { fill: none; stroke: var(--tinta); stroke-width: 3.5; stroke-linecap: round; stroke-linejoin: round; transition: d .5s var(--ease); }
+  .punto { fill: var(--rojo); stroke: #fff; stroke-width: 3; transition: cx .15s, cy .15s; }
+  .etq { font-size: 13px; fill: var(--tinta-2); font-family: var(--texto); }
+  .zt { font-size: 14px; font-weight: 700; fill: var(--tinta-2); font-family: var(--texto); }
+  [data-zona='1'] [data-zt='1'] { fill: #2f7d4f; }
+  [data-zona='2'] [data-zt='2'] { fill: var(--rojo); }
+  [data-zona='0'] .punto { fill: #8a8378; }
+  [data-estado='1'] .punto { fill: #2f7d4f; }
+  [data-estado='2'] .punto { fill: #c98a1b; }
+  .edh2-controles { display: grid; gap: .6rem; }
+  .edh2-controles > label { font-weight: 700; font-size: var(--t-0); }
+  .edh2-rango { display: flex; align-items: center; gap: .8rem; font-size: var(--t-0); color: var(--tinta-2); }
+  .edh2-rango input { flex: 1; min-width: 0; accent-color: var(--rojo); height: 2.2rem; }
+  .edh2-check { display: inline-flex; align-items: center; gap: .55rem; font-weight: 600; cursor: pointer; min-height: 2.6rem; }
+  .edh2-check input { width: 1.25rem; height: 1.25rem; accent-color: var(--rojo); }
+  .edh2-msg { padding: .9rem 1.1rem; border-radius: var(--radio-m); background: var(--papel); line-height: 1.5; box-shadow: inset 4px 0 0 #2f7d4f; }
+  [data-zona='0'] .edh2-msg { box-shadow: inset 4px 0 0 #b9b2a6; }
+  [data-estado='2'] .edh2-msg { box-shadow: inset 4px 0 0 #c98a1b; }
+  [data-zona='2'] .edh2-msg { box-shadow: inset 4px 0 0 var(--rojo); }
+  .edh2-ciclo { list-style: none; display: flex; flex-wrap: wrap; gap: .4rem; counter-reset: ciclo; }
+  .edh2-ciclo li { counter-increment: ciclo; display: inline-flex; align-items: center; gap: .45rem; padding: .45rem .9rem; border-radius: 999px; background: var(--papel); border: 1px solid var(--linea); font-weight: 700; font-size: var(--t-0); }
+  .edh2-ciclo li::before { content: counter(ciclo); width: 1.4rem; height: 1.4rem; border-radius: 50%; display: grid; place-items: center; background: var(--rojo); color: #fff; font-size: .75rem; }
+  @media (max-width: 560px) { .zt { font-size: 17px; } .etq { font-size: 15px; } }
+  @media (prefers-reduced-motion: reduce) { .curva, .punto { transition: none; } }
+</style>

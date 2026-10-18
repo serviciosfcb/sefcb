@@ -1,0 +1,101 @@
+---
+// Reto de la semana: la persona marca las pequeñas acciones que hizo. Se guarda solo en su navegador
+// y empieza de cero cada semana. No se envía nada.
+import type { Lang } from '../../i18n/content';
+import Icon from '../Icon.astro';
+interface Props { lang: Lang; clave: string; titulo?: string; items: string[] }
+const { lang, clave, titulo, items } = Astro.props;
+const en = lang === 'en';
+const t = en
+  ? { title: titulo || 'My week', lead: 'Tick what you do this week. Your progress stays only on this device and starts over every Monday.', of: 'of', done: 'done this week', zero: 'Pick one small dose to start with today.', some: 'Good start. Every small dose counts.', many: 'Great week! Keep it up.', reset: 'Start over' }
+  : { title: titulo || 'Mi semana', lead: 'Marque lo que haga esta semana. Su avance queda solo en este dispositivo y empieza de nuevo cada lunes.', of: 'de', done: 'hechas esta semana', zero: 'Elija una pequeña dosis para empezar hoy.', some: 'Buen comienzo. Cada pequeña dosis cuenta.', many: '¡Muy buena semana! Siga así.', reset: 'Empezar de nuevo' };
+---
+<section class="edn" aria-labelledby="edn-t" data-reto={`${clave}-${lang}`} data-t={JSON.stringify(t)}>
+  <div class="edn-cab">
+    <span class="edn-ico" aria-hidden="true"><Icon name="leaf" /></span>
+    <div><h2 id="edn-t">{t.title}</h2><p>{t.lead}</p></div>
+  </div>
+  <ul class="edn-lista">
+    {items.map((x, i) => (
+      <li><input type="checkbox" id={`edn-${clave}-${i}`} data-reto-item /><label for={`edn-${clave}-${i}`}>{x}</label></li>
+    ))}
+  </ul>
+  <div class="edn-avance">
+    <div class="edn-barra" aria-hidden="true"><i data-reto-barra></i></div>
+    <p aria-live="polite" data-reto-res><strong>0 {t.of} {items.length}</strong> {t.done}. {t.zero}</p>
+  </div>
+  <button class="edn-reset" type="button" data-reto-reset>{t.reset}</button>
+</section>
+
+<script>
+  // Semana ISO: año y número de semana, para que el reto empiece de cero cada lunes
+  const semana = (d = new Date()) => {
+    const x = new Date(Date.UTC(d.getFullYear(), d.getMonth(), d.getDate()));
+    const dia = x.getUTCDay() || 7;
+    x.setUTCDate(x.getUTCDate() + 4 - dia);
+    const inicio = new Date(Date.UTC(x.getUTCFullYear(), 0, 1));
+    return `${x.getUTCFullYear()}-${Math.ceil(((x.getTime() - inicio.getTime()) / 86400000 + 1) / 7)}`;
+  };
+  document.querySelectorAll<HTMLElement>('[data-reto]').forEach((box) => {
+    const t = JSON.parse(box.dataset.t || '{}');
+    const base = `sefcb-reto-${box.dataset.reto}-`;
+    const items = [...box.querySelectorAll<HTMLInputElement>('[data-reto-item]')];
+    const res = box.querySelector<HTMLElement>('[data-reto-res]')!;
+    const barra = box.querySelector<HTMLElement>('[data-reto-barra]')!;
+    // Se guarda el texto de cada acción marcada (no su posición), para que editar la lista en el panel no mueva las marcas
+    const texto = (i: HTMLInputElement) => (i.nextElementSibling?.textContent || '').trim();
+    let clave = base + semana();
+    const cargar = () => {
+      clave = base + semana();
+      let guardado: unknown = [];
+      try {
+        guardado = JSON.parse(localStorage.getItem(clave) || '[]');
+        // Borra las semanas anteriores de este reto
+        for (let k = localStorage.length - 1; k >= 0; k--) {
+          const n = localStorage.key(k);
+          if (n && n.startsWith(base) && n !== clave) localStorage.removeItem(n);
+        }
+      } catch { guardado = []; }
+      const marcadas = Array.isArray(guardado) ? guardado.filter((x): x is string => typeof x === 'string') : [];
+      items.forEach((it) => { it.checked = marcadas.includes(texto(it)); });
+    };
+    const pintar = (guardar = true) => {
+      const n = items.filter((i) => i.checked).length;
+      barra.style.width = `${(n / items.length) * 100}%`;
+      const b = document.createElement('strong'); b.textContent = `${n} ${t.of} ${items.length}`;
+      res.replaceChildren(b, ` ${t.done}. ${n === 0 ? t.zero : n < Math.ceil(items.length / 2) ? t.some : t.many}`);
+      if (guardar) {
+        // Si la página quedó abierta y ya empezó otra semana, las marcas nuevas van a la semana nueva
+        if (base + semana() !== clave) clave = base + semana();
+        try { localStorage.setItem(clave, JSON.stringify(items.filter((i) => i.checked).map(texto))); } catch { /* sin almacenamiento */ }
+      }
+    };
+    items.forEach((i) => i.addEventListener('change', () => pintar()));
+    box.querySelector('[data-reto-reset]')?.addEventListener('click', () => { items.forEach((i) => { i.checked = false; }); pintar(); });
+    // Al volver a la pestaña en una semana nueva, el reto empieza de cero
+    document.addEventListener('visibilitychange', () => { if (!document.hidden && base + semana() !== clave) { cargar(); pintar(false); } });
+    cargar();
+    pintar(false);
+  });
+</script>
+
+<style>
+  .edn { display: grid; gap: 1.1rem; padding: clamp(1.3rem, 3vw, 2rem); border-radius: var(--radio-l); background: linear-gradient(160deg, #e9f3ec, var(--niebla) 60%); }
+  .edn-cab { display: flex; gap: .9rem; align-items: flex-start; }
+  .edn-cab h2 { font-size: var(--t-4); }
+  .edn-cab p { color: var(--tinta-2); font-size: var(--t-0); margin-top: .2rem; }
+  .edn-ico { width: 2.8rem; height: 2.8rem; border-radius: 50%; display: grid; place-items: center; background: #2f7d4f; color: #fff; flex: none; }
+  .edn-ico :global(.icon) { width: 1.4rem; height: 1.4rem; }
+  .edn-lista { list-style: none; display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, 16rem), 1fr)); gap: .5rem; }
+  .edn-lista li { position: relative; }
+  .edn-lista input { position: absolute; left: .9rem; top: .95rem; width: 1.25rem; height: 1.25rem; accent-color: #2f7d4f; margin: 0; }
+  .edn-lista label { display: block; height: 100%; padding: .75rem .9rem .75rem 2.8rem; border-radius: var(--radio-m); background: var(--papel); border: 1px solid var(--linea); line-height: 1.4; cursor: pointer; transition: border-color .3s, background-color .3s; }
+  .edn-lista input:checked + label { border-color: #2f7d4f; background: #e3f1e8; }
+  .edn-lista input:focus-visible + label { outline: 3px solid #2f7d4f; outline-offset: 2px; }
+  .edn-avance { display: grid; gap: .7rem; padding: 1rem 1.1rem; border-radius: var(--radio-m); background: var(--papel); }
+  .edn-barra { height: 10px; border-radius: 999px; background: var(--linea); overflow: hidden; }
+  .edn-barra i { display: block; height: 100%; width: 0; border-radius: inherit; background: #2f7d4f; transition: width .5s var(--ease); }
+  .edn-avance p { line-height: 1.5; }
+  .edn-reset { justify-self: start; border: 0; background: none; padding: .4rem 0; font: inherit; font-weight: 600; color: var(--tinta-2); text-decoration: underline; text-underline-offset: .2em; cursor: pointer; }
+  @media (prefers-reduced-motion: reduce) { .edn-barra i { transition: none; } }
+</style>
