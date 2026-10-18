@@ -7,6 +7,11 @@
     "etica": "322 790 1271"
   },
   "whatsapp": "573209362904",
+  "chat": {
+    "activo": true,
+    "propiedad": "57656addec8ca2561a06d100",
+    "widget": "default"
+  },
   "correos": {
     "etica": "oficialdecumplimiento@sefcb.co",
     "judicial": "gerencia@sefcb.co"

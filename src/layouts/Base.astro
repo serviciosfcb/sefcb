@@ -5,6 +5,7 @@ import { content, phones } from '../i18n/content';
 import Header from '../components/Header.astro';
 import Footer from '../components/Footer.astro';
 import A11yPanel from '../components/A11yPanel.astro';
+import LiveChat from '../components/LiveChat.astro';
 interface Props {
   lang: Lang;
   title?: string;        // título de la página; si falta, el del inicio
@@ -84,6 +85,7 @@ const ld = {
     </main>
     <Footer lang={lang} home={home} />
     <A11yPanel lang={lang} />
+    <LiveChat />
     <script>
       import { initAnimations } from '../scripts/animations';
       initAnimations();
