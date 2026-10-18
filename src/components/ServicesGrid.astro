@@ -10,7 +10,7 @@ const { lang, exclude, compact = false } = Astro.props;
 const all = content[lang];
 const t = all.services;
 const list = (await getServicios(lang)).filter((s) => s.data.key !== exclude);
-const labelsFor = (k: string) => k === 'obesidad' ? t.plate : k === 'consulta' ? t.sounds : k === 'transporte' ? sedes.map((s) => (lang === 'en' ? s.nombre_en || s.nombre : s.nombre)) : [];
+const labelsFor = (k: string) => k === 'obesidad' ? t.pillars : k === 'consulta' ? t.sounds : k === 'transporte' ? sedes.map((s) => (lang === 'en' ? s.nombre_en || s.nombre : s.nombre)) : [];
 ---
 <ul class:list={['servicios-grid', { compacta: compact }]} data-stagger>
   {list.map((s, i) => (

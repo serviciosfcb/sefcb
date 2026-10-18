@@ -21,7 +21,7 @@ const path = pathOfServicio(s);
 const { Content } = await render(s);
 const sede = sedes[d.sede] ?? sedes[0];
 const svc = all.services;
-const labels = d.key === 'obesidad' ? svc.plate : d.key === 'consulta' ? svc.sounds : d.key === 'transporte' ? sedes.map((x) => (en ? x.nombre_en || x.nombre : x.nombre)) : [];
+const labels = d.key === 'obesidad' ? svc.pillars : d.key === 'consulta' ? svc.sounds : d.key === 'transporte' ? sedes.map((x) => (en ? x.nombre_en || x.nombre : x.nombre)) : [];
 const caption = svc.items.find((x) => x.key === d.key)?.caption ?? '';
 // Enlace a la guía de preparación, para los servicios que la tienen
 const prepAnchor = d.key === 'nuclear' ? (en ? 'nuclear-medicine' : 'medicina-nuclear') : d.key === 'noinvasiva' ? (en ? 'non-invasive-cardiology' : 'cardiologia-no-invasiva') : '';

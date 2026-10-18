@@ -64,11 +64,25 @@ for (let x = 28; x <= 452; x += 1.5) {
   pcgEcg += (pcgEcg ? 'L' : 'M') + f(x) + ' ' + f(84 - beat(ph, 'II') * 30);
 }
 
-// Método del plato: mitad, cuarto y cuarto
-const plate = (a0: number, a1: number, r: number) => {
-  const p = (a: number) => `${f(220 + r * Math.cos(a))} ${f(180 - r * Math.sin(a))}`;
-  return `M${p(a0)} A${r} ${r} 0 ${a1 - a0 > Math.PI ? 1 : 0} 0 ${p(a1)}`;
+// Mapa de HORMESIS: cuatro pilares alrededor de la capacidad de adaptación (Cartilla 0, visual 7.1)
+const hx = 240, hy = 180, hr0 = 66, hr1 = 152;
+const sector = (r0: number, r1: number, a0: number, a1: number) => {
+  const p = (r: number, a: number) => `${f(hx + r * Math.cos(a))} ${f(hy - r * Math.sin(a))}`;
+  return `M${p(r1, a0)} A${r1} ${r1} 0 0 0 ${p(r1, a1)} L${p(r0, a1)} A${r0} ${r0} 0 0 1 ${p(r0, a0)} Z`;
 };
+// Del primero al cuarto, en el sentido del reloj desde arriba a la izquierda; los colores se alternan para que ningún pilar parezca más importante
+const pilares = [135, 45, -45, -135].map((c, i) => {
+  const arriba = c > 0;
+  const bx = hx + 104 * Math.cos(c * deg) * (arriba ? 1 : 1.04), by = hy - 104 * Math.sin(c * deg);
+  const nombre = (labels[i] ?? '').split(' ');
+  const lineas = nombre.length > 1 ? [nombre[0], nombre.slice(1).join(' ')] : nombre;
+  // Arriba: el icono hacia afuera y el nombre hacia el centro; abajo, al revés
+  const iy = arriba ? by - 20 : by + 26;
+  const ty = arriba ? by + 18 : by - (lineas.length > 1 ? 14 : 4);
+  return { d: sector(hr0, hr1, (c - 42) * deg, (c + 42) * deg), bx: f(bx), iy: f(iy), ty, lineas, i };
+});
+// Puntos de unión entre pilares: se influyen entre sí
+const uniones = [90, 0, -90, 180].map((a) => ({ x: f(hx + 109 * Math.cos(a * deg)), y: f(hy - 109 * Math.sin(a * deg)) }));
 
 // Goniómetro: transportador de 0° a 180° y flexión de rodilla de 120°
 const gx = 240, gy = 262, flex = 120;
@@ -182,18 +196,47 @@ const [lx, ly] = polar(112, flex / 2);
 
   {kind === 'obesidad' && (
     <>
-      <circle cx="220" cy="180" r="140" class="plato" />
-      <circle cx="220" cy="180" r="124" class="plato-borde" />
-      <path d={plate(90 * deg, 270 * deg, 62)} data-draw class="porcion p1" />
-      <path d={plate(-90 * deg, 0, 62)} data-draw class="porcion p3" />
-      <path d={plate(0, 90 * deg, 62)} data-draw class="porcion p2" />
-      <line x1="220" y1="56" x2="220" y2="304" class="division" />
-      <line x1="220" y1="180" x2="344" y2="180" class="division" />
-      <text x="168" y="186" class="rotulo centro grande">{labels[0]}</text>
-      <text x="280" y="136" class="rotulo centro">{labels[1]}</text>
-      <text x="280" y="234" class="rotulo centro">{labels[2]}</text>
-      <rect x="392" y="96" width="44" height="78" rx="10" class="vaso" />
-      <rect x="396" y="126" width="36" height="44" rx="7" class="agua" />
+      <circle cx={hx} cy={hy} r="168" class="anillo-guia" />
+      <circle cx={hx} cy={hy} r="168" class="barrido" />
+      {pilares.map((p) => (
+        <g class={`pilar pl${p.i + 1}`} style={`--d:${p.i * .18}s`}>
+          <path d={p.d} class="sector" />
+          <g class="pl-contenido" transform={`translate(${p.bx} ${p.iy})`}>
+            {p.i === 0 && (
+              <>
+                <path d="M0 -5 C -4 -9 -13 -8 -13 1 C -13 9 -6 14 0 12 C 6 14 13 9 13 1 C 13 -8 4 -9 0 -5 Z" />
+                <path d="M0 -5 C 0 -9 1 -12 4 -14" />
+                <path d="M2 -9 C 5 -14 10 -13 11 -12 C 10 -8 6 -7 2 -9 Z" />
+              </>
+            )}
+            {p.i === 1 && (
+              <>
+                <circle cx="3" cy="-12" r="3.2" />
+                <path d="M2 -7 L-1 3 L-7 12 M-1 3 L5 7 L5 14 M-8 -1 L-2 -6 L4 -3 L9 1" />
+              </>
+            )}
+            {p.i === 2 && (
+              <>
+                <path d="M3 -12 A12 12 0 1 0 12 4 A9.5 9.5 0 0 1 3 -12 Z" />
+                <path d="M11 -14 V-8 M8 -11 H14" />
+              </>
+            )}
+            {p.i === 3 && (
+              <path d="M-13 -5 H5 A4.5 4.5 0 1 0 0.5 -9.5 M-13 1 H9 A4.5 4.5 0 1 1 4.5 5.5 M-13 7 H-1" />
+            )}
+          </g>
+          <text x={p.bx} y={p.ty} class="pl-nombre centro">
+            {p.lineas.map((l, k) => <tspan x={p.bx} dy={k ? 15 : 0}>{l}</tspan>)}
+          </text>
+        </g>
+      ))}
+      {uniones.map((u, i) => <circle cx={u.x} cy={u.y} r="4.5" class="union" style={`--d:${1 + i * .5}s`} />)}
+      <circle cx={hx} cy={hy} r="56" class="centro-pulso" />
+      <g class="centro-hm">
+        <circle cx={hx} cy={hy} r="56" />
+        <text x={hx} y={hy - 4} class="hm-sub centro">{labels[4]}</text>
+        <text x={hx} y={hy + 15} class="hm-titulo centro">{labels[5]}</text>
+      </g>
     </>
   )}
 </svg>
@@ -262,28 +305,37 @@ const [lx, ly] = polar(112, flex / 2);
   :global(.activa) .movil { opacity: 1; animation: recorrer 3.6s var(--ease-io) 1.2s infinite; }
   @keyframes recorrer { 0% { offset-distance: 0%; } 70%, 100% { offset-distance: 100%; } }
 
-  /* Plato */
-  .plato { fill: rgb(255 255 255 / .04); stroke: rgb(255 255 255 / .12); }
-  .plato-borde { fill: none; stroke: rgb(255 255 255 / .08); }
-  .porcion { fill: none; stroke-width: 124; stroke-dasharray: var(--len, none); stroke-dashoffset: var(--len, 0); }
-  .p1 { stroke: rgb(161 161 159 / .55); } .p2 { stroke: #9f2728; } .p3 { stroke: rgb(226 72 77 / .55); }
-  :global(.activa) .porcion { animation: trazar 1.1s var(--ease) forwards; }
-  :global(.activa) .p2 { animation-delay: .35s; } :global(.activa) .p3 { animation-delay: .6s; }
-  .division { stroke: #1c1a19; stroke-width: 4; }
-  .vaso { fill: none; stroke: rgb(255 255 255 / .3); stroke-width: 2; }
-  .agua { fill: rgb(161 161 159 / .3); transform-box: fill-box; transform-origin: bottom; transform: scaleY(0); }
-  :global(.activa) .agua { animation: llenar 1.4s var(--ease) .8s forwards; }
-  @keyframes llenar { to { transform: none; } }
+  /* Pilares de HORMESIS */
+  .vis-obesidad .barrido { transform-origin: 240px 180px; stroke-dasharray: 84 972; }
+  .pilar { transform-origin: 240px 180px; transform: scale(.82); opacity: 0; }
+  :global(.activa) .pilar { animation: segmento .9s var(--ease) forwards; animation-delay: var(--d); }
+  .sector { stroke: #1c1a19; stroke-width: 3; }
+  .pl1 .sector { fill: #9f2728; }
+  .pl2 .sector { fill: rgb(161 161 159 / .42); }
+  .pl3 .sector { fill: rgb(226 72 77 / .72); }
+  .pl4 .sector { fill: rgb(245 244 242 / .2); }
+  .pl-contenido path, .pl-contenido circle { fill: none; stroke: #fff; stroke-width: 2.2; stroke-linecap: round; stroke-linejoin: round; }
+  .pl-nombre { fill: #fff; font: 700 13.5px var(--texto); letter-spacing: .01em; }
+  .union { fill: #f5f4f2; stroke: #1c1a19; stroke-width: 3; opacity: 0; }
+  :global(.activa) .union { animation: aparecer .5s var(--ease) 1s forwards, latido 2s var(--ease-io) var(--d) infinite; }
+  @keyframes latido { 0%, 100% { fill: #f5f4f2; } 50% { fill: #e2484d; } }
+  .centro-hm circle { fill: #1c1a19; stroke: #e2484d; stroke-width: 2.5; }
+  .centro-hm { opacity: 0; }
+  :global(.activa) .centro-hm { animation: aparecer .7s var(--ease) .75s forwards; }
+  .hm-sub { fill: rgb(245 244 242 / .7); font: 600 11.5px var(--texto); letter-spacing: .03em; }
+  .hm-titulo { fill: #fff; font: 700 17px var(--display); letter-spacing: -.01em; }
+  .centro-pulso { fill: rgb(226 72 77 / .22); transform-box: fill-box; transform-origin: center; opacity: 0; }
+  :global(.activa) .centro-pulso { animation: pulso-centro 3s var(--ease) 1.4s infinite; }
+  @keyframes pulso-centro { 0% { transform: scale(1); opacity: .9; } 100% { transform: scale(1.5); opacity: 0; } }
 
   @media (prefers-reduced-motion: reduce) {
-    .traza, .traza-fina, .cateter, .v, .ruta, .porcion { stroke-dashoffset: 0 !important; }
-    .seg { opacity: 1 !important; transform: none !important; }
-    .agua { transform: none !important; }
-    .barrido, .movil { display: none; }
+    .traza, .traza-fina, .cateter, .v, .ruta { stroke-dashoffset: 0 !important; }
+    .seg, .pilar, .union, .centro-hm { opacity: 1 !important; transform: none !important; animation: none !important; }
+    .barrido, .movil, .centro-pulso { display: none; }
   }
   :global(:root[data-motion='reduced']) .traza, :global(:root[data-motion='reduced']) .traza-fina, :global(:root[data-motion='reduced']) .cateter,
-  :global(:root[data-motion='reduced']) .v, :global(:root[data-motion='reduced']) .ruta, :global(:root[data-motion='reduced']) .porcion { stroke-dashoffset: 0 !important; }
-  :global(:root[data-motion='reduced']) .seg { opacity: 1 !important; transform: none !important; }
-  :global(:root[data-motion='reduced']) .agua { transform: none !important; }
-  :global(:root[data-motion='reduced']) .barrido, :global(:root[data-motion='reduced']) .movil { display: none; }
+  :global(:root[data-motion='reduced']) .v, :global(:root[data-motion='reduced']) .ruta { stroke-dashoffset: 0 !important; }
+  :global(:root[data-motion='reduced']) .seg, :global(:root[data-motion='reduced']) .pilar, :global(:root[data-motion='reduced']) .union,
+  :global(:root[data-motion='reduced']) .centro-hm { opacity: 1 !important; transform: none !important; animation: none !important; }
+  :global(:root[data-motion='reduced']) .barrido, :global(:root[data-motion='reduced']) .movil, :global(:root[data-motion='reduced']) .centro-pulso { display: none; }
 </style>
