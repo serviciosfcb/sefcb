@@ -52,7 +52,9 @@ export const phones = {
 };
 
 export const emails = contacto.correos;
-export const insurers: string[] = convenios.lista;
+// Convenios: nombre y logo (opcional). Se aceptan también nombres sueltos, como se guardaban antes.
+export type Convenio = { nombre: string; logo?: string };
+export const insurers: Convenio[] = (convenios.lista as (string | Convenio)[]).map((x) => (typeof x === 'string' ? { nombre: x } : x)).filter((x) => x.nombre);
 export type Sede = (typeof contacto.sedes)[number];
 export const sedes: Sede[] = contacto.sedes;
 

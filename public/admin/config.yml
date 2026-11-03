@@ -354,7 +354,11 @@ collections:
             name: lista
             label_singular: entidad
             widget: list
-            field: { label: Nombre, name: nombre, widget: string }
+            summary: '{{fields.nombre}}'
+            hint: 'Aparecen en el inicio en este orden. El logo es opcional: use PNG con fondo transparente o blanco, recortado al borde del logo.'
+            fields:
+              - { label: Nombre, name: nombre, widget: string }
+              - { label: Logo, name: logo, widget: image, required: false, choose_url: false, media_folder: /src/assets/convenios, public_folder: /src/assets/convenios }
 
       - name: equipo
         label: Equipo y directorio

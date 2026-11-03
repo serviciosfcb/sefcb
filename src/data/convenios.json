@@ -1,16 +1,60 @@
 {
   "lista": [
-    "Allianz",
-    "Axa Colpatria",
-    "Colmédica",
-    "Colsanitas",
-    "Coomeva",
-    "Ecopetrol",
-    "HDI Seguros",
-    "Mapfre",
-    "MedPlus",
-    "Positiva",
-    "Seguros Bolívar",
-    "Sura"
+    {
+      "nombre": "Allianz",
+      "logo": "/src/assets/convenios/allianz.png"
+    },
+    {
+      "nombre": "Colmédica Medicina Prepagada",
+      "logo": "/src/assets/convenios/colmedica.png"
+    },
+    {
+      "nombre": "Colsanitas",
+      "logo": "/src/assets/convenios/colsanitas.png"
+    },
+    {
+      "nombre": "Comfaoriente EPS",
+      "logo": "/src/assets/convenios/comfaoriente.png"
+    },
+    {
+      "nombre": "Coomeva Medicina Prepagada",
+      "logo": "/src/assets/convenios/coomeva.png"
+    },
+    {
+      "nombre": "Ecopetrol",
+      "logo": "/src/assets/convenios/ecopetrol.png"
+    },
+    {
+      "nombre": "EPS Sanitas",
+      "logo": "/src/assets/convenios/eps-sanitas.png"
+    },
+    {
+      "nombre": "HDI Seguros",
+      "logo": "/src/assets/convenios/hdi-seguros.png"
+    },
+    {
+      "nombre": "Mapfre Seguros",
+      "logo": "/src/assets/convenios/mapfre.png"
+    },
+    {
+      "nombre": "MedPlus Medicina Prepagada",
+      "logo": "/src/assets/convenios/medplus.png"
+    },
+    {
+      "nombre": "Nueva EPS",
+      "logo": "/src/assets/convenios/nueva-eps.png"
+    },
+    {
+      "nombre": "Positiva Compañía de Seguros",
+      "logo": "/src/assets/convenios/positiva.png"
+    },
+    {
+      "nombre": "Seguros Bolívar",
+      "logo": "/src/assets/convenios/seguros-bolivar.png"
+    },
+    {
+      "nombre": "Sura",
+      "logo": "/src/assets/convenios/sura.png"
+    }
   ]
 }

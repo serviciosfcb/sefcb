@@ -1,12 +1,24 @@
 ---
+// Convenios: logos de las EPS y aseguradoras en dos filas que se deslizan (con botón para pausar).
+// Con movimiento reducido se muestran quietos, en una cuadrícula. Los datos se editan en el panel:
+// Datos del sitio > Convenios.
 import type { Lang } from '../i18n/content';
 import { content, insurers } from '../i18n/content';
+import { Image } from 'astro:assets';
+import { logoConvenio, anchoLogo } from '../lib/convenios';
 import Icon from './Icon.astro';
 interface Props { lang: Lang }
 const { lang } = Astro.props;
 const t = content[lang].insurers;
-const mitad = Math.ceil(insurers.length / 2);
-const fila1 = insurers.slice(0, mitad), fila2 = insurers.slice(mitad);
+const items = insurers.map((c) => {
+  const meta = logoConvenio(c.logo);
+  const w = meta ? anchoLogo(meta, 24, 9.6, 3.8) : 0;
+  const px = Math.round(w * 16);
+  const anchos = meta ? [px, px * 2].filter((x) => x <= meta.width) : [];
+  return { ...c, meta, w, px, anchos: anchos.length ? anchos : meta ? [meta.width] : [] };
+});
+const mitad = Math.ceil(items.length / 2);
+const filas = [items.slice(0, mitad), items.slice(mitad)];
 ---
 <section class="convenios seccion" aria-labelledby="convenios-titulo" data-marquee>
   <div class="contenedor conv-cab">
@@ -19,13 +31,30 @@ const fila1 = insurers.slice(0, mitad), fila2 = insurers.slice(mitad);
     </button>
   </div>
 
-  <div class="contenedor"><ul class="visualmente-oculto conv-lista">{insurers.map((n) => <li>{n}</li>)}</ul></div>
+  <!-- Lista para lectores de pantalla; con movimiento reducido se ve como cuadrícula -->
+  <div class="contenedor">
+    <ul class="conv-rejilla">
+      {items.map((c) => (
+        <li class="ficha">
+          {c.meta ? (
+            <Image src={c.meta} alt={c.nombre} widths={c.anchos} sizes={`${c.px}px`} format="webp" quality={88} style={`--w:${c.w}`} loading="lazy" />
+          ) : <span class="ficha-nombre">{c.nombre}</span>}
+        </li>
+      ))}
+    </ul>
+  </div>
 
   <div class="marquesina" aria-hidden="true">
-    {[fila1, fila2].map((fila, r) => (
+    {filas.map((fila, r) => (
       <div class:list={['fila', { inversa: r === 1 }]}>
         <div class="pista">
-          {[0, 1, 2].map(() => fila.map((n) => <span class="nombre">{n}<span class="punto"></span></span>))}
+          {[0, 1, 2].map(() => fila.map((c) => (
+            <span class="ficha">
+              {c.meta ? (
+                <Image src={c.meta} alt="" widths={c.anchos} sizes={`${c.px}px`} format="webp" quality={88} style={`--w:${c.w}`} loading="lazy" />
+              ) : <span class="ficha-nombre">{c.nombre}</span>}
+            </span>
+          )))}
         </div>
       </div>
     ))}
@@ -44,32 +73,48 @@ const fila1 = insurers.slice(0, mitad), fila2 = insurers.slice(mitad);
 </script>
 
 <style>
-  .convenios { background: var(--papel); overflow: hidden; padding-bottom: clamp(4rem, 6vw, 7rem); }
+  .convenios { --escala: 1; background: var(--papel); overflow: hidden; padding-bottom: clamp(4rem, 6vw, 7rem); }
   .conv-cab { display: flex; align-items: end; justify-content: space-between; gap: 2rem; }
   .conv-pausa { display: inline-flex; align-items: center; gap: .5rem; margin-bottom: clamp(2.5rem, 2rem + 2vw, 4rem); padding: .6rem 1rem; border-radius: 999px; border: 1px solid var(--linea); background: var(--papel); cursor: pointer; font-weight: 600; font-size: var(--t-0); color: var(--tinta); white-space: nowrap; }
   .conv-pausa:hover { border-color: var(--tinta); }
   .conv-pausa :global(.icon) { width: 1rem; height: 1rem; }
-  .marquesina { display: grid; gap: .6rem; mask-image: linear-gradient(90deg, transparent, #000 8%, #000 92%, transparent); }
-  .fila { display: flex; overflow: hidden; }
-  .pista { display: flex; flex: none; animation: deslizar 46s linear infinite; }
-  .inversa .pista { animation-direction: reverse; animation-duration: 52s; }
-  .convenios:hover .pista, .convenios.pausada .pista { animation-play-state: paused; }
-  .nombre {
-    display: inline-flex; align-items: center; gap: clamp(1.4rem, 3vw, 2.8rem); padding-right: clamp(1.4rem, 3vw, 2.8rem);
-    font-family: var(--display); font-size: clamp(2.2rem, 1.4rem + 3.4vw, 4.6rem); font-weight: 600; letter-spacing: -.035em; line-height: 1.15;
-    color: transparent; -webkit-text-stroke: 1.2px #b9b7b2; white-space: nowrap; transition: color .4s var(--ease), -webkit-text-stroke-color .4s;
+
+  /* Ficha de cada convenio: logo a color sobre blanco, todos con el mismo peso visual */
+  .ficha {
+    flex: none; display: grid; place-items: center;
+    width: calc(12rem * var(--escala)); height: calc(6rem * var(--escala));
+    border-radius: var(--radio-m); background: #fff; border: 1px solid var(--linea);
+    transition: border-color .3s, transform .5s var(--ease), box-shadow .5s var(--ease);
   }
-  .nombre:hover { color: var(--rojo); -webkit-text-stroke-color: var(--rojo); }
-  .fila.inversa .nombre { color: var(--tinta); -webkit-text-stroke: 0; }
-  .fila.inversa .nombre:hover { color: var(--rojo); }
-  .punto { width: .7rem; height: .7rem; border-radius: 50%; background: var(--rojo); flex: none; }
+  .ficha :global(img) { display: block; width: calc(var(--w) * 1rem * var(--escala)); height: auto; }
+  .ficha-nombre { font: 600 var(--t-2) / 1.2 var(--display); color: var(--tinta); text-align: center; padding: 0 1rem; }
+
+  .marquesina { display: grid; gap: 1rem; mask-image: linear-gradient(90deg, transparent, #000 8%, #000 92%, transparent); }
+  .fila { display: flex; overflow: hidden; padding: .4rem 0; }
+  .pista { display: flex; flex: none; animation: deslizar 60s linear infinite; }
+  .pista .ficha { margin-right: 1rem; }
+  .inversa .pista { animation-direction: reverse; animation-duration: 68s; }
+  .convenios:hover .pista, .convenios.pausada .pista { animation-play-state: paused; }
+  .pista .ficha:hover { border-color: rgb(159 39 40 / .35); transform: translateY(-3px); box-shadow: 0 18px 36px -24px rgb(var(--sombra) / .5); }
   @keyframes deslizar { to { transform: translateX(-33.333%); } }
-  @media (max-width: 640px) { .conv-cab { display: grid; } .conv-pausa { justify-self: start; margin-top: -1.5rem; } }
-  :global(:root[data-contrast='high']) .nombre { color: #000; -webkit-text-stroke: 0; }
+
+  /* La cuadrícula solo se ve con movimiento reducido; si no, queda para lectores de pantalla */
+  .conv-rejilla { position: absolute; width: 1px; height: 1px; padding: 0; margin: -1px; overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; border: 0; list-style: none; }
+
+  @media (max-width: 640px) {
+    .convenios { --escala: .78; }
+    .conv-cab { display: grid; }
+    .conv-pausa { justify-self: start; margin-top: -1.5rem; }
+    .marquesina { gap: .7rem; }
+    .pista .ficha { margin-right: .7rem; }
+  }
+  :global(:root[data-contrast='high']) .ficha { border: 2px solid #000; }
   :global(:root[data-motion='reduced']) .marquesina, :global(:root[data-motion='reduced']) .conv-pausa { display: none; }
-  :global(:root[data-motion='reduced']) .conv-lista { position: static !important; width: auto; height: auto; margin: 0; overflow: visible; clip: auto; white-space: normal; display: flex; flex-wrap: wrap; gap: .6rem 2rem; list-style: none; font-family: var(--display); font-size: var(--t-4); font-weight: 600; }
+  :global(:root[data-motion='reduced']) .conv-rejilla { position: static; width: auto; height: auto; margin: 0; overflow: visible; clip: auto; white-space: normal; display: grid; grid-template-columns: repeat(auto-fill, minmax(calc(12rem * var(--escala)), 1fr)); gap: 1rem; }
+  :global(:root[data-motion='reduced']) .conv-rejilla .ficha { width: auto; }
   @media (prefers-reduced-motion: reduce) {
     .marquesina, .conv-pausa { display: none; }
-    .conv-lista { position: static !important; width: auto; height: auto; margin: 0; overflow: visible; clip: auto; white-space: normal; display: flex; flex-wrap: wrap; gap: .6rem 2rem; list-style: none; font-family: var(--display); font-size: var(--t-4); font-weight: 600; }
+    .conv-rejilla { position: static; width: auto; height: auto; margin: 0; overflow: visible; clip: auto; white-space: normal; display: grid; grid-template-columns: repeat(auto-fill, minmax(calc(12rem * var(--escala)), 1fr)); gap: 1rem; }
+    .conv-rejilla .ficha { width: auto; }
   }
 </style>
