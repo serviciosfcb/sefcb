@@ -16,6 +16,10 @@ Submit petitions, complaints, suggestions, compliments, questions, information r
 
 If you are not satisfied with our response, you can contact the National Health Superintendency (Supersalud) or the Norte de Santander Departmental Health Institute. Their channels are listed under [oversight bodies](/en/transparency/oversight-bodies/).
 
+## Rate your care
+
+If you have visited us, tell us how it went in our [satisfaction survey](https://forms.gle/S7yYoVYFBgTzdZZ5A) (in Spanish). Your answers help us improve.
+
 ## Opening hours (Colombia time, UTC−5)
 
 - **In person at our main location (Calle 19):** Monday to Friday, 7:00 a.m. to 6:00 p.m.; Saturday, 8:00 a.m. to 11:00 a.m.

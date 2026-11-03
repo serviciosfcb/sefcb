@@ -18,6 +18,7 @@ export const links = {
   registro: 'https://app.sefcb.co/a/pacientes/registro',
   whatsapp: `https://wa.me/${contacto.whatsapp}`,
   pqrs: 'https://docs.google.com/forms/d/e/1FAIpQLSdNUpQtBaGXjQgKYLvxctA8vwbtnJvuMjyYgKuwYNLGUy0Jgg/viewform',
+  encuesta: 'https://forms.gle/S7yYoVYFBgTzdZZ5A',
   pagos: 'https://zonapagos.com/t_Serviciosfcb/pagos.asp',
   sired: 'https://sites.google.com/sefcb.co/siredsefcb2',
   facebook: 'https://www.facebook.com/sefcb/',
@@ -34,7 +35,7 @@ export const links = {
   calidad: 'https://sefcb.co/calidad-certificada/',
   empleo: 'https://sefcb.co/trabaje-con-nosotros/',
   transparencia: 'https://sefcb.co/quienes-somos/transparencia/',
-  etica: 'https://drive.google.com/file/d/1mjmSa6US-DnnrB_JF4nMs3MpUDXhBRGx/view',
+  etica: 'https://drive.google.com/file/d/108ukcISqy3gj1alvHdzJBY82625Xmovl/view',
   informe2021: 'https://drive.google.com/file/d/1SNWkUpquVoad-aOBB1pIlWIP16VLRfy2/view',
 };
 

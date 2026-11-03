@@ -16,6 +16,10 @@ Presente sus derechos de petición, quejas, reclamos, sugerencias, felicitacione
 
 Si no está conforme con la respuesta, puede acudir a la Superintendencia Nacional de Salud o al Instituto Departamental de Salud de Norte de Santander. Encuentre sus canales en el [directorio de entidades](/transparencia/directorio-de-entidades/).
 
+## Califique su atención
+
+Si ya lo atendimos, cuéntenos cómo le fue en la [encuesta de satisfacción](https://forms.gle/S7yYoVYFBgTzdZZ5A). Sus respuestas nos ayudan a mejorar.
+
 ## Horarios
 
 - **Atención presencial en la sede principal (Calle 19):** lunes a viernes de 7:00 a. m. a 6:00 p. m. y sábados de 8:00 a. m. a 11:00 a. m.

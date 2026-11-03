@@ -38,3 +38,7 @@ Yes, with an authorization letter signed by you and that person, and a copy of y
 ### Where can I file a petition, complaint, suggestion or compliment?
 
 Use the [feedback form](https://docs.google.com/forms/d/e/1FAIpQLSdNUpQtBaGXjQgKYLvxctA8vwbtnJvuMjyYgKuwYNLGUy0Jgg/viewform) (in Spanish), the suggestion boxes in our waiting rooms, or speak in person with the patient services (SIAU) coordinator. For compliments, we also keep an experiences book.
+
+### How can I rate the care I received?
+
+Fill in our [satisfaction survey](https://forms.gle/S7yYoVYFBgTzdZZ5A) (in Spanish). Your answers help us measure and improve the quality of our service.

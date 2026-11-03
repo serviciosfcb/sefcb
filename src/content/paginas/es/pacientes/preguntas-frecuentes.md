@@ -39,3 +39,7 @@ Sí, con una carta de autorización firmada por usted y por esa persona, y la fo
 ### ¿Dónde presento una petición, queja, reclamo, sugerencia o felicitación?
 
 En el [formulario de PQRS](https://docs.google.com/forms/d/e/1FAIpQLSdNUpQtBaGXjQgKYLvxctA8vwbtnJvuMjyYgKuwYNLGUy0Jgg/viewform), en los buzones de sugerencias de las salas de espera o de forma presencial con la coordinación del SIAU. Para felicitaciones también tenemos un libro de experiencias.
+
+### ¿Cómo califico la atención que recibí?
+
+Responda la [encuesta de satisfacción](https://forms.gle/S7yYoVYFBgTzdZZ5A). Sus respuestas nos ayudan a medir y mejorar la calidad del servicio.
