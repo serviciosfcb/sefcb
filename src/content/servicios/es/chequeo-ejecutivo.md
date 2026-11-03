@@ -1,16 +1,17 @@
 ---
 key: chequeo
+order: 8
 title: Chequeo ejecutivo cardiovascular
 tag: Paquetes de prevención
-summary: Consulta con el cardiólogo, exámenes de laboratorio y estudios del corazón en una sola jornada, para conocer su riesgo cardiovascular y metabólico.
-order: 8
-sede: 0
-review: "Tomado de las piezas «Chequeo Ejecutivo Cardiovascular» y «Chequeo Premium Cardiovascular» que envió la gerencia el 03/11/2026 (valores de 2.500.000 y 3.000.000 COP). Por validar: la preparación y si la jornada se hace en la sede principal."
+summary: Consulta con el cardiólogo, exámenes de laboratorio y estudios del
+  corazón en una sola jornada, para conocer su riesgo cardiovascular y
+  metabólico.
 paquetes:
   - nombre: Chequeo Ejecutivo Cardiovascular
     corto: Ejecutivo
-    valor: "$ 2.500.000 COP"
-    resumen: La valoración completa de su corazón en una jornada, con la entrega integrada de resultados.
+    valor: ""
+    resumen: La valoración completa de su corazón en una jornada, con la entrega
+      integrada de resultados.
     mensaje: Hola, quiero agendar el Chequeo Ejecutivo Cardiovascular.
     incluye:
       - Consulta médica de cardiología
@@ -20,7 +21,8 @@ paquetes:
       - Ecocardiograma transtorácico
       - Prueba de esfuerzo cardiovascular
       - Valoración nutricional
-      - Consulta médica de integración y entrega de resultados, presencial o por teleconsulta
+      - Consulta médica de integración y entrega de resultados, presencial o por
+        teleconsulta
       - Inmersión natural y bienestar
     complementarios:
       - Sala VIP
@@ -29,8 +31,9 @@ paquetes:
       - Acompañamiento durante toda la experiencia
   - nombre: Chequeo Premium Cardiovascular
     corto: Premium
-    valor: "$ 3.000.000 COP"
-    resumen: Todo lo del chequeo ejecutivo, más ecografía de abdomen, valoración de medicina del deporte y valoración psicológica.
+    valor: ""
+    resumen: Todo lo del chequeo ejecutivo, más ecografía de abdomen, valoración de
+      medicina del deporte y valoración psicológica.
     mensaje: Hola, quiero agendar el Chequeo Premium Cardiovascular.
     incluye:
       - Consulta médica de cardiología
@@ -43,7 +46,8 @@ paquetes:
       - Valoración nutricional
       - Valoración de ejercicio y actividad física por medicina del deporte
       - Valoración psicológica y conductual
-      - Consulta médica de integración y entrega de resultados, presencial o por teleconsulta
+      - Consulta médica de integración y entrega de resultados, presencial o por
+        teleconsulta
       - Inmersión natural y bienestar
     complementarios:
       - Sala VIP
@@ -51,6 +55,11 @@ paquetes:
       - Parqueadero durante su estadía
       - "Gastronomía saludable: desayuno, almuerzo y estación de café"
       - Acompañamiento durante toda la experiencia
+sede: 0
+review: "Tomado de las piezas «Chequeo Ejecutivo Cardiovascular» y «Chequeo
+  Premium Cardiovascular» que envió la gerencia el 03/11/2026 (valores de
+  2.500.000 y 3.000.000 COP). Por validar: la preparación y si la jornada se
+  hace en la sede principal."
 groups:
   - title: Exámenes de laboratorio
     intro: Incluidos en los dos paquetes.
