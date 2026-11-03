@@ -5,6 +5,10 @@
       "logo": "/src/assets/convenios/allianz.png"
     },
     {
+      "nombre": "Axa Colpatria",
+      "logo": "/src/assets/convenios/axa-colpatria.png"
+    },
+    {
       "nombre": "Colmédica Medicina Prepagada",
       "logo": "/src/assets/convenios/colmedica.png"
     },
