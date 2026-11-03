@@ -1,16 +1,16 @@
 ---
 key: chequeo
+order: 8
 title: Executive cardiovascular checkup
 tag: Prevention packages
-summary: A cardiology visit, lab tests and heart studies in a single day, to find out your cardiovascular and metabolic risk.
-order: 8
-sede: 0
-review: "Translated from the Spanish page (03/11/2026). Prices are the same as in the Spanish flyers."
+summary: A cardiology visit, lab tests and heart studies in a single day, to
+  find out your cardiovascular and metabolic risk.
 paquetes:
   - nombre: Executive Cardiovascular Checkup
     corto: Executive
-    valor: "COP 2,500,000"
-    resumen: A complete assessment of your heart in a single day, with all your results explained together.
+    valor: ""
+    resumen: A complete assessment of your heart in a single day, with all your
+      results explained together.
     mensaje: Hello, I would like to book the Executive Cardiovascular Checkup.
     incluye:
       - Cardiology consultation
@@ -29,8 +29,9 @@ paquetes:
       - Personal support throughout the day
   - nombre: Premium Cardiovascular Checkup
     corto: Premium
-    valor: "COP 3,000,000"
-    resumen: Everything in the executive checkup, plus an abdominal ultrasound, a sports medicine assessment and a psychological assessment.
+    valor: ""
+    resumen: Everything in the executive checkup, plus an abdominal ultrasound, a
+      sports medicine assessment and a psychological assessment.
     mensaje: Hello, I would like to book the Premium Cardiovascular Checkup.
     incluye:
       - Cardiology consultation
@@ -51,6 +52,9 @@ paquetes:
       - Parking during your visit
       - "Healthy meals: breakfast, lunch and a coffee station"
       - Personal support throughout the day
+sede: 0
+review: Translated from the Spanish page (03/11/2026). Prices are the same as in
+  the Spanish flyers.
 groups:
   - title: Lab tests
     intro: Included in both packages.
