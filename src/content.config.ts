@@ -46,7 +46,7 @@ const paginas = defineCollection({
 const servicios = defineCollection({
   loader: glob({ pattern: '**/*.md', base: './src/content/servicios' }),
   schema: z.object({
-    key: z.enum(['noinvasiva', 'nuclear', 'intervencionismo', 'consulta', 'terapia', 'transporte', 'obesidad']),
+    key: z.enum(['noinvasiva', 'nuclear', 'intervencionismo', 'consulta', 'terapia', 'transporte', 'obesidad', 'chequeo']),
     title: z.string(),
     tag: z.string(),
     summary: z.string(),
@@ -61,6 +61,17 @@ const servicios = defineCollection({
     // Si es false, el servicio no aparece en el sitio (ni su página, ni su tarjeta, ni el mapa del sitio).
     // Sirve para retirar un servicio que no está habilitado sin perder su texto.
     publicado: z.boolean().optional().default(true),
+    // Paquetes con valor (por ejemplo, los chequeos). La página los muestra en tarjetas y en una tabla que compara
+    // qué incluye cada uno; un elemento que comparten los paquetes se escribe igual en los dos.
+    paquetes: z.array(z.object({
+      nombre: z.string(),
+      corto: z.string().optional().default(''),
+      valor: z.string().optional().default(''),
+      resumen: z.string().optional().default(''),
+      incluye: z.array(z.string()).optional().default([]),
+      complementarios: z.array(z.string()).optional().default([]),
+      mensaje: z.string().optional().default(''),
+    })).optional().default([]),
     // Foto del servicio (opcional): ruta en src/assets/fotos, descripción, pie de foto y encuadre
     image: z.string().optional().default(''),
     image_alt: z.string().optional().default(''),
@@ -85,7 +96,7 @@ const educacion = defineCollection({
     categoria: z.enum(['examenes', 'enfermedades', 'prevencion', 'estilos', 'tratamiento', 'urgencias', 'derechos', 'seguridad', 'familias']),
     tipo: z.enum(['lectura', 'herramienta', 'video', 'descargable']).optional().default('lectura'),
     momento: z.array(z.enum(['antes', 'durante', 'despues', 'siempre'])).optional().default([]),
-    servicios: z.array(z.enum(['noinvasiva', 'nuclear', 'intervencionismo', 'consulta', 'terapia', 'transporte', 'obesidad'])).optional().default([]),
+    servicios: z.array(z.enum(['noinvasiva', 'nuclear', 'intervencionismo', 'consulta', 'terapia', 'transporte', 'obesidad', 'chequeo'])).optional().default([]),
     // Herramienta interactiva que se muestra en la ficha
     herramienta: z.enum(['', 'pasos', 'emergencia', 'presion', 'imc', 'riesgo', 'curva', 'reto', 'respiracion']).optional().default(''),
     // Examen de src/data/preparaciones.json cuya preparación se muestra en "Antes"

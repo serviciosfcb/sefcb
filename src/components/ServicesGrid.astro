@@ -1,16 +1,17 @@
 ---
 // Tarjetas de los servicios, con su ilustración técnica animada al aparecer.
 import type { Lang } from '../i18n/content';
-import { content, sedes } from '../i18n/content';
+import { content } from '../i18n/content';
 import { getServicios, pathOfServicio } from '../lib/paginas';
 import ServiceVisual from './ServiceVisual.astro';
+import { visualLabels } from '../lib/visual';
 import Icon from './Icon.astro';
 interface Props { lang: Lang; exclude?: string; compact?: boolean }
 const { lang, exclude, compact = false } = Astro.props;
 const all = content[lang];
 const t = all.services;
 const list = (await getServicios(lang)).filter((s) => s.data.key !== exclude);
-const labelsFor = (k: string) => k === 'obesidad' ? t.pillars : k === 'consulta' ? t.sounds : k === 'transporte' ? sedes.map((s) => (lang === 'en' ? s.nombre_en || s.nombre : s.nombre)) : [];
+const labelsFor = (k: string) => visualLabels(lang, k);
 ---
 <ul class:list={['servicios-grid', { compacta: compact }]} data-stagger>
   {list.map((s, i) => (
@@ -70,6 +71,19 @@ const labelsFor = (k: string) => k === 'obesidad' ? t.pillars : k === 'consulta'
   .tarjeta-serv:hover .ts-leer :global(.icon) { transform: translateX(4px); }
   .compacta { grid-template-columns: repeat(3, minmax(0, 1fr)); }
   .compacta .ts-vis { aspect-ratio: 16 / 9; }
+  /* Si la última fila queda con una sola tarjeta, esa tarjeta ocupa todo el ancho, con el dibujo a un lado */
+  @media (min-width: 961px) {
+    .servicios-grid:not(.compacta) > li:last-child:nth-child(3n+1) { grid-column: 1 / -1; }
+    .servicios-grid:not(.compacta) > li:last-child:nth-child(3n+1) .tarjeta-serv { grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); grid-template-rows: auto; }
+    .servicios-grid:not(.compacta) > li:last-child:nth-child(3n+1) .ts-vis { aspect-ratio: 16 / 10; border-radius: calc(var(--radio-l) - 1px) 0 0 calc(var(--radio-l) - 1px); }
+    .servicios-grid:not(.compacta) > li:last-child:nth-child(3n+1) .ts-txt { align-content: center; padding: 2rem clamp(1.5rem, 3vw, 2.8rem); }
+  }
+  @media (min-width: 601px) and (max-width: 960px) {
+    .servicios-grid:not(.compacta) > li:last-child:nth-child(2n+1) { grid-column: 1 / -1; }
+    .servicios-grid:not(.compacta) > li:last-child:nth-child(2n+1) .tarjeta-serv { grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); grid-template-rows: auto; }
+    .servicios-grid:not(.compacta) > li:last-child:nth-child(2n+1) .ts-vis { aspect-ratio: auto; min-height: 100%; border-radius: calc(var(--radio-l) - 1px) 0 0 calc(var(--radio-l) - 1px); }
+    .servicios-grid:not(.compacta) > li:last-child:nth-child(2n+1) .ts-txt { align-content: center; }
+  }
   @media (max-width: 960px) { .servicios-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
   @media (max-width: 600px) { .servicios-grid { grid-template-columns: 1fr; } }
 </style>

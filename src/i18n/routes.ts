@@ -18,6 +18,7 @@ export const pageRoutes = {
   'servicio-terapia': { es: '/servicios/terapia-fisica/', en: '/en/services/physical-therapy/' },
   'servicio-transporte': { es: '/servicios/transporte-asistencial/', en: '/en/services/ambulance-transport/' },
   'servicio-obesidad': { es: '/servicios/hormesis/', en: '/en/services/hormesis/' },
+  'servicio-chequeo': { es: '/servicios/chequeo-ejecutivo/', en: '/en/services/executive-checkup/' },
 
   // Pacientes
   pacientes: { es: '/pacientes/', en: '/en/patients/' },

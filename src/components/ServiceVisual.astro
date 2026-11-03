@@ -84,6 +84,10 @@ const pilares = [135, 45, -45, -135].map((c, i) => {
 // Puntos de unión entre pilares: se influyen entre sí
 const uniones = [90, 0, -90, 180].map((a) => ({ x: f(hx + 109 * Math.cos(a * deg)), y: f(hy - 109 * Math.sin(a * deg)) }));
 
+// Chequeo: la jornada como un recorrido por estaciones, de la consulta de cardiología a la entrega de resultados
+const ruta = 'M70 92 H350 C410 92 410 192 350 192 H130 C70 192 70 292 130 292 H300';
+const paradas = [[70, 92], [190, 92], [310, 92], [350, 192], [240, 192], [130, 192]].map(([x, y], i) => ({ x, y, i, d: [.05, .35, .65, 1.15, 1.45, 1.75][i] }));
+
 // Goniómetro: transportador de 0° a 180° y flexión de rodilla de 120°
 const gx = 240, gy = 262, flex = 120;
 const polar = (r: number, aDeg: number) => [gx + r * Math.cos(aDeg * deg), gy - r * Math.sin(aDeg * deg)];
@@ -191,6 +195,27 @@ const [lx, ly] = polar(112, flex / 2);
       <text x="112" y="300" class="rotulo centro">{labels[0]}</text>
       <text x="354" y="88" class="rotulo centro">{labels[1]}</text>
       <circle r="6" class="movil" />
+    </>
+  )}
+
+  {kind === 'chequeo' && (
+    <>
+      <path d={ruta} class="jr-base" />
+      <path d={ruta} data-draw class="jr-avance" />
+      {paradas.map((p) => (
+        <g class="parada" style={`--d:${p.d}s`} transform={`translate(${p.x} ${p.y})`}>
+          <circle r="17" />
+          <path d="M-6.5 0.5 L-2 5 L7 -5" class="ok" />
+        </g>
+      ))}
+      {paradas.map((p) => <text x={p.x} y={p.y + 38} class="rotulo centro">{labels[p.i]}</text>)}
+      <circle cx="300" cy="292" r="26" class="meta-pulso" />
+      <g class="meta" transform="translate(300 292)">
+        <circle r="26" />
+        <path d="M0 9 C -9 3 -13 -2 -13 -6.5 C -13 -11 -9.5 -13.5 -6.2 -13.5 C -3.4 -13.5 -1.2 -11.8 0 -9.6 C 1.2 -11.8 3.4 -13.5 6.2 -13.5 C 9.5 -13.5 13 -11 13 -6.5 C 13 -2 9 3 0 9 Z" />
+      </g>
+      <text x="340" y="297" class="rotulo meta-rotulo">{labels[6]}</text>
+      <circle r="6" class="viajero" style={`offset-path: path('${ruta}')`} />
     </>
   )}
 
@@ -305,6 +330,26 @@ const [lx, ly] = polar(112, flex / 2);
   :global(.activa) .movil { opacity: 1; animation: recorrer 3.6s var(--ease-io) 1.2s infinite; }
   @keyframes recorrer { 0% { offset-distance: 0%; } 70%, 100% { offset-distance: 100%; } }
 
+  /* Jornada del chequeo */
+  .jr-base { fill: none; stroke: rgb(255 255 255 / .1); stroke-width: 10; stroke-linecap: round; stroke-linejoin: round; }
+  .jr-avance { fill: none; stroke: #e2484d; stroke-width: 3.5; stroke-linecap: round; stroke-linejoin: round; stroke-dasharray: var(--len, none); stroke-dashoffset: var(--len, 0); filter: drop-shadow(0 0 6px rgb(226 72 77 / .55)); }
+  :global(.activa) .jr-avance { animation: trazar 2.6s var(--ease-io) forwards; }
+  .parada circle { fill: #1c1a19; stroke: rgb(255 255 255 / .32); stroke-width: 2.5; }
+  .parada .ok { fill: none; stroke: #fff; stroke-width: 2.8; stroke-linecap: round; stroke-linejoin: round; stroke-dasharray: 22; stroke-dashoffset: 22; }
+  :global(.activa) .parada circle { animation: parada-lista .5s var(--ease) var(--d) forwards; }
+  :global(.activa) .parada .ok { animation: trazar .45s var(--ease) calc(var(--d) + .15s) forwards; }
+  @keyframes parada-lista { to { fill: #9f2728; stroke: #e2484d; } }
+  .meta circle { fill: #1c1a19; stroke: #e2484d; stroke-width: 2.5; }
+  .meta path { fill: #e2484d; }
+  .meta, .meta-rotulo { opacity: 0; }
+  :global(.activa) .meta, :global(.activa) .meta-rotulo { animation: aparecer .6s var(--ease) 2.3s forwards; }
+  .meta-rotulo { fill: #fff; font-size: 14px; }
+  .meta-pulso { fill: rgb(226 72 77 / .25); transform-box: fill-box; transform-origin: center; opacity: 0; }
+  :global(.activa) .meta-pulso { animation: pulso-centro 2.6s var(--ease) 2.6s infinite; }
+  .viajero { fill: #fff; filter: drop-shadow(0 0 8px #e2484d); offset-distance: 0%; opacity: 0; }
+  :global(.activa) .viajero { animation: viajar 6s var(--ease-io) 3s infinite; }
+  @keyframes viajar { 0% { offset-distance: 0%; opacity: 0; } 6% { opacity: 1; } 76% { offset-distance: 100%; opacity: .9; } 82%, 100% { offset-distance: 100%; opacity: 0; } }
+
   /* Pilares de HORMESIS */
   .vis-obesidad .barrido { transform-origin: 240px 180px; stroke-dasharray: 84 972; }
   .pilar { transform-origin: 240px 180px; transform: scale(.82); opacity: 0; }
@@ -329,13 +374,18 @@ const [lx, ly] = polar(112, flex / 2);
   @keyframes pulso-centro { 0% { transform: scale(1); opacity: .9; } 100% { transform: scale(1.5); opacity: 0; } }
 
   @media (prefers-reduced-motion: reduce) {
-    .traza, .traza-fina, .cateter, .v, .ruta { stroke-dashoffset: 0 !important; }
-    .seg, .pilar, .union, .centro-hm { opacity: 1 !important; transform: none !important; animation: none !important; }
-    .barrido, .movil, .centro-pulso { display: none; }
+    .traza, .traza-fina, .cateter, .v, .ruta, .jr-avance, .parada .ok { stroke-dashoffset: 0 !important; animation: none !important; }
+    .seg, .pilar, .union, .centro-hm, .meta, .meta-rotulo { opacity: 1 !important; transform: none !important; animation: none !important; }
+    .parada circle { fill: #9f2728 !important; stroke: #e2484d !important; animation: none !important; }
+    .barrido, .movil, .centro-pulso, .meta-pulso, .viajero { display: none; }
   }
   :global(:root[data-motion='reduced']) .traza, :global(:root[data-motion='reduced']) .traza-fina, :global(:root[data-motion='reduced']) .cateter,
   :global(:root[data-motion='reduced']) .v, :global(:root[data-motion='reduced']) .ruta { stroke-dashoffset: 0 !important; }
   :global(:root[data-motion='reduced']) .seg, :global(:root[data-motion='reduced']) .pilar, :global(:root[data-motion='reduced']) .union,
   :global(:root[data-motion='reduced']) .centro-hm { opacity: 1 !important; transform: none !important; animation: none !important; }
   :global(:root[data-motion='reduced']) .barrido, :global(:root[data-motion='reduced']) .movil, :global(:root[data-motion='reduced']) .centro-pulso { display: none; }
+  :global(:root[data-motion='reduced']) .jr-avance, :global(:root[data-motion='reduced']) .parada .ok { stroke-dashoffset: 0 !important; animation: none !important; }
+  :global(:root[data-motion='reduced']) .meta, :global(:root[data-motion='reduced']) .meta-rotulo { opacity: 1 !important; animation: none !important; }
+  :global(:root[data-motion='reduced']) .parada circle { fill: #9f2728 !important; stroke: #e2484d !important; animation: none !important; }
+  :global(:root[data-motion='reduced']) .meta-pulso, :global(:root[data-motion='reduced']) .viajero { display: none; }
 </style>

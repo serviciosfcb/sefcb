@@ -58,6 +58,20 @@ x-campos-servicio: &campos_servicio
   - { label: Etiqueta, name: tag, widget: string, hint: 'Ej. Adultos y niños' }
   - { label: Resumen, name: summary, widget: text }
   - { label: Publicado en el sitio, name: publicado, widget: boolean, required: false, default: true, hint: 'Desactívelo para retirar el servicio del sitio sin borrar su texto (por ejemplo, si no está habilitado).' }
+  - label: Paquetes
+    name: paquetes
+    widget: list
+    required: false
+    summary: '{{fields.nombre}} · {{fields.valor}}'
+    hint: 'Para servicios con paquetes, como el chequeo ejecutivo. La página compara qué incluye cada uno: escriba exactamente igual lo que comparten.'
+    fields:
+      - { label: Nombre, name: nombre, widget: string }
+      - { label: Nombre corto (tabla), name: corto, widget: string, required: false, hint: 'Ej. Ejecutivo' }
+      - { label: Valor, name: valor, widget: string, required: false, hint: 'Ej. $ 2.500.000 COP' }
+      - { label: Resumen, name: resumen, widget: text, required: false }
+      - { label: Mensaje de WhatsApp, name: mensaje, widget: string, required: false, hint: 'Texto con el que se abre el chat al pulsar «Agendar por WhatsApp».' }
+      - { label: Incluye, name: incluye, widget: list, required: false, field: { label: Elemento, name: elemento, widget: string } }
+      - { label: Complementarios, name: complementarios, widget: list, required: false, field: { label: Elemento, name: elemento, widget: string } }
   - label: Sede donde se presta
     name: sede
     widget: select
@@ -101,7 +115,7 @@ x-campos-educacion: &campos_educacion
     options: [{ label: Conozca su examen, value: examenes }, { label: Urgencias, value: urgencias }, { label: Enfermedades del corazón, value: enfermedades }, { label: Prevención, value: prevencion }, { label: Estilos de vida, value: estilos }, { label: Viva con su tratamiento, value: tratamiento }, { label: Seguridad del paciente, value: seguridad }, { label: Derechos y normatividad, value: derechos }, { label: Familias y cuidadores, value: familias }]
   - { label: Tipo, name: tipo, widget: select, default: lectura, options: [{ label: Lectura, value: lectura }, { label: Herramienta, value: herramienta }, { label: Video, value: video }, { label: Descargable, value: descargable }] }
   - { label: Momento de la atención, name: momento, widget: select, multiple: true, required: false, options: [{ label: Antes, value: antes }, { label: Durante, value: durante }, { label: Después, value: despues }, { label: Siempre, value: siempre }] }
-  - { label: Servicios relacionados, name: servicios, widget: select, multiple: true, required: false, options: [{ label: Cardiología no invasiva, value: noinvasiva }, { label: Medicina nuclear, value: nuclear }, { label: Intervencionismo, value: intervencionismo }, { label: Consulta externa, value: consulta }, { label: Terapia física, value: terapia }, { label: Transporte asistencial, value: transporte }, { label: HORMESIS, value: obesidad }] }
+  - { label: Servicios relacionados, name: servicios, widget: select, multiple: true, required: false, options: [{ label: Cardiología no invasiva, value: noinvasiva }, { label: Medicina nuclear, value: nuclear }, { label: Intervencionismo, value: intervencionismo }, { label: Consulta externa, value: consulta }, { label: Terapia física, value: terapia }, { label: Transporte asistencial, value: transporte }, { label: HORMESIS, value: obesidad }, { label: Chequeo ejecutivo, value: chequeo }] }
   - label: Herramienta interactiva
     name: herramienta
     widget: select
@@ -937,6 +951,10 @@ collections:
         label: "HORMESIS"
         file: src/content/servicios/es/hormesis.md
         fields: *campos_servicio
+      - name: es-chequeo-ejecutivo
+        label: "Chequeo ejecutivo cardiovascular"
+        file: src/content/servicios/es/chequeo-ejecutivo.md
+        fields: *campos_servicio
   - name: servicios_en
     label: Servicios en inglés
     description: Descripción, procedimientos y ubicación de cada servicio.
@@ -970,4 +988,8 @@ collections:
       - name: en-hormesis
         label: "HORMESIS"
         file: src/content/servicios/en/hormesis.md
+        fields: *campos_servicio
+      - name: en-executive-checkup
+        label: "Executive cardiovascular checkup"
+        file: src/content/servicios/en/executive-checkup.md
         fields: *campos_servicio

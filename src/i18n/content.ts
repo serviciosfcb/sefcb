@@ -56,7 +56,7 @@ export const insurers: string[] = convenios.lista;
 export type Sede = (typeof contacto.sedes)[number];
 export const sedes: Sede[] = contacto.sedes;
 
-export type ServiceKey = 'noinvasiva' | 'nuclear' | 'intervencionismo' | 'consulta' | 'terapia' | 'transporte' | 'obesidad';
+export type ServiceKey = 'noinvasiva' | 'nuclear' | 'intervencionismo' | 'consulta' | 'terapia' | 'transporte' | 'obesidad' | 'chequeo';
 
 const es = {
   lang: 'es',
@@ -173,10 +173,19 @@ const es = {
         list: [],
         caption: 'Los cuatro pilares de HORMESIS alrededor de la capacidad de adaptación.',
       },
+      {
+        key: 'chequeo' as ServiceKey,
+        name: 'Chequeo ejecutivo cardiovascular',
+        tag: 'Paquetes de prevención',
+        text: 'Consulta con el cardiólogo, laboratorios y estudios del corazón en una sola jornada, con la entrega integrada de resultados.',
+        list: [],
+        caption: 'Una jornada: de la consulta de cardiología a la entrega de resultados.',
+      },
     ],
     more: 'Conocer el servicio',
     all: 'Ver todos los servicios',
     pillars: ['Alimentación', 'Movimiento', 'Sueño', 'Regulación emocional', 'Capacidad de', 'adaptación'],
+    journey: ['Cardiología', 'Laboratorio', 'Electro', 'Eco', 'Esfuerzo', 'Nutrición', 'Resultados'],
     sounds: ['S1', 'S2'],
     cta: 'Pedir una cita',
   },
@@ -442,10 +451,19 @@ const en: Content = {
         list: [],
         caption: 'The four HORMESIS pillars around the ability to adapt.',
       },
+      {
+        key: 'chequeo' as ServiceKey,
+        name: 'Executive cardiovascular checkup',
+        tag: 'Prevention packages',
+        text: 'A cardiology visit, lab tests and heart studies in a single day, with all your results explained together.',
+        list: [],
+        caption: 'One day: from the cardiology visit to your results.',
+      },
     ],
     more: 'Learn more',
     all: 'See all services',
     pillars: ['Food', 'Movement', 'Sleep', 'Emotional regulation', 'Ability to', 'adapt'],
+    journey: ['Cardiology', 'Lab tests', 'ECG', 'Echo', 'Stress test', 'Nutrition', 'Results'],
     sounds: ['S1', 'S2'],
     cta: 'Book an appointment',
   },

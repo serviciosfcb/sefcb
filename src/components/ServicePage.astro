@@ -11,6 +11,7 @@ import ServicesGrid from './ServicesGrid.astro';
 import CtaBand from './CtaBand.astro';
 import Icon from './Icon.astro';
 import Foto from './Foto.astro';
+import { visualLabels } from '../lib/visual';
 interface Props { s: Servicio; lang: Lang }
 const { s, lang } = Astro.props;
 const all = content[lang];
@@ -21,10 +22,31 @@ const path = pathOfServicio(s);
 const { Content } = await render(s);
 const sede = sedes[d.sede] ?? sedes[0];
 const svc = all.services;
-const labels = d.key === 'obesidad' ? svc.pillars : d.key === 'consulta' ? svc.sounds : d.key === 'transporte' ? sedes.map((x) => (en ? x.nombre_en || x.nombre : x.nombre)) : [];
+const labels = visualLabels(lang, d.key);
 const caption = svc.items.find((x) => x.key === d.key)?.caption ?? '';
 // Enlace a la guía de preparación, para los servicios que la tienen
-const prepAnchor = d.key === 'nuclear' ? (en ? 'nuclear-medicine' : 'medicina-nuclear') : d.key === 'noinvasiva' ? (en ? 'non-invasive-cardiology' : 'cardiologia-no-invasiva') : '';
+const prepAnchor = d.key === 'nuclear' ? (en ? 'nuclear-medicine' : 'medicina-nuclear') : d.key === 'noinvasiva' || d.key === 'chequeo' ? (en ? 'non-invasive-cardiology' : 'cardiologia-no-invasiva') : '';
+// Paquetes (chequeos): tarjetas con su valor y una tabla que compara qué incluye cada uno.
+// Las filas de la tabla son todos los elementos de los paquetes, en el orden en que aparecen.
+const paquetes = d.paquetes;
+const unir = (listas: string[][]) => {
+  const filas: string[] = [];
+  for (const lista of listas) {
+    let pos = -1;
+    for (const it of lista) {
+      const k = filas.indexOf(it);
+      if (k >= 0) pos = k;
+      else { filas.splice(pos + 1, 0, it); pos += 1; }
+    }
+  }
+  return filas;
+};
+const filasIncluye = unir(paquetes.map((p) => p.incluye));
+const filasComp = unir(paquetes.map((p) => p.complementarios));
+const wa = (m: string) => `${links.whatsapp}?text=${encodeURIComponent(m)}`;
+const tp = en
+  ? { title: 'Packages', compare: 'What each package includes', item: 'Service', price: 'Package price', book: 'Book on WhatsApp', see: 'See the packages', extras: 'Extras', yes: 'Included', no: 'Not included', count: (n: number) => `${n} services included` }
+  : { title: 'Paquetes', compare: 'Qué incluye cada paquete', item: 'Servicio', price: 'Valor del paquete', book: 'Agendar por WhatsApp', see: 'Ver los paquetes', extras: 'Complementarios', yes: 'Incluido', no: 'No incluido', count: (n: number) => `${n} servicios incluidos` };
 // Muchos grupos cortos (como las especialidades de medicina nuclear) se muestran como cuadrícula
 const compactGroups = d.groups.length > 3 && d.groups.every((g) => !g.intro && g.items.every((it) => !it.detail));
 const ld = {
@@ -55,7 +77,11 @@ if (['intervencionismo'].includes(d.key)) ld.procedureType = 'https://schema.org
         <h1 id="sh-titulo" data-split>{d.title}</h1>
         <p class="sh-lead" data-reveal>{d.summary}</p>
         <div class="sh-ctas" data-reveal>
-          <a class="btn btn-primario" href={links.portal} rel="noopener" data-magnet>{t.book}<Icon name="arrow" /></a>
+          {paquetes.length > 0 ? (
+            <a class="btn btn-primario" href="#paquetes" data-magnet>{tp.see}<Icon name="arrow" /></a>
+          ) : (
+            <a class="btn btn-primario" href={links.portal} rel="noopener" data-magnet>{t.book}<Icon name="arrow" /></a>
+          )}
           <a class="btn btn-fantasma" href={links.whatsapp} rel="noopener"><Icon name="whatsapp" />WhatsApp</a>
         </div>
       </div>
@@ -78,6 +104,52 @@ if (['intervencionismo'].includes(d.key)) ld.procedureType = 'https://schema.org
           </figure>
         )}
         <div class="prosa" data-reveal><Content /></div>
+        {paquetes.length > 0 && (
+          <section id="paquetes" class="paquetes" aria-labelledby="paq-titulo">
+            <h2 id="paq-titulo">{tp.title}</h2>
+            <div class="paq-grid">
+              {paquetes.map((p) => (
+                <article class="paq" data-reveal>
+                  <h3>{p.nombre}</h3>
+                  <p class="paq-cuenta">{tp.count(p.incluye.length)}</p>
+                  {p.resumen && <p class="paq-resumen">{p.resumen}</p>}
+                  {p.valor && <p class="paq-valor"><span>{tp.price}</span><strong>{p.valor}</strong></p>}
+                  <a class="btn btn-primario" href={wa(p.mensaje || p.nombre)} rel="noopener"><Icon name="whatsapp" />{tp.book}<span class="visualmente-oculto">: {p.nombre}</span></a>
+                </article>
+              ))}
+            </div>
+            {paquetes.length > 1 && (
+              <table class="paq-tabla" data-reveal>
+                <caption>{tp.compare}</caption>
+                <thead>
+                  <tr>
+                    <th scope="col"><span class="visualmente-oculto">{tp.item}</span></th>
+                    {paquetes.map((p) => <th scope="col"><span class="paq-th-nombre">{p.corto || p.nombre}</span>{p.valor && <span class="paq-th-valor">{p.valor}</span>}</th>)}
+                  </tr>
+                </thead>
+                <tbody>
+                  {filasIncluye.map((f) => (
+                    <tr>
+                      <th scope="row">{f}</th>
+                      {paquetes.map((p) => <td>{p.incluye.includes(f) ? <><Icon name="check" /><span class="visualmente-oculto">{tp.yes}</span></> : <><span class="paq-no" aria-hidden="true">–</span><span class="visualmente-oculto">{tp.no}</span></>}</td>)}
+                    </tr>
+                  ))}
+                </tbody>
+                {filasComp.length > 0 && (
+                  <tbody>
+                    <tr class="paq-sub"><th scope="colgroup" colspan={paquetes.length + 1}>{tp.extras}</th></tr>
+                    {filasComp.map((f) => (
+                      <tr>
+                        <th scope="row">{f}</th>
+                        {paquetes.map((p) => <td>{p.complementarios.includes(f) ? <><Icon name="check" /><span class="visualmente-oculto">{tp.yes}</span></> : <><span class="paq-no" aria-hidden="true">–</span><span class="visualmente-oculto">{tp.no}</span></>}</td>)}
+                      </tr>
+                    ))}
+                  </tbody>
+                )}
+              </table>
+            )}
+          </section>
+        )}
         {compactGroups ? (
           <section class="grupo" data-reveal>
             <h2>{en ? 'Studies by specialty' : 'Estudios por especialidad'}</h2>
@@ -193,6 +265,36 @@ if (['intervencionismo'].includes(d.key)) ld.procedureType = 'https://schema.org
   .chequeos { list-style: none; display: grid; grid-template-columns: repeat(auto-fill, minmax(min(100%, 18rem), 1fr)); gap: .6rem 1.5rem; }
   .chequeos li { display: flex; gap: .6rem; align-items: flex-start; line-height: 1.4; }
   .chequeos :global(.icon) { width: 1.15rem; height: 1.15rem; color: var(--rojo); stroke-width: 2.4; flex: none; margin-top: .15rem; }
+
+  /* Paquetes */
+  .paquetes { display: grid; gap: 1.4rem; scroll-margin-top: calc(var(--alto-cabecera) + 1.5rem); }
+  .paquetes > h2 { font-size: var(--t-4); }
+  .paq-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, 17rem), 1fr)); gap: 1rem; }
+  .paq { position: relative; display: grid; gap: .7rem; align-content: start; padding: 1.5rem 1.5rem 1.6rem; border-radius: var(--radio-l); border: 1px solid var(--linea); background: var(--papel); overflow: hidden; }
+  .paq::before { content: ''; position: absolute; inset: 0 0 auto; height: 4px; background: var(--rojo); }
+  .paq h3 { font-size: var(--t-3); letter-spacing: -.02em; line-height: 1.2; }
+  .paq-cuenta { color: var(--rojo); font-weight: 700; font-size: var(--t-0); }
+  .paq-resumen { color: var(--tinta-2); font-size: var(--t-0); }
+  .paq-valor { display: grid; gap: .1rem; margin-top: .3rem; }
+  .paq-valor span { font-size: var(--t-0); color: var(--tinta-2); }
+  .paq-valor strong { font: 700 var(--t-4) / 1.1 var(--display); letter-spacing: -.02em; font-variant-numeric: tabular-nums; }
+  .paq .btn { justify-self: start; margin-top: .4rem; }
+  .paq-tabla { width: 100%; border-collapse: collapse; font-size: var(--t-0); line-height: 1.4; }
+  .paq-tabla caption { text-align: left; font: 700 var(--t-2) / 1.3 var(--display); padding-bottom: .8rem; }
+  .paq-tabla th, .paq-tabla td { padding: .7rem .6rem; border-bottom: 1px solid var(--linea); vertical-align: middle; }
+  .paq-tabla thead th { text-align: center; border-bottom: 2px solid var(--tinta); vertical-align: bottom; }
+  .paq-tabla thead th:first-child { width: 58%; }
+  .paq-th-nombre { display: block; font-weight: 700; font-size: var(--t-1); }
+  .paq-th-valor { display: block; font-weight: 600; color: var(--tinta-2); font-variant-numeric: tabular-nums; white-space: nowrap; }
+  .paq-tabla tbody th { text-align: left; font-weight: 500; }
+  .paq-tabla td { text-align: center; width: 21%; }
+  .paq-tabla td :global(.icon) { display: block; margin-inline: auto; width: 1.25rem; height: 1.25rem; color: var(--rojo); stroke-width: 2.6; }
+  .paq-no { color: var(--tinta-2); }
+  .paq-sub th { text-align: left; padding-top: 1.4rem; font: 700 var(--t-1) / 1.3 var(--display); color: var(--rojo); border-bottom: 1px solid var(--linea); }
+  @media (max-width: 599px) {
+    .paq-tabla th, .paq-tabla td { padding: .65rem .35rem; }
+    .paq-th-valor { display: none; }
+  }
 
   .grupos-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(min(100%, 15rem), 1fr)); gap: 1rem; }
   .mini { padding: 1.2rem 1.3rem; border-radius: var(--radio-m); border: 1px solid var(--linea); display: grid; gap: .6rem; align-content: start; transition: border-color .3s, transform .5s var(--ease); }

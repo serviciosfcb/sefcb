@@ -1,17 +1,18 @@
 ---
 import type { Lang } from '../i18n/content';
-import { content, links, sedes } from '../i18n/content';
+import { content, links } from '../i18n/content';
 import Icon from './Icon.astro';
 import ServiceVisual from './ServiceVisual.astro';
 import { r, serviceRoute } from '../i18n/routes';
 import { getServicios } from '../lib/paginas';
+import { visualLabels } from '../lib/visual';
 interface Props { lang: Lang }
 const { lang } = Astro.props;
 const all = content[lang];
 // Solo los servicios publicados en el panel (un servicio retirado no aparece en la portada)
 const publicados = new Set((await getServicios(lang)).map((s) => s.data.key));
 const t = { ...all.services, items: all.services.items.filter((it) => publicados.has(it.key)) };
-const labelsFor = (k: string) => k === 'obesidad' ? t.pillars : k === 'consulta' ? t.sounds : k === 'transporte' ? sedes.map((s) => (lang === 'en' ? s.nombre_en || s.nombre : s.nombre)) : [];
+const labelsFor = (k: string) => visualLabels(lang, k);
 const total = String(t.items.length).padStart(2, '0');
 ---
 <section id="servicios" class="servicios seccion" aria-labelledby="servicios-titulo">
