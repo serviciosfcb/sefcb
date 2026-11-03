@@ -2,7 +2,7 @@
 key: servicios
 title: Our services
 lead: Heart diagnosis and treatment in one place, for adults and children.
-description: Non-invasive cardiology, nuclear medicine, interventional cardiology, specialist consultations, physical therapy, ambulance transport and the HORMESIS program in Cúcuta, Colombia.
+description: Non-invasive cardiology, nuclear medicine, interventional cardiology, specialist consultations, physical therapy and the HORMESIS program in Cúcuta, Colombia.
 section: servicios
 layout: servicios
 order: 0

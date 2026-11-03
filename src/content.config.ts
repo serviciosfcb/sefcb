@@ -58,6 +58,9 @@ const servicios = defineCollection({
     })).optional().default([]),
     location: z.string().optional().default(''),
     sede: z.number().optional().default(0),
+    // Si es false, el servicio no aparece en el sitio (ni su página, ni su tarjeta, ni el mapa del sitio).
+    // Sirve para retirar un servicio que no está habilitado sin perder su texto.
+    publicado: z.boolean().optional().default(true),
     // Foto del servicio (opcional): ruta en src/assets/fotos, descripción, pie de foto y encuadre
     image: z.string().optional().default(''),
     image_alt: z.string().optional().default(''),

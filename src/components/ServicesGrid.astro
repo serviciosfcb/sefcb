@@ -42,14 +42,22 @@ const labelsFor = (k: string) => k === 'obesidad' ? t.pillars : k === 'consulta'
   .servicios-grid li { display: grid; }
   .tarjeta-serv {
     --mx: 50%; --my: 50%;
-    position: relative; isolation: isolate; display: grid; grid-template-rows: auto 1fr;
-    border-radius: var(--radio-l); overflow: hidden; background: var(--papel); border: 1px solid var(--linea);
+    position: relative; isolation: isolate; display: grid; grid-template-columns: minmax(0, 1fr); grid-template-rows: auto 1fr;
+    border-radius: var(--radio-l); background: var(--papel); border: 1px solid var(--linea);
     transition: transform .6s var(--ease), box-shadow .6s var(--ease), border-color .4s;
   }
   .tarjeta-serv:hover, .tarjeta-serv:focus-within { transform: translateY(-5px); box-shadow: 0 40px 70px -40px rgb(var(--sombra) / .55); border-color: rgb(159 39 40 / .25); }
   .tarjeta-serv:focus-within { outline: 3px solid var(--foco); outline-offset: 3px; }
-  .ts-vis { aspect-ratio: 4 / 3; max-width: 100%; background: radial-gradient(16rem 12rem at var(--mx) var(--my), rgb(159 39 40 / .32), transparent 70%), var(--carbon); padding: 1rem 1.2rem; display: grid; place-items: center; }
-  .ts-vis :global(.vis) { max-height: 100%; }
+  /* La caja del dibujo tiene siempre la misma proporción y el dibujo se ajusta dentro de ella: así su tamaño
+     nunca depende del navegador ni del dibujo, y el texto de la tarjeta no queda recortado. */
+  .ts-vis {
+    position: relative; aspect-ratio: 4 / 3; min-width: 0; overflow: hidden;
+    border-radius: calc(var(--radio-l) - 1px) calc(var(--radio-l) - 1px) 0 0;
+    background: radial-gradient(16rem 12rem at var(--mx) var(--my), rgb(159 39 40 / .32), transparent 70%), var(--carbon);
+  }
+  .ts-vis :global(.vis) { position: absolute; inset: 1rem 1.2rem; width: calc(100% - 2.4rem); height: calc(100% - 2rem); max-height: none; }
+  /* Navegadores sin aspect-ratio: la misma proporción con el relleno superior */
+  @supports not (aspect-ratio: 1) { .ts-vis::before { content: ''; display: block; padding-top: 75%; } .compacta .ts-vis::before { padding-top: 56.25%; } }
   .ts-txt { display: grid; gap: .55rem; align-content: start; padding: 1.4rem 1.5rem 1.6rem; }
   .ts-tag { color: var(--rojo); font-weight: 700; font-size: var(--t-0); }
   .ts-titulo { font-size: var(--t-3); letter-spacing: -.02em; line-height: 1.2; }

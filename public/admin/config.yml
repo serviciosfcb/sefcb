@@ -57,6 +57,7 @@ x-campos-servicio: &campos_servicio
   - { label: Nombre del servicio, name: title, widget: string }
   - { label: Etiqueta, name: tag, widget: string, hint: 'Ej. Adultos y niños' }
   - { label: Resumen, name: summary, widget: text }
+  - { label: Publicado en el sitio, name: publicado, widget: boolean, required: false, default: true, hint: 'Desactívelo para retirar el servicio del sitio sin borrar su texto (por ejemplo, si no está habilitado).' }
   - label: Sede donde se presta
     name: sede
     widget: select
@@ -929,7 +930,7 @@ collections:
         file: src/content/servicios/es/terapia-fisica.md
         fields: *campos_servicio
       - name: es-transporte-asistencial
-        label: "Transporte asistencial básico"
+        label: "Transporte asistencial básico (retirado: no habilitado)"
         file: src/content/servicios/es/transporte-asistencial.md
         fields: *campos_servicio
       - name: es-hormesis
@@ -963,7 +964,7 @@ collections:
         file: src/content/servicios/en/physical-therapy.md
         fields: *campos_servicio
       - name: en-ambulance-transport
-        label: "Basic ambulance transport"
+        label: "Basic ambulance transport (retirado: no habilitado)"
         file: src/content/servicios/en/ambulance-transport.md
         fields: *campos_servicio
       - name: en-hormesis

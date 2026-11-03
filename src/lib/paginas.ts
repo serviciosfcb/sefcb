@@ -21,7 +21,7 @@ export async function getPaginas(lang: Lang) {
   return all.sort((a, b) => a.data.order - b.data.order || a.data.title.localeCompare(b.data.title));
 }
 export async function getServicios(lang: Lang) {
-  const all = await getCollection('servicios', (s) => langOf(s) === lang);
+  const all = await getCollection('servicios', (s) => langOf(s) === lang && s.data.publicado !== false);
   return all.sort((a, b) => a.data.order - b.data.order);
 }
 

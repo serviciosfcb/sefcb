@@ -2,7 +2,7 @@
 key: servicios
 title: Nuestros servicios
 lead: Diagnóstico y tratamiento del corazón en un solo lugar, para adultos y niños.
-description: Cardiología no invasiva, medicina nuclear, intervencionismo, consulta especializada, terapia física, transporte asistencial y el programa HORMESIS en Cúcuta.
+description: Cardiología no invasiva, medicina nuclear, intervencionismo, consulta especializada, terapia física y el programa HORMESIS en Cúcuta.
 section: servicios
 layout: servicios
 order: 0
