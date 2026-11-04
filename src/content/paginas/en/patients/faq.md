@@ -9,7 +9,7 @@ order: 5
 ---
 ### What are your opening hours?
 
-At our main location (Calle 19), Monday to Friday, 7:00 a.m. to 6:00 p.m., and Saturday, 8:00 a.m. to 11:00 a.m. At location 2 (cath lab), Monday to Friday, 8:00 a.m. to 12:00 p.m. All times are Colombia time.
+At our main location (Calle 19), Monday to Friday, 7:00 a.m. to 6:00 p.m., and Saturday, 8:00 a.m. to 11:00 a.m. At location 2 (cath lab), Monday to Friday, 8:00 a.m. to 12:00 p.m. All times are Colombia time. We are closed on Colombian public holidays.
 
 ### When can I book an appointment?
 

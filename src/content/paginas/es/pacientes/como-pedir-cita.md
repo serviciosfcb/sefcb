@@ -28,6 +28,8 @@ Para procedimientos de **intervencionismo**, escriba a secintervencionismo@sefcb
 - **Atención presencial en la sede 2 (hemodinamia):** lunes a viernes de 8:00 a. m. a 12:00 m.
 - **Call center:** lunes a viernes de 7:00 a. m. a 7:00 p. m. y sábados de 8:00 a. m. a 2:00 p. m.
 
+Los días festivos no hay atención.
+
 ## Documentos que necesita
 
 - **Si es usuario de EPS:** orden médica, autorización original, documento de identidad e historia clínica.

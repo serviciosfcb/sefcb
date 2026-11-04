@@ -10,7 +10,7 @@ review: Atención preferencial ajustada a la norma y horarios confirmados por ge
 ---
 ### ¿Cuáles son los horarios de atención?
 
-En la sede principal (Calle 19), de lunes a viernes de 7:00 a. m. a 6:00 p. m. y los sábados de 8:00 a. m. a 11:00 a. m. En la sede 2 (hemodinamia), de lunes a viernes de 8:00 a. m. a 12:00 m.
+En la sede principal (Calle 19), de lunes a viernes de 7:00 a. m. a 6:00 p. m. y los sábados de 8:00 a. m. a 11:00 a. m. En la sede 2 (hemodinamia), de lunes a viernes de 8:00 a. m. a 12:00 m. Los días festivos no hay atención.
 
 ### ¿En qué horario puedo pedir una cita?
 

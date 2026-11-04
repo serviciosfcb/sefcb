@@ -28,6 +28,8 @@ For **interventional procedures**, write to secintervencionismo@sefcb.co or call
 - **In person at location 2 (cath lab):** Monday to Friday, 8:00 a.m. to 12:00 p.m.
 - **Call center:** Monday to Friday, 7:00 a.m. to 7:00 p.m.; Saturday, 8:00 a.m. to 2:00 p.m.
 
+We are closed on Colombian public holidays.
+
 All times are Colombia time (UTC−5).
 
 ## Documents you need

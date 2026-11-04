@@ -34,6 +34,8 @@ If you have visited us, tell us how it went in our [satisfaction survey](https:/
 - **In person at location 2 (cath lab):** Monday to Friday, 8:00 a.m. to 12:00 p.m.
 - **Call center:** Monday to Friday, 7:00 a.m. to 7:00 p.m.; Saturday, 8:00 a.m. to 2:00 p.m.
 
+We are closed on Colombian public holidays.
+
 ## Correspondence
 
 - **Email:** contacto@sefcb.co

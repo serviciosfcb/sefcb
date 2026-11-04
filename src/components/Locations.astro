@@ -10,8 +10,8 @@ const en = lang === 'en';
 // Franjas de cada sede para el aviso «abierta ahora»; se leen del horario en español del panel
 const franjas = sedes.map((s) => leerHorarios(s.horarios.map((h) => ({ dias: h.dias, horas: h.horas }))));
 const tEstado = en
-  ? { open: 'Open now', closes: 'closes at', closed: 'Closed', opens: 'opens', today: 'today at', tomorrow: 'tomorrow at', on: 'on', at: 'at', holiday: 'Today is a public holiday: please call before you go.', days: ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'], am: 'a.m.', pm: 'p.m.', noon: '12:00\u00a0p.m.' }
-  : { open: 'Abierta ahora', closes: 'cierra a las', closed: 'Cerrada', opens: 'abre', today: 'hoy a las', tomorrow: 'mañana a las', on: 'el', at: 'a las', holiday: 'Hoy es festivo: llame antes de ir.', days: ['domingo', 'lunes', 'martes', 'miércoles', 'jueves', 'viernes', 'sábado'], am: 'a.\u00a0m.', pm: 'p.\u00a0m.', noon: '12:00\u00a0m.' };
+  ? { open: 'Open now', closes: 'closes at', closed: 'Closed', opens: 'opens', today: 'today at', tomorrow: 'tomorrow at', on: 'on', at: 'at', holiday: 'Closed for the public holiday', days: ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'], am: 'a.m.', pm: 'p.m.', noon: '12:00\u00a0p.m.' }
+  : { open: 'Abierta ahora', closes: 'cierra a las', closed: 'Cerrada', opens: 'abre', today: 'hoy a las', tomorrow: 'mañana a las', on: 'el', at: 'a las', holiday: 'Cerrada por festivo', days: ['domingo', 'lunes', 'martes', 'miércoles', 'jueves', 'viernes', 'sábado'], am: 'a.\u00a0m.', pm: 'p.\u00a0m.', noon: '12:00\u00a0m.' };
 const contacts = [
   { label: t.citas, value: phones.citas.label, href: links.whatsapp, icon: 'whatsapp', copy: phones.citas.label },
   { label: t.atencion, value: `${phones.atencion1.label} · ${phones.atencion2.label}`, href: `tel:${phones.atencion1.tel}`, icon: 'phone', copy: `${phones.atencion1.label} / ${phones.atencion2.label}` },
@@ -109,7 +109,8 @@ const contacts = [
 <script is:inline type="application/json" id="sede-estado-t" set:html={JSON.stringify(tEstado)} />
 <script>
   // Aviso «Abierta ahora / Cerrada · abre…» con la hora de Cúcuta, sin importar dónde esté la persona.
-  // En festivos colombianos pide llamar antes de ir, porque el horario de festivos no está publicado.
+  // Los festivos colombianos no hay atención (confirmado por la gerencia el 04/11/2026): la sede aparece cerrada
+  // y se indica cuándo vuelve a abrir.
   type Franja = { dias: number[]; desde: number; hasta: number; festivos: boolean };
   const t = JSON.parse(document.getElementById('sede-estado-t')?.textContent || '{}');
   const iso = (d: Date) => d.toISOString().slice(0, 10);
@@ -150,7 +151,7 @@ const contacts = [
     const { fecha, min } = ahora();
     const esFestivo = (d: Date) => festivos(d.getUTCFullYear()).has(iso(d));
     const aplica = (f: Franja, d: Date) => (esFestivo(d) ? f.festivos : f.dias.includes(d.getUTCDay()));
-    if (esFestivo(fecha) && !fr.some((f) => f.festivos)) return { clase: 'festivo', texto: t.holiday };
+    const festivoHoy = esFestivo(fecha) && !fr.some((f) => f.festivos);
     const abierta = fr.find((f) => aplica(f, fecha) && min >= f.desde && min < f.hasta);
     if (abierta) return { clase: 'abierta', texto: `${t.open} · ${t.closes} ${hora(abierta.hasta)}` };
     for (let k = 0; k < 8; k++) {
@@ -158,9 +159,9 @@ const contacts = [
       const prox = fr.filter((f) => aplica(f, d) && (k > 0 || f.desde > min)).sort((a, b) => a.desde - b.desde)[0];
       if (!prox) continue;
       const cuando = k === 0 ? `${t.today} ${hora(prox.desde)}` : k === 1 ? `${t.tomorrow} ${hora(prox.desde)}` : `${t.on} ${t.days[d.getUTCDay()]} ${t.at} ${hora(prox.desde)}`;
-      return { clase: 'cerrada', texto: `${t.closed} · ${t.opens} ${cuando}` };
+      return { clase: festivoHoy ? 'festivo' : 'cerrada', texto: `${festivoHoy ? t.holiday : t.closed} · ${t.opens} ${cuando}` };
     }
-    return null;
+    return festivoHoy ? { clase: 'festivo', texto: t.holiday } : null;
   };
   const pintar = () => {
     document.querySelectorAll<HTMLElement>('[data-horario]').forEach((box) => {
