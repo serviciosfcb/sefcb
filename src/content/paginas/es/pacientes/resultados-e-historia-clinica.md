@@ -6,7 +6,7 @@ description: Cómo obtener resultados de exámenes y copias de la historia clín
 card: Descarga de resultados y copias de la historia clínica.
 section: pacientes
 order: 3
-review: Formatos MA040105-R1 y MA040105-R2 versión 03 (2020), tomados del Drive con autorización de gerencia (17/10/2026). Al actualizar un formato, reemplazar el PDF en public/documentos con el mismo nombre.
+review: Formatos MA040105-R1 y MA040105-R2 versión 03 (2020), tomados del Drive con autorización de gerencia (17/10/2026). Al actualizar un formato, reemplazar el PDF en public/documentos con el mismo nombre. Solicitud por correo a coordinacionsiau@sefcb.co según el procedimiento MA040105P, confirmada por gerencia (04/11/2026).
 ---
 ## Sus resultados
 
@@ -18,9 +18,14 @@ Si otra persona va a reclamar sus resultados de forma presencial, debe traer una
 
 La historia clínica es un documento privado y sometido a reserva. Solo la pueden conocer terceros con autorización del paciente o en los casos que define la ley.
 
-Si viene a una consulta especializada, puede pedir la copia al terminar su atención.
+Puede pedirla de dos formas:
 
-**Dónde se tramita:** Servicio de Información y Atención al Usuario (SIAU), Calle 19 No. 1-44, Barrio Blanco.
+- **En persona,** en la oficina del SIAU. Si viene a una consulta especializada, puede pedirla al terminar su atención.
+- **Por correo electrónico,** a [coordinacionsiau@sefcb.co](mailto:coordinacionsiau@sefcb.co). Adjunte el formato de solicitud diligenciado y firmado, y los documentos que le correspondan según los requisitos de abajo.
+
+En el formato puede elegir si quiere recibir la copia en papel o por correo electrónico. Cuando esté lista, le avisamos.
+
+**Oficina del SIAU:** Servicio de Información y Atención al Usuario, Calle 19 No. 1-44, Barrio Blanco.
 
 **Horario:** lunes a viernes de 7:00 a. m. a 12:00 m. y de 2:00 p. m. a 6:00 p. m.; sábados de 8:00 a. m. a 11:00 a. m.
 
@@ -28,7 +33,7 @@ Si viene a una consulta especializada, puede pedir la copia al terminar su atenc
 
 ## Formatos para descargar
 
-Imprímalos, diligéncielos y tráigalos con los demás requisitos.
+Imprímalos y diligéncielos. Tráigalos con los demás requisitos o envíelos escaneados a coordinacionsiau@sefcb.co.
 
 - [Solicitud de historia clínica y resultados de ayudas diagnósticas (MA040105-R1, PDF, 122 KB)](/documentos/MA040105-R1-solicitud-historia-clinica.pdf)
 - [Autorización de entrega de resultados o historia clínica a terceros (MA040105-R2, PDF, 112 KB)](/documentos/MA040105-R2-autorizacion-entrega-a-terceros.pdf)

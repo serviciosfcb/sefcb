@@ -31,6 +31,10 @@ We give priority service to children, pregnant women, people with disabilities, 
 
 In the [patient portal](https://app.sefcb.co/pacientes/ingresar?locale=es), from anywhere with an internet connection.
 
+### Can I request a copy of my medical records by email?
+
+Yes. Write to [coordinacionsiau@sefcb.co](mailto:coordinacionsiau@sefcb.co) with the completed and signed request form and the documents listed in the [requirements](/en/patients/results-and-medical-records/). You can receive the copy on paper or by email.
+
 ### Can someone else pick up my results or medical records?
 
 Yes, with an authorization letter signed by you and that person, and a copy of your ID. Medical records are confidential (Resolution 1995 of 1999); without authorization we cannot release them.

@@ -32,6 +32,10 @@ Damos atención preferencial a niñas y niños, mujeres gestantes, personas con 
 
 En el [portal del paciente](https://app.sefcb.co/pacientes/ingresar?locale=es), desde cualquier lugar con internet.
 
+### ¿Puedo pedir la copia de mi historia clínica por correo?
+
+Sí. Escriba a [coordinacionsiau@sefcb.co](mailto:coordinacionsiau@sefcb.co) con el formato de solicitud diligenciado y firmado y los documentos que piden los [requisitos](/pacientes/resultados-e-historia-clinica/). Puede recibir la copia en papel o por correo electrónico.
+
 ### ¿Otra persona puede reclamar mis resultados o mi historia clínica?
 
 Sí, con una carta de autorización firmada por usted y por esa persona, y la fotocopia de su documento de identidad. La historia clínica es un documento reservado (Resolución 1995 de 1999); sin autorización no podemos entregarla.

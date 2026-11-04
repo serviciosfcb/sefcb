@@ -17,9 +17,14 @@ If someone else will pick up your results in person, they must bring an authoriz
 
 Medical records are private and confidential. Third parties may only see them with the patient's authorization or in the cases defined by law.
 
-If you come for a specialist consultation, you can ask for a copy at the end of your visit.
+You can request it in two ways:
 
-**Where:** Patient Information and Services Office (SIAU), Calle 19 No. 1-44, Barrio Blanco.
+- **In person,** at the SIAU office. If you come for a specialist consultation, you can ask for it at the end of your visit.
+- **By email,** to [coordinacionsiau@sefcb.co](mailto:coordinacionsiau@sefcb.co). Attach the completed and signed request form, along with the documents that apply to you under the requirements below.
+
+On the form you can choose to receive the copy on paper or by email. We will let you know when it is ready.
+
+**SIAU office:** Patient Information and Services Office, Calle 19 No. 1-44, Barrio Blanco.
 
 **Hours:** Monday to Friday, 7:00 a.m. to 12:00 p.m. and 2:00 p.m. to 6:00 p.m.; Saturday, 8:00 a.m. to 11:00 a.m.
 
@@ -27,7 +32,7 @@ If you come for a specialist consultation, you can ask for a copy at the end of 
 
 ## Forms to download
 
-Print them, fill them in and bring them with the other requirements. The forms are in Spanish.
+Print them and fill them in. Bring them with the other requirements or email scanned copies to coordinacionsiau@sefcb.co. The forms are in Spanish.
 
 - [Request for medical records and diagnostic results (MA040105-R1, PDF, 122 KB)](/documentos/MA040105-R1-solicitud-historia-clinica.pdf)
 - [Authorization to release results or medical records to a third party (MA040105-R2, PDF, 112 KB)](/documentos/MA040105-R2-autorizacion-entrega-a-terceros.pdf)
