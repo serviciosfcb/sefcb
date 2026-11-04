@@ -22,12 +22,6 @@ Our management systems are certified by Icontec, with international recognition 
 
 <img src="/uploads/certificaciones/icontec-iqnet.webp" alt="Icontec certification marks for ISO 9001, certificate SC7166-1, and ISO 45001, certificate ST-CER961165, and the IQNet recognized certification mark" width="660" height="335" loading="lazy" style="width:100%;max-width:22rem;height:auto">
 
-## Working toward accreditation
-
-We are working toward health accreditation, the highest level of Colombia's mandatory quality assurance system for health care. It is voluntary and is granted after an external assessment of the whole institution.
-
-Since 2024, self-assessment teams from several areas have been comparing our care with the standards of the Single Accreditation System (Resolution 5095 of 2018). Their findings become improvement plans, which we follow up through our quality improvement audit program (PAMEC). We also learn from accredited institutions through benchmarking.
-
 ## Scope of the quality management system
 
 Outpatient psychology and nutrition consultations (low complexity); specialist consultations in cardiology, sports medicine and electrophysiology (medium complexity); invasive and non-invasive cardiovascular diagnosis (medium and high complexity); diagnostic and therapeutic support in cardiac catheterization and nuclear medicine (high complexity); and cardiovascular prevention and rehabilitation programs (low and medium complexity).

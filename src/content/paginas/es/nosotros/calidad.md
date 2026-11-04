@@ -22,12 +22,6 @@ Nuestros sistemas de gestión están certificados por Icontec, con reconocimient
 
 <img src="/uploads/certificaciones/icontec-iqnet.webp" alt="Sellos de certificación Icontec ISO 9001, certificado SC7166-1, e ISO 45001, certificado ST-CER961165, y sello de certificación reconocida IQNet" width="660" height="335" loading="lazy" style="width:100%;max-width:22rem;height:auto">
 
-## Camino a la acreditación
-
-Trabajamos para obtener la acreditación en salud, el nivel más alto del Sistema Obligatorio de Garantía de Calidad en Colombia. Es voluntaria y se otorga después de una evaluación externa de toda la institución.
-
-Desde 2024, equipos de autoevaluación de varias áreas comparan nuestra atención con los estándares del Sistema Único de Acreditación (Resolución 5095 de 2018). Lo que encuentran se convierte en planes de mejoramiento, que seguimos con el Programa de Auditoría para el Mejoramiento de la Calidad (PAMEC). También aprendemos de instituciones ya acreditadas mediante ejercicios de referenciación.
-
 ## Alcance del sistema de gestión de calidad
 
 La prestación de servicios de consulta externa general en psicología y nutrición de baja complejidad; consulta externa especializada en cardiología, medicina del deporte y electrofisiología de mediana complejidad; diagnóstico cardiovascular invasivo y no invasivo de mediana y alta complejidad; apoyo diagnóstico y terapéutico en hemodinamia y en medicina nuclear de alta complejidad; y programas de prevención y rehabilitación cardiovascular de baja y mediana complejidad.
