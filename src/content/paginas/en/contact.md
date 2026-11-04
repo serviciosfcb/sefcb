@@ -38,6 +38,7 @@ If you have visited us, tell us how it went in our [satisfaction survey](https:/
 - **Interventional cardiology (cath lab) appointments:** [secintervencionismo@sefcb.co](mailto:secintervencionismo@sefcb.co)
 - **Appointments for hospitalized patients:** [atencionalusuario9@sefcb.co](mailto:atencionalusuario9@sefcb.co)
 - **Tax certificates:** [contabilidad@sefcb.co](mailto:contabilidad@sefcb.co)
+- **Electronic invoices:** [gerencia@sefcb.co](mailto:gerencia@sefcb.co)
 - **CVs and internships:** [talentohumano@sefcb.co](mailto:talentohumano@sefcb.co)
 - **Ethics and transparency line:** [oficialdecumplimiento@sefcb.co](mailto:oficialdecumplimiento@sefcb.co)
 - **Legal notices:** [gerencia@sefcb.co](mailto:gerencia@sefcb.co)

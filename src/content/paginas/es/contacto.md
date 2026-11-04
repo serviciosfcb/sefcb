@@ -38,6 +38,7 @@ Si ya lo atendimos, cuéntenos cómo le fue en la [encuesta de satisfacción](ht
 - **Citas de intervencionismo (hemodinamia):** [secintervencionismo@sefcb.co](mailto:secintervencionismo@sefcb.co)
 - **Citas para pacientes hospitalizados:** [atencionalusuario9@sefcb.co](mailto:atencionalusuario9@sefcb.co)
 - **Certificados tributarios:** [contabilidad@sefcb.co](mailto:contabilidad@sefcb.co)
+- **Factura electrónica:** [gerencia@sefcb.co](mailto:gerencia@sefcb.co)
 - **Hojas de vida y prácticas:** [talentohumano@sefcb.co](mailto:talentohumano@sefcb.co)
 - **Línea ética y de transparencia:** [oficialdecumplimiento@sefcb.co](mailto:oficialdecumplimiento@sefcb.co)
 - **Notificaciones judiciales:** [gerencia@sefcb.co](mailto:gerencia@sefcb.co)
