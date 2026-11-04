@@ -7,7 +7,7 @@ tipo: lectura
 momento: [antes, durante, despues]
 servicios: [noinvasiva]
 herramienta: pasos
-prep: eco-estres
+prep: prueba-esfuerzo
 orden: 3
 pasos:
   durante:

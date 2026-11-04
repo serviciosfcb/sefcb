@@ -177,11 +177,56 @@
       ]
     },
     {
+      "id": "prueba-esfuerzo",
+      "servicio": "cardiologia",
+      "codigo": "MM040109-R2",
+      "nombre": "Prueba de esfuerzo cardiovascular",
+      "nombre_en": "Cardiovascular exercise stress test",
+      "ayuno": "5 horas sin sólidos y 3 horas sin líquidos",
+      "ayuno_en": "No food for 5 hours and no drinks for 3 hours",
+      "duracion": "",
+      "duracion_en": "",
+      "indicaciones": [
+        {
+          "es": "No coma alimentos sólidos (pan, arepa, huevo, carne, pollo) en las 5 horas anteriores, ni tome líquidos (agua, jugo, aromática, aguapanela) en las 3 horas anteriores.",
+          "en": "Do not eat solid food (bread, arepa, eggs, meat, chicken) for 5 hours before, or drink liquids (water, juice, herbal tea, aguapanela) for 3 hours before."
+        },
+        {
+          "es": "Si su cita es entre las 9:00 y las 11:30 a. m., puede tomar una bebida líquida, como agua aromática o jugo sin leche, hasta 3 horas antes.",
+          "en": "If your appointment is between 9:00 and 11:30 a.m., you may have a drink, such as herbal tea or juice without milk, up to 3 hours before."
+        },
+        {
+          "es": "Si toma alguno de estos medicamentos, el protocolo pide suspenderlo 48 horas antes: aminofilina, metoprolol (Betaloc, Lopresor), carvedilol (Dilatrend), bisoprolol (Concor), propranolol o sotalol. Los calcioantagonistas (verapamilo, diltiazem, amlodipino, nifedipino o nimodipino) se suspenden 72 horas antes. Confírmelo antes con su médico.",
+          "en": "If you take any of these medicines, the protocol asks you to stop it 48 hours before: aminophylline, metoprolol (Betaloc, Lopresor), carvedilol (Dilatrend), bisoprolol (Concor), propranolol or sotalol. Calcium channel blockers (verapamil, diltiazem, amlodipine, nifedipine or nimodipine) are stopped 72 hours before. Check with your doctor first."
+        },
+        {
+          "es": "Si es hombre, rasúrese el vello del pecho.",
+          "en": "Men should shave their chest."
+        },
+        {
+          "es": "Venga con tenis y ropa suelta para hacer ejercicio.",
+          "en": "Wear sneakers and loose clothes for exercise."
+        },
+        {
+          "es": "Avísenos si tiene alguna condición que le impida hacer ejercicio, como problemas de rodilla, cadera, columna o musculares.",
+          "en": "Tell us if you have any condition that keeps you from exercising, such as knee, hip, back or muscle problems."
+        },
+        {
+          "es": "Venga con una sola persona adulta. No traiga niños ni adolescentes, ni a una persona con limitaciones físicas como acompañante.",
+          "en": "Come with only one adult. Do not bring children or teenagers, or a companion with physical limitations."
+        },
+        {
+          "es": "Preséntese 30 minutos antes de la cita para diligenciar los datos administrativos.",
+          "en": "Arrive 30 minutes before your appointment to complete the paperwork."
+        }
+      ]
+    },
+    {
       "id": "eco-estres",
       "servicio": "cardiologia",
       "codigo": "",
-      "nombre": "Ecocardiograma de estrés y prueba de esfuerzo",
-      "nombre_en": "Stress echocardiogram and exercise test",
+      "nombre": "Ecocardiograma de estrés con prueba de esfuerzo o farmacológica",
+      "nombre_en": "Stress echocardiogram with exercise or medication",
       "ayuno": "5 horas, sin sólidos ni líquidos",
       "ayuno_en": "5 hours, no food or drinks",
       "duracion": "",
@@ -210,6 +255,39 @@
         {
           "es": "Venga con un adulto autorizado para tomar decisiones y firmar el consentimiento.",
           "en": "Come with an adult who can make decisions and sign the consent form."
+        }
+      ]
+    },
+    {
+      "id": "mesa-basculante",
+      "servicio": "cardiologia",
+      "codigo": "MM040110-R2",
+      "nombre": "Prueba de mesa basculante",
+      "nombre_en": "Tilt table test",
+      "ayuno": "6 horas",
+      "ayuno_en": "6 hours",
+      "duracion": "",
+      "duracion_en": "",
+      "indicaciones": [
+        {
+          "es": "Venga acompañado de un adulto.",
+          "en": "Come with an adult."
+        },
+        {
+          "es": "Retírese el esmalte de las uñas.",
+          "en": "Remove any nail polish."
+        },
+        {
+          "es": "Traiga una muda adicional para la parte de abajo: ropa interior y pantalón o falda.",
+          "en": "Bring a spare set of clothes for the lower body: underwear and trousers or a skirt."
+        },
+        {
+          "es": "No conduzca ningún tipo de vehículo durante las 5 horas siguientes al examen.",
+          "en": "Do not drive any kind of vehicle for 5 hours after the test."
+        },
+        {
+          "es": "Preséntese 30 minutos antes de la cita para diligenciar los datos administrativos.",
+          "en": "Arrive 30 minutes before your appointment to complete the paperwork."
         }
       ]
     },
