@@ -186,3 +186,70 @@ h1, h2, h3 { overflow-wrap: break-word; }
 .prosa blockquote { border-left: 3px solid var(--rojo); padding-left: 1.1em; color: var(--tinta-2); font-style: italic; }
 .prosa img { border-radius: var(--radio-m); height: auto; max-width: 100%; }
 .prosa strong { font-weight: 700; }
+.prosa ul > li::marker { color: var(--rojo); }
+.prosa ol > li::marker { color: var(--rojo); font-weight: 700; font-variant-numeric: tabular-nums; }
+.prosa h2, .prosa h3 { scroll-margin-top: calc(var(--alto-cabecera) + 1.5rem); }
+
+/* Cada sección (##) se separa de la anterior con una línea */
+.prosa > h2 { margin-top: 2.2em; padding-top: 1.4em; border-top: 1px solid var(--linea); }
+.prosa > h2:first-child { margin-top: 0; padding-top: 0; border-top: 0; }
+
+/* Datos: listas de «**Etiqueta:** valor» */
+.prosa .datos { display: grid; border-top: 1px solid var(--linea); }
+.prosa .dato { display: grid; grid-template-columns: minmax(8rem, 14rem) minmax(0, 1fr); gap: .25rem 1.6rem; padding: .85rem 0; border-bottom: 1px solid var(--linea); }
+.prosa .dato dt { font-weight: 700; line-height: 1.5; }
+.prosa .dato dd { margin: 0; line-height: 1.6; min-width: 0; overflow-wrap: anywhere; }
+.prosa .dato dd > * + * { margin-top: .6em; }
+.prosa h2 + .datos, .prosa h3 + .datos, .prosa p + .datos { margin-top: 1.2em; }
+@media (max-width: 640px) { .prosa .dato { grid-template-columns: minmax(0, 1fr); padding: .8rem 0; } }
+
+/* Documentos para descargar (listas de enlaces a PDF) */
+.prosa .documentos { list-style: none; padding: 0; display: grid; gap: .6rem; }
+.prosa .documentos li + li { margin-top: 0; }
+.prosa .doc {
+  display: grid; grid-template-columns: 2.6rem minmax(0, 1fr) 1.3rem; align-items: center; column-gap: 1rem;
+  padding: .9rem 1.1rem; border: 1px solid var(--linea); border-radius: var(--radio-s);
+  color: var(--tinta); text-decoration: none; line-height: 1.35; transition: border-color .25s, background-color .25s;
+}
+.prosa .doc::before {
+  content: ''; grid-row: 1 / span 2; width: 2.6rem; height: 2.6rem; border-radius: 8px; background: rgb(159 39 40 / .08) center / 1.35rem no-repeat
+    url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%239f2728' stroke-width='1.8' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M14 3H7a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V8z'/%3E%3Cpath d='M14 3v5h5M9 13h6M9 17h4'/%3E%3C/svg%3E");
+}
+.prosa .doc::after {
+  content: ''; grid-column: 3; grid-row: 1 / span 2; width: 1.3rem; height: 1.3rem; background: center / contain no-repeat
+    url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%239f2728' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M12 4v11m-5-5 5 5 5-5M5 20h14'/%3E%3C/svg%3E");
+}
+.prosa .doc:hover { border-color: var(--rojo); background: rgb(159 39 40 / .03); }
+.prosa .doc:focus-visible { outline: 3px solid var(--foco); outline-offset: 2px; }
+.prosa .doc-nombre { grid-column: 2; font-weight: 700; }
+.prosa .doc-meta { grid-column: 2; color: var(--tinta-2); font-size: var(--t-0); }
+
+/* Nota destacada: un párrafo suelto que empieza con «**Algo:**» */
+.prosa .nota { padding: 1rem 1.25rem; border-left: 3px solid var(--rojo); background: var(--niebla); border-radius: 0 var(--radio-s) var(--radio-s) 0; }
+
+/* Casos: los subtítulos (###) de una sección, en paneles */
+.prosa .casos { display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, 19rem), 1fr)); gap: 1rem; margin-top: 1.4em; }
+.prosa .caso { padding: 1.3rem 1.4rem 1.4rem; border-radius: var(--radio-m); background: var(--niebla); font-size: var(--t-1); line-height: 1.6; }
+.prosa .caso > * + * { margin-top: .8em; }
+.prosa .caso h3 { font-size: var(--t-2); margin: 0; line-height: 1.25; }
+.prosa .caso ol, .prosa .caso ul { padding-left: 1.2em; }
+
+/* Preguntas frecuentes: cada pregunta se abre y se cierra */
+.prosa .pregunta { border-bottom: 1px solid var(--linea); }
+.prosa .pregunta:first-of-type { border-top: 1px solid var(--linea); }
+.prosa .pregunta + .pregunta { margin-top: 0; }
+.prosa .pregunta summary { list-style: none; display: flex; align-items: center; justify-content: space-between; gap: 1.5rem; padding: 1.15rem 0; cursor: pointer; }
+.prosa .pregunta summary::-webkit-details-marker { display: none; }
+.prosa .pregunta summary h3 { margin: 0; font-size: var(--t-2); line-height: 1.35; }
+.prosa .pregunta summary::after {
+  content: ''; flex: none; width: 1.9rem; height: 1.9rem; border-radius: 50%; border: 1px solid var(--linea); background: center / .9rem no-repeat
+    url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%239f2728' stroke-width='2.4' stroke-linecap='round'%3E%3Cpath d='M12 5v14M5 12h14'/%3E%3C/svg%3E");
+  transition: transform .3s var(--ease);
+}
+.prosa .pregunta[open] summary::after { transform: rotate(45deg); }
+.prosa .pregunta summary:hover h3 { color: var(--rojo); }
+.prosa .pregunta summary:focus-visible { outline: 3px solid var(--foco); outline-offset: 4px; border-radius: 4px; }
+.prosa .respuesta { padding: 0 3rem 1.3rem 0; }
+.prosa .respuesta > * + * { margin-top: .9em; }
+@media (max-width: 640px) { .prosa .respuesta { padding-right: 0; } }
+:root[data-contrast='high'] .prosa .caso, :root[data-contrast='high'] .prosa .nota { border: 2px solid #000; }

@@ -4,8 +4,8 @@ import type { Lang } from '../i18n/content';
 import { content, links, phones } from '../i18n/content';
 import Icon from './Icon.astro';
 interface Item { label: string; href: string }
-interface Props { lang: Lang; title: string; items: Item[]; current: string; showHelp?: boolean }
-const { lang, title, items, current, showHelp = true } = Astro.props;
+interface Props { lang: Lang; title: string; items: Item[]; current: string; showHelp?: boolean; toc?: Item[] }
+const { lang, title, items, current, showHelp = true, toc = [] } = Astro.props;
 const t = content[lang].pages;
 ---
 <details class="nav-seccion-movil">
@@ -19,7 +19,16 @@ const t = content[lang].pages;
   <nav class="nav-seccion" aria-label={`${t.inSection}: ${title}`}>
     <p class="nav-titulo">{title}</p>
     <ul>
-      {items.map((it) => <li><a href={it.href} aria-current={it.href === current ? 'page' : undefined}>{it.label}</a></li>)}
+      {items.map((it) => (
+        <li>
+          <a href={it.href} aria-current={it.href === current ? 'page' : undefined}>{it.label}</a>
+          {it.href === current && toc.length > 0 && (
+            <ul class="toc" aria-label={t.onPage} data-indice>
+              {toc.map((h) => <li><a href={h.href}>{h.label}</a></li>)}
+            </ul>
+          )}
+        </li>
+      ))}
     </ul>
   </nav>
   {showHelp && (
@@ -33,7 +42,11 @@ const t = content[lang].pages;
 </aside>
 
 <style>
-  .lateral { position: sticky; top: calc(var(--alto-cabecera) + 1.5rem + env(safe-area-inset-top, 0px)); display: grid; gap: 1.5rem; align-self: start; }
+  .lateral {
+    position: sticky; top: calc(var(--alto-cabecera) + 1.5rem + env(safe-area-inset-top, 0px)); display: grid; gap: 1.5rem; align-self: start;
+    /* Con el índice de la página la columna puede ser más alta que la pantalla: entonces se desplaza sola */
+    max-height: calc(100dvh - var(--alto-cabecera) - 3rem); overflow-y: auto; overscroll-behavior: contain; scrollbar-width: thin; padding: 2px 4px 2px 2px; margin: -2px -4px -2px -2px;
+  }
   .nav-titulo { font-family: var(--display); font-weight: 650; font-size: var(--t-2); margin-bottom: .6rem; }
   .nav-seccion ul { list-style: none; display: grid; border-left: 2px solid var(--linea); }
   .nav-seccion a {
@@ -42,7 +55,14 @@ const t = content[lang].pages;
     transition: color .25s, border-color .25s;
   }
   .nav-seccion a:hover { color: var(--tinta); border-left-color: var(--gris-marca); }
-  .nav-seccion a[aria-current] { color: var(--rojo); border-left-color: var(--rojo); }
+  .nav-seccion a[aria-current='page'] { color: var(--rojo); border-left-color: var(--rojo); }
+  /* Índice de la página actual: sus secciones, con la que se está leyendo marcada */
+  .nav-seccion .toc { border-left: 0; margin: .1rem 0 .5rem; }
+  .nav-seccion .toc a { padding: .3rem 0 .3rem 1.9rem; font-weight: 500; font-size: .8rem; border-left-color: transparent; position: relative; }
+  .nav-seccion .toc a::before { content: ''; position: absolute; left: 1rem; top: .95em; width: .45rem; height: 1px; background: var(--gris-marca); transition: width .25s var(--ease), background-color .25s; }
+  .nav-seccion .toc a:hover { border-left-color: transparent; }
+  .nav-seccion .toc a[aria-current='location'] { color: var(--tinta); font-weight: 700; }
+  .nav-seccion .toc a[aria-current='location']::before { background: var(--rojo); width: .7rem; }
   .ayuda { display: grid; gap: .7rem; padding: 1.3rem; border-radius: var(--radio-m); background: var(--niebla); font-size: var(--t-0); }
   .ayuda-titulo { font-weight: 700; font-size: var(--t-1); }
   .ayuda p { color: var(--tinta-2); }

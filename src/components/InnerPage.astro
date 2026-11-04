@@ -26,7 +26,10 @@ const { p, lang } = Astro.props;
 const t = content[lang].pages;
 const d = p.data;
 const path = pathOfPagina(p);
-const { Content } = await render(p);
+const { Content, headings } = await render(p);
+// Índice de la página: sus secciones (##) cuando son tres o más
+const toc = d.key === 'faq' ? [] : headings.filter((h) => h.depth === 2).map((h) => ({ label: h.text, href: `#${h.slug}` }));
+const conIndice = toc.length >= 3;
 
 const all = await getPaginas(lang);
 const sectionKey = sections[d.section] as RouteKey;
@@ -44,14 +47,30 @@ crumbs.push({ label: d.title });
 
 const wide = ['seccion', 'servicios', 'contacto', 'mapa', 'educacion'].includes(d.layout);
 const showNav = !wide && navItems.length > 1;
+// Páginas anchas sin navegación de sección (como Contacto): el índice va en la columna izquierda
+const indiceSolo = !showNav && conIndice && !['seccion', 'servicios', 'mapa', 'educacion'].includes(d.layout);
 ---
 <Base lang={lang} title={d.title} description={d.description || d.lead} path={path} altPath={altPath(d.key, lang)}>
   <PageHero title={d.title} lead={d.lead} crumbs={crumbs} crumbsLabel={t.crumbs} image={d.image} imageAlt={d.image_alt} imagePos={d.image_pos} />
 
-  <div class:list={['interior', 'seccion', { ancho: !showNav }]}>
+  <div class:list={['interior', 'seccion', { ancho: !showNav && !indiceSolo }]}>
     <div class="contenedor interior-grid">
-      {showNav && <SideNav lang={lang} title={sectionTitle} items={navItems} current={path} />}
+      {showNav && <SideNav lang={lang} title={sectionTitle} items={navItems} current={path} toc={conIndice ? toc : []} />}
+      {indiceSolo && (
+        <aside class="indice-solo">
+          <nav aria-label={t.onPage}>
+            <p class="indice-titulo">{t.onPage}</p>
+            <ul data-indice>{toc.map((h) => <li><a href={h.href}>{h.label}</a></li>)}</ul>
+          </nav>
+        </aside>
+      )}
       <div class="interior-cuerpo">
+        {conIndice && (
+          <details class="indice-movil">
+            <summary>{t.onPage}</summary>
+            <ul data-indice>{toc.map((h) => <li><a href={h.href}>{h.label}</a></li>)}</ul>
+          </details>
+        )}
         <div class="prosa" data-reveal>
           <Content />
         </div>
@@ -74,12 +93,56 @@ const showNav = !wide && navItems.length > 1;
   {d.section !== 'transparencia' && d.section !== 'legal' && <CtaBand lang={lang} />}
 </Base>
 
+<script>
+  // Marca en el índice la sección que se está leyendo
+  const enlaces = [...document.querySelectorAll<HTMLAnchorElement>('[data-indice] a[href^="#"]')];
+  if (enlaces.length) {
+    const ids = [...new Set(enlaces.map((a) => decodeURIComponent(a.hash.slice(1))))];
+    const titulos = ids.map((id) => document.getElementById(id)).filter((x): x is HTMLElement => !!x);
+    let actual = '';
+    const marcar = () => {
+      const limite = innerHeight * 0.3;
+      let id = '';
+      for (const h of titulos) if (h.getBoundingClientRect().top <= limite) id = h.id;
+      if (id === actual) return;
+      actual = id;
+      enlaces.forEach((a) => (decodeURIComponent(a.hash.slice(1)) === id ? a.setAttribute('aria-current', 'location') : a.removeAttribute('aria-current')));
+    };
+    let pendiente = false;
+    addEventListener('scroll', () => { if (!pendiente) { pendiente = true; requestAnimationFrame(() => { pendiente = false; marcar(); }); } }, { passive: true });
+    marcar();
+    // En el celular, el índice se cierra al elegir una sección
+    document.querySelectorAll<HTMLDetailsElement>('.indice-movil').forEach((det) => det.addEventListener('click', (e) => { if ((e.target as HTMLElement).closest('a')) det.open = false; }));
+  }
+</script>
+
 <style>
   .interior { background: var(--papel); padding-top: clamp(3rem, 5vw, 4.5rem); }
   .interior-grid { display: grid; grid-template-columns: 16.5rem minmax(0, 1fr); gap: clamp(2rem, 5vw, 5rem); align-items: start; }
   .ancho .interior-grid { grid-template-columns: minmax(0, 1fr); }
-  .interior-cuerpo { min-width: 0; display: grid; gap: 2.5rem; align-content: start; }
-  .interior-cuerpo > .prosa { max-width: 46rem; }
+  .interior-cuerpo { min-width: 0; display: grid; grid-template-columns: minmax(0, 1fr); gap: 2.5rem; align-content: start; }
+  /* El texto se lee a 46rem; los datos, documentos y casos usan más ancho */
+  .interior-cuerpo > .prosa > :global(*) { max-width: 46rem; }
+  .interior-cuerpo > .prosa > :global(h2), .interior-cuerpo > .prosa > :global(.datos),
+  .interior-cuerpo > .prosa > :global(.documentos), .interior-cuerpo > .prosa > :global(.casos) { max-width: 54rem; }
+
+  .indice-solo { position: sticky; top: calc(var(--alto-cabecera) + 1.5rem + env(safe-area-inset-top, 0px)); align-self: start; }
+  .indice-titulo { font-family: var(--display); font-weight: 650; font-size: var(--t-2); margin-bottom: .6rem; }
+  .indice-solo ul { list-style: none; display: grid; border-left: 2px solid var(--linea); }
+  .indice-solo a { display: block; padding: .45rem 0 .45rem 1rem; margin-left: -2px; border-left: 2px solid transparent; color: var(--tinta-2); text-decoration: none; font-size: var(--t-0); font-weight: 600; line-height: 1.35; transition: color .25s, border-color .25s; }
+  .indice-solo a:hover { color: var(--tinta); border-left-color: var(--gris-marca); }
+  .indice-solo a[aria-current] { color: var(--rojo); border-left-color: var(--rojo); }
+
+  .indice-movil { display: none; border: 1px solid var(--linea); border-radius: var(--radio-m); background: var(--papel); }
+  .indice-movil summary { list-style: none; padding: .9rem 1.1rem; cursor: pointer; font-size: var(--t-0); font-weight: 700; }
+  .indice-movil summary::-webkit-details-marker { display: none; }
+  .indice-movil ul { list-style: none; display: grid; padding: 0 1.1rem 1rem; }
+  .indice-movil a { display: block; padding: .55rem 0; border-top: 1px solid var(--linea); color: var(--tinta); text-decoration: none; font-weight: 600; font-size: var(--t-0); }
+  .indice-movil a[aria-current] { color: var(--rojo); }
+  @media (max-width: 960px) {
+    .indice-solo { display: none; }
+    .indice-movil { display: block; }
+  }
   .interior-cuerpo > .prosa:empty { display: none; }
   @media (max-width: 960px) { .interior-grid { grid-template-columns: minmax(0, 1fr); gap: 1.5rem; } }
 </style>
