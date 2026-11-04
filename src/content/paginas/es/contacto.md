@@ -16,6 +16,14 @@ Presente sus derechos de petición, quejas, reclamos, sugerencias, felicitacione
 
 Si no está conforme con la respuesta, puede acudir a la Superintendencia Nacional de Salud o al Instituto Departamental de Salud de Norte de Santander. Encuentre sus canales en el [directorio de entidades](/transparencia/directorio-de-entidades/).
 
+## Oficina de atención al usuario (SIAU)
+
+Queda solo en la **sede principal**, Calle 19 No. 1-44, Barrio Blanco. Allí lo orientamos, recibimos sus PQRS y tramitamos las copias de la historia clínica.
+
+- **Horario:** lunes a viernes de 7:00 a. m. a 12:00 m. y de 2:00 p. m. a 6:00 p. m.; sábados de 8:00 a. m. a 11:00 a. m.
+- **Línea:** PBX (607) 595 6075, ext. 105
+- **Correo:** [coordinacionsiau@sefcb.co](mailto:coordinacionsiau@sefcb.co)
+
 ## Califique su atención
 
 Si ya lo atendimos, cuéntenos cómo le fue en la [encuesta de satisfacción](https://forms.gle/S7yYoVYFBgTzdZZ5A). Sus respuestas nos ayudan a mejorar.

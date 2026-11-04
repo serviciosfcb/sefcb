@@ -16,6 +16,14 @@ Submit petitions, complaints, suggestions, compliments, questions, information r
 
 If you are not satisfied with our response, you can contact the National Health Superintendency (Supersalud) or the Norte de Santander Departmental Health Institute. Their channels are listed under [oversight bodies](/en/transparency/oversight-bodies/).
 
+## Patient services office (SIAU)
+
+It is only at our **main location**, Calle 19 No. 1-44, Barrio Blanco. There we can guide you, receive your feedback and process copies of your medical records.
+
+- **Hours:** Monday to Friday, 7:00 a.m. to 12:00 p.m. and 2:00 p.m. to 6:00 p.m.; Saturday, 8:00 a.m. to 11:00 a.m.
+- **Phone:** +57 (607) 595 6075, ext. 105
+- **Email:** [coordinacionsiau@sefcb.co](mailto:coordinacionsiau@sefcb.co)
+
 ## Rate your care
 
 If you have visited us, tell us how it went in our [satisfaction survey](https://forms.gle/S7yYoVYFBgTzdZZ5A) (in Spanish). Your answers help us improve.
