@@ -292,6 +292,64 @@
       ]
     },
     {
+      "id": "eco-abdomen",
+      "servicio": "cardiologia",
+      "codigo": "MM040116-R2",
+      "nombre": "Ecografía de abdomen total",
+      "nombre_en": "Full abdominal ultrasound",
+      "ayuno": "6 a 8 horas",
+      "ayuno_en": "6 to 8 hours",
+      "duracion": "",
+      "duracion_en": "",
+      "indicaciones": [
+        {
+          "es": "Evite las comidas abundantes, las bebidas alcohólicas y las gaseosas antes del examen.",
+          "en": "Avoid large meals, alcohol and fizzy drinks before the test."
+        },
+        {
+          "es": "Si su médico pidió evaluar también la vejiga, la pelvis o la próstata, venga con la vejiga llena: tome agua antes, según le indiquen.",
+          "en": "If your doctor also asked to examine your bladder, pelvis or prostate, come with a full bladder: drink water beforehand as instructed."
+        },
+        {
+          "es": "Venga con ropa cómoda, que permita descubrir el abdomen con facilidad.",
+          "en": "Wear comfortable clothes that make it easy to uncover your abdomen."
+        },
+        {
+          "es": "Durante el examen le pueden pedir que cambie de posición o que tome aire y lo sostenga.",
+          "en": "During the scan you may be asked to change position or to breathe in and hold your breath."
+        },
+        {
+          "es": "Si no cumple la preparación, el estudio puede salir de menor calidad y ser necesario reprogramarlo.",
+          "en": "If you do not follow the preparation, the scan may be of lower quality and need to be rescheduled."
+        }
+      ]
+    },
+    {
+      "id": "duplex-renal",
+      "servicio": "cardiologia",
+      "codigo": "MM040112-R6",
+      "nombre": "Dúplex de arterias renales",
+      "nombre_en": "Renal artery duplex ultrasound",
+      "ayuno": "8 horas",
+      "ayuno_en": "8 hours",
+      "duracion": "",
+      "duracion_en": "",
+      "indicaciones": [
+        {
+          "es": "No coma verduras ni alimentos que producen gases.",
+          "en": "Do not eat vegetables or foods that cause gas."
+        },
+        {
+          "es": "No tome bebidas negras, como café o gaseosas de cola, en las 24 horas anteriores.",
+          "en": "Do not drink dark drinks, such as coffee or cola, for 24 hours before."
+        },
+        {
+          "es": "No fume antes del examen.",
+          "en": "Do not smoke before the test."
+        }
+      ]
+    },
+    {
       "id": "perfusion-esfuerzo",
       "servicio": "nuclear",
       "codigo": "MM040326-R2",
