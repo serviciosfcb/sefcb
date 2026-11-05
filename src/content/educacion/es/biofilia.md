@@ -7,6 +7,7 @@ tipo: herramienta
 momento: [siempre]
 servicios: [consulta, obesidad]
 herramienta: respiracion
+video: https://youtube.com/shorts/I7kNMr45KrE
 orden: 4
 preguntas:
   - "¿La respiración lenta me puede ayudar a manejar el estrés y la presión?"
@@ -23,7 +24,7 @@ comprobacion:
 fuentes:
   - texto: "SEFCB, Atención al Usuario, charla «Biofilia: sanar el corazón a través de la naturaleza», Ps. Silvana María Carrasco Blanco (2025)"
   - texto: "SEFCB, procedimiento MM010134S «Vitamina N», versión 02 (29 de agosto de 2025)"
-review: "Borrador de Claude (17/10/2026) a partir de la charla de biofilia de SIAU y la técnica 4-4-6 del procedimiento MM010134S. Validar la hora del sol de la mañana (antes de las 8), la opción de respirar sin sostener el aire y si se publica el video de biofilia (está en el Drive; falta subirlo a YouTube). Pendiente de validación por el área asistencial y la coordinación de SIAU."
+review: "Borrador de Claude (17/10/2026) a partir de la charla de biofilia de SIAU y la técnica 4-4-6 del procedimiento MM010134S. Validar la hora del sol de la mañana (antes de las 8) y la opción de respirar sin sostener el aire. El video de biofilia lo envió la gerencia ya publicado en YouTube (05/11/2026). Pendiente de validación por el área asistencial y la coordinación de SIAU."
 ---
 **Biofilia** quiere decir «amor por la vida y por lo vivo». La palabra la usó primero el psicoanalista Erich Fromm, y el biólogo Edward O. Wilson la desarrolló: propuso que los seres humanos tenemos una tendencia natural a conectarnos con las plantas, los animales, el agua y la luz.
 

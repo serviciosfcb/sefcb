@@ -7,6 +7,7 @@ tipo: herramienta
 momento: [siempre]
 servicios: [consulta, obesidad]
 herramienta: respiracion
+video: https://youtube.com/shorts/I7kNMr45KrE
 orden: 4
 preguntas:
   - "Can slow breathing help me manage stress and blood pressure?"
@@ -23,7 +24,7 @@ comprobacion:
 fuentes:
   - texto: "SEFCB Patient Services, talk “Biofilia: sanar el corazón a través de la naturaleza” (Biophilia: healing the heart through nature), Ps. Silvana María Carrasco Blanco (2025)"
   - texto: "SEFCB, procedure MM010134S “Vitamina N”, version 02 (August 29, 2025)"
-review: "Borrador de Claude (17/10/2026) a partir de la charla de biofilia de SIAU y la técnica 4-4-6 del procedimiento MM010134S. Validar la hora del sol de la mañana (antes de las 8), la opción de respirar sin sostener el aire y si se publica el video de biofilia (está en el Drive; falta subirlo a YouTube). Pendiente de validación por el área asistencial y la coordinación de SIAU."
+review: "Borrador de Claude (17/10/2026) a partir de la charla de biofilia de SIAU y la técnica 4-4-6 del procedimiento MM010134S. Validar la hora del sol de la mañana (antes de las 8) y la opción de respirar sin sostener el aire. El video de biofilia lo envió la gerencia ya publicado en YouTube (05/11/2026). Pendiente de validación por el área asistencial y la coordinación de SIAU."
 ---
 **Biophilia** means “love of life and of living things.” The psychoanalyst Erich Fromm used the word first, and the biologist Edward O. Wilson developed it: he proposed that human beings have a natural tendency to connect with plants, animals, water and light.
 

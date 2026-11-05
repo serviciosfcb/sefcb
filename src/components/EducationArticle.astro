@@ -22,10 +22,12 @@ import NatureChallenge from './edu/NatureChallenge.astro';
 import BreathingPacer from './edu/BreathingPacer.astro';
 import QuestionList from './edu/QuestionList.astro';
 import QuickCheck from './edu/QuickCheck.astro';
+import { videoYoutube } from '../lib/youtube';
 interface Props { f: Ficha; alt: string; lang: Lang }
 const { f, alt, lang } = Astro.props;
 const en = lang === 'en';
 const d = f.data;
+const video = videoYoutube(d.video);
 const t0 = content[lang].pages;
 const path = pathOfFicha(f);
 const { Content } = await render(f);
@@ -116,10 +118,13 @@ const comprobacion = d.comprobacion && d.comprobacion.pregunta && d.comprobacion
           </aside>
         )}
 
-        {d.video && (
-          <div class="edf-video">
-            <iframe src={d.video.replace('watch?v=', 'embed/').replace('youtube.com', 'youtube-nocookie.com')} title={d.title} loading="lazy" allow="accelerometer; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
-          </div>
+        {video && (
+          <figure class:list={['edf-video', { vertical: video.vertical }]}>
+            <div class="edf-video-marco">
+              <iframe src={video.embed} title={`Video: ${d.title}`} loading="lazy" referrerpolicy="strict-origin-when-cross-origin" allow="accelerometer; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>
+            </div>
+            {en && <figcaption>Video in Spanish.</figcaption>}
+          </figure>
         )}
 
         {d.preguntas.length > 0 && <QuestionList lang={lang} preguntas={d.preguntas} titulo={d.title} />}
@@ -275,8 +280,13 @@ const comprobacion = d.comprobacion && d.comprobacion.pregunta && d.comprobacion
   .edf-alarma .btn { justify-self: start; }
   .edf-alarma .btn :global(.icon) { width: 1.05rem; height: 1.05rem; }
 
-  .edf-video { position: relative; aspect-ratio: 16 / 9; border-radius: var(--radio-l); overflow: hidden; background: var(--carbon); }
+  .edf-video { display: grid; gap: .6rem; margin: 0; }
+  .edf-video-marco { position: relative; aspect-ratio: 16 / 9; border-radius: var(--radio-l); overflow: hidden; background: var(--carbon); }
   .edf-video iframe { position: absolute; inset: 0; width: 100%; height: 100%; border: 0; }
+  /* Video corto (Shorts): formato de celular, sin ocupar toda la columna */
+  .edf-video.vertical { justify-self: center; width: min(100%, 21rem); }
+  .edf-video.vertical .edf-video-marco { aspect-ratio: 9 / 16; }
+  .edf-video figcaption { font-size: var(--t-0); color: var(--tinta-2); text-align: center; }
 
   .edf-dudas { display: grid; gap: .7rem; padding: clamp(1.3rem, 3vw, 1.8rem); border-radius: var(--radio-l); background: var(--niebla); }
   .edf-dudas h2 { font-size: var(--t-3); }

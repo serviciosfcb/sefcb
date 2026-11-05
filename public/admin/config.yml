@@ -160,7 +160,7 @@ x-campos-educacion: &campos_educacion
       - { label: Opciones, name: opciones, widget: list, required: false, field: { label: Opción, name: opcion, widget: string } }
       - { label: Opción correcta, name: correcta, widget: number, value_type: int, default: 0, hint: '0 es la primera opción, 1 la segunda, 2 la tercera.' }
       - { label: Explicación, name: explicacion, widget: text, required: false }
-  - { label: Video de YouTube, name: video, widget: string, required: false, hint: 'Pegue el enlace del video (https://www.youtube.com/watch?v=...).' }
+  - { label: Video de YouTube, name: video, widget: string, required: false, hint: 'Pegue el enlace del video tal como lo copia de YouTube (sirven los de videos normales, cortos o Shorts y los de «Compartir»).' }
   - { label: Descargable (PDF), name: descargable, widget: file, required: false }
   - { label: Revisado por, name: revisado_por, widget: string, required: false, hint: 'Nombre y cargo del profesional que validó la ficha. Sin esto, no se publique contenido clínico.' }
   - { label: Fecha de revisión, name: fecha_revision, widget: datetime, required: false, date_format: 'YYYY-MM-DD', time_format: false, format: 'YYYY-MM-DD' }
