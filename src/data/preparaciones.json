@@ -910,6 +910,78 @@
           "en": "Do not have any study with radiographic contrast in the 24 hours before, as it can interfere with kidney function."
         }
       ]
+    },
+    {
+      "id": "bioimpedancia",
+      "servicio": "consulta",
+      "codigo": "MM030105-R1",
+      "nombre": "Análisis de composición corporal por bioimpedancia",
+      "nombre_en": "Body composition analysis by bioimpedance",
+      "claves": "inbody composicion corporal grasa masa muscular nutricion body fat muscle nutrition",
+      "ayuno": "2 a 3 horas sin comer y 45 minutos sin tomar agua",
+      "ayuno_en": "No food for 2 to 3 hours and no water for 45 minutes",
+      "duracion": "",
+      "duracion_en": "",
+      "indicaciones": [
+        {
+          "es": "El día anterior tome líquidos como de costumbre, para que el resultado de agua corporal y masa magra no salga más bajo.",
+          "en": "Drink fluids as usual the day before, so your body water and lean mass results do not come out lower."
+        },
+        {
+          "es": "No coma ni haga ejercicio en las 2 a 3 horas anteriores al examen.",
+          "en": "Do not eat or exercise for 2 to 3 hours before the test."
+        },
+        {
+          "es": "No tome agua en los 45 minutos anteriores, porque puede registrarse como grasa.",
+          "en": "Do not drink water for 45 minutes before, as it can be measured as fat."
+        },
+        {
+          "es": "No tome licor ni café en exceso.",
+          "en": "Do not drink alcohol or too much coffee."
+        },
+        {
+          "es": "Evite el sauna o la ducha antes del examen, porque cambian la temperatura y la hidratación del cuerpo.",
+          "en": "Avoid the sauna or a shower before the test, as they change your body temperature and hydration."
+        },
+        {
+          "es": "No se aplique crema ni loción en las manos ni en los pies, porque afectan la medición.",
+          "en": "Do not put cream or lotion on your hands or feet, as they affect the measurement."
+        },
+        {
+          "es": "Pase al baño antes del examen.",
+          "en": "Use the restroom before the test."
+        },
+        {
+          "es": "Para la medición se quitará las medias, porque las manos y los pies deben tocar bien los electrodos. Retírese también los objetos pesados, porque su peso se suma como grasa.",
+          "en": "For the measurement you will take off your socks, because your hands and feet must touch the electrodes well. Also remove heavy objects, as their weight is counted as fat."
+        },
+        {
+          "es": "Antes de la medición permanecerá de pie al menos 5 minutos, para que la sangre se distribuya de manera uniforme.",
+          "en": "Before the measurement you will stand for at least 5 minutes, so your blood spreads evenly."
+        }
+      ],
+      "avisos": [
+        {
+          "es": "Está embarazada: no se recomienda el examen, porque los cambios en los líquidos del cuerpo alteran el resultado.",
+          "en": "You are pregnant: the test is not recommended, because changes in body fluids alter the result."
+        },
+        {
+          "es": "Tiene marcapasos: solo se hace con autorización previa de su médico y consentimiento informado.",
+          "en": "You have a pacemaker: the test is only done with your doctor's prior authorization and informed consent."
+        },
+        {
+          "es": "Tiene alguna amputación: el examen necesita contacto con todos los sensores.",
+          "en": "You have an amputation: the test needs contact with all the sensors."
+        },
+        {
+          "es": "Tiene implantes mamarios o metálicos: pueden cambiar el resultado. La primera medición sirve de referencia para comparar las siguientes.",
+          "en": "You have breast or metal implants: they can change the result. Your first measurement is used as a reference for the next ones."
+        },
+        {
+          "es": "Está en su periodo menstrual: el agua del cuerpo cambia y puede alterar el resultado.",
+          "en": "You are on your period: body water changes and can alter the result."
+        }
+      ]
     }
   ]
 }

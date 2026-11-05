@@ -2,7 +2,7 @@
 key: preparacion
 title: Preparing for your test
 lead: Fasting, medicines, what to bring and how much time to allow. Find your test and get ready with confidence.
-description: Preparation instructions for non-invasive cardiology and nuclear medicine tests at Servicios Especializados del Corazón.
+description: Preparation instructions for non-invasive cardiology, nuclear medicine and body composition tests at Servicios Especializados del Corazón.
 card: Fasting, medicines and what to bring, test by test.
 section: pacientes
 order: 2.5

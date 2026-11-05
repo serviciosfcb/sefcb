@@ -17,8 +17,8 @@ const t = en
       bring: 'Bring', keep: 'Keep in mind', after: 'After the injection', forAll: 'For every test in this service',
       doc: 'Document', meds: 'When a preparation asks you to stop a medicine, confirm it first with the doctor who prescribed it.',
       doubts: 'Questions about your preparation? Message us on WhatsApp', count: (n: number) => `${n} ${n === 1 ? 'test' : 'tests'} shown`,
-      nothing: 'No special instructions besides the general ones.',
-      servicios: { cardiologia: 'Non-invasive cardiology', nuclear: 'Nuclear medicine' },
+      nothing: 'No special instructions besides the general ones.', tell: 'Tell us before the test if',
+      servicios: { cardiologia: 'Non-invasive cardiology', nuclear: 'Nuclear medicine', consulta: 'Outpatient clinic' },
     }
   : {
       search: 'Busque su examen', placeholder: 'Por ejemplo: tiroides, holter, prueba de esfuerzo', all: 'Todos',
@@ -26,11 +26,17 @@ const t = en
       bring: 'Lleve', keep: 'Tenga en cuenta', after: 'Después de la inyección', forAll: 'Para todos los exámenes de este servicio',
       doc: 'Documento', meds: 'Cuando una preparación pide suspender un medicamento, confírmelo antes con el médico que se lo formuló.',
       doubts: '¿Dudas con su preparación? Escríbanos por WhatsApp', count: (n: number) => `${n} ${n === 1 ? 'examen' : 'exámenes'} en la lista`,
-      nothing: 'No requiere indicaciones adicionales a las generales.',
-      servicios: { cardiologia: 'Cardiología no invasiva', nuclear: 'Medicina nuclear' },
+      nothing: 'No requiere indicaciones adicionales a las generales.', tell: 'Avísenos antes del examen si',
+      servicios: { cardiologia: 'Cardiología no invasiva', nuclear: 'Medicina nuclear', consulta: 'Consulta externa' },
     };
-const order = ['cardiologia', 'nuclear'] as const;
-const comunes = data.comunes as Record<string, { llevar: Txt[]; tener_en_cuenta: Txt[]; despues?: Txt[] }>;
+const order = ['cardiologia', 'nuclear', 'consulta'] as const;
+const ids = en
+  ? { cardiologia: 'non-invasive-cardiology', nuclear: 'nuclear-medicine', consulta: 'outpatient-clinic' }
+  : { cardiologia: 'cardiologia-no-invasiva', nuclear: 'medicina-nuclear', consulta: 'consulta-externa' };
+// Indicaciones comunes del servicio (opcionales) y datos opcionales de cada examen
+const comunes = data.comunes as Record<string, { llevar: Txt[]; tener_en_cuenta: Txt[]; despues?: Txt[] } | undefined>;
+type Examen = (typeof data.examenes)[number] & { avisos?: Txt[]; claves?: string };
+const examenes = data.examenes as Examen[];
 const norm = (s: string) => s.normalize('NFD').replace(/[̀-ͯ]/g, '').toLowerCase();
 ---
 <div class="prep" data-prep>
@@ -54,11 +60,12 @@ const norm = (s: string) => s.normalize('NFD').replace(/[̀-ͯ]/g, '').toLowerCa
   <div id="prep-lista" class="prep-lista">
     {order.map((k) => {
       const c = comunes[k];
-      const items = data.examenes.filter((x) => x.servicio === k);
+      const items = examenes.filter((x) => x.servicio === k);
+      if (!items.length) return null;
       return (
-        <section class="prep-sec" id={k === 'nuclear' ? (en ? 'nuclear-medicine' : 'medicina-nuclear') : (en ? 'non-invasive-cardiology' : 'cardiologia-no-invasiva')} data-prep-sec={k}>
+        <section class="prep-sec" id={ids[k]} data-prep-sec={k}>
           <h2>{t.servicios[k]}</h2>
-          <div class="prep-comun">
+          {c && <div class="prep-comun">
             <p class="prep-comun-tit">{t.forAll}</p>
             <div class="prep-comun-grid">
               <div>
@@ -76,14 +83,14 @@ const norm = (s: string) => s.normalize('NFD').replace(/[̀-ͯ]/g, '').toLowerCa
                 </div>
               )}
             </div>
-          </div>
+          </div>}
           <ul class="prep-items">
             {items.map((x) => {
               const nombre = en ? x.nombre_en || x.nombre : x.nombre;
               const ayuno = en ? x.ayuno_en || x.ayuno : x.ayuno;
               const dur = en ? x.duracion_en || x.duracion : x.duracion;
               return (
-                <li data-prep-item data-q={norm(`${x.nombre} ${x.nombre_en}`)}>
+                <li data-prep-item data-q={norm(`${x.nombre} ${x.nombre_en} ${x.claves ?? ''}`)}>
                   <details id={`prep-${x.id}`}>
                     <summary>
                       <span class="pi-nombre">{nombre}</span>
@@ -95,6 +102,12 @@ const norm = (s: string) => s.normalize('NFD').replace(/[̀-ͯ]/g, '').toLowerCa
                     </summary>
                     <div class="pi-cuerpo">
                       {x.indicaciones.length ? <ul>{x.indicaciones.map((i) => <li><Icon name="check" /><span>{tx(i)}</span></li>)}</ul> : <p>{t.nothing}</p>}
+                      {x.avisos?.length ? (
+                        <div class="pi-avisos">
+                          <p class="pi-avisos-tit"><Icon name="alert" />{t.tell}:</p>
+                          <ul>{x.avisos.map((i) => <li><span>{tx(i)}</span></li>)}</ul>
+                        </div>
+                      ) : null}
                       {x.codigo && <p class="pi-doc">{t.doc} {x.codigo}</p>}
                     </div>
                   </details>
@@ -198,9 +211,10 @@ const norm = (s: string) => s.normalize('NFD').replace(/[̀-ͯ]/g, '').toLowerCa
   .prep-items summary:focus-visible { outline: 3px solid var(--rojo); outline-offset: 2px; border-radius: var(--radio-m); }
   .pi-nombre { font-weight: 700; font-size: var(--t-2); line-height: 1.3; }
   .pi-datos { grid-column: 1; display: flex; flex-wrap: wrap; gap: .4rem; }
-  .pi-chip { display: inline-flex; align-items: center; gap: .3rem; font-size: var(--t-0); padding: .2rem .65rem; border-radius: 999px; background: var(--niebla); color: var(--tinta-2); }
+  /* En bloque, para que un ayuno largo se lea como una frase y no en una columna angosta */
+  .pi-chip { display: inline-block; font-size: var(--t-0); line-height: 1.4; padding: .2rem .7rem; border-radius: .9rem; background: var(--niebla); color: var(--tinta-2); }
   .pi-chip strong { color: var(--tinta); font-weight: 600; }
-  .pi-chip :global(.icon) { width: .95rem; height: .95rem; }
+  .pi-chip :global(.icon) { display: inline-block; width: .95rem; height: .95rem; vertical-align: -.15em; margin-right: .3rem; }
   .pi-flecha { grid-column: 2; grid-row: 1 / span 2; width: 2.2rem; height: 2.2rem; border-radius: 50%; display: grid; place-items: center; border: 1px solid var(--linea); transition: transform .35s var(--ease), background .3s; }
   .pi-flecha :global(.icon) { width: 1rem; height: 1rem; transform: rotate(90deg); }
   details[open] .pi-flecha { transform: rotate(180deg); background: var(--tinta); color: #fff; border-color: var(--tinta); }
@@ -209,6 +223,14 @@ const norm = (s: string) => s.normalize('NFD').replace(/[̀-ͯ]/g, '').toLowerCa
   .pi-cuerpo li { display: flex; gap: .6rem; align-items: flex-start; line-height: 1.5; }
   .pi-cuerpo li :global(.icon) { width: 1.1rem; height: 1.1rem; color: var(--rojo); flex: none; margin-top: .2rem; stroke-width: 2.4; }
   .pi-cuerpo > p { color: var(--tinta-2); }
+  /* Condiciones que el paciente debe contar antes del examen */
+  .pi-avisos { display: grid; gap: .6rem; padding: 1rem 1.1rem; border-radius: var(--radio-m); background: rgb(159 39 40 / .05); border: 1px solid rgb(159 39 40 / .18); }
+  .pi-avisos-tit { display: flex; gap: .55rem; align-items: center; font-weight: 700; }
+  .pi-avisos-tit :global(.icon) { width: 1.2rem; height: 1.2rem; color: var(--rojo); flex: none; }
+  .pi-avisos ul { gap: .5rem; padding-left: 1.75rem; list-style: disc; }
+  .pi-avisos li { display: list-item; line-height: 1.5; }
+  .pi-avisos li::marker { color: var(--rojo); }
+  :global(:root[data-contrast='high']) .pi-avisos { border: 2px solid #000; background: none; }
   .pi-doc { font-size: .8rem; color: var(--tinta-2); }
   .prep-vacio { padding: 1.2rem; border-radius: var(--radio-m); background: var(--niebla); }
   .prep-vacio[hidden] { display: none; }
