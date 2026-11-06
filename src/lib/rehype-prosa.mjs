@@ -174,7 +174,9 @@ function transformar(arbol, fm) {
     }
     hijos = nuevos;
 
-    hijos = fm.key === 'faq' ? preguntasPlegables(hijos) : agruparCasos(hijos);
+    // Los documentos normativos (como la política de datos) se leen de corrido: sus subtítulos no se agrupan en paneles
+    const deCorrido = ['datos'].includes(fm.key);
+    hijos = fm.key === 'faq' ? preguntasPlegables(hijos) : deCorrido ? hijos : agruparCasos(hijos);
     arbol.children = hijos;
   }
 }
